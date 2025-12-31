@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<en-GB>
+
+<name>Team Creator</name>
+<menu-tc>Team Creator</menu-tc>
+<notallowed>Sorry, you do not have permissions to create a team</notallowed>
+
+<created>Team Created. Redirecting please wait.</created>
+<tooExpensive>Your team costs more than the available funds</tooExpensive>
+<tooFewPlayers>You must have at least 11 players</tooFewPlayers>
+<tooFewPlayerssevens>You must have at least 7 players</tooFewPlayerssevens>
+<tooManyInsignificant>You have too many Insignificant players (Snotling Linemen). There cannot be more nsignificant players than non-Insignificant ones</tooManyInsignificant>
+<tooManyBigGuys>Too many big guys</tooManyBigGuys>
+<tooManyBlitzers>Too many players of type: Blitzer</tooManyBlitzers>
+<tooManyRunners>Too many players of type: Runner</tooManyRunners>
+<tooManyCatchers>Too many players of type: Catcher</tooManyCatchers>
+<tooManyThrowers>Too many players of type: Thrower</tooManyThrowers>
+<tooManyBlockers>Too many players of type: Blocker</tooManyBlockers>
+<tooManySpecial>Too many players of type: Special</tooManySpecial>
+<tooManyPos>Too many positionals for a Sevens team (limit is 4)</tooManyPos>
+<tooManyPlayers>Too many players, a team can have 16 players max</tooManyPlayers>
+<tooManySevensPlayers>Too many players, a Sevens team can have 11 players max</tooManySevensPlayers>
+<tooManyRR>Too many rerolls</tooManyRR>
+<tooManyFF>Too many fans</tooManyFF>
+<tooManyAc>Too many coaches</tooManyAc>
+<tooManyCl>Too many cheerleaders</tooManyCl>
+<noInduce>You may not create teams with inducements</noInduce>
+<noTeamName>You must enter a team name</noTeamName>
+
+<race>Race</race>
+<raceDefaultOption>-select-</raceDefaultOption>
+<teamName>Team Name</teamName>
+<noRaceSelected>No race selected</noRaceSelected>
+<createBtn>Create</createBtn>
+<inducementsCheck>Inducements</inducementsCheck>
+<sevensCheck>Sevens</sevensCheck>
+<playerCount># Players</playerCount>
+<total>Total (k)</total>
+<normal>Primary</normal>
+<double>Secondary</double>
+<quantity>Qty</quantity>
+<dollar>Cost (k)</dollar>
+<subtotal>Subtotal</subtotal>
+
+</en-GB>

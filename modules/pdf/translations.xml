@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<en-GB>
+
+<!--STAR PLAYER SPECIAL RULES AND DESCRIPTIONS-->
+<beerbarrelbash>Beer Barrel Bash</beerbarrelbash>
+<beerbarrelbashdesc>Once per Drive, at the start of his activation, Thorsson may select an opposition player within three squares and roll a D6. On a 3+, the selected player is immediately Knocked Down. On a 2, nothing happens. On a 1, Thorsson Falls Over. After using this special rule, Thorsson's activation immediately ends.</beerbarrelbashdesc>
+<blastit>Blast It!</blastit>
+<blastitdesc>Whenever Barik makes a Hail Mary Pass, he may re-roll any scatter results for determining where the ball lands, and any team-mate attempting to catch the ball applies a +1 modifier to the roll.</blastitdesc>
+<blindrage>Blind Rage</blindrage>
+<blindragedesc>Akhorne may choose to re-roll the D6 when rolling for the Dauntless Skill</blindragedesc>
+<brutalblock>Brutal Block</brutalblock>
+<brutalblockdesc>Once per game, when Frank N Stein makes an Injury roll against an opponents a result of a Block Action, he may choose to add an additional +1 modifier to the Injury roll. This modifier may be applied after the roll has been made.</brutalblockdesc>
+<slashingnails>Slashing Nails</slashingnails>
+<slashingnailsdesc>Once per half, when Roxanna declares a Blitz Action, she gains the Claws SKill until the end of her activation.</slashingnailsdesc>
+<consummatepro>Consummate Professional</consummatepro>
+<consummateprodesc>Once per game, Griff may apply a +1 modifier to an Agility Test he has made. This modifier may be applied after the roll has been made..</consummateprodesc>
+<crushingblow>Crushing Blow</crushingblow>
+<crushingblowdesc>Once per game, when an opposition player is Knocked Down as the result of a Block Action performed by Zug, you may apply an additional +1 modifier to the Armour roll. This modifier may be applied after the roll has been made.</crushingblowdesc>
+<excuseme>Excuse Me, Are You a Zoat?</excuseme>
+<excusemedesc>Once per game, when Zolcath is activated he may select an opposition player within 3 squares. The selected player immediately becomes Distracted.</excusemedesc>
+<frenziedrush>Frenzied Rush</frenziedrush>
+<frenziedrushdesc>Once per half, when Glart declares a Blitz Action he may gain the Frenzy Skill until the end of his activation. Glart may not use the Grab Skill during a Turn in which he uses this special rule.</frenziedrushdesc>
+<furyotbg>Fury of the Blood God</furyotbg>
+<furyotbgdesc>Once per game, if Scyla rolls a 1 for his Unchannelled Fury roll after declaring a Block Action then, instead of applying the usual effects of Unchannelled Fury, Scyla may perform two Block actions instead. The first Block Action must be fully resolved, including the use of the Frenzy Skill, before the second one is performed.</furyotbgdesc>
+<ghostlyflames>Ghostly Flames</ghostlyflames>
+<ghostlyflamesdesc>Once per half, when Bryce makes the Chainsaw Attack Special Action as part of a Blitz Action, he may add +4 to the Armour roll against an opponent rather +3.</ghostlyflamesdesc>
+<goredbythebull>Gored by the Bull</goredbythebull>
+<goredbythebulldesc>Once per game, when Grashnak performs a Block Action as part of a Blitz Action, he may roll one additional Block Dice against the opposition player, regardless of their ST, to a maximum of three Block Dice. If Grashnak performs a second Block Action due to the Frenzy Skill, the second Block Action will also benefit from this rule.</goredbythebulldesc>
+<illbeback>I’ll Be Back!</illbeback>
+<illbebackdesc>The first time in a game that Kreek would be Sent-off as per the Secret Weapon Trait, he is not Sent-off and may instead continue as part of the game. Kreek's coach may not Argue the Call when Kreek uses this special rule.</illbebackdesc>
+<incorporeal>Incorporeal</incorporeal>
+<incorporealdesc>Once per game, when Gretchen is activated she can use this special rule. Until the end of her activation, Gretchen does not have to make Dodge rolls for leaving a square within an opposition player's Tackle Zone.</incorporealdesc>
+<indomitable>Indomitable</indomitable>
+<indomitabledesc>Once per game, when Karla successfully rolls to use her Dauntless Skill, she may increase her ST characteristic to double that of the target of the Block Action.</indomitabledesc>
+<kaboom>Kaboom!</kaboom>
+<kaboomdesc>Once per game, if an opposition player catches a bomb thrown by Bomber, you can choose to have it explode rather than the opposition player immediately attempting to throw it again.</kaboomdesc>
+<lordofchaos>Lord of Chaos</lordofchaos>
+<lordofchaosdesc>Once per game, when Lord Borak performs a Block Action he may re-roll a single Block Dice.</lordofchaosdesc>
+<maximumcarnage>Maximum Carnage</maximumcarnage>
+<maximumcarnagedesc>Once per game, after Max performs a Chainsaw Attack Special Action he may immediately perform another Chainsaw Attack Special Action that targets a different opposition player.</maximumcarnagedesc>
+<mesmerisingdance>Mesmerising Dance</mesmerisingdance>
+<mesmerisingdancedesc>Once per half, Eldril may re-roll the dice when performing a Hypnotic Gaze Special Action.</mesmerisingdancedesc>
+<oldpro>Old Pro</oldpro>
+<oldprodesc>Once per game, Helmut may use his Pro Skill to re-roll a single dice rolled as part of an Armour Roll.</oldprodesc>
+<pumpupthecrowd>Pump Up the Crowd</pumpupthecrowd>
+<pumpupthecrowddesc>Once per game, when Skrorg causes an opposition player to be removed as a Casualty as the result of a Block Action, Skrorg’s controlling coach gains one Team Re-rol until the end of the current Drive. If this Team Re-roll has not been used by the end of the Drive, it is lost.</pumpupthecrowddesc>
+<raidingparty>Raiding Party</raidingparty>
+<raidingpartydesc>Once per Drive, when Ivar begins his activation, he may select one Open team-mate within 5 squares. The selected player may immediately move 1 square, though they must end this move Marking an opposition player.</raidingpartydesc>
+<ram>Ram</ram>
+<ramdesc>Once per game, when an opposition player is Knocked Down as the result of a Block Action performed by Rumbelow, you may apply an additional +1 modifier to either the Armour or Injury roll. This modifier may be applied after the roll has been made.</ramdesc>
+<reliable>Reliable</reliable>
+<reliabledesc>If Deeproot makes a Fumbled Throw when performing a Throw Team-mate Action, the player that was being thrown will Bounce as normal but will automatically land safely.</reliabledesc>
+<savagemauling>Savage Mauling</savagemauling>
+<savagemaulingdesc>Once per game, when Wilhelm makes an Injury Roll against an opposing player, he may choose to re-roll the result.</savagemaulingdesc>
+<shottonothing>Shot to Nothing</shottonothing>
+<shottonothingdesc>Once per game, when Gloriel is activated she may use this special rule. If she does, Gloriel gains the Hail Mary Pass Skill until the end of her activation.</shottonothingdesc>
+<slayer>Slayer</slayer>
+<slayerdesc>Once per game, when an opposition Big Guy is Knocked Down as the result of a Block Action performed by Grim, you may apply an additional +1 modifier to either the Armour or Injury roll. This modifier may be applied after the roll has been made.</slayerdesc>
+<sneakiestotl>Sneakiest of the Lot</sneakiestotl>
+<sneakiestotldesc>If your team includes the Black Gobbo, then you may declare two Foul actions per Turn, rather than the usual one. However one of these Foul actions must be declared by the Black Gobbo himself.</sneakiestotldesc>
+<strongpassinggame>Strong Passing Game</strongpassinggame>
+<strongpassinggamedesc>Once per game, when Skrull performs a Pass Action he may modify the result of the Passing Ability Test by the value of his ST charactestic, to a maximum of 6.</strongpassinggamedesc>
+<theballista>The Ballista</theballista>
+<theballistadesc>Once per game, when Morg performs a Throw Team-mate Action, he may re-roll the Passing Ability test.</theballistadesc>
+<treacherous>Treacherous</treacherous>
+<treacherousdesc>Once per game, if Hakflem is adjacent to a team-mate who is in possession of the ball when he is activated, then Hakflem can choose to gain possession of the ball. If he does, then the team-mate will immediately be Knocked Down. This will not cause a turnover even if the team-mate suffers a casualty.</treacherousdesc>
+<workingintandem>Two for One</workingintandem>
+<workingintandemdesc>The Swift Twins must be hired as a pair. Additionally, if Lucien Performs a Block Action against an opposition player who is also Marked by Valen, Lucien may re-roll a single Block Dice.</workingintandemdesc>
+<workingintandem2desc>The Swift Twins must be hired as a pair.  Additionally, if Valen perfoms a Pass Action that targets a square containing Lucien, then Valen suffers no modifiers to the PA Test for the range of the Pass Action.</workingintandem2desc>
+<whirlingdervish>Whirling Dervish</whirlingdervish>
+<whirlingdervishdesc>Once per activation, Fungus may re-roll the D6 when determining which direction he moves in.</whirlingdervishdesc>
+<wisdomotwd>Wisdom of the White Dwarf</wisdomotwd>
+<wisdomotwddesc>Once per game, when Grombrindal is activated he may select one team-mate that is within 2 squares. The selected team-mate gains one of the following Skills until the end of turn: Break Tackle, Dauntless, Mighty Blow, Sure Feet.</wisdomotwddesc>
+<lookintomyeyes>Look into my Eyes</lookintomyeyes>
+<lookintomyeyesdesc>Once per game, if Boa starts his activation Marking an opposition player in possession of the ball, he may roll a D6. On a 1, nothing happens. On a 2+ the opposition player loses possession of the ball, Boa immediately gains possession of the ball and Boa’s activation immediately ends.</lookintomyeyesdesc>
+<balefulhex>Baleful Hex</balefulhex>
+<balefulhexdesc>One per game, at the beginning of Estelle’s activation, she may select an opposition player within 5 squares and roll a D6. On a 2+ the selected player becomes Distracted and cannot be activated during their team’s next Turn.</balefulhexdesc>
+<primalsavagery>Primal Savagery</primalsavagery>
+<primalsavagerydesc>Once per game, when Glotl fails an Animal Savagery roll, it may lash out at an opposition player rather than a team mate.</primalsavagerydesc>
+<watchout>Watch Out!</watchout>
+<watchoutdesc>The first time each Drive that Withergrasp is the target of a Block Action performed by an opposition player, he counts as having the Dodge Skill.</watchoutdesc>
+<yoink>Yoink!</yoink>
+<yoinkdesc>Once per game, when Scrappa attempts to Intercept a Pass Action he may roll a D6. On a 2+, Scrappa does not need to roll to Intercept; instead he will automatically Intercept the Pass Action and gains control of the ball.</yoinkdesc>
+<kickemwtd>Kick ’em While They’re Down!</kickemwtd>
+<kickemwtddesc>Once per game, Nobbla may use the Chainsaw Attack Special Action against a Prone or Stunned opposition player. This does not count as a Foul Action and so Nobbla cannot be Sent-off when using this special rule.</kickemwtddesc>
+<thinkingmanstroll>Thinking Man’s Troll</thinkingmanstroll>
+<thinkingmanstrolldesc>Once per half, Ripper may re-roll a single dice that was rolled either as a single dice roll, a multiple dice roll, or a dice pool, though this cannot be a dice that was rolled as part of an Armour Roll, Injury Roll or Casualty Roll.</thinkingmanstrolldesc>
+<putridregurgitation>Putrid Regurgitation</putridregurgitation>
+<putridregurgitationdesc>Once per half, Bilerot may use the Projectile Vomit Special Action. This may still be used even if Bilerot has already performed a Block Action this turn.</putridregurgitationdesc>
+<allyoucaneat>All You Can Eat</allyoucaneat>
+<allyoucaneatdesc>Once per game, Cindy may perform two Throw Bomb Special actions rather than one, though she must commit to doing so before making the first Action. If she does, immediately after performing the second Throw Bomb Special Action roll a D6. On a 1-3 Cindy is immediately Sent Off.</allyoucaneatdesc>
+<asneakypair>A Sneaky Pair</asneakypair>
+<asneakypairdesc>Dribl &amp; Drull must be hired as a pair. Additionally, whenever Dribl or Drull perform either a Foul Action or a Stab Special Action against an opposition player Marked by both Dribl &amp; Drull, they may apply a +1 modifier to the roll.</asneakypairdesc>
+<halflingluck>Halfling Luck</halflingluck>
+<halflingluckdesc>Once per game, Puggy may re-roll a single dice that was rolled either as a single dice roll, a multiple dice roll, or a dice pool, though this cannot be a dice that was rolled part of an Armour Roll, Injury Roll or Casualty Roll.</halflingluckdesc>
+<tastymorsel>Tasty Morsel</tastymorsel>
+<tastymorseldesc>Once per game, when Karina fails a Bloodlust roll, she may choose to bite an opposition player with a ST of 3 or lower as if they were a Thrall Lineman team-mate. Karina may not bite Star Players with this special rule.</tastymorseldesc>
+<dwarfenscourge>Dwarfen Scourge</dwarfenscourge>
+<dwarfenscourgedesc>Once per game, when an opposition player is Knocked Down as a result of a Block Action performed by Ivan, you may apply an additional +1 modifier to the Armour roll or Injury roll. If this is against a Dwarf player this may instead be a +2 modifier.</dwarfenscourgedesc>
+<staroftheshow>Star of the Show</staroftheshow>
+<staroftheshowdesc>Once per game, when Count Luthor scores a touchdown, his controlling coach may gain one team re-roll. If this re-roll has not been used by the end of the next drive, it is lost.</staroftheshowdesc>
+<masterassassin>Master Assassin</masterassassin>
+<masterassassindesc>Once per game, when Skitter performs a Stab Special Action, he may choose to re-roll the Armour roll.</masterassassindesc>
+<boundingleap>Bounding Leap</boundingleap>
+<boundingleapdesc>Once per game, after declaring that she will Leap but before rolling any dice, Rowana may choose to use this special rule. If she does, Rowana suffers no negative modifiers for the Agility test to Leap and may choose to re-roll the result.</boundingleapdesc>
+<catchoftheday>Catch of the Day</catchoftheday>
+<catchofthedaydesc>Once per half, if Rodney is Standing and begins his activation within 3 squares of a ball which is on the ground he may roll a D6. On a 1-2, nothing happens. On a 3+, Rodney immediately gains possession of the ball.</catchofthedaydesc>
+<blastin>Blastin' Solves Everything</blastin>
+<blastindesc>Once per half, at the start of his activation, Zzharg may select a Standing opposition player within 3 squares and roll a D6. On a 3+, the selected player is hit. On a 2, the opposing coach selects a player (from either team, but not Zzharg) within 3 squares of the originaly selected player to be hit instead. On a 1, Zzharg is hit instead. Make an Armour Roll for whichever player is hit. Zzharg's activation then immediately ends.</blastindesc>
+<unstoppablemomentum>Unstoppable Momentum</unstoppablemomentum>
+<unstoppablemomentumdesc>Whenever H'Thark performs a Block Action as part of a Blitz Action, he may re-roll a single Block Dice.</unstoppablemomentumdesc>
+<toxinconnoisseur>Toxin Connoisseur</toxinconnoisseur>
+<toxinconnoisseurdesc>Once per game, when Rashnak successfully breaks an opposition player's armour as a result os a Stab Special Action, you may apply an additional +1 modifier to the Injury roll. This modifier may be applied after the roll has been made.</toxinconnoisseurdesc>
+<swiftasthebreeze>Swift as the Breeze</swiftasthebreeze>
+<swiftasthebreezedesc>Once per game, Jordell can choose to pass a single Dodge, Leap or Rush test on a 2+, regardless of any modifiers.</swiftasthebreezedesc>
+<theflashingblade>The Flashing Blade</theflashingblade>
+<theflashingbladedesc>Once per game, at the start of his activation, Jeremiah may declare a Stab Special Action against an opposition player he is marking. After performing the Stab Special Action, Jeremiah may then perform a Move Action before his activation ends.</theflashingbladedesc>
+<viciousvines>Vicious Vines</viciousvines>
+<viciousvinesdesc>Once per half, when Maple declares a Block Action, he may do so against an opposition player who is 2 squares away, following all the normal rules for performing a Block Action, though he may not follow up.</viciousvinesdesc>
+<furiousoutburst>Furious Outburst</furiousoutburst>
+<furiousoutburstdesc>Once per half, so long as she is Standing at the start of her activation, Swiftvine can place herself adjacent to a Standing opposition player within 3 squares of her and immediately make a Stab Special Action against them. She may then place herself in an unoccupied square within 3 squares of her new position. Her activation then immediately ends. This counts as the team's Blitz Action for the turn.</furiousoutburstdesc>
+<savageblow>Savage Blow</savageblow>
+<savageblowdesc>Once per game, when Anqi performs a Block Action against an opposition player, he may choose to re-roll any number of the Block dice.</savageblowdesc>
+<quickbite>Quick Bite</quickbite>
+<quickbitedesc>Once per game, if Guffle is Marking an opposition player who catches the ball, he may immediately make an Armour Roll against that player. If the target's Armour is broken, Guffle immediately gains possession of the ball. No Turnover is caused as a result of using this special rule.</quickbitedesc>
+<blackink>Black Ink</blackink>
+<blackinkdesc>Once per game, at the start of any of his activations, Kiroth can select an opposition player he is Marking. The selected player becomes Distracted until they are next activated.</blackinkdesc>
+<dwarvengrit>Dwarven Grit</dwarvengrit>
+<dwarvengritdesc>Once per game, when Josef's armour is broken as a result of an Armour Roll, you may choose to have the Armour Roll re-rolled.</dwarvengritdesc>
+<krumpsmash>Krump and Smash</krumpsmash>
+<krumpsmashdesc>Once per game, when an opposition player is Knocked Down as a result of a Block Action performed by Varag, he may re-roll the Armour Roll.</krumpsmashdesc>
+<illcarryyou>I'll Carry You</illcarryyou>
+<illcarryyoudesc>Grak &amp; Crumbleberry must be hired as a pair. Additionally, once per half, if Grak begins his activation adjacent to Crumbleberry he may pick up Crumbleberry: temporarily remove Crumbleberry from the pitch. At the end of Grak's activation, place Crumbleberry in an unoccupied square adjacent to Grak.</illcarryyoudesc>
+<illcarryyou2desc>Grak &amp; Crumbleberry must be hired as a pair. Additionally, whilst Crumbleberry is being carried by Grak, Grak gains the Break Tackle and Dodge Skills.</illcarryyou2desc>
+<woodlandfury>Woodland Fury</woodlandfury>
+<woodlandfurydesc>Once per game, when Willow performs a Block Action that would result in her being Knocked Down, she can choose to re-roll a single Block Dice.</woodlandfurydesc>
+
+</en-GB>
