@@ -1298,6 +1298,7 @@ class HTMLOUT
 		$CP = count($fields);
 		?>
 		<!-- Following HTML from ./lib/class_htmlout.php sort_table-->
+		<div class='tableResponsive'>
 		<table class="common" <?php echo (array_key_exists('tableWidth', $extra)) ? "style='width: $extra[tableWidth];'" : '';?>>
 			<tr class="commonhead">
 				<td colspan="<?php echo $CP;?>"><b>
@@ -1434,10 +1435,12 @@ class HTMLOUT
 			<?php
 			}
 		echo "</table>\n";
+		echo "</div>\n";
 	}
 	
 	public static function generateEStable($obj) {
 		global $ES_fields, $lng;
+		echo "<div class='tableResponsive'>\n";
 		echo "<table>\n";
 		echo "<tr><td><i>".$lng->getTrn('common/stat')."</i></td>
 			<td><i>".$lng->getTrn('common/alltime')."</i></td>
@@ -1455,7 +1458,8 @@ class HTMLOUT
 			}
 			echo "<tr valign='top'><td>$ESf</td><td align='right'>".$obj->{"mv_$ESf"}."</td><td align='right'>".sprintf("%1.2f",$objAVG->{"mv_$ESf"})."</td><td style='padding-left:10px;'>".$def['desc']."</td></tr>\n";
 		}
-		echo "</table>";
+		echo "</table>\n";
+		echo "</div>\n";
 	}
 	
 	private static $helpBoxIdx = 0;

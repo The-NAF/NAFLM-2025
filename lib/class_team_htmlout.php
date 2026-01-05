@@ -44,12 +44,14 @@ class Team_HTMLOUT extends Team
 		global $DEA, $rules, $page;
 		$page = (isset($_GET['page']) && $_GET['page'] <= $pages) ? $_GET['page'] : 1; # Page 1 is default, of course.
 		$_url = "?section=teamlist&amp;";
+		echo "<div class='tableResponsive'>\n";
 		echo '<br><center><table>';
 		echo '<tr><td>';
 		echo $lng->getTrn('common/page').': '.implode(', ', array_map(create_function('$nr', 'global $page; return ($nr == $page) ? $nr : "<a href=\''.$_url.'page=$nr\'>$nr</a>";'), range(1,$pages)));
 		echo '</td></td>';
 		echo "<tr><td>".$lng->getTrn('common/teams').": $cnt</td></td>";
 		echo '</table></center><br>';
+		echo "</div>\n";
 		$queryGet .= ' LIMIT '.(($page-1)*T_HTML_TEAMS_PER_PAGE).', '.(($page)*T_HTML_TEAMS_PER_PAGE);
 
 		$teams = array();
@@ -432,7 +434,7 @@ class Team_HTMLOUT extends Team
 			}
 			$p->keywords   = '<small>'.$p->getKeywordsStr(true).'</small>';
 			$p->injs     = $p->getInjsStr(true);
-			$p->position = "<table style='border-spacing:0px;'><tr><td><img align='left' src='$p->icon' alt='player avatar'></td><td>".$lng->getTrn("position/".strtolower($lng->FilterPosition($p->position)))."</td></tr></table>";
+			$p->position = "<div class='tableResponsive'><table style='border-spacing:0px;'><tr><td><img align='left' src='$p->icon' alt='player avatar'></td><td>".$lng->getTrn("position/".strtolower($lng->FilterPosition($p->position)))."</td></tr></table></div>";
 			if ($DETAILED) {
 				$p->mv_cas = "$p->mv_bh/$p->mv_si/$p->mv_ki";
 				$p->mv_spp = "$p->mv_spp/$p->extra_spp";
@@ -813,7 +815,7 @@ class Team_HTMLOUT extends Team
 				$s->player_id = $s->star_id;
 				$s->team_id = $team->team_id;
 				$s->nr = 0;
-				$s->position = "<table style='border-spacing:0px;'><tr><td><i>Star&nbsp;player</i></td></tr></table>";
+				$s->position = "<div class='tableResponsive'><table style='border-spacing:0px;'><tr><td><i>Star&nbsp;player</i></td></tr></table></div>";
 				$s->setSkills(true);
 				$s->skills = '<small>'.$s->skills.'</small>';
 				$s->injs = '';
@@ -905,6 +907,7 @@ class Team_HTMLOUT extends Team
 		);
 		?>
 		<!-- Following HTML is from class_team_htmlout.php _roster -->
+		<div class='tableResponsive'>
 		<table class="text">
 			<tr>
 				<td style="width: 100%;"> </td>
@@ -925,6 +928,7 @@ class Team_HTMLOUT extends Team
 				?>
 			</tr>
 		</table>
+		</div>
 		<?php
 	}
 
@@ -1167,6 +1171,7 @@ class Team_HTMLOUT extends Team
 		<div class="boxTeamPage">
 			<div class="boxTitle<?php echo T_HTMLBOX_INFO;?>"><?php echo $lng->getTrn('profile/team/box_info/title');?></div>
 			<div class="boxBody">
+				<div class='tableResponsive'>
 				<table width="100%">
 					<tr>
 						<td><?php echo $lng->getTrn('common/coach');?></td>
@@ -1354,6 +1359,7 @@ class Team_HTMLOUT extends Team
 					}
 					?>
 				</table>
+				</div>
 			</div>
 		</div>
 
@@ -2459,6 +2465,7 @@ class Team_HTMLOUT extends Team
 						<h4 style="margin-top: 0;">Expensive Mistakes Table</h4>
 						<p><b>Current Treasury:</b> <?php echo $team->treasury/1000; ?>k</p>
 						
+						<div class='tableResponsive'>
 						<table border="1" cellpadding="5" cellspacing="0" style="margin: 10px 0; background: white; border-collapse: collapse;">
 							<tr style="background-color: #f0f0f0;">
 								<th>D6</th>
@@ -2489,6 +2496,7 @@ class Team_HTMLOUT extends Team
 							}
 							?>
 						</table>
+						</div>
 						
 						<div style="margin: 10px 0; padding: 10px; background: #d9edf7; border-left: 4px solid #31708f;">
 							<b>Outcomes:</b><br>
@@ -2675,6 +2683,7 @@ class Team_HTMLOUT extends Team
 		title('<div class="team-management-title">' . $lng->getTrn('common/about') . '</div>');
 		?>
 		<!-- Following HTML is from class_team_htmlout.php _about -->
+		<div class='tableResponsive'>
 		<table class='common'>
 
 			<tr class='commonhead'>
@@ -2769,6 +2778,7 @@ class Team_HTMLOUT extends Team
 				</td>
 			</tr>
 		</table>
+		</div>
 		<?php
 	}
 

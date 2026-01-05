@@ -90,6 +90,7 @@ class Calculator implements ModuleInterface
                     Player Skills
                 </div>
                 <div class="boxBody">
+                    <div class='tableResponsive'>
                     <table class="common" style="width:100%;">
                         <tr>
                             <td>
@@ -116,6 +117,7 @@ class Calculator implements ModuleInterface
                             </td>
                         </tr>
                     </table>
+                    </div>
                 </div>
             </div>
             
@@ -596,6 +598,7 @@ class Calculator implements ModuleInterface
                 Action Breakdown (Skill Rerolls Only)
             </div>
             <div class="boxBody" style="text-align: left;">
+                <div class='tableResponsive'>
                 <table class="common" style="width:100%;">
                     <tr>
                         <th>Action</th>
@@ -618,6 +621,7 @@ class Calculator implements ModuleInterface
                     </tr>
                     <?php endforeach; ?>
                 </table>
+                </div>
             </div>
         </div>
         
@@ -628,6 +632,7 @@ class Calculator implements ModuleInterface
                 Combined Probabilities
             </div>
             <div class="boxBody" style="text-align: left;">
+                <div class='tableResponsive'>
                 <table class="common" style="width:100%;">
                     <tr>
                         <th>Scenario</th>
@@ -689,6 +694,7 @@ class Calculator implements ModuleInterface
                     <?php endforeach; ?>
                     <?php endif; ?>
                 </table>
+                </div>
             </div>
         </div>
         

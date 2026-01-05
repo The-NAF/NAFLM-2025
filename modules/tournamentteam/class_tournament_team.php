@@ -3441,7 +3441,7 @@ function updateInducementsDisplay() {
     if (!container || currentRaceId < 0) return;
     
     var teamRules = currentTeamRules || [];
-    var html = '<table class="builder-table"><tr><th>Inducement</th><th>Cost</th><th>Quantity</th></tr>';
+    var html = '<div class="tableResponsive"><table class="builder-table"><tr><th>Inducement</th><th>Cost</th><th>Quantity</th></tr>';
     
     for (var indName in inducements) {
         var ind = inducements[indName];
@@ -3499,7 +3499,7 @@ function updateInducementsDisplay() {
         html += '</select></td></tr>';
     }
     
-    html += '</table>';
+    html += '</table></div>';
     container.innerHTML = html;
 }
 
@@ -3544,9 +3544,9 @@ function updateSidelineDisplay() {
 		apothCost = parseInt(ts.cost_apothecary) || apothCost;
 	}
     
-    var html = '<table style="width: 100%; border-collapse: collapse;"><tr>';
+    var html = '<div class="tableResponsive"><table style="width: 100%; border-collapse: collapse;"><tr>';
     html += '<td style="vertical-align: top; width: 50%;">';
-    html += '<table class="sideline-table" style="border-collapse: collapse;">';
+    html += '<div class="tableResponsive"><table class="sideline-table" style="border-collapse: collapse;">';
     
     // LEFT COLUMN
     // Re-rolls
@@ -3588,7 +3588,7 @@ function updateSidelineDisplay() {
         html += '</td></tr>';
     }
     
-    html += '</table></td>';
+    html += '</table></dic></td>';
     
     // RIGHT COLUMN
     html += '<td style="vertical-align: top; width: 50%; padding-left: 20px;">';
@@ -3616,7 +3616,7 @@ function updateSidelineDisplay() {
     }
     html += '</select></td></tr>';
     
-    html += '</table></td></tr></table>';
+    html += '</table></dic></td></tr></table></dic>';
     
     document.getElementById('sideline-content').innerHTML = html;
 }
@@ -3946,7 +3946,7 @@ function updateRosterDisplay() {
     
     rosterBox.style.display = '';
     
-    var html = '<table class="builder-table" style="font-size: 11px;">';
+    var html = '<div class="tableResponsive"><table class="builder-table" style="font-size: 11px;">';
     html += '<thead><tr>';
     html += '<th style="width: 30px;">Max Qty</th>';
     html += '<th style="width: 150px;">Position</th>';
@@ -4025,7 +4025,7 @@ function updateRosterDisplay() {
         html += '</tr>';
     }
     
-    html += '</tbody></table>';
+    html += '</tbody></table></dic>';
     
     rosterContent.innerHTML = html;
 }
@@ -4486,6 +4486,7 @@ table.builder-table td {
 
 <div class="section-box">
     <div class="section-title">Team Information</div>
+    <div class='tableResponsive'>
     <table>
         <tr>
             <td><b>Team Name:</b></td>
@@ -4524,6 +4525,7 @@ table.builder-table td {
 				</span>
 			</td>
     </table>
+    </div>
 </div>
 
 <<div class="section-box">
@@ -4535,10 +4537,12 @@ table.builder-table td {
         <p style="color: #666;">Select a race to configure tournament settings.</p>
     </div>
     <div id="tournament-settings-container" style="display: none;">
+        <div class='tableResponsive'>
         <table style="width: 100%;">
             <tr>
                 <td style="width: 28%; vertical-align: top; padding-right: 15px;">
                     <h4 style="margin: 10px 0 5px 0;">Treasury & Budget</h4>
+                    <div class='tableResponsive'>
                     <table>
                         <tr>
                             <td><b>Max Treasury Spend:</b></td>
@@ -4608,8 +4612,10 @@ table.builder-table td {
                             </td>
                         </tr>
                     </table>
+                    </div>
                     
                     <h4 style="margin: 15px 0 5px 0;">General Rules</h4>
+                    <div class='tableResponsive'>
                     <table>
                         <tr>
 							<td colspan="2">
@@ -4618,10 +4624,12 @@ table.builder-table td {
 							</td>
 						</tr>
                     </table>
+                    </div>
                 </td>
                 
                 <td style="width: 27%; vertical-align: top; padding-left: 15px; padding-right: 15px; border-left: 1px solid #ccc;">
                     <h4 style="margin: 10px 0 5px 0;">Skills</h4>
+                    <div class='tableResponsive'>
                     <table>
                         <tr>
                             <td colspan="2">
@@ -4705,10 +4713,12 @@ table.builder-table td {
                             </td>
                         </tr>
                     </table>
+                    </div>
                 </td>
                 
                 <td style="width: 45%; vertical-align: top; padding-left: 15px; border-left: 1px solid #ccc;">
                     <h4 style="margin: 10px 0 5px 0;">Stat Improvements</h4>
+                    <div class='tableResponsive'>
                     <table style="width: 100%;">
                         <tr>
                             <td colspan="3">
@@ -4829,6 +4839,7 @@ table.builder-table td {
                             </td>
                         </tr>
                     </table>
+                    </div>
 					<div style="margin-top: 20px; padding: 12px; background-color: #fff3cd; border: 2px solid #ffc107; border-radius: 5px; font-size: 11px;">
 						<b style="color: #856404;">⚠ Important:</b> 
 						<ul style="margin: 5px 0; padding-left: 20px;">
@@ -4839,6 +4850,7 @@ table.builder-table td {
                 </td>
             </tr>
         </table>
+        </div>
     </div>
 </div>
 
@@ -5388,6 +5400,7 @@ if (!empty($ts) && array_filter($ts)): // Only show if there are non-zero settin
 
 <div class="section-box">
     <div class="section-title">Players (Maximum 16 including stars)</div>
+    <div class='tableResponsive'>
     <table class="builder-table">
         <thead>
             <tr>
@@ -5602,6 +5615,7 @@ if (!empty($ts) && array_filter($ts)): // Only show if there are non-zero settin
             </tr>
         </tfoot>
     </table>
+    </div>
 </div>
 
 <div class="section-box">
@@ -5618,6 +5632,7 @@ if (!empty($ts) && array_filter($ts)): // Only show if there are non-zero settin
     </div>
     <div id="inducements-container">
 <?php if ($race_id >= 0): ?>
+        <div class='tableResponsive'>
         <table class="builder-table">
             <tr>
                 <th>Inducement</th>
@@ -5690,6 +5705,7 @@ if (!empty($ts) && array_filter($ts)): // Only show if there are non-zero settin
         }
 ?>
         </table>
+        </div>
 <?php else: ?>
         <p style="color: #666;">Select a race to see available inducements.</p>
 <?php endif; ?>

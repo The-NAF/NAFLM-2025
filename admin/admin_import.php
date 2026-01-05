@@ -115,13 +115,15 @@ When importing teams you will need to know the IDs of the respective coaches, ra
 You'll also need to know the IDs of the leagues which the teams belong to and likwise division IDs, if the league in question require teams to be tied to a divsions.<br>
 Use the IDs from the below table
 <?php title('League and divsision IDs'); ?>
-<table>
-<tr style='font-weight:bold;'><td>League</td><td>Division</td><td>League ID</td><td>Division ID</td><td>League requires team-division ties?</td></tr>
-<?php
-foreach ($divisions as $did => $desc) {
-    if ($leagues[$desc['f_lid']]['ring'] == Coach::T_RING_LOCAL_ADMIN) {
-        echo "<tr><td>".$leagues[$desc['f_lid']]['lname']."</td><td>$desc[dname]</td><td>$desc[f_lid]</td><td>$did</td><td>".(($leagues[$desc['f_lid']]['tie_teams']) ? 'Yes' : 'No')."</td></tr>";
-    }
-}
-?>
-</table>
+<div class='tableResponsive'>
+    <table>
+        <tr style='font-weight:bold;'><td>League</td><td>Division</td><td>League ID</td><td>Division ID</td><td>League requires team-division ties?</td></tr>
+        <?php
+        foreach ($divisions as $did => $desc) {
+            if ($leagues[$desc['f_lid']]['ring'] == Coach::T_RING_LOCAL_ADMIN) {
+                echo "<tr><td>".$leagues[$desc['f_lid']]['lname']."</td><td>$desc[dname]</td><td>$desc[f_lid]</td><td>$did</td><td>".(($leagues[$desc['f_lid']]['tie_teams']) ? 'Yes' : 'No')."</td></tr>";
+            }
+        }
+        ?>
+    </table>
+</div>

@@ -298,31 +298,33 @@ $T_LOCAL_RINGS = array(
                             return confirm('Are you sure you want to delete user "' + coachName + '"? This action cannot be undone.');
                         }
                     </script>
-                    <table>
-                        <?php 
-                            foreach($retiredCoaches as $retiredCoach) { 
-                                if($coach->mayManageObj(T_OBJ_COACH, $retiredCoach->coach_id)) {
-                                    $escapedName = htmlspecialchars($retiredCoach->name, ENT_QUOTES, 'UTF-8');
-                                ?>
-                                    <tr>
-                                        <td><?php echo $retiredCoach->name; ?></td>
-                                        <td><?php echo join(', ', $retiredCoach->getLeagues()); ?></td>
-                                        <td>
-                                            <form method="POST" action="handler.php?type=registration&form=activate" style="display:inline;">
-                                                <input type="hidden" name="activate_name" value="<?php echo $retiredCoach->name; ?>" />
-                                                <button type="submit">Activate</button>
-                                            </form>
-                                            <form method="POST" style="display:inline;" onsubmit="return confirmDelete('<?php echo $escapedName; ?>');">
-                                                <input type="hidden" name="name" value="<?php echo $retiredCoach->name; ?>" />
-                                                <input type="hidden" name="type" value="dc" />
-                                                <button type="submit" style="background-color:#d9534f;color:white;">Reject</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                <?php 
-                                }
-                            } ?>
-                    </table>
+                    <div class='tableResponsive'>
+                        <table>
+                            <?php 
+                                foreach($retiredCoaches as $retiredCoach) { 
+                                    if($coach->mayManageObj(T_OBJ_COACH, $retiredCoach->coach_id)) {
+                                        $escapedName = htmlspecialchars($retiredCoach->name, ENT_QUOTES, 'UTF-8');
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $retiredCoach->name; ?></td>
+                                            <td><?php echo join(', ', $retiredCoach->getLeagues()); ?></td>
+                                            <td>
+                                                <form method="POST" action="handler.php?type=registration&form=activate" style="display:inline;">
+                                                    <input type="hidden" name="activate_name" value="<?php echo $retiredCoach->name; ?>" />
+                                                    <button type="submit">Activate</button>
+                                                </form>
+                                                <form method="POST" style="display:inline;" onsubmit="return confirmDelete('<?php echo $escapedName; ?>');">
+                                                    <input type="hidden" name="name" value="<?php echo $retiredCoach->name; ?>" />
+                                                    <input type="hidden" name="type" value="dc" />
+                                                    <button type="submit" style="background-color:#d9534f;color:white;">Reject</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php 
+                                    }
+                                } ?>
+                        </table>
+                    </div>
                     <br />
                     <em>Admin:</em> Avoid activating users from other leagues.
                 <?php } ?>
@@ -350,11 +352,13 @@ $T_LOCAL_RINGS = array(
                 echo "<i>None</i>";
             }
             else {
+                echo "<div class='tableResponsive'>\n";
                 echo "<table><tr style='font-style:italic;'><td>League</td><td>Access level</td></tr>\n";
                 foreach ($_leagues as $lid => $desc) {
                     echo "<tr><td>$desc[lname]</td><td>".$T_LOCAL_RINGS[$desc['ring']]."</td></tr>\n";
                 }
                 echo "</table>";
+                echo "</div>\n";
             }
         }
         ?>

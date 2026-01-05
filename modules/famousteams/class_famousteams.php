@@ -326,6 +326,7 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
 {
     global $lng;
     $entries = self::getFT($node,$node_id);
+    echo "<! PROBLEM? !/>\n";
     echo "<table style='table-layout:fixed; width:".(count($entries) == 1 ? 50 : 100)."%;'><tr>"; # The percentage difference is a HTML layout fix.
     $i = 1;
     foreach ($entries as $e) {
@@ -344,6 +345,7 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
                 ?>
             </div>
             <div class="boxBody">
+                <div class='tableResponsive'>
                 <table class="common">
                     <tr>
                         <td align="left" valign="top">
@@ -373,6 +375,7 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
                         </td>
                     </tr>
                 </table>
+                </div>
             </div>
         </div>
         </td>

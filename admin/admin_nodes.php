@@ -81,12 +81,9 @@ title($lng->getTrn('menu/admin_menu/nodes'));
 ?>
 <!-- Following HTML from ./admin/admin_nodes.php -->
 <b>Please note:</b> When deleting any node (i.e. tournaments, divisions or leagues) a "syncAll()" re-synchronisation should be run afterwards from the <a href='index.php?section=admin&amp;subsec=cpanel'>NAFLM core panel</a>.
-<table>
     <?php
     if (in_array(T_NODE_TOURNAMENT, $_SHOW)) {
     ?>
-    <tr>
-        <td valign='top'>
         <div class="boxCommon">
             <div class="boxTitle<?php echo T_HTMLBOX_ADMIN;?>">Create tournament</div>
             <div class="boxBody">
@@ -120,8 +117,6 @@ title($lng->getTrn('menu/admin_menu/nodes'));
             </form>
             </div>
         </div>
-        </td>
-        <td valign='top'>
         <div class="boxCommon">
             <div class="boxTitle<?php echo T_HTMLBOX_ADMIN;?>">Modify tournament</div>
             <div class="boxBody">
@@ -183,10 +178,6 @@ title($lng->getTrn('menu/admin_menu/nodes'));
             </script>
             </div>
         </div>
-        </td>
-    </tr>
-    <tr>
-        <td valign='top' colspan='2'>
         <div class="boxCommon">
             <div class="boxTitle<?php echo T_HTMLBOX_ADMIN;?>">Tournament deletion</div>
             <div class="boxBody">
@@ -212,14 +203,10 @@ title($lng->getTrn('menu/admin_menu/nodes'));
             </form>
             </div>
         </div>
-        </td>
-    </tr>
     <?php
     }
     if (in_array(T_NODE_DIVISION, $_SHOW)) {
     ?>
-    <tr>
-        <td valign='top'>
         <div class="boxCommon">
             <div class="boxTitle<?php echo T_HTMLBOX_ADMIN;?>">Create division</div>
             <div class="boxBody">
@@ -236,8 +223,6 @@ title($lng->getTrn('menu/admin_menu/nodes'));
             </form>
             </div>
         </div>
-        </td>
-        <td valign='top'>
         <div class="boxCommon">
             <div class="boxTitle<?php echo T_HTMLBOX_ADMIN;?>">Modify division</div>
             <div class="boxBody">
@@ -254,10 +239,6 @@ title($lng->getTrn('menu/admin_menu/nodes'));
             </form>
             </div>
         </div>
-        </td>
-    </tr>
-    <tr>
-        <td valign='top' colspan='2'>
         <div class="boxCommon">
             <div class="boxTitle<?php echo T_HTMLBOX_ADMIN;?>">Delete division</div>
             <div class="boxBody">
@@ -273,14 +254,10 @@ title($lng->getTrn('menu/admin_menu/nodes'));
             </form>
             </div>
         </div>
-        </td>
-    </tr>
     <?php
     }
     if (in_array(T_NODE_LEAGUE, $_SHOW)) {
     ?>
-    <tr>
-        <td valign='top'>
         <div class="boxCommon">
             <div class="boxTitle<?php echo T_HTMLBOX_ADMIN;?>">Create league</div>
             <div class="boxBody">
@@ -297,8 +274,6 @@ title($lng->getTrn('menu/admin_menu/nodes'));
             </form>
             </div>
         </div>
-        </td>
-        <td valign='top'>
         <div class="boxCommon">
             <div class="boxTitle<?php echo T_HTMLBOX_ADMIN;?>">Modify league</div>
             <div class="boxBody">
@@ -320,10 +295,6 @@ title($lng->getTrn('menu/admin_menu/nodes'));
             </form>
             </div>
         </div>
-        </td>
-    </tr>
-    <tr>
-        <td valign='top' colspan='2'>
         <div class="boxCommon">
             <div class="boxTitle<?php echo T_HTMLBOX_ADMIN;?>">Delete league</div>
             <div class="boxBody">
@@ -339,9 +310,6 @@ title($lng->getTrn('menu/admin_menu/nodes'));
             </form>
             </div>
         </div>
-        </td>
-    </tr>
     <?php
     }
     ?>
-</table>

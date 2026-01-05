@@ -343,6 +343,7 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
         <div class="boxWide" style="width: 80%; margin: 20px auto 20px auto;">
             <div class="boxTitle<?php echo T_HTMLBOX_INFO;?>"><?php echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_PLAYER,$e->pid,false,false)."'>$e->name</a> ".$lng->getTrn('from', __CLASS__)." <a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$e->f_tid,false,false)."'>$e->f_tname</a>: $e->title";?></div>
             <div class="boxBody">
+                <div class='tableResponsive'>
                 <table class="common">
                     <tr>
                         <td align="left" valign="top">
@@ -372,6 +373,7 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
                         </td>
                     </tr>
                 </table>
+                </div>
             </div>
         </div>
         </td>

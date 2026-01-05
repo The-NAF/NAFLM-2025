@@ -322,6 +322,7 @@ function sec_main() {
             <div class='boxWide'>
                 <h3 class='boxTitle<?php echo T_HTMLBOX_STATS;?>'><?php echo $box['title'];?></h3>
                 <div class='boxBody'>
+                    <div class='tableResponsive'>
                     <table class="boxTable">
                         <?php
                         echo "<tr>\n";
@@ -350,6 +351,7 @@ function sec_main() {
                         }
                         ?>
                     </table>
+                    </div>
                     <?php
                     if (isset($box['infocus']) && $box['infocus']) {
                         echo "<hr>";
@@ -372,6 +374,7 @@ function sec_main() {
           <div class="boxWide">
               <h3 class='boxTitle<?php echo T_HTMLBOX_MATCH;?>'><?php echo $box['title'];?></h3>
               <div class='boxBody'>
+                  <div class='tableResponsive'>
                   <table class="boxTable">
                       <tr>
                           <td style="text-align: right;" width="50%"><i><?php echo $lng->getTrn('common/home');?></i></td>
@@ -403,6 +406,7 @@ function sec_main() {
                         }
                         ?>  
                     </table>
+                    </div>
                 </div>
             </div>
             <?php
@@ -417,6 +421,7 @@ function sec_main() {
             <div class="boxWide">
                 <h3 class='boxTitle<?php echo T_HTMLBOX_STATS;?>'><?php echo $box['title'];?></h3>
                 <div class='boxBody'>
+                    <div class='tableResponsive'>
                     <table class="boxTable">
                         <tr>
                             <td><i><?php echo $lng->getTrn('common/name');?></i></td>
@@ -441,6 +446,7 @@ function sec_main() {
                         }
                         ?>
                     </table>
+                    </div>
                 </div>
             </div>
             <?php
@@ -453,6 +459,7 @@ function sec_main() {
             <div class="boxWide">
                 <h3 class='boxTitle<?php echo T_HTMLBOX_STATS;?>'><?php echo $box['title'];?></h3>
                 <div class='boxBody'>
+                    <div class='tableResponsive'>
                     <table class="boxTable">
                         <?php
                         $head = array_pop($events);
@@ -494,6 +501,7 @@ function sec_main() {
                         }
                         ?>
                     </table>
+                    </div>
                 </div>
             </div>
             <?php
@@ -614,14 +622,17 @@ function _infocus($teams) {
             </div>
             <div id="inFocusContent<?php echo $_INFOCUSCNT;?>">
                 <div class="inFocus">
+                    <div class='tableResponsive'>
                     <table>
                         <tr><td class="leftContentTd"><?php echo $lng->getTrn('common/coach'); ?></td><td><?php echo $team->f_cname; ?></td></tr>
                         <tr><td class="leftContentTd"><?php echo $lng->getTrn('common/race'); ?></td><td><?php echo $team->f_rname; ?></td></tr>
                         <tr><td class="leftContentTd"><?php echo 'TV'; ?></td><td><?php echo (string)($team->tv / 1000); ?>k</td></tr>
                     </table>
+                    </div>
                 </div>
                 <div class="invisible">
                     <p><?php echo $lng->getTrn('common/stars'); ?></p>
+                    <div class='tableResponsive'>
                     <table>
                         <?php
                         foreach($starPlayers as $player) {
@@ -629,6 +640,7 @@ function _infocus($teams) {
                         }
                         ?>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -773,7 +785,7 @@ function sec_stars() {
     title($lng->getTrn('common/starlist'));
     ?>
     <div class="boxWide">
-        <div class="boxBody">
+        <div class="boxBody" id="starPlayersListBox">
             <div>
 		<?php	
 		$racestars = array(); 
@@ -949,8 +961,7 @@ function sec_skills() {
     title($lng->getTrn('common/skilllist'));
     ?>
     <div class="boxWide">
-        <div class="boxBody">
-		<div>
+        <div class="boxBody" id="skillslistbox">
 		<?php	
 		$skillslist = array();
 		$hatredFound = false;
@@ -1062,7 +1073,7 @@ function sec_skills() {
 			$skillslist[] = $tmp;
 		}
 		if ($animosityFound) {
-			$tmp = (object) array(d,
+			$tmp = (object) array(
 				'skillname' => $lng->getTrn('skilllist/animosityx'),
 				'skillcat' => 'Trait',
 				'elite' => 'N',
@@ -1087,7 +1098,6 @@ function sec_skills() {
 		);
 		?>
         </div>
-        </div>
     </div>
     <?php
 }
@@ -1106,6 +1116,7 @@ function sec_cheatsheet() {
 		  background-color: grey;
 		}
 		</style>
+		<div class='tableResponsive'>
 		<table border="1" cellpadding="6" cellspacing="0">
 			<tbody>
 
@@ -1305,6 +1316,7 @@ function sec_cheatsheet() {
 			</tbody>
 		</table>
 		</div>
+		</div>
         </div>
     </div>
     <?php
@@ -1326,6 +1338,7 @@ function sec_sequence() {
 		}
 		</style>
 		<p align="left"><strong>Pre-Game & Post-Game Sequence</strong></p>
+		<div class='tableResponsive'>
 		<table cellpadding="6">
 			<tr>
 			<th style="width: 117.422px;" align="left">Pre-Game</th>
@@ -1348,10 +1361,12 @@ function sec_sequence() {
 			<td style="width: 158.047px;">Expensive Mistakes</td>
 			</tr>
 		</table>
+		</div>
 
 		<br><br>
 
 		<p align="left"><strong>Expensive Mistakes Table</strong></p>
+		<div class='tableResponsive'>
 		<table border="1" cellpadding="5" cellspacing="0" style="margin: 10px 0; background: white; border-collapse: collapse;">
 							<tr style="background-color: #f0f0f0;">
 								<th>D6</th>
@@ -1383,19 +1398,23 @@ function sec_sequence() {
 							}
 							?>
 						</table>
+						</div>
 		<br>
 
 		<p align="left"><strong>Incident Results</strong></p>
+		<div class='tableResponsive'>
 		<table cellpadding="6">
 		  <tr><th align="left">Crisis Averted</th><td>No treasury lost</td></tr>
 		  <tr><th align="left">Minor Incident</th><td>D3 × 10k loss</td></tr>
 		  <tr><th align="left">Major Incident</th><td>Lose half of Treasury, rounded down to nearest 5k</td></tr>
 		  <tr><th align="left">Catastrophe</th><td>Lose all Treasury except 2D6 × 10k</td></tr>
 		</table>
+		</div>
 
 		<br><br>
 
 		<p align="left"><strong>Random Skill Table</strong></p>
+		<div class='tableResponsive'>
 		<table cellpadding="6">
 		  <tr>
 			<th align="left">1st D6</th>
@@ -1422,10 +1441,12 @@ function sec_sequence() {
 		  <tr><th align="left">5</th><td>Sprint</td><td>Sneaky Git</td><td>Taunt</td><td>Two Heads</td><td>Punt</td><td>Strong Arm</td></tr>
 		  <tr><th align="left">6</th><td>Sure Feet</td><td>Violent Innovator</td><td>Wrestle</td><td>Very Long Legs</td><td>Safe Pass</td><td>Thick Skull</td></tr>
 		</table>
+		</div>
 
 		<br><br>
 
 		<p align="left"><strong>Characteristic Improvement</strong></p>
+		<div class='tableResponsive'>
 		<table cellpadding="6">
 		  <tr>
 			<th align="left">D8</th>
@@ -1439,6 +1460,7 @@ function sec_sequence() {
 		  <tr><th align="left">7</th><td>AG or ST</td></tr>
 		  <tr><th align="left">8</th><td>Any</td></tr>
 		</table>
+		</div>
 
         </div>
         </div>
@@ -1455,6 +1477,7 @@ function sec_ptn() {
     <div class="boxWide">
         <div class="boxBody">
 		<div>
+		<div class='tableResponsive'>
 		<table style="border-collapse: collapse;" border="0" cellspacing="0" cellpadding="5">
 		<tbody>
 		<tr style="height: 15.0pt;">
@@ -1526,6 +1549,7 @@ function sec_ptn() {
 		</tr>
 		</tbody>
 		</table>
+		</div>
         </div>
         </div>
     </div>

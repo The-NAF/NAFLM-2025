@@ -357,6 +357,7 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
             <div class="boxTitle<?php echo T_HTMLBOX_INFO;?>"><?php echo "$tname prizes";?> <a href='javascript:void(0);' onClick="slideToggleFast('<?php echo 'trpr'.$trid;?>');">[+/-]</a></div>
             <div id="trpr<?php echo $trid;?>">
             <div class="boxBody">
+                <div class='tableResponsive'>
                 <table class="common" style='border-spacing: 10px;'>
                     <tr>
                         <td style='width:25%;'><b>Prize&nbsp;type</b></td>
@@ -376,6 +377,7 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
                     }
                     ?>
                 </table>
+                </div>
             </div>
             </div>
         </div>

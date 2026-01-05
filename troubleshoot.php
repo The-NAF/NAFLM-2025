@@ -6,6 +6,7 @@ title("OBBLM Troubleshooting");
 
 ?>
 <h1>Leagues</h1>
+<div class='tableResponsive'>
 <table>
     <thead>
         <th>League ID</th>
@@ -32,8 +33,10 @@ title("OBBLM Troubleshooting");
         ?>
     </tbody>
 </table>
+</div>
 
 <h1>Tournaments</h1>
+<div class='tableResponsive'>
 <table>
     <thead>
         <th>Tour ID</th>
@@ -78,6 +81,7 @@ title("OBBLM Troubleshooting");
         ?>
     </tbody>
 </table>
+</div>
 
 <?php
 HTMLOUT::frame_end();

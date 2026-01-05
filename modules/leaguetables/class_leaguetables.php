@@ -213,6 +213,7 @@ public static function showTables() {
 		// no conferences at all, or not for this league - normal format
 echo<<< EOQ
 		<div class='boxBody'>
+			<div class='tableResponsive'>
 			<table class="boxTable">
 EOQ;
 				$i = 0;
@@ -221,6 +222,7 @@ EOQ;
 				self::showUnplayedTeams($unplayedTeams, $i);
 echo<<< EOQ
 			</table>
+			</div>
 		</div>
 EOQ;
 	} else {
@@ -231,6 +233,7 @@ EOQ;
 echo<<< EOQ
 		<div class='boxWide'>
 			<h4 class='boxTitleConf'>$conf->name</h4>
+				<div class='tableResponsive'>
 				<table class="boxTable">
 EOQ;
 					$i = 0;
@@ -239,6 +242,7 @@ EOQ;
 					self::showMissingConferenceTeams($teams, $i, $conf);
 echo<<< EOQ
 				</table>
+				</div>
 		</div>
 EOQ;
 		}
@@ -249,6 +253,7 @@ EOQ;
 echo<<< EOQ
 		<div class='boxWide'>
 			<h4 class='boxTitleConf'>$title</h4>
+			<div class='tableResponsive'>
 			<table class="boxTable">
 EOQ;
 			$noConfTeam = array();
@@ -269,6 +274,7 @@ EOQ;
 			self::showUnplayedTeams($noConfUPTeam, $i);
 echo<<< EOQ
 			</table>
+			</div>
 		</div>
 EOQ;
 		}

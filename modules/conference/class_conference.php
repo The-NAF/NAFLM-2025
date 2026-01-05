@@ -560,6 +560,7 @@ echo<<< EOQ
 		<input name='tour_id' type='hidden' value='$tour_id' />
 		<input name='conf_id' id='conf_id' type='hidden' value='0' />
 	</form>
+	<div class='tableResponsive'>
 	<table class="boxTable">
 EOQ;
 	$confs = self::getConferencesForTour($tour->tour_id);
@@ -591,6 +592,7 @@ EOQ;
 	}
 echo<<< EOQ
 	</table>
+	</div>
 EOQ;
 }
 

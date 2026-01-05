@@ -94,6 +94,7 @@ private static function printList($team,$ALLOW_EDIT)
                 ?>
             </div>
             <div class="boxBody">
+                <div class='tableResponsive'>
                 <table class="common">
                     <tr>
                         <td align="left" valign="top">
@@ -148,6 +149,7 @@ private static function printList($team,$ALLOW_EDIT)
                         </td>
                     </tr>
                 </table>
+                </div>
             </div>
         </div>
         </td>

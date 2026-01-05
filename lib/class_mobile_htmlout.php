@@ -112,6 +112,7 @@ class Mobile_HTMLOUT {
         global $lng;
         ?>
         <div id="Teams">
+            <div class='tableResponsive'>
             <table id="Players">
                 <thead>
                     <tr>
@@ -136,10 +137,12 @@ class Mobile_HTMLOUT {
                     </tr>
                 </tbody>
             </table>
+            </div>
             <div>
                 <span class="miss-next-game"><?php echo $lng->getTrn('mobile/team/miss_next_game'); ?></span>, <span class="may-buy-new-skill"><?php echo $lng->getTrn('mobile/team/may_buy_new_skill'); ?></span>.
             </div>
             <div id="PlayerDialog" data-bind="with: playerDialogViewModel">
+                <div class='tableResponsive'>
                 <table>
                     <tbody>
                         <tr><td><?php echo $lng->getTrn('common/number'); ?>:</td><td class="data" data-bind="text: number"></td></tr>
@@ -167,6 +170,7 @@ class Mobile_HTMLOUT {
                         </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
         <?php
@@ -193,6 +197,7 @@ class Mobile_HTMLOUT {
         global $lng;
         ?>
         <div id="Games">
+            <div class='tableResponsive'>
             <table id="GamesTable">
                 <tbody>
                     <tr><td colspan="4"><h3><?php echo $lng->getTrn("common/recentmatches"); ?></h3></td></tr>
@@ -201,6 +206,7 @@ class Mobile_HTMLOUT {
                     <?php Mobile_HTMLOUT::outputMatchesRows($upcomingMatches, $selectedTeamId); ?>
                 </tbody>
             </table>
+            </div>
             <div>
                 <a href="index.php?mobile=1&section=matches&type=usersched"><?php echo $lng->getTrn('menu/matches_menu/usersched'); ?></a>
             </div>

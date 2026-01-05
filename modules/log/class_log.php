@@ -89,6 +89,7 @@ public static function logViewPage()
         fatal("Sorry. Only site administrators and commissioners are allowed to access this section.");
 
     title($lng->getTrn('name', 'LogSubSys'));
+    echo "<div class='tableResponsive'>\n";
     echo "<table style='width:100%;'>\n";
     echo "<tr><td><i>Date</i></td><td><i>Message</i></td></tr><tr><td colspan='2'><hr></td></tr>\n";
     $query = "SELECT * FROM log WHERE date > SUBDATE(NOW(), INTERVAL ".LOG_HIST_LENGTH." MONTH) ORDER BY date DESC";
@@ -98,6 +99,7 @@ public static function logViewPage()
         echo "<tr><td>".textdate($l->date)."</td><td>$l->msg</td></tr>\n";
     }
     echo "</table>\n";
+    echo "</div>\n";
 }
 
 }

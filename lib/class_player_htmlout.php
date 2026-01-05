@@ -121,6 +121,7 @@ class Player_HTMLOUT extends Player
 			<div class="boxPlayerPageInfo">
 				<div class="boxTitle<?php echo T_HTMLBOX_INFO;?>"><?php echo $lng->getTrn('profile/player/about');?></div>
 				<div class="boxBody">
+					<div class='tableResponsive'>
 					<table class="pbox">
 						<tr>
 							<td><b><?php echo $lng->getTrn('common/name');?></b></td>
@@ -307,6 +308,7 @@ class Player_HTMLOUT extends Player
 							<td><?php echo $p->mv_mvp; ?></td>
 						</tr>
 					</table>
+					</div>
 				</div>
 			</div>
 			<div class="boxCommon">
@@ -352,6 +354,7 @@ class Player_HTMLOUT extends Player
 			<div class="boxWide">
 				<div class="boxTitle<?php echo T_HTMLBOX_STATS;?>"><a href='javascript:void(0);' onClick="slideToggleFast('ach');"><b>[+/-]</b></a> &nbsp;<?php echo $lng->getTrn('common/ach');?></div>
 				<div class="boxBody" id="ach" style='display:none;'>
+					<div class='tableResponsive'>
 					<table class="common">
 						<tr>
 							<td><b><?php echo $lng->getTrn('common/type');?></b></td>
@@ -401,6 +404,7 @@ class Player_HTMLOUT extends Player
 						}
 						?>
 					</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -416,6 +420,7 @@ class Player_HTMLOUT extends Player
 			<div class="boxWide">
 				<div class="boxTitle<?php echo T_HTMLBOX_STATS;?>"><a href='javascript:void(0);' onClick="slideToggleFast('mbest');"><b>[+/-]</b></a> &nbsp;<?php echo $lng->getTrn('profile/player/best');?></div>
 				<div class="boxBody" id="mbest">
+					<div class='tableResponsive'>
 					<table class="common">
 						<tr>
 							<td><b><?php echo $lng->getTrn('common/type');?></b></td>
@@ -459,6 +464,7 @@ class Player_HTMLOUT extends Player
 						}
 						?>
 					</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -493,6 +499,7 @@ class Player_HTMLOUT extends Player
 			<div class="boxWide">
 				<div class="boxTitle<?php echo T_HTMLBOX_STATS;?>"><a href='javascript:void(0);' onClick="slideToggleFast('injhist');"><b>[+/-]</b></a> &nbsp;<?php echo $lng->getTrn('profile/player/injhist');?></div>
 				<div class="boxBody" id="injhist">
+					<div class='tableResponsive'>
 					<table class="common">
 						<tr>
 							<td><b><?php echo $lng->getTrn('common/injs');?></b></td>
@@ -534,6 +541,7 @@ class Player_HTMLOUT extends Player
 						}
 						?>
 					</table>
+					</div>
 				</div>
 			</div>
 		</div>

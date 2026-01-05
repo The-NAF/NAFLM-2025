@@ -130,6 +130,7 @@ function SendToPDF()
 -->
 <?php title('Inducements try-out');?>
 <form action="" method="post" name="InduceForm">
+<div class='tableResponsive'>
 <table> <!-- Star Players -->
 <?php 
 	if ($DEA[$t->f_rname]['other']['format'] <> 'SV') {
@@ -201,7 +202,9 @@ function SendToPDF()
         break;
         }
 ?>
-</table> <!-- End of Star Player Table -->
+</table>
+</div> <!-- End of Star Player Table -->
+<div class='tableResponsive'>
 <table> <!-- Mercenaries Table -->
     <tr>
         <td class="indtitle"><b>Mercenaries</b></td>
@@ -279,9 +282,12 @@ function SendToPDF()
         echo "      </SELECT></td>\n";
         echo "    </tr>\n";
 ?>
-</table>  <!--End of Mercenaries Table -->
+</table>
+</div>  <!--End of Mercenaries Table -->
+<div class='tableResponsive'>
 <table> <!-- Inducements Table -->
 <tr><td>
+<div class='tableResponsive'>
 <table>
     <tr>
         <td class="indtitle"><b>Inducement</b></td>
@@ -437,7 +443,9 @@ function SendToPDF()
 <td class="right" colspan="6"><br><input type="submit" name="Submit" value="Create PDF roster" onclick="return SendToPDF();"></td></tr>
 <tr><td><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$team_id,false,false); ?>"> <- Back to team page</a></td></tr>
 </table>
+</div>
 </td><td class="cent2">
+<div class='tableResponsive'>
 <table>
 <?php
         function kilo($str) {
@@ -451,10 +459,14 @@ function SendToPDF()
 ?>
 
 </table>
+
+</div>
 </td>
 </tr>
 
-</table> <!-- End of Inducements Table -->
+</table>
+
+</div> <!-- End of Inducements Table -->
 </form>
 <!--
 </div>

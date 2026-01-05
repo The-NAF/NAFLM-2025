@@ -64,12 +64,14 @@ class Match_HTMLOUT extends Match
 		$_url = "?section=matches&amp;type=tourmatches&amp;trid=$trid&amp;";
 		title(get_alt_col('tours', 'tour_id', $trid, 'name'));
 		echo '<!-- Following HTML from ./lib/class_match_htmlout.php tourMatches -->';
+		echo "<div class='tableResponsive'>\n";
 		echo '<center><table>';
 		echo '<tr><td>';
 		echo 'Page: '.implode(', ', array_map(create_function('$nr', 'global $page; return ($nr == $page) ? $nr : "<a href=\''.$_url.'page=$nr\'>$nr</a>";'), range(1,$pages)));
 		echo '</td></td>';
 		echo "<tr><td>    Matches: $cnt</td></td>";
 		echo '</table></center>';
+		echo "</div>\n";
 
 		$rnd = 0; # Initial round number must be lower than possible round numbers.
 		$cols = 7; # Common columns counter.
@@ -78,6 +80,7 @@ class Match_HTMLOUT extends Match
 			FROM matches, teams AS t1, teams AS t2 WHERE f_tour_id = $trid AND team1_id = t1.team_id AND team2_id = t2.team_id
 			ORDER BY round $ROUND_SORT_DIR, date_played DESC, date_created ASC LIMIT ".(($page-1)*self::T_HTML_MATCHES_PER_PAGE).', '.(($page)*self::T_HTML_MATCHES_PER_PAGE);
 		$result = mysql_query($query);
+		echo "<div class='tableResponsive'>\n";
 		echo "<table class='tours'>\n";
 		while ($m = mysql_fetch_object($result)) {
 			if ($m->round != $rnd) {
@@ -137,6 +140,7 @@ class Match_HTMLOUT extends Match
 			<?php
 		}
 		echo "</table>\n";
+		echo "</div>\n";
 	}
 
 	public static function tours() {
@@ -586,6 +590,7 @@ class Match_HTMLOUT extends Match
 
 		?>
 		<!-- Following HTML from ./lib/class_match_htmlout.php report -->
+		<div class='tableResponsive'>
 		<table>
 		<tr><td></td><td style='text-align: right;'><i><?php echo $lng->getTrn('common/home');?></i></td><td>&mdash;</td><td style='text-align: left;'><i><?php echo $lng->getTrn('common/away');?></i></td></tr>
 		<tr><td><b><?php echo $lng->getTrn('common/teams');?></b>:</td><td style='text-align: right;'><?php echo "$teamUrl1</td><td> &mdash; </td><td style='text-align: left;'>$teamUrl2";?></td></tr>
@@ -637,9 +642,11 @@ class Match_HTMLOUT extends Match
 		}
 	?>
 		</table>
+		</div>
 		<br>
 		<?php echo "<b><a TARGET='_blank' href='".DOC_URL_GUIDE."'>".$lng->getTrn('common/needhelp')."</a></b><br><br>"; ?>
 		<form method="POST" enctype="multipart/form-data">
+			<div class='tableResponsive'>
 			<table class="common">
 				<tr class='commonhead'><td colspan="<?php echo $CP;?>"><b><?php echo $lng->getTrn('matches/report/info');?></b></td></tr>
 				<tr><td class='seperator' colspan='<?php echo $CP;?>'></td></tr>
@@ -709,6 +716,7 @@ class Match_HTMLOUT extends Match
 				}
 				?>
 			</table>
+			</div>
 
 			<?php
 			$playerFields = array_merge($T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_INJ, $T_MOUT_HAT);
@@ -720,6 +728,7 @@ class Match_HTMLOUT extends Match
 				}
 			foreach (array(1 => $team1, 2 => $team2) as $id => $t) {
 				?>
+				<div class='tableResponsive'>
 				<table class='common'>
 				<tr><td class='seperator' colspan='<?php echo $CPP;?>'></td></tr>
 				<tr class='commonhead'><td colspan='<?php echo $CPP;?>'>
@@ -775,17 +784,26 @@ class Match_HTMLOUT extends Match
 				echo "</table>\n";
 				echo "<br>\n";
 				if (!$NORMSTAT) {
-				?><table class="text"><tr><td style="width: 100%;"></td><?php
-					if (1) {
-						?>
-						<td style="background-color: <?php echo COLOR_HTML_MNG;     ?>;"><font color='black'><b>&nbsp;MNG&nbsp;</b></font></td>
-						<td style="background-color: <?php echo COLOR_HTML_RETIRED;     ?>;"><font color='black'><b>&nbsp;RET&nbsp;</b></font></td>
-						<td style="background-color: <?php echo COLOR_HTML_JOURNEY; ?>;"><font color='black'><b>&nbsp;Journeyman&nbsp;</b></font></td>
-						<td style="background-color: <?php echo COLOR_HTML_JOURNEY_USED; ?>;"><font color='black'><b>&nbsp;Used&nbsp;journeyman&nbsp;</b></font></td>
-						<td style="background-color: <?php echo COLOR_HTML_NEWSKILL;?>;"><font color='black'><b>&nbsp;New&nbsp;skill&nbsp;available&nbsp;</b></font></td>
-						<?php
-					}
-				?></tr></table><?php
+				?>
+					<div class="tableResponsive">
+						<table class="text">
+							<tr>
+								<td style="width: 100%;"></td>
+								<?php
+									if (1) {
+										?>
+										<td style="background-color: <?php echo COLOR_HTML_MNG;     ?>;"><font color='black'><b>&nbsp;MNG&nbsp;</b></font></td>
+										<td style="background-color: <?php echo COLOR_HTML_RETIRED;     ?>;"><font color='black'><b>&nbsp;RET&nbsp;</b></font></td>
+										<td style="background-color: <?php echo COLOR_HTML_JOURNEY; ?>;"><font color='black'><b>&nbsp;Journeyman&nbsp;</b></font></td>
+										<td style="background-color: <?php echo COLOR_HTML_JOURNEY_USED; ?>;"><font color='black'><b>&nbsp;Used&nbsp;journeyman&nbsp;</b></font></td>
+										<td style="background-color: <?php echo COLOR_HTML_NEWSKILL;?>;"><font color='black'><b>&nbsp;New&nbsp;skill&nbsp;available&nbsp;</b></font></td>
+										<?php
+									}
+								?>
+							</tr>
+						</table>
+					</div>
+				<?php
 				}
 
 				// Add raised zombies
@@ -794,9 +812,11 @@ class Match_HTMLOUT extends Match
 					echo "<hr style='width:200px;float:left;'><br>
 					<b>Raised Zombie?:</b> <input type='checkbox' name='t${id}zombie' value='1' onclick='slideToggleFast(\"t${id}zombie\");'><br>\n";
 					echo "<div id='t${id}zombie' style='display:none;'>\n";
+					echo "<div class='tableResponsive'>\n";
 					echo "<table class='common'>\n";
 					self::_print_player_row("t${id}zombie", 'Raised Zombie', '&mdash;', 'Zombie Lineman', false, array(), $DIS);
 					echo "</table>\n";
+					echo "</div>\n";
 					echo "</div>\n";
 				}
 				// Add raised skeletons
@@ -805,9 +825,11 @@ class Match_HTMLOUT extends Match
 					echo "<hr style='width:200px;float:left;'><br>
 					<b>Raised Skeleton?:</b> <input type='checkbox' name='t${id}skeleton' value='1' onclick='slideToggleFast(\"t${id}skeleton\");'><br>\n";
 					echo "<div id='t${id}skeleton' style='display:none;'>\n";
+					echo "<div class='tableResponsive'>\n";
 					echo "<table class='common'>\n";
 					self::_print_player_row("t${id}skeleton", 'Raised skeleton', '&mdash;', 'Skeleton Lineman', false, array(), $DIS);
 					echo "</table>\n";
+					echo "</div>\n";
 					echo "</div>\n";
 				}
 				// Add raised rotters
@@ -817,9 +839,11 @@ class Match_HTMLOUT extends Match
 					echo "<hr style='width:200px;float:left;'><br>
 					<b>Raised Rotter?:</b>  <input type='checkbox' name='t${id}rotter' value='1' onclick='slideToggleFast(\"t${id}rotter\");'><br>\n";
 					echo "<div id='t${id}rotter' style='display:none;'>\n";
+					echo "<div class='tableResponsive'>\n";
 					echo "<table class='common'>\n";
 					self::_print_player_row("t${id}rotter", "Raised Rotter Journeyman", '&mdash;', 'Rotter Lineman', false, array(), $DIS);
-					echo "</table></div>\n";	
+					echo "</table></div>\n";
+					echo "</div>\n";	
 				}
 				// Add summoned thrall
 				global $racesMayRaiseThrall;
@@ -827,12 +851,15 @@ class Match_HTMLOUT extends Match
 					echo "<hr style='width:200px;float:left;'><br>
 					<b>Summoned Thrall?:</b>  <input type='checkbox' name='t${id}thrall' value='1' onclick='slideToggleFast(\"t${id}thrall\");'><br>\n";
 					echo "<div id='t${id}thrall' style='display:none;'>\n";
+					echo "<div class='tableResponsive'>\n";
 					echo "<table class='common'>\n";
 					self::_print_player_row("t${id}thrall", "Summoned Thrall", '&mdash;', 'Thrall Lineman', false, array(), $DIS);
-					echo "</table></div>\n";	
+					echo "</table></div>\n";
+					echo "</div>\n";	
 				}
 				?>
 
+				<div class='tableResponsive'>
 				<table style='border-spacing: 0px 10px;'>
 					<tr><td align="left" valign="top">
 						<b>Star Players</b>:
@@ -851,17 +878,22 @@ class Match_HTMLOUT extends Match
 						<b>Mercenaries</b>: <input type='button' id="addMercsBtn_<?php echo $id;?>" value="<?php echo $lng->getTrn('common/add');?>" onClick="addStarMerc(<?php echo "$id, ".ID_MERCS;?>);" <?php echo $DIS; ?>>
 					</td></tr>
 				</table>
+				</div>
 
+				<div class='tableResponsive'>
 				<table class='common' id='<?php echo "starsmercs_$id";?>'>
 				</table>
+				</div>
 				<?php
 			}
 			?>
+			<div class='tableResponsive'>
 			<table class='common'>
 				<tr><td class='seperator' colspan='13'></td></tr>
 				<tr class='commonhead'><td colspan='13'><b><?php echo $lng->getTrn('matches/report/summary');?></b></td></tr>
 				<tr><td colspan='13'><textarea name='summary' rows='10' cols='100' <?php echo $DIS . ">" . $m->getText(); ?></textarea></td></tr>
 			</table>
+			</div>
 			<br>
 			<center>
 				<input type="submit" name='button' value="<?php echo $lng->getTrn('common/save');?>" <?php echo $DIS; ?>>
@@ -1008,10 +1040,11 @@ class Match_HTMLOUT extends Match
 		title('ES submission');
 		echo "<!-- Following HTML from ./lib/class_match_htmlout.php report_ES -->";
 		echo "<center><a href='index.php?section=matches&amp;type=report&amp;mid=$mid'>".$lng->getTrn('common/back')."</a></center>\n";
-		HTMLOUT::helpBox('<b>Field explanations</b><br><table>'.implode("\n", array_map(create_function('$f,$def', 'return "<tr><td>$f</td><td>$def[desc]</td></tr>";'), array_keys($ES_fields), array_values($ES_fields))).'</table>', '<b>'.$lng->getTrn('common/needhelp').'</b>');
+		HTMLOUT::helpBox('<b>Field explanations</b><br><div class="tableResponsive"><table>'.implode("\n", array_map(create_function('$f,$def', 'return "<tr><td>$f</td><td>$def[desc]</td></tr>";'), array_keys($ES_fields), array_values($ES_fields))).'</table></div>', '<b>'.$lng->getTrn('common/needhelp').'</b>');
 		echo "<form method='POST'>\n";
 		foreach ($players as $teamPlayers) {
 			echo "<br>\n";
+			echo "<div class='tableResponsive'>\n";
 			echo "<table style='font-size: small;'>\n";
 			$COLSPAN = count($teamPlayers)+1; # +1 for field desc.
 			$tid = $teamPlayers[0]['f_tid'];
@@ -1032,6 +1065,7 @@ class Match_HTMLOUT extends Match
 				))."</tr>\n";
 			}
 			echo "</table>\n";
+			echo "</div>\n";
 		}
 		echo "<br><br><input type='submit' name='submit' value='".$lng->getTrn('common/submit')."'>\n";
 		echo "<input type='hidden' name='ES_submitted' value='1'>\n";

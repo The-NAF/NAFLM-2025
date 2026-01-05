@@ -105,6 +105,7 @@ protected static function _compare($tid1, $tid2)
       <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
       -->
     <center>
+    <div class='tableResponsive'>
     <table style='width:70%; '>
         <tr><td style='width:120px;'> </td>
             <td><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$tid1,false,false);?>"><b><?php echo $t1->name;?></b></a></td>
@@ -143,6 +144,7 @@ protected static function _compare($tid1, $tid2)
             <td><?php self::_bar($t2->mv_intcpt/self::$T_MAX_INT *100, $t2->mv_intcpt, $t2->mv_intcpt/self::$T_MAX_INT *100);?></td>
         </tr>
     </table>
+    </div>
     </center>
     <br><br>
     The scales of the bar graphs are static and are relative to what is considered "much" of a given team property.

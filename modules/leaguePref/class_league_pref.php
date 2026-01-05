@@ -399,6 +399,7 @@ public static function showLeaguePreferences() {
             <form method="POST">
                 <input type="hidden" name="lid" value="<?php echo $l_pref->lid; ?>" />
                 <input type="hidden" name="existing" value="<?php echo $l_pref->existing; ?>" />
+                <div class='tableResponsive'>
                 <table width="100%" border="0">
                     <tr title="<?php echo $league_name_help; ?>">
                         <td>
@@ -617,6 +618,7 @@ public static function showLeaguePreferences() {
                         </td>
                     </tr>
                 </table>
+                </div>
             </form>
 		</div>
 	</div>

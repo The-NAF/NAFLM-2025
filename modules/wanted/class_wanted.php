@@ -349,6 +349,7 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
             ?>
             </div>
             <div class="boxBody">
+                <div class='tableResponsive'>
                 <table class="common">
                     <tr>
                         <td colspan="2" align="left" valign="top">
@@ -392,6 +393,7 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
                         </td>
                     </tr>
                 </table>
+                </div>
             </div>
         </div>
         </td>

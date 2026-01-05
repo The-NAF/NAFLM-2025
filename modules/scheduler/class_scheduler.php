@@ -784,6 +784,7 @@ public static function apa_generate_schedule($draw) {
 	?>
 	<div class="boxBody">
 	<?php 
+	echo "<div class='tableResponsive'>\n";
 	echo "<table class='tours'>\n";
 	foreach($schedule as $rnd => $value) {
         $round = '';
@@ -834,6 +835,7 @@ public static function apa_generate_schedule($draw) {
 		}
 	}
 	?></table>
+	</div>
 	</div></div><?php 
 }
 

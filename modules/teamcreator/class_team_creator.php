@@ -832,6 +832,7 @@ EOQ;
 		<input type="hidden" id="action" name="action" value="create" />
 		<input type="hidden" id="raceid" name="raceid" value="" />
 		<div class='boxWide'>
+		<div class='tableResponsive'>
 		<table class="common"><tr><td>
 		<b>$txtRaceSelectTitle</b>: <select id="rid" name="rid" onchange="changeRace(this.options[this.selectedIndex].value)">
 EOQ;
@@ -918,6 +919,7 @@ EOQ;
 		</tr></table>
 		</div>
 		<div class="boxWide">
+			<div class='tableResponsive'>
 			<table class="common" id="teamTable">
 				<tr class="commonhead">
 					<th>$txtPos</th>
@@ -935,6 +937,7 @@ EOQ;
 					<th>$txtSubtotal</th>
 				</tr>
 			</table>
+			</div>
 		</div>
 		</form>
 EOQ;

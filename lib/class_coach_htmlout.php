@@ -49,11 +49,15 @@ class Coach_HTMLOUT extends Coach
 		$page = (isset($_GET['page']) && $_GET['page'] <= $pages) ? $_GET['page'] : 1; # Page 1 is default, of course.
 		$_url = "?section=coachlist&amp;";
 		echo '<br><center><table>';
+		echo "<div class='tableResponsive'>\n";
+		echo "<table>\n";
 		echo '<tr><td>';
 		echo $lng->getTrn('common/page').': '.implode(', ', array_map(create_function('$nr', 'global $page; return ($nr == $page) ? $nr : "<a href=\''.$_url.'page=$nr\'>$nr</a>";'), range(1,$pages)));
 		echo '</td></td>';
 		echo "<tr><td>".$lng->getTrn('common/coaches').": $cnt</td></td>";
-		echo '</table></center><br>';
+		echo '</table>\n';
+		echo "</div>\n";
+		echo '</center><br>';
 		$queryGet .= ' LIMIT '.(($page-1)*T_HTML_COACHES_PER_PAGE).', '.(($page)*T_HTML_COACHES_PER_PAGE);
 		
 		$coaches = array();
@@ -249,13 +253,22 @@ class Coach_HTMLOUT extends Coach
 		echo "<br><br>";
 		?>
 		<!-- Following HTML from .lib/class_coach_htmlout.php -->
-		<table class="common"><tr class="commonhead"><td><b><?php echo $lng->getTrn('cc/coach_info');?></b></td></tr></table>
+		<div class='tableResponsive'>
+		<table class="common">
+			<tr class="commonhead">
+				<td>
+					<b><?php echo $lng->getTrn('cc/coach_info');?></b>
+				</td>
+			</tr>
+		</table>
+		</div>
 		<br>
 		<?php
 		echo $lng->getTrn('cc/note_persinfo');
 		echo "<br><br>";
 		if (is_object($coach) && !$ALLOW_EDIT) { # Logged in but not viewing own coach page.
 			?>
+			<div class='tableResponsive'>
 			<table>
 				<tr>
 					<td>ID:</td>
@@ -278,11 +291,13 @@ class Coach_HTMLOUT extends Coach
 					<td><?php echo empty($this->mail) ? '<i>'.$lng->getTrn('common/none').'</i>' : $this->mail?></td>
 				</tr>
 			</table>
+			</div>
 			<br>
 			<?php
 		}
 		if ($ALLOW_EDIT) {
 			?>
+			<div class='tableResponsive'>
 			<table class="common" style="border-spacing:5px; padding:20px;">
 				<tr><td colspan='4'>ID: <?php echo $this->coach_id;?></td></tr>
 				<tr>
@@ -367,10 +382,12 @@ class Coach_HTMLOUT extends Coach
 					</form>
 				</tr>
 			</table>
+			</div>
 			<?php
 		}
 		?>
 
+		<div class='tableResponsive'>
 		<table class='common'>
 			<tr class='commonhead'>
 				<td><b><?php echo $lng->getTrn('cc/photo');?></b></td>
@@ -405,6 +422,7 @@ class Coach_HTMLOUT extends Coach
 				</td>
 			</tr>
 		</table>
+		</div>
 		<?php
 	}
 
@@ -416,6 +434,7 @@ class Coach_HTMLOUT extends Coach
 			<div class="boxCoachPage">
 				<h3 class='boxTitle1'><?php echo $lng->getTrn('common/general'); ?></h3>
 				<div class='boxBody'>
+					<div class='tableResponsive'>
 					<table class="boxTable">
 					<?php
 					echo "<tr><td>Played</td><td>$this->mv_played</td></tr>\n";
@@ -448,11 +467,13 @@ class Coach_HTMLOUT extends Coach
 					echo "<tr><td>".$lng->getTrn('profile/coach/avgteam_ff')."</td><td>$row[avg_ff]</td></tr>\n";
 					?>
 					</table>
+					</div>
 				</div>
 			</div>
 			<div class="boxCoachPage">
 				<h3 class='boxTitle1'><?php echo $lng->getTrn('common/ach'); ?></h3>
 				<div class='boxBody'>
+					<div class='tableResponsive'>
 					<table class="boxTable">
 					<?php
 					$stats = array(
@@ -480,6 +501,7 @@ class Coach_HTMLOUT extends Coach
 					}
 					?>
 					</table>
+					</div>
 				</div>
 			</div>
 		</div>

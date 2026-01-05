@@ -65,6 +65,7 @@ public static function main($argv) {
         <div class="boxWide">
             <div class="boxTitle<?php echo T_HTMLBOX_INFO;?>"><?php echo $lng->getTrn($d, __CLASS__); ?></div>
             <div class="boxBody">
+                <div class='tableResponsive'>
                 <table class="common">
                 <?php
                 if (empty($matches)) {
@@ -126,6 +127,7 @@ public static function main($argv) {
                 }
                 ?>
                 </table>
+                </div>
             </div>
         </div>
         <?php
