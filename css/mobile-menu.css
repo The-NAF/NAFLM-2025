@@ -21,7 +21,7 @@ display: none !important;
         margin: 15px 0 0 160px;
     }
     body, td, th, input, select, textarea {
-        font-size: 16px;
+        font-size: 12px;
     }
     /* help with table overflow */
     div.tableResponsive {
@@ -29,7 +29,7 @@ display: none !important;
     }
     /* table sorting "buttons" */
     table tbody a {
-        font-size: 16px;
+        font-size: 12px;
         padding: 5px;
     }
     /* main page adjustments */
@@ -136,7 +136,7 @@ display: none !important;
     ul.css3menu1 li {
         border-bottom: 1px solid #555;
         display: block !important;
-        width: 100%;
+        width: 100% !important;
         white-space: normal;
     }
     
@@ -152,12 +152,21 @@ display: none !important;
         border: none !important;
         line-height: 20px !important;
     }
+    
+    ul.topmenu > li > a {
+        height: auto;
+    }
 
     ul.css3menu1 a:hover {
         background: #555 !important;
     }
 
     /* Submenu Styles for Mobile */
+    /* First submenu elevate to first level */
+    ul.css3menu1>li:nth-of-type(1)>ul {
+        display: block !important;
+        position: static;
+    }
     ul.css3menu1 ul {
         display: none !important;
         position: absolute;
