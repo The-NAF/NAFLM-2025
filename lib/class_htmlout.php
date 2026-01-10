@@ -1252,7 +1252,6 @@ class HTMLOUT
 		</ul>
 	</li>  
 
-	<li><a href="index.php?section=about">About NAFLM</a></li>
 	<?php
 		if (Module::isRegistered('Search')) {
 			?><li><a href="handler.php?type=search"><?php
