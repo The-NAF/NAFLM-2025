@@ -13,25 +13,36 @@ div.statsSelection {
 
 /* Mobile Styles */
 @media (max-width: 500px) {
-    /* font adjustments */
+    /* banner adjustments */
+    body {
+        margin: 0;
+    }
+
+    div.banner {
+        background-position-x: -2px;
+        border: none;
+        margin: 0;
+    }
     div.banner > br {
         display: none;
     }
     f1 {
         display: block !important;
-        position: absolute;
+        position: relative;
+        width: calc(100% - 158px);
         top: 31px;
-        left: 170px;
+        left: 158px;
         line-height: 38px;
         margin: 0;
         padding: 0px;
     }
     div.banner > f2 {
-        position: absolute;
-        top: 95px;
-        left: 170px;
+        position: relative;
+        display: block;
+        top: 10px;
+        left: 158px;
         line-height: normal;
-        width: 55%;
+        width: calc(100% - 158px);
         margin: 0;
     }
     body, td, th, input, select, textarea {
@@ -135,7 +146,9 @@ div.statsSelection {
     .hamburger::after {
         top: 35px;
     }
-
+    div.menu {
+        border: none;
+    }
     /* Menu Styles */
     ul.css3menu1 {
         display: none !important;
@@ -229,6 +242,6 @@ div.statsSelection {
 
 @media (max-width: 470px) {
     f1 {
-        top: 12px;
+        top: 1px;
     }
 }
