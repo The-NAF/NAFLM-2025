@@ -29,7 +29,7 @@ div.statsSelection {
     f1 {
         display: block !important;
         position: relative;
-        width: calc(100% - 158px);
+        width: calc(100% - 212px);
         top: 31px;
         left: 158px;
         line-height: 38px;
@@ -37,12 +37,12 @@ div.statsSelection {
         padding: 0px;
     }
     div.banner > f2 {
-        position: relative;
+        position: absolute;
         display: block;
-        top: 10px;
+        top: 85px;
         left: 158px;
         line-height: normal;
-        width: calc(100% - 158px);
+        width: calc(100% - 160px);
         margin: 0;
     }
     body, td, th, input, select, textarea {
@@ -112,11 +112,11 @@ div.statsSelection {
         padding: 10px;
         background: #333;
         color: white;
-        border: none;
+        border: 1px solid #5f5f5f;
         font-size: 20px;
         position: fixed;
         top: 0;
-        left: 0;
+        right: 0;
         width: 30px;
         height: 30px;
         z-index: 1001;
@@ -129,7 +129,7 @@ div.statsSelection {
         display: block;
         width: 30px;
         height: 2px;
-        left: 10px;
+        left: 11px;
         background: white;
         position: absolute;
         transition: all 0.3s ease;
@@ -157,11 +157,12 @@ div.statsSelection {
         margin: 0 !important;
         background: #333 !important;
         position: absolute !important;
-        top: 50px !important; /* Adjust based on header height */
-        left: 0 !important;
-        width: 100% !important;
+        top: 51px !important; /* Adjust based on header height */
+        /* left: 0 !important; */
+        width: calc(100% - 2px) !important;
         z-index: 1000 !important;
-        width: 33% !important;
+        max-height: calc(100% - 52px) !important;
+        overflow: auto;
     }
 
     ul.css3menu1 li {
@@ -188,15 +189,12 @@ div.statsSelection {
         height: auto;
     }
 
-    ul.css3menu1 a:hover {
-        background: #555 !important;
-    }
-
     /* Submenu Styles for Mobile */
     ul.css3menu1 ul {
         display: none !important;
-        position: absolute;
-        left: 100% !important;
+        position: relative !important;
+        left: 50px !important;
+        border-left: 0;
         top: 0 !important;
         background: #333;
         z-index: 1001;
@@ -205,25 +203,37 @@ div.statsSelection {
         box-shadow: none;
         border-color: #5f5f5f;
         overflow-y: auto;
-        max-height: 90vh;
+        max-height: 48vh;
+        width: calc(100% - 50px) !important;
+        /* border-top: none; */
+        /* border-bottom: none; */
+    }
+
+    ul.css3menu1 a:hover {
+        background: #555 !important;
     }
 
     ul.css3menu1 li:hover > ul {
         display: block !important;
     }
 
+    ul li:has(a:hover) > a {
+        background: #555 !important;
+    }
+
+
     /* sub sub menus */
     ul.css3menu1 ul ul {
-        width: 33vw !important;
-        position: fixed;
-        top: 7.6% !important;
-        left: 66vw !important;
+        /* width: 33vw !important; */
+        /* position: fixed; */
+        /* top: 7.6% !important; */
+        /* left: 66vw !important; */
     }
 
     /* Toggle Menu on Checkbox Check */
     #menu-toggle:checked ~ ul.css3menu1 {
         display: block !important;
-        position: fixed !important;
+        /* position: fixed !important; */
     }
 
     /* Animate Hamburger to X */
@@ -233,10 +243,12 @@ div.statsSelection {
 
     #menu-toggle:checked ~ .hamburger::before {
         transform: rotate(45deg) translate(5px, 10px);
+        width: 35px;
     }
 
     #menu-toggle:checked ~ .hamburger::after {
-        transform: rotate(-45deg) translate(5px, -10px);
+        transform: rotate(-45deg) translate(5px, -9px);
+        width: 35px;
     }
 }
 
