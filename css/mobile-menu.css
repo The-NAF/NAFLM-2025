@@ -46,7 +46,7 @@ div.statsSelection {
         margin: 0;
     }
     body, td, th, input, select, textarea {
-        font-size: 12px;
+        font-size: 13px;
     }
     /* help with table overflow */
     div.tableResponsive {
@@ -54,7 +54,7 @@ div.statsSelection {
     }
     /* table sorting "buttons" */
     table tbody a {
-        font-size: 12px;
+        font-size: 13px;
         padding: 5px;
     }
     /* main page adjustments */
@@ -104,6 +104,15 @@ div.statsSelection {
         width: 20px;
         height: 20px;
         margin: 5px;
+    }
+    /* league tournament tables */
+    div.leaguesNCont {
+        font-size: 14px;
+    }
+
+    div.leaguesNCont a {
+        padding: 5px;
+        display: inline-block;
     }
     /* Hamburger Icon */
     .hamburger {
@@ -157,8 +166,7 @@ div.statsSelection {
         margin: 0 !important;
         background: #333 !important;
         position: absolute !important;
-        top: 51px !important; /* Adjust based on header height */
-        /* left: 0 !important; */
+        top: 51px !important; 
         width: calc(100% - 2px) !important;
         z-index: 1000 !important;
         max-height: calc(100% - 52px) !important;
@@ -205,8 +213,6 @@ div.statsSelection {
         overflow-y: auto;
         max-height: 48vh;
         width: calc(100% - 50px) !important;
-        /* border-top: none; */
-        /* border-bottom: none; */
     }
 
     ul.css3menu1 a:hover {
@@ -219,15 +225,6 @@ div.statsSelection {
 
     ul li:has(a:hover) > a {
         background: #555 !important;
-    }
-
-
-    /* sub sub menus */
-    ul.css3menu1 ul ul {
-        /* width: 33vw !important; */
-        /* position: fixed; */
-        /* top: 7.6% !important; */
-        /* left: 66vw !important; */
     }
 
     /* Toggle Menu on Checkbox Check */
