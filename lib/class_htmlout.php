@@ -142,7 +142,8 @@ class HTMLOUT
 			$fields,
 			array('+round','+date_created'),
 			(isset($_GET["sort$opts[GET_SS]"])) ? array((($_GET["dir$opts[GET_SS]"] == 'a') ? '+' : '-') . $_GET["sort$opts[GET_SS]"]) : array(),
-			$extra
+			$extra,
+			'matchesTable'
 		);
 	}
 	
@@ -1261,7 +1262,7 @@ class HTMLOUT
 	}
 	
 	// Prints an advanced sort table.
-	public static function sort_table($title, $lnk, array $objs, array $fields, array $std_sort, $sort = array(), $extra = array())	{
+	public static function sort_table($title, $lnk, array $objs, array $fields, array $std_sort, $sort = array(), $extra = array(), $tableClassName = 'tableResponsive')	{
 		/*
 			extra fields:
 				tableWidth  => CSS style width value
@@ -1309,7 +1310,7 @@ class HTMLOUT
 		$CP = count($fields);
 		?>
 		<!-- Following HTML from ./lib/class_htmlout.php sort_table-->
-		<div class='tableResponsive'>
+		<div class="<?php echo $tableClassName;?>">
 		<table class="common" <?php echo (array_key_exists('tableWidth', $extra)) ? "style='width: $extra[tableWidth];'" : '';?>>
 			<tr class="commonhead">
 				<td colspan="<?php echo $CP;?>"><b>

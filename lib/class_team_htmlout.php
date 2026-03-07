@@ -2711,7 +2711,7 @@ class Team_HTMLOUT extends Team
 		?>
 		<!-- Following HTML is from class_team_htmlout.php _about -->
 		<div class='tableResponsive'>
-		<table class='common'>
+		<table class='common teamAbout'>
 
 			<tr class='commonhead'>
 				<td><b><?php echo $lng->getTrn('profile/team/logo');?></b></td>

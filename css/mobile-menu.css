@@ -217,7 +217,7 @@ ul.rosterMenu a:hover {
         padding: 0 !important;
         margin: 0 !important;
         background: #333 !important;
-        position: absolute !important;
+        position: fixed !important;
         top: 51px !important; 
         width: calc(100% - 2px) !important;
         z-index: 1000 !important;
@@ -327,6 +327,105 @@ ul.rosterMenu a:hover {
         border: none !important;
         white-space: normal !important;
         word-wrap: break-word !important;
+    }
+    /* matches tables */
+    .matchesTable tr:nth-child(2),
+    .matchesTable tr:nth-child(4),
+    .matchesTable tr:nth-child(3),
+    .matchesTable tr:nth-last-child(2) {
+        display: none !important;
+    }
+
+    .matchesTable tr {
+        display: block;
+        border: 1px black solid;
+        position: relative;
+    }
+
+    .matchesTable tr td {
+        display: block;
+        margin: 2px 0px;
+    }
+    .matchesTable tr:not(:first-child) td:nth-child(-n+3) {
+        display: inline-flex;
+        width: 32.5%;
+    }
+    .matchesTable tr:not(:first-child) td:nth-child(2) a {
+        text-align: center;
+        width: 100%;
+    }
+    .matchesTable tr:not(:first-child) td:nth-child(3) a {
+        text-align: right;
+        width: 100%;
+    }
+    .matchesTable tr td:nth-child(4) {
+        width: 100%;
+    }
+
+    .matchesTable tr td:nth-child(5) {
+        float: left;
+    }
+    .matchesTable tr td:nth-child(6)  {
+        float: right;
+    }
+    .matchesTable tr td:nth-child(5) i,
+    .matchesTable tr td:nth-child(6) i {
+        visibility: hidden;
+        display: block;
+        text-align: center;
+        padding: 10px 0px 0px 0px;
+    }
+    .matchesTable tr td:nth-child(6) i {
+        text-align: center;
+    }
+    .matchesTable tr td:nth-child(5) i a,
+    .matchesTable tr td:nth-child(6) i a {
+        visibility: visible;
+    }
+
+    .matchesTable tr td:nth-last-child(1) {
+        clear: both;
+        padding: 5px;
+        text-align: center;
+    }
+    .matchesTable tr:nth-last-child(1) {
+        display: block;
+        height: 35px;
+    }
+    .matchesTable tr:last-child td:nth-child(1) {
+        display: block;
+        width: 95%;
+    }
+    .tourMatches a {
+        font-size: 14px;
+        color: black;
+    }
+
+    .tourMatches td > a {
+        display: inline-flex;
+    }
+    .tourMatches tr  td  i a {
+        visibility: visible;
+    }
+
+    .tourMatches tr  td  i {
+        visibility: hidden;
+    }
+
+    td.matchManagement {
+        width: 26%;
+    }
+
+    td.match.divider {
+        display: none;
+    }
+
+    .tourMatches {
+        color: black;
+    }
+    /* team about form */
+    .teamAbout tr:nth-child(2) td:nth-child(3) form {
+        width: 450px;
     }
 }
 

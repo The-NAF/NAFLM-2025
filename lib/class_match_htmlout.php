@@ -64,7 +64,7 @@ class Match_HTMLOUT extends Match
 		$_url = "?section=matches&amp;type=tourmatches&amp;trid=$trid&amp;";
 		title(get_alt_col('tours', 'tour_id', $trid, 'name'));
 		echo '<!-- Following HTML from ./lib/class_match_htmlout.php tourMatches -->';
-		echo "<div class='tableResponsive'>\n";
+		echo "<div class='tourMatchesSummary'>\n";
 		echo '<center><table>';
 		echo '<tr><td>';
 		echo 'Page: '.implode(', ', array_map(create_function('$nr', 'global $page; return ($nr == $page) ? $nr : "<a href=\''.$_url.'page=$nr\'>$nr</a>";'), range(1,$pages)));
@@ -80,7 +80,7 @@ class Match_HTMLOUT extends Match
 			FROM matches, teams AS t1, teams AS t2 WHERE f_tour_id = $trid AND team1_id = t1.team_id AND team2_id = t2.team_id
 			ORDER BY round $ROUND_SORT_DIR, date_played DESC, date_created ASC LIMIT ".(($page-1)*self::T_HTML_MATCHES_PER_PAGE).', '.(($page)*self::T_HTML_MATCHES_PER_PAGE);
 		$result = mysql_query($query);
-		echo "<div class='tableResponsive'>\n";
+		echo "<div class='tourMatches'>\n";
 		echo "<table class='tours'>\n";
 		while ($m = mysql_fetch_object($result)) {
 			if ($m->round != $rnd) {
@@ -101,24 +101,24 @@ class Match_HTMLOUT extends Match
 				<td><?php echo !empty($m->date_played) ? textdate($m->date_played, true) : ''; ?></td>
 				<td class="match" style="text-align: right;">
 					<?php 
-					echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->t1_id,false,false)."'>$m->t1_name</a>&nbsp;<i>(<a href='".urlcompile(T_URL_PROFILE,T_OBJ_COACH,$m->c1_id,false,false)."'>$m->c1_name</a>)</i>";
+					echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->t1_id,false,false)."'>$m->t1_name</a><i>(<a href='".urlcompile(T_URL_PROFILE,T_OBJ_COACH,$m->c1_id,false,false)."'>$m->c1_name</a>)</i>";
 					?>
 				</td>
-				<td class="match" style="text-align: center;"><?php echo !empty($m->date_played) ? $m->team1_score : '';?></td>
-				<td class="match" style="text-align: center;">-</td>
-				<td class="match" style="text-align: center;"><?php echo !empty($m->date_played) ? $m->team2_score : '';?></td>
+				<td class="match divider" style="text-align: center;"><?php echo !empty($m->date_played) ? $m->team1_score : '';?></td>
+				<td class="match divider" style="text-align: center;">-</td>
+				<td class="match divider" style="text-align: center;"><?php echo !empty($m->date_played) ? $m->team2_score : '';?></td>
 				<td class="match" style="text-align: left;">
 					<?php 
-					echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->t2_id,false,false)."'>$m->t2_name</a>&nbsp;<i>(<a href='".urlcompile(T_URL_PROFILE,T_OBJ_COACH,$m->c2_id,false,false)."'>$m->c2_name</a>)</i>";
+					echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->t2_id,false,false)."'>$m->t2_name</a><i>(<a href='".urlcompile(T_URL_PROFILE,T_OBJ_COACH,$m->c2_id,false,false)."'>$m->c2_name</a>)</i>";
 					?>
 				</td>
 				<?php
 				// Does the user have edit or view rights?
 				$matchURL = "index.php?section=matches&amp;type=tourmatches&amp;trid=$trid&amp;mid=$m->match_id";
 				?>
-				<td>
+				<td class="matchManagement">
 				<?php
-				echo "&nbsp;<a href='index.php?section=matches&amp;type=report&amp;mid=$m->match_id'>".$lng->getTrn('common/view')."</a>&nbsp;\n";
+				echo "<a href='index.php?section=matches&amp;type=report&amp;mid=$m->match_id'>".$lng->getTrn('common/view')."</a>\n";
 				if ($IS_LOCAL_ADMIN) {
 					?>
 					<script language="JavaScript" type="text/javascript">
@@ -130,9 +130,9 @@ class Match_HTMLOUT extends Match
 						}
 					</script>
 					<?php
-					echo "<a onclick=\"return match_reset();\" href='$matchURL&amp;action=reset'>".$lng->getTrn('common/reset')."</a>&nbsp;\n";
-					echo "<a onclick=\"return match_delete();\" href='$matchURL&amp;action=delete' style='color:".(!empty($m->date_played) ? 'Red' : 'Blue').";'>".$lng->getTrn('common/delete')."</a>&nbsp;\n";
-					echo "<a href='$matchURL&amp;action=".(($m->locked) ? 'unlock' : 'lock')."'>" . ($m->locked ? $lng->getTrn('common/unlock') : $lng->getTrn('common/lock')) . "</a>&nbsp;\n";
+					echo "<a onclick=\"return match_reset();\" href='$matchURL&amp;action=reset'>".$lng->getTrn('common/reset')."</a>\n";
+					echo "<a onclick=\"return match_delete();\" href='$matchURL&amp;action=delete' style='color:".(!empty($m->date_played) ? 'Red' : 'Blue').";'>".$lng->getTrn('common/delete')."</a>\n";
+					echo "<a href='$matchURL&amp;action=".(($m->locked) ? 'unlock' : 'lock')."'>" . ($m->locked ? $lng->getTrn('common/unlock') : $lng->getTrn('common/lock')) . "</a>\n";
 				}
 				?>
 				</td>
@@ -194,7 +194,7 @@ class Match_HTMLOUT extends Match
 
 		// Print fixture list.
 		foreach ($flist as $lid => $divs) {
-			# Container
+			# Container TODO
 			echo "<div id='lid_${lid}_cont' class='leaguesNCont' style='".((in_array("lid_${lid}", $flist_JShides)) ? "display:none;" : '')."'>";
 			# Title
 			echo "<div class='leagues'><b><a href='javascript:void(0);' onClick=\"slideToggleFast('lid_$lid');\">[+/-]</a>&nbsp;".$flist[$lid]['desc']['lname']."</b></div>\n";
