@@ -50,7 +50,7 @@ class HTMLOUT
 			$m->tour_name = Tour::getTourUrl($m->f_tour_id);
 			$m->league_name = League::getLeagueUrl(get_parent_id(T_NODE_TOURNAMENT, $m->f_tour_id, T_NODE_LEAGUE));
 			if ($FOR_OBJ) {
-				$m->result = matchresult_icon($m->result);
+				$m->result = matchresult_icon(isset($m->result) ? $m->result : null);
 			}
 			if (in_array($m->round,array_keys($T_ROUNDS))) {
 				$m->round = $T_ROUNDS[$m->round];
@@ -1250,7 +1250,7 @@ class HTMLOUT
 			<li><a href="index.php?section=cheatsheet" >Cheat Sheet</a></li>
 			<li><a href="handler.php?type=tournamentteam&obj=builder" >Tournament Team Builder</a></li>
 			<li><a href="handler.php?type=calculator" >Dice Probability Calculator</a></li>
-			<li><a href="https://assets.warhammer-community.com/eng_14-11_bloodbowl_faq_errata-ngh7bivuzu-vslz4fw2nm.pdf">BB2025 Latest FAQ & Errata</a></li>
+			<li><a href="https://assets.warhammer-community.com/eng_20-05_blood_bowl_faq_errata-gytvlserev-ngihd3chox.pdf">BB2025 Latest FAQ & Errata</a></li>
 			<li><a href="https://www.thenaf.net/wp-content/uploads/2026/01/NAF-FAQ-for-BB2025_v20260127_A4.pdf">BB2025 NAF Tournament Clarifications</a></li>
 		</ul>
 	</li>  

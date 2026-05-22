@@ -69,6 +69,8 @@ $rules['dungeon'] 					= 1; 	//Dungeon Bowl Teams
 $rules['sevens'] 					= 1; 	//Sevens Teams
 // Toggle Automated Random Skill Rolls: 0 = enabled. 1 = disabled.
 $rules['randomskillrolls'] 			= 1; 	//Automated Random Skill Rolls
+// Toggle Automated Random Stat Rolls: 0 = enabled. 1 = disabled.
+$rules['randomstatrolls'] 			= 1; 	//Automated Random Stat Rolls
 // Toggle Manual Entry of Random Skill Rolls: 0 = enabled. 1 = disabled.
 $rules['randomskillmanualentry'] 	= 0; 	//Manual Random Skill Rolls
 // Allow/disallow Mega-Stars in general: 0 = enabled. 1 = disabled.
@@ -91,6 +93,10 @@ $rules['banned_stars'] 				= '';
 $rules['megastar_tax'] 				= 0;
 // Minimum team value required
 $rules['min_tv'] 					= 0;
+// Discord webhook URL
+$rules['discord_webhook_url'] = '';
+// Discord post permissions (coaches = either playing coach has perms (as well as admin) / admins = only admin has perms)
+$rules['discord_post_permission'] = 'admins';
 // Remove double backslashes in front of team number to enable team specific starting treasuries.
 $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
 											//	1			=>	1000000,	// Chaos Chosen

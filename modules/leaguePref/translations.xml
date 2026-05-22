@@ -74,6 +74,10 @@
 <randomskillrolls_help>Tick the box to disable Automated Random Skills from being available on the team management Box, in which case only Random Skill Manual Entry will be allowed: Ticked box = Disabled.</randomskillrolls_help>
 <randomskillrolls>Automated Random Skills Disabled</randomskillrolls>
 
+<randomstatrolls_title>&lt;br/&gt;&lt;b&gt;Automated Random Stat Generator&lt;/b&gt;&lt;br/&gt; Disable Automated Random Stat option from Team Management Box.&lt;br/&gt;&lt;i&gt;(do not disable this unless you enable Manual Random Skill Entry below)&lt;/i&gt;</randomstatrolls_title>
+<randomstatrolls_help>Tick the box to disable Automated Random Stat Increases from being available on the team management Box, in which case only Random Stat Manual Entry will be allowed: Ticked box = Disabled.</randomstatrolls_help>
+<randomstatrolls>Automated Random Stat Disabled</randomstatrolls>
+
 <randomskillmanualentry_title>&lt;br/&gt;&lt;b&gt;Manual Random Skill Entry&lt;/b&gt;&lt;br/&gt; Disable Manual Random Skill Entry from the Roster/team page.&lt;br/&gt;&lt;i&gt;(do not disable this unless you enable Automated Random Skill Rolls above)&lt;/i&gt;</randomskillmanualentry_title>
 <randomskillmanualentry_help>Tick the box to disable Manual Random Skill Entry from being available on the Roster/Team Page, in which case only Automated Random Skill generation will be allowed: Ticked box = Disabled.</randomskillmanualentry_help>
 <randomskillmanualentry>Manual Random Skill Entry Disabled</randomskillmanualentry>
@@ -94,6 +98,7 @@ Entering 0 points for all three will hide the Additonal League points calculator
 
 <prayer_cost_title>&lt;br/&gt;&lt;b&gt;Prayers to Nuffle Cost Override&lt;/b&gt;&lt;br/&gt; Modify the cost of the Prayers to Nuffle inducement.&lt;/i&gt;</prayer_cost_title>
 <prayer_cost_help>Set a custom cost for the Prayers to Nuffle inducement for this league. Set to 0 to use the standard cost from game data (usually 10,000). This allows you to balance the cost if you find it too cheap or expensive for your league.</prayer_cost_help>
+<prayer_cost_note>(0 = use standard cost)</prayer_cost_note>
 
 <megastars_title>&lt;br/&gt;&lt;b&gt;Mega-Stars&lt;/b&gt;&lt;br/&gt; Disable Mega-Stars from inducements.&lt;br/&gt;&lt;i&gt;(see latest FAQ for list of which Star Players are classed as Mega-Stars)&lt;/i&gt;</megastars_title>
 <megastars_help>Tick the box to disable Mega-Stars from being available on inducements: Ticked box = Disabled.</megastars_help>
@@ -101,9 +106,19 @@ Entering 0 points for all three will hide the Additonal League points calculator
 
 <megastar_tax_title>&lt;br/&gt;&lt;b&gt;Mega-Star Tax&lt;/b&gt;&lt;br/&gt;Set an additional cost (flat fee in gold) to add to all Mega-Star hiring costs.</megastar_tax_title>
 <megastar_tax_help>Set an additional cost (flat fee in gold) to add to all Mega-Star hiring costs. This is added on top of the standard cost for Mega-Star players. Set to 0 for no additional tax. Example: Setting this to 50000 would add 50k gold to every Mega-Star's cost.</megastar_tax_help>
+<megastar_tax_note>(flat fee added to Mega Star costs)</megastar_tax_note>
 
 <banned_stars_title>&lt;br/&gt;&lt;b&gt;Banned Star Players&lt;/b&gt;&lt;br/&gt;Select which Star Players should not be available for hire in this league.&lt;br/&gt;This allows you to ban specific stars that are too powerful or don't fit your league's playstyle, regardless of whether they are Mega-Stars or not.</banned_stars_title>
 <banned_stars_help>Select which Star Players should not be available for hire in this league. This allows you to ban specific stars that are too powerful or don't fit your league's playstyle, regardless of whether they are Mega-Stars or not.</banned_stars_help>
 <banned_stars_note>Hold Ctrl (Windows) or Cmd (Mac) to select multiple stars</banned_stars_note>
+
+<discord_url_title>&lt;br/&gt;&lt;b&gt;Discord Webhook URL&lt;/b&gt;&lt;br/&gt; Discord webhook URL for posting match results.&lt;/i&gt;</discord_url_title>
+<discord_url_help>Enter a URL for a Discord channel webhook here, to enable posting match results to Discord, leave blank to disable this option.</discord_url_help>
+<discord_url_note>(leave blank to disable Discord posting)</discord_url_note>
+
+<discord_perms_title>&lt;br/&gt;&lt;b&gt;Discord Post Permission&lt;/b&gt;&lt;br/&gt; Who can trigger a Discord post from the match report.&lt;/i&gt;</discord_perms_title>
+<discord_perms_help>If posting results to Discord is enabled above, this will determine who can submit match results.</discord_perms_help>
+<discord_perms_coaches>Admins and involved coaches</discord_perms_coaches>
+<discord_perms_admins>Admins only</discord_perms_admins>
 
 </en-GB>

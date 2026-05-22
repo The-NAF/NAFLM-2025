@@ -46,6 +46,7 @@ $rules['slann'] 					= 0; 	//Slann (teams of legend)
 $rules['sevens'] 					= 1; 	//Sevens Teams
 $rules['dungeon'] 					= 1; 	//Dungeon Bowl Teams
 $rules['randomskillrolls'] 			= 1; 	//Automated Random Skill Rolls
+$rules['randomstatrolls'] 			= 1; 	//Automated Random Stat Rolls
 $rules['randomskillmanualentry'] 	= 0; 	//Manual Random Skill Rolls
 $rules['megastars'] 				= 0; 	//Mega-Stars
 $rules['base_inducements'] 			= 1; 	//Base Inducements Only
@@ -61,6 +62,9 @@ $rules['prayer_cost'] 				= 0;	// Prayers to Nuffle cost override (0 = use defau
 $rules['banned_stars'] 				= '';	// Banned star player IDs (comma-separated list)
 $rules['megastar_tax'] 				= 0;	// Mega star tax (flat amount added to mega star costs)
 $rules['min_tv'] 					= 0;	// Minimum team value required
+
+$rules['discord_webhook_url'] = '';
+$rules['discord_post_permission'] = 'admins';
 
 $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
 											//	1			=>	1000000,	// Chaos Chosen

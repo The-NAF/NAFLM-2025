@@ -110,6 +110,7 @@ public $language = 'en-GB';
 public $helf = 0;
 public $slann = 0;
 public $randomskillrolls = 0;
+public $randomstatrolls = 0;
 public $randomskillmanualentry = 0;
 public $megastars = 0;
 public $base_inducements = 0;
@@ -123,10 +124,12 @@ public $prayer_cost = 0;
 public $banned_stars = '';
 public $megastar_tax = 0;
 public $min_tv = 0;
+public $discord_webhook_url = '';
+public $discord_post_permission = 'admins';
 
 function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $helf, $slann, 
-$randomskillrolls, $randomskillmanualentry, $megastars, $base_inducements, $fireunder11, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts, 
-$prayer_cost, $banned_stars, $megastar_tax, $min_tv) {
+$randomskillrolls, $randomstatrolls, $randomskillmanualentry, $megastars, $base_inducements, $fireunder11, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts, 
+$prayer_cost, $banned_stars, $megastar_tax, $min_tv, $discord_webhook_url, $discord_post_permission) {
 	global $settings;
 	$this->lid = $lid;
 	$this->l_name = $name;
@@ -144,6 +147,7 @@ $prayer_cost, $banned_stars, $megastar_tax, $min_tv) {
     $this->helf = $helf;
     $this->slann = $slann;
     $this->randomskillrolls = $randomskillrolls;
+    $this->randomstatrolls = $randomstatrolls;
     $this->randomskillmanualentry = $randomskillmanualentry;
     $this->megastars = $megastars;
     $this->base_inducements = $base_inducements;
@@ -157,6 +161,8 @@ $prayer_cost, $banned_stars, $megastar_tax, $min_tv) {
     $this->banned_stars = $banned_stars;
     $this->megastar_tax = $megastar_tax;
     $this->min_tv = $min_tv;
+	$this->discord_webhook_url = $discord_webhook_url;
+    $this->discord_post_permission = $discord_post_permission;
 }
 
 /* Gets the preferences for the current league */
@@ -178,25 +184,27 @@ public static function getLeaguePreferences() {
                 $settings['stylesheet'], $rules['initial_treasury'], 
 				$settings['lang'],
 				$rules['helf'],$rules['slann'],
-				$rules['randomskillrolls'],$rules['randomskillmanualentry'],
+				$rules['randomskillrolls'],$rules['randomstatrolls'],$rules['randomskillmanualentry'],
 				$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'],
 				$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
 				$rules['major_beat_cas'],$rules['major_beat_pts'],
 				isset($rules['prayer_cost']) ? $rules['prayer_cost'] : 0,
 				isset($rules['banned_stars']) ? $rules['banned_stars'] : '',
 				isset($rules['megastar_tax']) ? $rules['megastar_tax'] : 0,
-				isset($rules['min_tv']) ? $rules['min_tv'] : 0);
+				isset($rules['min_tv']) ? $rules['min_tv'] : 0,
+				isset($rules['discord_webhook_url']) ? $rules['discord_webhook_url'] : '',
+				isset($rules['discord_post_permission']) ? $rules['discord_post_permission'] : 'admins');
         }
     } else {
 		return new LeaguePref($sel_lid, $leagues['lname'], null, null, null, null, null, null, false, null, 
             $settings['stylesheet'], $rules['initial_treasury'], 
 			$settings['lang'],
 			$rules['helf'],$rules['slann'],
-			$rules['randomskillrolls'],$rules['randomskillmanualentry'],
+			$rules['randomskillrolls'],$rules['randomstatrolls'],$rules['randomskillmanualentry'],
 			$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'],
 			$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
 			$rules['major_beat_cas'],$rules['major_beat_pts'],
-			0, '', 0, 0);
+			0, '', 0, 0, '', 'admins');
 	}
 }
 
@@ -223,6 +231,7 @@ private function syncSettingsWithTemplate() {
         'helf',
         'slann',
         'randomskillrolls',
+        'randomstatrolls',
         'randomskillmanualentry',
         'megastars',
         'base_inducements',
@@ -235,7 +244,9 @@ private function syncSettingsWithTemplate() {
         'prayer_cost',
         'banned_stars',
         'megastar_tax',
-        'min_tv'
+        'min_tv',
+        'discord_webhook_url',
+        'discord_post_permission'
     );
     
     // Process in reverse order so insertions don't mess up positions
@@ -320,6 +331,7 @@ function save() {
     $settingsFileContents = $this->updateRule($settingsFileContents, 'helf', $this->helf == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'slann', $this->slann == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'randomskillrolls', $this->randomskillrolls == 1 ? 1 : 0);
+    $settingsFileContents = $this->updateRule($settingsFileContents, 'randomstatrolls', $this->randomstatrolls == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'randomskillmanualentry', $this->randomskillmanualentry == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'megastars', $this->megastars == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'base_inducements', $this->base_inducements == 1 ? 1 : 0);
@@ -336,6 +348,8 @@ function save() {
     $settingsFileContents = $this->updateRule($settingsFileContents, 'banned_stars', $banned_stars_clean, true);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'megastar_tax', $this->megastar_tax > 0 ? $this->megastar_tax : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'min_tv', $this->min_tv > 0 ? $this->min_tv : 0);
+	$settingsFileContents = $this->updateRule($settingsFileContents, 'discord_webhook_url', mysql_real_escape_string(trim($this->discord_webhook_url)), true);
+    $settingsFileContents = $this->updateRule($settingsFileContents, 'discord_post_permission', mysql_real_escape_string(trim($this->discord_post_permission)), true);
     
     // Write the file
     FileManager::writeFile(FileManager::getSettingsDirectoryName() . "/settings_$this->lid.php", $settingsFileContents);
@@ -348,6 +362,8 @@ function save() {
     $rules['banned_stars'] = $this->banned_stars;
     $rules['megastar_tax'] = $this->megastar_tax;
     $rules['min_tv'] = $this->min_tv;
+	$rules['discord_webhook_url'] = $this->discord_webhook_url;
+    $rules['discord_post_permission'] = $this->discord_post_permission;
             
     return mysql_query($query);
 }
@@ -355,6 +371,13 @@ function save() {
 public static function showLeaguePreferences() {
     global $lng, $tours, $coach, $leagues, $settings, $rules, $stars;
     title($lng->getTrn('name', 'LeaguePref'));
+
+    // Show success message if redirected here after a save
+    if (isset($_GET['saved']) && $_GET['saved'] == 1) {
+        echo "<div class='boxWide'>";
+        HTMLOUT::helpBox($lng->getTrn('saved', 'LeaguePref'), '');
+        echo "</div>";
+    }
 
 	self::handleActions();
 
@@ -563,6 +586,15 @@ public static function showLeaguePreferences() {
                             <b><?php echo $lng->getTrn('randomskillrolls', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
+                    <tr title="<?php echo $lng->getTrn('randomstatrolls_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('randomstatrolls_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type='checkbox' name='randomstatrolls' value='1' onclick='slideToggleFast("randomstatrolls");'	<?php if($rules['randomstatrolls'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('randomstatrolls', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
                     <tr title="<?php echo $lng->getTrn('randomskillmanualentry_help', 'LeaguePref'); ?>">
                         <td>
                             <?php echo $lng->getTrn('randomskillmanualentry_title', 'LeaguePref'); ?>
@@ -604,7 +636,7 @@ public static function showLeaguePreferences() {
                         </td>
                         <td>
                             <input type="number" min="0" step="5000" name="prayer_cost" <?php echo $canEdit; ?> value="<?php echo $l_pref->prayer_cost; ?>" />
-                            <small>(0 = use standard cost)</small>
+                            <small><?php echo $lng->getTrn('prayer_cost_note', 'LeaguePref'); ?></small>
                         </td>
                     </tr>
                     <tr title="<?php echo $lng->getTrn('megastars_help', 'LeaguePref'); ?>">
@@ -622,7 +654,7 @@ public static function showLeaguePreferences() {
                         </td>
                         <td>
                             <input type="number" min="0" step="5000" name="megastar_tax" <?php echo $canEdit; ?> value="<?php echo $l_pref->megastar_tax; ?>" />
-                            <small>(flat fee added to Mega Star costs)</small>
+                            <small><?php echo $lng->getTrn('megastar_tax_note', 'LeaguePref'); ?></small>
                         </td>
                     </tr>
                     <tr title="<?php echo $lng->getTrn('banned_stars_help', 'LeaguePref'); ?>">
@@ -642,9 +674,42 @@ public static function showLeaguePreferences() {
                             }
                             ?>
                             </select>
-                            <br><small><?php echo $lng->getTrn('banned_stars_note', 'LeaguePref'); ?> (Hold Ctrl/Cmd to select multiple)</small>
+                            <br><small><?php echo $lng->getTrn('banned_stars_note', 'LeaguePref'); ?></small>
                         </td>
                     </tr>
+					<tr title="<?php echo $lng->getTrn('discord_url_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('discord_url_title', 'LeaguePref'); ?>:
+                        </td>
+						<td>
+							<input type="text" size="80" maxlength="512"
+								   name="discord_webhook_url" <?php echo $canEdit; ?>
+								   value="<?php echo htmlspecialchars($l_pref->discord_webhook_url); ?>" />
+							<small><?php echo $lng->getTrn('discord_url_note', 'LeaguePref'); ?></small>
+						</td>
+					</tr>
+					<tr title="<?php echo $lng->getTrn('discord_perms_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('discord_perms_title', 'LeaguePref'); ?>:
+                        </td>
+						<td>
+							<label>
+								<input type="radio" name="discord_post_permission" value="admins"
+									<?php echo ($l_pref->discord_post_permission != 'coaches')
+										? 'checked' : ''; ?>
+									<?php echo $canEdit; ?>>
+								<?php echo $lng->getTrn('discord_perms_admins', 'LeaguePref'); ?>:
+							</label>
+							&nbsp;&nbsp;
+							<label>
+								<input type="radio" name="discord_post_permission" value="coaches"
+									<?php echo ($l_pref->discord_post_permission == 'coaches')
+										? 'checked' : ''; ?>
+									<?php echo $canEdit; ?>>
+								<?php echo $lng->getTrn('discord_perms_coaches', 'LeaguePref'); ?>:
+							</label>
+						</td>
+					</tr>
 
                     <tr title="<?php echo $submit_title; ?>">
                         <td colspan="2">
@@ -681,18 +746,24 @@ public static function handleActions() {
 				isset($_POST['helf']) ? $_POST['helf'] : 0,
 				isset($_POST['slann']) ? $_POST['slann'] : 0,
 				isset($_POST['randomskillrolls']) ? $_POST['randomskillrolls'] : 0,
+				isset($_POST['randomstatrolls']) ? $_POST['randomstatrolls'] : 0,
 				isset($_POST['randomskillmanualentry']) ? $_POST['randomskillmanualentry'] : 0,
 				isset($_POST['megastars']) ? $_POST['megastars'] : 0,
 				isset($_POST['base_inducements']) ? $_POST['base_inducements'] : 0,
 				isset($_POST['fireunder11']) ? $_POST['fireunder11'] : 0,
 				$_POST['major_win_tds'],$_POST['major_win_pts'],$_POST['clean_sheet_pts'],
 				$_POST['major_beat_cas'],$_POST['major_beat_pts'],
-				$_POST['prayer_cost'], $banned_stars, $_POST['megastar_tax'], $_POST['min_tv']);
+				$_POST['prayer_cost'], $banned_stars, $_POST['megastar_tax'], $_POST['min_tv'],
+				isset($_POST['discord_webhook_url']) ? $_POST['discord_webhook_url'] : '',
+				isset($_POST['discord_post_permission']) ? $_POST['discord_post_permission'] : 'admins');
 			if($l_pref->validate()) {
 				if($l_pref->save()) {
-					echo "<div class='boxWide'>";
-					HTMLOUT::helpBox($lng->getTrn('saved', 'LeaguePref'), '');
-					echo "</div>";
+					// Redirect back to the same page so the form re-renders with fresh data from the saved file.
+					// The ?saved=1 parameter triggers the success message after the redirect.
+					$lid = intval($_POST['lid']);
+					$redirectUrl = "handler.php?type=leaguepref&lid=$lid&saved=1";
+					echo "<script>window.location.replace('" . $redirectUrl . "');</script>";
+					return;
 				} else {
 					echo "<div class='boxWide'>";
 					HTMLOUT::helpBox($lng->getTrn('failedSave', 'LeaguePref'), '', 'errorBox');

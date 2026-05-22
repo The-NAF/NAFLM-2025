@@ -545,6 +545,76 @@ class Match_HTMLOUT extends Match
 			}
 			$m->finalizeMatchSubmit(); # Required!
 			MTS('Report submit ENDED');
+			
+			//Discord webhook 
+			if (!empty($rules['discord_webhook_url'])
+					&& isset($_POST['discord_post'])) {
+				$mPost    = new Match($match_id);
+				$t1Post   = new Team($mPost->team1_id);
+				$t2Post   = new Team($mPost->team2_id);
+				$coach1name = get_alt_col('coaches', 'coach_id',
+					$t1Post->owned_by_coach_id, 'name');
+				$coach2name = get_alt_col('coaches', 'coach_id',
+					$t2Post->owned_by_coach_id, 'name');
+				$tourName   = get_alt_col('tours', 'tour_id',
+					$mPost->f_tour_id, 'name');
+				$datePlayed = !empty($mPost->date_played)
+					? date('j M Y', strtotime($mPost->date_played))
+					: 'Unknown';
+				// Colours: green=winner, red=loser, yellow=draw
+				if ($mPost->team1_score > $mPost->team2_score) {
+					$color1 = 0x2ecc71; $color2 = 0xe74c3c;
+				} elseif ($mPost->team1_score < $mPost->team2_score) {
+					$color1 = 0xe74c3c; $color2 = 0x2ecc71;
+				} else {
+					$color1 = 0xf1c40f; $color2 = 0xf1c40f;
+				}
+				$inj1 = self::discordInjurySummary($mPost->team1_id, $match_id);
+				$inj2 = self::discordInjurySummary($mPost->team2_id, $match_id);
+				$headline = sprintf('**%s %d – %d %s**',
+					$mPost->team1_name, $mPost->team1_score,
+					$mPost->team2_score, $mPost->team2_name);
+				$embeds = array(
+					array(
+						'title' => '🏈 ' . $mPost->team1_name,
+						'color'  => $color1,
+						'fields' => self::discordTeamFields(
+							$t1Post, $coach1name,
+							$mPost->team1_score, $mPost->tcas1, $inj1),
+					),
+					array(
+						'title' => '🏈 ' . $mPost->team2_name,
+						'color'  => $color2,
+						'fields' => self::discordTeamFields(
+							$t2Post, $coach2name,
+							$mPost->team2_score, $mPost->tcas2, $inj2),
+					),
+				);
+				$matchNotes = trim($mPost->getText());
+				if (!empty($matchNotes)) {
+					$embeds[] = array(
+						'title' => '📝 Match Report',
+						'color'       => 0x95a5a6,
+						'description' => $matchNotes,
+					);
+				}
+				$payload = json_encode(array(
+					'content' => $headline . "\n_"
+						. $tourName . ' — ' . $datePlayed . '_',
+					'embeds'  => $embeds,
+				));
+				$ch = curl_init($rules['discord_webhook_url']);
+				curl_setopt($ch, CURLOPT_HTTPHEADER,
+					array('Content-Type: application/json'));
+				curl_setopt($ch, CURLOPT_POST,        true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS,  $payload);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				curl_exec($ch);
+				curl_close($ch);
+			}
+			//End Discord webhook 
+			
 			// Refresh objects used to display form.
 			$m = new Match($match_id);
 			$team1 = new Team($m->team1_id);
@@ -914,10 +984,39 @@ class Match_HTMLOUT extends Match
 			</table>
 			</div>
 			<br>
-			<center>
-				<input type="submit" name='button' value="<?php echo $lng->getTrn('common/save');?>" <?php echo $DIS; ?>>
-				<?php if ($USED_JOURNEYMAN_PRESENT) {echo "<br><br><b>".$lng->getTrn('matches/report/usedjourney')."</b>";} ?>
-			</center>
+			<?php
+            // Determine whether to show the Discord post checkbox.
+            $showDiscordCheckbox = false;
+            if (!empty($rules['discord_webhook_url'])) {
+                if ($IS_LOCAL_ADMIN) {
+                    $showDiscordCheckbox = true;
+                } elseif (
+                    $rules['discord_post_permission'] == 'coaches'
+                    && is_object($coach)
+                    && ($coach->coach_id == $team1->owned_by_coach_id
+                        || $coach->coach_id == $team2->owned_by_coach_id)
+                ) {
+                    $showDiscordCheckbox = true;
+                }
+            }
+            ?>
+            <center>
+                <?php if ($showDiscordCheckbox): ?>
+                <label>
+                    <input type="checkbox" name="discord_post" value="1">
+                    Post result to Discord
+                </label>
+                <br><br>
+                <?php endif; ?>
+                <input type="submit" name='button'
+                       value="<?php echo $lng->getTrn('common/save');?>"
+                       <?php echo $DIS; ?>>
+                <?php if ($USED_JOURNEYMAN_PRESENT) {
+                    echo "<br><br><b>"
+                        .$lng->getTrn('matches/report/usedjourney')
+                        ."</b>";
+                } ?>
+            </center>
 		</form>
 		<br><br>
 		<?php
@@ -1108,6 +1207,75 @@ class Match_HTMLOUT extends Match
 		}
 		return $players;
 	}
+	
+	 /**
+     * Build a human-readable injury summary for one team in a match.
+     * Returns e.g. "Badly Hurt x2, Serious Injury x1, Dead x1" or "None".
+     */
+    private static function discordInjurySummary($team_id, $match_id) {
+		$tid = (int) $team_id;
+		$mid = (int) $match_id;
+
+		$injLabels = array(
+			2 => 'Miss Next Game',
+			3 => 'Niggling Injury',
+			4 => 'Movement',
+			5 => 'Armour',
+			6 => 'Agility',
+			7 => 'Strength',
+			8 => 'Passing',
+			9 => 'Dead',
+		);
+
+		$result = mysql_query(
+			"SELECT md.inj
+			 FROM match_data md
+			 INNER JOIN players p ON md.f_player_id = p.player_id
+			 WHERE md.f_match_id = $mid
+			 AND p.owned_by_team_id = $tid
+			 AND md.inj != 1"
+		);
+
+		if (!$result) return 'None';
+
+		$counts = array();
+		while ($row = mysql_fetch_assoc($result)) {
+			$inj = $row['inj'];
+			if (isset($injLabels[$inj])) {
+				$label = $injLabels[$inj];
+				$counts[$label] = isset($counts[$label])
+					? $counts[$label] + 1 : 1;
+			}
+		}
+
+		if (empty($counts)) return 'None';
+
+		$parts = array();
+		foreach ($counts as $label => $count) {
+			$parts[] = ($count > 1) ? "$label x$count" : $label;
+		}
+		return implode(', ', $parts);
+	}
+    /**
+     * Build the Discord embed fields array for one team.
+     */
+    private static function discordTeamFields(
+            $teamObj, $coachName, $score, $cas, $injSummary) {
+        return array(
+            array('name' => 'Race',
+                  'value' => $teamObj->f_rname,       'inline' => false),
+            array('name' => 'Coach',
+                  'value' => $coachName,              'inline' => false),
+            array('name' => 'TV',
+                  'value' => ($teamObj->value / 1000) . 'k', 'inline' => true),
+            array('name' => 'Score (TDs)',
+                  'value' => (string) $score,         'inline' => true),
+            array('name' => 'CAS caused',
+                  'value' => (string) $cas,           'inline' => true),
+            array('name' => 'Injuries suffered',
+                  'value' => $injSummary,             'inline' => false),
+        );
+    }
 
 	public static function userSched() {
 		global $lng, $coach, $settings, $leagues,$divisions,$tours;

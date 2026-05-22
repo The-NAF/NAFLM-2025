@@ -328,6 +328,43 @@ class Team_HTMLOUT extends Team
 					status(false, $result['error']);
 				}
 				break;
+			case 'apply_random_stat':
+				$playerId = isset($_POST['player'])   ? (int)$_POST['player']   : null;
+				$statKey  = isset($_POST['stat_key']) ? $_POST['stat_key']       : null;
+				$sppCost  = isset($_POST['spp_cost']) ? (int)$_POST['spp_cost']  : null;
+
+				if ($playerId && $statKey && $sppCost) {
+					$p = new Player($playerId);
+					global $CHR_CONV;
+					// Find the chr_id for this stat key
+					$chrId = null;
+					foreach ($CHR_CONV as $id => $name) {
+						if ($name === $statKey) { $chrId = $id; break; }
+					}
+					if ($chrId !== null) {
+						status($p->addSkill('C', $chrId, $sppCost, 'X'));
+					} else {
+						status(false, 'Invalid stat key: ' . htmlspecialchars($statKey));
+					}
+				} else {
+					status(false, 'Missing parameters for stat increase.');
+				}
+				break;
+			case 'apply_random_stat_skill':
+				$playerId  = isset($_POST['player'])    ? (int)$_POST['player']    : null;
+				$skillId   = isset($_POST['skill_id'])  ? (int)$_POST['skill_id']  : null;
+				$skillType = isset($_POST['skill_type'])? $_POST['skill_type']      : null;
+				$sppCost   = isset($_POST['spp_cost'])  ? (int)$_POST['spp_cost']  : null;
+
+				if ($playerId && $skillId && $skillType && $sppCost) {
+					$p = new Player($playerId);
+					// Validate skill type
+					$type = ($skillType === 'N') ? 'N' : 'D';
+					status($p->addSkill($type, $skillId, $sppCost, 'X'));
+				} else {
+					status(false, 'Missing parameters for skill-instead submission.');
+				}
+				break;
 		}
 
 		// Administrator tools used?
@@ -726,122 +763,57 @@ class Team_HTMLOUT extends Team
 						}
 					}
 					
-					// Characteristic improvements
-					if (($p->numberOfAchSkill() == 0 && $p->mv_spp >= 14) || ($p->numberOfAchSkill() == 1 && $p->mv_spp >= 16) || ($p->numberOfAchSkill() == 2 && $p->mv_spp >= 20) || ($p->numberOfAchSkill() == 3 && $p->mv_spp >= 24) || ($p->numberOfAchSkill() == 4 && $p->mv_spp >= 28) || ($p->numberOfAchSkill() == 5 && $p->mv_spp >= 38)) {
-						$x .= "<optgroup label='Characteristic improvement'>\n";
-						foreach ($p->choosable_skills['chr'] as $s) {
-							global $CHR_CONV;
-							if ($CHR_CONV[$s] == 'ma' || $CHR_CONV[$s] == 'av' || $CHR_CONV[$s] == 'st') {
-								$x .= "<option value='ach_$s'>+ ".ucfirst($CHR_CONV[$s])."</option>\n";
-							} else {
-								$x .= "<option value='ach_$s'>- ".ucfirst($CHR_CONV[$s])."</option>\n";	
+					// Characteristic improvements — only show if random stat management box is disabled
+					if ($rules['randomstatrolls'] == 1) {
+						if (($p->numberOfAchSkill() == 0 && $p->mv_spp >= 14) || ($p->numberOfAchSkill() == 1 && $p->mv_spp >= 16) || ($p->numberOfAchSkill() == 2 && $p->mv_spp >= 20) || ($p->numberOfAchSkill() == 3 && $p->mv_spp >= 24) || ($p->numberOfAchSkill() == 4 && $p->mv_spp >= 28) || ($p->numberOfAchSkill() == 5 && $p->mv_spp >= 38)) {
+							$x .= "<optgroup label='Characteristic improvement'>\n";
+							foreach ($p->choosable_skills['chr'] as $s) {
+								global $CHR_CONV;
+								if ($CHR_CONV[$s] == 'ma' || $CHR_CONV[$s] == 'av' || $CHR_CONV[$s] == 'st') {
+									$x .= "<option value='ach_$s'>+ ".ucfirst($CHR_CONV[$s])."</option>\n";
+								} else {
+									$x .= "<option value='ach_$s'>- ".ucfirst($CHR_CONV[$s])."</option>\n";	
+								}
 							}
+							$x .= "</optgroup>\n";
 						}
-						$x .= "</optgroup>\n";
 					}
-					
 					$x .= "</select>\n";
 					$x .= "<select name='skillcost'>\n";
 					$x .= "<option selected value='99'>-- Select Skill Cost --</option>\n";
+
+					$costs = self::_sppCostTable();
+					$n = min($p->numberOfAchSkill(), 5);
+					$c = $costs[$n];
+
+					if ($rules['randomskillmanualentry'] != 1) {
+						$x .= "<option value='{$c[0]}|R'>{$c[0]} SPP (Random Primary)</option>\n";
+					}
+					if ($p->mv_spp >= $c[1]) {
+						$x .= "<option value='{$c[1]}|P'>{$c[1]} SPP (Chosen Primary)</option>\n";
+					}
+					if ($p->mv_spp >= $c[2]) {
+						$x .= "<option value='{$c[2]}|S'>{$c[2]} SPP (Chosen Secondary)</option>\n";
+					}
+					if ($p->mv_spp >= $c[3] && $rules['randomstatrolls'] == 1) {
+						$x .= "<option value='{$c[3]}|X'>{$c[3]} SPP (Random Stat Improvement)</option>\n";
+						$x .= "<option value='{$c[3]}|S'>{$c[3]} SPP (Chosen Skill instead of Rolled Stat)</option>\n";
+					}
+					$x .= "</select>\n";
+					$x .= "<input type='submit' name='button' value='OK' onClick=\"if(!confirm('".$lng->getTrn('common/confirm_box')."')){return false;}\">\n";
+					$x .= "<input type='hidden' name='type' value='skill'>\n";
+					$x .= "<input type='hidden' name='player' value='".$p->player_id."'>\n";
+					$x .= "</form>\n";
 					
-					// Variable SPP cost dependent on number of already achieved skills
-					// Hide random options if randomskillmanualentry is enabled
-					if ($p->numberOfAchSkill() == 0) { 
-						if ($rules['randomskillmanualentry'] != 1) {
-							$x .= "<option value='3|R'>3 SPP (Random Primary)</option>\n";
-						}
-						if ($p->mv_spp >= 6) { 
-							$x .= "<option value='6|P'>6 SPP (Chosen Primary)</option>\n";
-							if ($p->mv_spp >= 10) { 
-								$x .= "<option value='10|S'>10 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp >= 14) { 
-									$x .= "<option value='14|X'>14 SPP (Random Stat Improvement)</option>\n";
-									$x .= "<option value='14|S'>14 SPP (Chosen Skill instead of Rolled Stat)</option>\n";
-								}
-							}
-						}
-					} elseif ($p->numberOfAchSkill() == 1) { 
-						if ($rules['randomskillmanualentry'] != 1) {
-							$x .= "<option value='4|R'>4 SPP (Random Primary)</option>\n";
-						}
-						if ($p->mv_spp >= 8) { 
-							$x .= "<option value='8|P'>8 SPP (Chosen Primary)</option>\n";
-							if ($p->mv_spp >= 12) { 
-								$x .= "<option value='12|S'>12 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp >= 16) { 
-									$x .= "<option value='16|X'>16 SPP (Random Stat Improvement)</option>\n";
-									$x .= "<option value='16|S'>16 SPP (Chosen Skill instead of Rolled Stat)</option>\n";
-								}
-							}
-						}
-					} elseif ($p->numberOfAchSkill() == 2) { 
-						if ($rules['randomskillmanualentry'] != 1) {
-							$x .= "<option value='6|R'>6 SPP (Random Primary)</option>\n";
-						}
-						if ($p->mv_spp >= 12) { 
-							$x .= "<option value='12|P'>12 SPP (Chosen Primary)</option>\n";
-							if ($p->mv_spp >= 16) { 
-								$x .= "<option value='16|S'>16 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp >= 20) { 
-									$x .= "<option value='20|X'>20 SPP (Random Stat Improvement)</option>\n";
-									$x .= "<option value='20|S'>20 SPP (Chosen Skill instead of Rolled Stat)</option>\n";
-								}
-							}
-						}
-					} elseif ($p->numberOfAchSkill() == 3) { 
-						if ($rules['randomskillmanualentry'] != 1) {
-							$x .= "<option value='8|R'>8 SPP (Random Primary)</option>\n";
-						}
-						if ($p->mv_spp >= 16) { 
-							$x .= "<option value='16|P'>16 SPP (Chosen Primary)</option>\n";
-							if ($p->mv_spp >= 20) { 
-								$x .= "<option value='20|S'>20 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp >= 24) { 
-									$x .= "<option value='24|X'>24 SPP (Random Stat Improvement)</option>\n";
-									$x .= "<option value='24|S'>24 SPP (Chosen Skill instead of Rolled Stat)</option>\n";
-								}
-							}
-						}
-					} elseif ($p->numberOfAchSkill() == 4) { 
-						if ($rules['randomskillmanualentry'] != 1) {
-							$x .= "<option value='10|R'>10 SPP (Random Primary)</option>\n";
-						}
-						if ($p->mv_spp >= 20) { 
-							$x .= "<option value='20|P'>20 SPP (Chosen Primary)</option>\n";
-							if ($p->mv_spp >= 24) { 
-								$x .= "<option value='24|S'>24 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp >= 28) { 
-									$x .= "<option value='28|X'>28 SPP (Random Stat Improvement)</option>\n";
-									$x .= "<option value='28|S'>28 SPP (Chosen Skill instead of Rolled Stat)</option>\n";
-								}
-							}
-						}
-					} elseif ($p->numberOfAchSkill() == 5) { 
-						if ($rules['randomskillmanualentry'] != 1) {
-							$x .= "<option value='15|R'>15 SPP (Random Primary)</option>\n";
-						}
-						if ($p->mv_spp >= 30) { 
-							$x .= "<option value='30|P'>30 SPP (Chosen Primary)</option>\n";
-							if ($p->mv_spp >= 34) { 
-								$x .= "<option value='34|S'>34 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp >= 38) { 
-									$x .= "<option value='38|X'>38 SPP (Random Stat Improvement)</option>\n";
-									$x .= "<option value='38|S'>38 SPP (Chosen Skill instead of Rolled Stat)</option>\n";
-								}
-							}
-						}
-					} 
-					
-					$x .= '</select>
-					<input type="submit" name="button" value="OK" onClick="if(!confirm(\''.$lng->getTrn('common/confirm_box').'\')){return false;}">
-					<input type="hidden" name="type" value="skill">
-					<input type="hidden" name="player" value="'.$p->player_id.'">
-					</form>
-					';
-					
-					// Show random skill message below the dropdown if randomskillmanualentry is enabled
+					// Show random skill message below the dropdown if randomskillmanualentry is enabled and also checks if randomstat is enabled
 					if ($rules['randomskillmanualentry'] == 1) {
-						$x .= "<BR><small>&nbsp;&nbsp;&nbsp;<u>Random skill available, see Team management box below</u></small>";
+						$hasEnoughForStat = ($p->mv_spp >= $c[3]);
+						$showStat = ($hasEnoughForStat && $rules['randomstatrolls'] != 1);
+						if ($showStat) {
+							$x .= "<BR><small>&nbsp;&nbsp;&nbsp;<u>Random skill or stat increase available, see Team management box below</u></small>";
+						} else {
+							$x .= "<BR><small>&nbsp;&nbsp;&nbsp;<u>Random skill available, see Team management box below</u></small>";
+						}
 					}
 					
 					$x .= '</td>';
@@ -2020,9 +1992,78 @@ class Team_HTMLOUT extends Team
 			<?php
 		}
 	}
+	
+	private static function _sppCostTable() {
+		// Indexed by numberOfAchSkill() (0-5)
+		// [random_primary, chosen_primary, chosen_secondary, stat_increase]
+		return array(
+			array(3,  6,  10, 14),
+			array(4,  8,  12, 16),
+			array(6,  12, 16, 20),
+			array(8,  16, 20, 24),
+			array(10, 20, 24, 28),
+			array(15, 30, 34, 38),
+		);
+	}
+	
+	/**
+	 * Build stat improvement data for a player (current value, improvements, caps).
+	 * Used to populate JS data attributes for the random stat modal.
+	 */
+	private static function _buildStatData($p) {
+		// Count improvements from ach_chr_skills table
+		$result = mysql_query(
+			"SELECT chr_id, COUNT(*) as cnt FROM ach_chr_skills "
+			. "WHERE f_pid = " . (int)$p->player_id . " GROUP BY chr_id"
+		);
+		$improvements = array('ma'=>0,'st'=>0,'ag'=>0,'pa'=>0,'av'=>0);
+		global $CHR_CONV;
+		while ($row = mysql_fetch_assoc($result)) {
+			$chrKey = isset($CHR_CONV[$row['chr_id']]) ? $CHR_CONV[$row['chr_id']] : null;
+			if ($chrKey && isset($improvements[$chrKey])) {
+				$improvements[$chrKey] = (int)$row['cnt'];
+			}
+		}
+		return array(
+			'ma' => array('current' => (int)$p->ma, 'improvements' => $improvements['ma']),
+			'st' => array('current' => (int)$p->st, 'improvements' => $improvements['st']),
+			'ag' => array('current' => (int)$p->ag, 'improvements' => $improvements['ag']),
+			'pa' => array('current' => (int)$p->pa, 'improvements' => $improvements['pa']),
+			'av' => array('current' => (int)$p->av, 'improvements' => $improvements['av']),
+		);
+	}
+
+	/**
+	 * Returns a string of category letters the player has Primary access to (e.g. "GASP").
+	 */
+	private static function _getPrimaryCategories($p, $team, $DEA) {
+		foreach ($DEA[$team->f_rname]['players'] as $posName => $posDetails) {
+			if ($posDetails['pos_id'] == $p->f_pos_id) {
+				return isset($posDetails['norm']) ? implode('', (array)$posDetails['norm']) : '';
+			}
+		}
+		return '';
+	}
+
+	/**
+	 * Returns a string of category letters the player has Secondary access to (e.g. "SM"),
+	 * excluding categories already in Primary.
+	 */
+	private static function _getSecondaryCategories($p, $team, $DEA) {
+		foreach ($DEA[$team->f_rname]['players'] as $posName => $posDetails) {
+			if ($posDetails['pos_id'] == $p->f_pos_id) {
+				$primary   = isset($posDetails['norm']) ? (array)$posDetails['norm'] : array();
+				$secondary = isset($posDetails['doub']) ? (array)$posDetails['doub'] : array();
+				// Only return cats not already in primary
+				$diff = array_diff($secondary, $primary);
+				return implode('', $diff);
+			}
+		}
+		return '';
+	}
 
 	private function _teamManagementBox($players, $team) {
-		global $lng, $rules, $DEA, $T_ALLOWED_PLAYER_NR;
+		global $lng, $rules, $DEA, $T_ALLOWED_PLAYER_NR, $skillididx;
 		?>
 		<!-- Following HTML is from class_team_htmlout.php _teamManagementBox -->
 		<div class="boxTeamPage">
@@ -2040,7 +2081,8 @@ class Team_HTMLOUT extends Team
 					'unbuy_player'      => $lng->getTrn($base.'/box_tm/unbuy_player'),
 					'rename_player'     => $lng->getTrn($base.'/box_tm/rename_player'),
 					'renumber_player'   => $lng->getTrn($base.'/box_tm/renumber_player'),				
-					'random_skill'   	=> $lng->getTrn($base.'/box_tm/random_skill'),				
+					'random_skill'   	=> $lng->getTrn($base.'/box_tm/random_skill'),
+					'random_stat'    	=> $lng->getTrn($base.'/box_tm/random_stat'),					
 					'expensive_mistakes' => $lng->getTrn($base.'/box_tm/expensive_mistakes'),
 					'retire_player'   	=> $lng->getTrn($base.'/box_tm/retire_player'),
 					'rename_team'       => $lng->getTrn($base.'/box_tm/rename_team'),
@@ -2053,6 +2095,10 @@ class Team_HTMLOUT extends Team
 			# If random skills are turned off in the settings, hide option
 			if ($rules['randomskillrolls'] == 1) {
 			unset($tmanage['random_skill']);
+			}
+			# If random stat increases are turned off in the settings, hide option
+			if ($rules['randomstatrolls'] == 1) {
+				unset($tmanage['random_stat']);
 			}
 			# If a team league has already been selected OR if it does not apply, hide option
 			if (strlen($team->getLeaguechosen()) >= 1 || strlen($team->getLeagueoptions()) == 1  ) { 
@@ -2068,7 +2114,7 @@ class Team_HTMLOUT extends Team
 			}
 			# If one of these are selected from the menu, a JavaScript confirm prompt is displayed before submitting.
 			# Note: Don't add "hire_player" here - players may be un-bought if not having played any games.
-			$tmange_confirm = array('hire_journeyman', 'fire_player', 'buy_goods', 'drop_goods','retire_player','select_league','select_rule','select_captain','random_skill');
+			$tmange_confirm = array('hire_journeyman', 'fire_player', 'buy_goods', 'drop_goods','retire_player','select_league','select_rule','select_captain','random_skill','random_stat');
 			// Set default choice.
 			if (!isset($_POST['menu_tmanage'])) {
 				reset($tmanage);
@@ -2271,10 +2317,10 @@ class Team_HTMLOUT extends Team
 					<?php
 					$DISABLE = true;
 					
-					// Count rostered players (not sold, not dead, not retired, not journeymen)
+					// Count rostered players (not sold, not dead, not retired, not journeymen, not MNG)
 					$rostered_players = 0;
 					foreach ($players as $p) {
-						if (!$p->is_dead && !$p->is_sold && !$p->is_retired && !$p->is_journeyman) {
+						if (!$p->is_dead && !$p->is_sold && !$p->is_retired && !$p->is_journeyman && !$p->is_mng) {
 							$rostered_players++;
 						}
 					}
@@ -2425,6 +2471,9 @@ class Team_HTMLOUT extends Team
 				 **************/
 				case 'random_skill':
 				echo $lng->getTrn('profile/team/box_tm/desc/random_skill');
+				if ($rules['randomstatrolls'] == 1) {
+					echo $lng->getTrn('profile/team/box_tm/desc/random_skill2');
+				}
 				?>
 				<hr><br>
 				<?php echo $lng->getTrn('common/player');?>:<br>
@@ -2479,201 +2528,552 @@ class Team_HTMLOUT extends Team
 					</div>
 				</div>
 				
-			<script>
-			// Category name mapping
-			var categoryNames = {
-				'G': 'General',
-				'A': 'Agility',
-				'D': 'Devious',
-				'S': 'Strength',
-				'P': 'Passing',
-				'M': 'Mutation'
-			};
+				<script>
+				// Category name mapping
+				var categoryNames = {
+					'G': 'General',
+					'A': 'Agility',
+					'D': 'Devious',
+					'S': 'Strength',
+					'P': 'Passing',
+					'M': 'Mutation'
+				};
 
-			// Track if skills have been generated
-			var skillsGenerated = false;
+				// Track if skills have been generated
+				var skillsGenerated = false;
 
-			// Update skill categories when player changes
-			function updateSkillCategories() {
-				var playerSelect = document.getElementById('random_skill_player');
-				var skillCatSelect = document.getElementById('random_skill_cat');
-				
-				var selectedPlayer = playerSelect.options[playerSelect.selectedIndex];
-				
-				if (!selectedPlayer) {
-					skillCatSelect.innerHTML = '<option value="">-- Select player first --</option>';
-					return;
-				}
-				
-				// Always use Primary for Third Season rules
-				var availableCategories = selectedPlayer.getAttribute('data-primary') || '';
-				
-				// Clear and rebuild category dropdown
-				skillCatSelect.innerHTML = '';
-				
-				if (availableCategories.length === 0) {
-					skillCatSelect.innerHTML = '<option value="">-- No primary categories available --</option>';
-					return;
-				}
-				
-				// Add available categories
-				for (var i = 0; i < availableCategories.length; i++) {
-					var cat = availableCategories.charAt(i);
-					if (categoryNames[cat]) {
-						var option = document.createElement('option');
-						option.value = cat;
-						option.textContent = categoryNames[cat];
-						skillCatSelect.appendChild(option);
-					}
-				}
-			}
-
-			// Attach event listener
-			document.getElementById('random_skill_player').addEventListener('change', function() {
-				// Reset the generated flag when player changes
-				skillsGenerated = false;
-				document.getElementById('generate_random_skills').disabled = false;
-				updateSkillCategories();
-			});
-
-			// Initialize on page load
-			updateSkillCategories();
-
-			document.getElementById('generate_random_skills').addEventListener('click', function() {
-				const playerId = document.getElementById('random_skill_player').value;
-				const skillType = 'P'; // Always Primary for Third Season rules
-				const skillCat = document.getElementById('random_skill_cat').value;
-				
-				if (!playerId) {
-					alert('Please select a player');
-					return;
-				}
-				
-				if (!skillCat) {
-					alert('Please select a skill category');
-					return;
-				}
-
-				// NEW: Confirmation before rolling
-				const playerSelect = document.getElementById('random_skill_player');
-				const skillCatSelect = document.getElementById('random_skill_cat');
-				const playerName = playerSelect.options[playerSelect.selectedIndex].text;
-				const catName = skillCatSelect.options[skillCatSelect.selectedIndex].text;
-				
-				if (!confirm('Rolling a random Primary skill for\n\nPlayer: ' + playerName + '\nCategory: ' + catName + '\n\nAre you sure? This cannot be undone!')) {
-					return;
-				}
-
-				// Show loading in modal
-				const modal = document.getElementById('skill_selection_modal');
-				const skillOptions = document.getElementById('skill_options');
-				skillOptions.innerHTML = '<p>Rolling dice... 🎲🎲</p>';
-				modal.style.display = 'block';
-				
-				// AJAX call to get 2 random skills
-				fetch('lib/class_random_skills.php', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded',
-					},
-					body: 'player_id=' + playerId + '&skill_type=' + skillType + '&skill_cat=' + skillCat
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.error) {
-						skillOptions.innerHTML = '<p style="color:red;">' + data.error + '</p>';
-						// Add close button on error
-						skillOptions.innerHTML += '<br><button type="button" onclick="closeSkillModal()" style="background:#ccc; padding:8px 16px; border:none; border-radius:4px; cursor:pointer;">Close</button>';
+				// Update skill categories when player changes
+				function updateSkillCategories() {
+					var playerSelect = document.getElementById('random_skill_player');
+					var skillCatSelect = document.getElementById('random_skill_cat');
+					
+					var selectedPlayer = playerSelect.options[playerSelect.selectedIndex];
+					
+					if (!selectedPlayer) {
+						skillCatSelect.innerHTML = '<option value="">-- Select player first --</option>';
 						return;
 					}
 					
-					// Mark that skills have been generated - disable the generate button
-					skillsGenerated = true;
-					document.getElementById('generate_random_skills').disabled = true;
-					document.getElementById('generate_random_skills').textContent = 'Skills Generated - Choose One Above';
+					// Always use Primary for Third Season rules
+					var availableCategories = selectedPlayer.getAttribute('data-primary') || '';
 					
-					// Display the 2 skills as buttons
-					let html = '';
-					data.skills.forEach((skill, index) => {
-						// Determine border color based on elite status
-						const borderColor = skill.is_elite ? '#FF9800' : '#ddd';
-						const hoverBorderColor = skill.is_elite ? '#F57C00' : '#4CAF50';
-						
-						html += '<div style="margin:10px 0; padding:15px; border:2px solid ' + borderColor + '; border-radius:5px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor=\'' + hoverBorderColor + '\'; this.style.background=\'#f0f9f0\'" onmouseout="this.style.borderColor=\'' + borderColor + '\'; this.style.background=\'white\'" onclick="selectSkill(' + playerId + ', ' + skill.id + ')">';
-						html += '<div style="color:#888; font-size:12px; margin-bottom:5px;">🎲 ' + skill.roll_info + '</div>';
-						html += '<strong style="font-size:18px;">' + skill.name + '</strong>';
-						
-						// Add Elite indicator if applicable
-						if (skill.is_elite) {
-							html += ' <span style="background:#FF9800; color:white; padding:2px 6px; border-radius:3px; font-size:11px; font-weight:bold;">ELITE</span>';
-						}
-						
-						html += '<br>';
-						
-						if (skill.description) {
-							html += '<span style="color:#666;">' + skill.description + '</span><br>';
-						}
-						
-						// Add SPP cost and value increase info
-						html += '<div style="margin-top:8px; padding-top:8px; border-top:1px solid #eee; font-size:13px; color:#555;">';
-						html += '<span style="margin-right:15px;">💎 <strong>-' + skill.spp_cost + ' SPP</strong></span>';
-						
-						// Format value increase (convert 20000 to 20k, 30000 to 30k)
-						const valueInK = (skill.value_increase / 1000) + 'k';
-						html += '<span>💰 <strong>+' + valueInK + '</strong> value</span>';
-						html += '</div>';
-						
-						html += '</div>';
-					});
+					// Clear and rebuild category dropdown
+					skillCatSelect.innerHTML = '';
 					
-					// Check if both skills are the same
-					if (data.skills[0].id === data.skills[1].id) {
-						html += '<p style="color:#ff9800; font-style:italic; text-align:center; margin-top:10px;">⚠️ Same skill rolled twice - you must select this skill!</p>';
+					if (availableCategories.length === 0) {
+						skillCatSelect.innerHTML = '<option value="">-- No primary categories available --</option>';
+						return;
 					}
 					
-					skillOptions.innerHTML = html;
-				})
-				.catch(error => {
-					skillOptions.innerHTML = '<p style="color:red;">Error generating skills. Please try again.</p>';
-					skillOptions.innerHTML += '<br><button type="button" onclick="closeSkillModal()" style="background:#ccc; padding:8px 16px; border:none; border-radius:4px; cursor:pointer;">Close</button>';
-					console.error('Error:', error);
+					// Add available categories
+					for (var i = 0; i < availableCategories.length; i++) {
+						var cat = availableCategories.charAt(i);
+						if (categoryNames[cat]) {
+							var option = document.createElement('option');
+							option.value = cat;
+							option.textContent = categoryNames[cat];
+							skillCatSelect.appendChild(option);
+						}
+					}
+				}
+
+				// Attach event listener
+				document.getElementById('random_skill_player').addEventListener('change', function() {
+					// Reset the generated flag when player changes
+					skillsGenerated = false;
+					document.getElementById('generate_random_skills').disabled = false;
+					updateSkillCategories();
 				});
-			});
 
-			function selectSkill(playerId, skillId) {
-				console.log('selectSkill called with:', playerId, skillId);
-				
-				// Set hidden form values
-				document.getElementById('final_player_id').value = playerId;
-				document.getElementById('final_skill_id').value = skillId;
-				document.getElementById('final_skill_type').value = 'P'; // Always Primary
-				
-				console.log('Submitting with skill type: P');
-				
-				// Submit the form
-				document.getElementById('final_skill_form').submit();
-			}
+				// Initialize on page load
+				updateSkillCategories();
 
-			function closeSkillModal() {
-				// Only allow closing on error (when skills haven't been successfully generated)
-				if (!skillsGenerated) {
-					document.getElementById('skill_selection_modal').style.display = 'none';
-				}
-			}
+				document.getElementById('generate_random_skills').addEventListener('click', function() {
+					const playerId = document.getElementById('random_skill_player').value;
+					const skillType = 'P'; // Always Primary for Third Season rules
+					const skillCat = document.getElementById('random_skill_cat').value;
+					
+					if (!playerId) {
+						alert('Please select a player');
+						return;
+					}
+					
+					if (!skillCat) {
+						alert('Please select a skill category');
+						return;
+					}
 
-			// Prevent closing modal by clicking outside when skills are generated
-			document.getElementById('skill_selection_modal').addEventListener('click', function(e) {
-				if (e.target === this && skillsGenerated) {
-					alert('You must choose one of the two skills. You cannot cancel or re-roll!');
-				} else if (e.target === this && !skillsGenerated) {
-					closeSkillModal();
-				}
-			});
-			</script>
+					// NEW: Confirmation before rolling
+					const playerSelect = document.getElementById('random_skill_player');
+					const skillCatSelect = document.getElementById('random_skill_cat');
+					const playerName = playerSelect.options[playerSelect.selectedIndex].text;
+					const catName = skillCatSelect.options[skillCatSelect.selectedIndex].text;
+					
+					if (!confirm('Rolling a random Primary skill for\n\nPlayer: ' + playerName + '\nCategory: ' + catName + '\n\nAre you sure? This cannot be undone!')) {
+						return;
+					}
+
+					// Show loading in modal
+					const modal = document.getElementById('skill_selection_modal');
+					const skillOptions = document.getElementById('skill_options');
+					skillOptions.innerHTML = '<p>Rolling dice... 🎲🎲</p>';
+					modal.style.display = 'block';
+					
+					// AJAX call to get 2 random skills
+					fetch('lib/class_random_skills.php', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded',
+						},
+						body: 'player_id=' + playerId + '&skill_type=' + skillType + '&skill_cat=' + skillCat
+					})
+					.then(response => response.json())
+					.then(data => {
+						if (data.error) {
+							skillOptions.innerHTML = '<p style="color:red;">' + data.error + '</p>';
+							// Add close button on error
+							skillOptions.innerHTML += '<br><button type="button" onclick="closeSkillModal()" style="background:#ccc; padding:8px 16px; border:none; border-radius:4px; cursor:pointer;">Close</button>';
+							return;
+						}
 						
-			<?php
-			break;
+						// Mark that skills have been generated - disable the generate button
+						skillsGenerated = true;
+						document.getElementById('generate_random_skills').disabled = true;
+						document.getElementById('generate_random_skills').textContent = 'Skills Generated - Choose One Above';
+						
+						// Display the 2 skills as buttons
+						let html = '';
+						data.skills.forEach((skill, index) => {
+							// Determine border color based on elite status
+							const borderColor = skill.is_elite ? '#FF9800' : '#ddd';
+							const hoverBorderColor = skill.is_elite ? '#F57C00' : '#4CAF50';
+							
+							html += '<div style="margin:10px 0; padding:15px; border:2px solid ' + borderColor + '; border-radius:5px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor=\'' + hoverBorderColor + '\'; this.style.background=\'#f0f9f0\'" onmouseout="this.style.borderColor=\'' + borderColor + '\'; this.style.background=\'white\'" onclick="selectSkill(' + playerId + ', ' + skill.id + ', \'' + skill.name.replace(/'/g, "\\'") + '\')">';
+							html += '<div style="color:#888; font-size:12px; margin-bottom:5px;">🎲 ' + skill.roll_info + '</div>';
+							html += '<strong style="font-size:18px;">' + skill.name + '</strong>';
+							
+							// Add Elite indicator if applicable
+							if (skill.is_elite) {
+								html += ' <span style="background:#FF9800; color:white; padding:2px 6px; border-radius:3px; font-size:11px; font-weight:bold;">ELITE</span>';
+							}
+							
+							html += '<br>';
+							
+							if (skill.description) {
+								html += '<span style="color:#666;">' + skill.description + '</span><br>';
+							}
+							
+							// Add SPP cost and value increase info
+							html += '<div style="margin-top:8px; padding-top:8px; border-top:1px solid #eee; font-size:13px; color:#555;">';
+							html += '<span style="margin-right:15px;">💎 <strong>-' + skill.spp_cost + ' SPP</strong></span>';
+							
+							// Format value increase (convert 20000 to 20k, 30000 to 30k)
+							const valueInK = (skill.value_increase / 1000) + 'k';
+							html += '<span>💰 <strong>+' + valueInK + '</strong> value</span>';
+							html += '</div>';
+							
+							html += '</div>';
+						});
+						
+						// Check if both skills are the same
+						if (data.skills[0].id === data.skills[1].id) {
+							html += '<p style="color:#ff9800; font-style:italic; text-align:center; margin-top:10px;">⚠️ Same skill rolled twice - you must select this skill!</p>';
+						}
+						
+						skillOptions.innerHTML = html;
+					})
+					.catch(error => {
+						skillOptions.innerHTML = '<p style="color:red;">Error generating skills. Please try again.</p>';
+						skillOptions.innerHTML += '<br><button type="button" onclick="closeSkillModal()" style="background:#ccc; padding:8px 16px; border:none; border-radius:4px; cursor:pointer;">Close</button>';
+						console.error('Error:', error);
+					});
+				});
+
+				function selectSkill(playerId, skillId, skillName) {
+					if (!confirm('You selected: ' + skillName + '\n\nAre you sure? This cannot be undone.')) {
+						return;
+					}
+					document.getElementById('final_player_id').value = playerId;
+					document.getElementById('final_skill_id').value = skillId;
+					document.getElementById('final_skill_type').value = 'P';
+					document.getElementById('final_skill_form').submit();
+				}
+
+				function closeSkillModal() {
+					// Only allow closing on error (when skills haven't been successfully generated)
+					if (!skillsGenerated) {
+						document.getElementById('skill_selection_modal').style.display = 'none';
+					}
+				}
+
+				// Prevent closing modal by clicking outside when skills are generated
+				document.getElementById('skill_selection_modal').addEventListener('click', function(e) {
+					if (e.target === this && skillsGenerated) {
+						alert('You must choose one of the two skills. You cannot cancel or re-roll!');
+					} else if (e.target === this && !skillsGenerated) {
+						closeSkillModal();
+					}
+				});
+				</script>
+							
+				<?php
+				break;
 				
+				/**************
+				 * Random Stat Increase
+				 **************/
+				case 'random_stat':
+					$costs = self::_sppCostTable();
+					echo $lng->getTrn('profile/team/box_tm/desc/random_stat');
+					?>
+					<hr><br>
+					<?php echo $lng->getTrn('common/player');?>:<br>
+					<select name="player" id="rstat_player_select">
+					<?php
+					$hasStatEligible = false;
+					foreach ($players as $p) {
+						if ($p->is_dead || $p->is_sold || $p->is_retired) continue;
+						$n = min($p->numberOfAchSkill(), 5);
+						$statCost = $costs[$n][3];
+						if ($p->mv_spp < $statCost) continue;
+
+						// Build cap/improvement data for JS
+						$statData = self::_buildStatData($p);
+
+						$p->setChoosableSkills();
+
+						// Build skill lists by category for the skill-instead picker
+						// keyed by category letter -> array of [id, name]
+						$normByCat = array();
+						$seenNorm = array();
+						foreach (array_unique($p->choosable_skills['norm']) as $sid) {
+							if (isset($seenNorm[$sid])) continue;
+							$seenNorm[$sid] = true;
+							$cat = get_alt_col('game_data_skills', 'skill_id', $sid, 'cat');
+							if (!$cat || $cat === 'E') continue;
+							if (!isset($normByCat[$cat])) $normByCat[$cat] = array();
+							$normByCat[$cat][] = array('id' => (int)$sid, 'name' => $skillididx[$sid]);
+						}
+						$doubByCat = array();
+						$seenDoub = array();
+						foreach (array_unique($p->choosable_skills['doub']) as $sid) {
+							if (isset($seenDoub[$sid])) continue;
+							$seenDoub[$sid] = true;
+							$cat = get_alt_col('game_data_skills', 'skill_id', $sid, 'cat');
+							if (!$cat || $cat === 'E') continue;
+							if (!isset($doubByCat[$cat])) $doubByCat[$cat] = array();
+							$doubByCat[$cat][] = array('id' => (int)$sid, 'name' => $skillididx[$sid]);
+						}
+						// Sort each category alphabetically by name
+						foreach ($normByCat as $cat => &$skills) usort($skills, function($a,$b){ return strcmp($a['name'],$b['name']); });
+						foreach ($doubByCat as $cat => &$skills) usort($skills, function($a,$b){ return strcmp($a['name'],$b['name']); });
+						unset($skills);
+
+						echo "<option value='$p->player_id' "
+							. "data-spp='$p->mv_spp' "
+							. "data-skills='$n' "
+							. "data-statcost='$statCost' "
+							. "data-statjson='" . htmlspecialchars(json_encode($statData), ENT_QUOTES) . "' "
+							. "data-primary='" . self::_getPrimaryCategories($p, $team, $DEA) . "' "
+							. "data-secondary='" . self::_getSecondaryCategories($p, $team, $DEA) . "' "
+							. "data-normbyCat='" . htmlspecialchars(json_encode($normByCat), ENT_QUOTES) . "' "
+							. "data-doubbycat='" . htmlspecialchars(json_encode($doubByCat), ENT_QUOTES) . "'"
+							. ">$p->nr $p->name ($p->mv_spp SPP)</option>\n";
+						$hasStatEligible = true;
+					}
+					?>
+					</select>
+
+					<br><br>
+					<div id="rstat_cost_display" style="color: var(--color-text-secondary); font-size: 13px;"></div>
+					<br>
+
+					<button type="button" id="rstat_roll_btn" <?php echo !$hasStatEligible ? 'disabled' : ''; ?>>
+						Generate Random Stat Increase
+					</button>
+
+					<!-- Result modal -->
+					<div id="rstat_modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000;">
+						<div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:30px; border-radius:10px; min-width:420px; max-width:560px; box-shadow:0 4px 20px rgba(0,0,0,0.3); color: #222;">
+							<h3 style="margin-top:0;" id="rstat_modal_title">Stat Roll Result</h3>
+							<div id="rstat_modal_body"></div>
+						</div>
+					</div>
+
+					<script>
+					(function() {
+						// D8 table: maps roll (1-8) to array of stat keys that are offered
+						var D8_TABLE = {
+							1: ['av'],
+							2: ['av','pa'],
+							3: ['av','ma','pa'],
+							4: ['av','ma','pa'],
+							5: ['ma','pa'],
+							6: ['ag','ma'],
+							7: ['ag','st'],
+							8: ['ma','st','ag','av','pa']  // "Any" — player chooses
+						};
+
+						// Stat display names
+						var STAT_NAMES = { ma:'MA', st:'ST', ag:'AG', pa:'PA', av:'AV' };
+
+						// Caps: maximum IMPROVED value (av & ma increase is good, ag/pa decrease of roll needed is good)
+						// For MA: max 9. For ST: max 8. For AV: max 11 (displayed as 11+). For AG: min 1+ (best). For PA: min 1+ (best).
+						// We track improvements as number of times improved, cap at 2.
+						// Stat floor/ceiling per stat key:
+						var STAT_CAPS = { ma:9, st:8, ag:1, pa:1, av:11 };
+
+						var playerSelect = document.getElementById('rstat_player_select');
+						var rollBtn      = document.getElementById('rstat_roll_btn');
+						var costDisplay  = document.getElementById('rstat_cost_display');
+						var modal        = document.getElementById('rstat_modal');
+						var modalBody    = document.getElementById('rstat_modal_body');
+
+						var lastRoll = null;
+						var rollLocked = false;
+						var currentStatData = null;
+
+						function getSelectedPlayerData() {
+							var opt = playerSelect.options[playerSelect.selectedIndex];
+							if (!opt) return null;
+							return {
+								id:         opt.value,
+								name:       opt.text,
+								spp:        parseInt(opt.getAttribute('data-spp')),
+								skills:     parseInt(opt.getAttribute('data-skills')),
+								statCost:   parseInt(opt.getAttribute('data-statcost')),
+								statData:   JSON.parse(opt.getAttribute('data-statjson')),
+								primary:    opt.getAttribute('data-primary'),   // e.g. "GASP"
+								secondary:  opt.getAttribute('data-secondary')  // e.g. "SM"
+							};
+						}
+
+						function updateCostDisplay() {
+							var pd = getSelectedPlayerData();
+							if (!pd) { costDisplay.innerHTML = ''; return; }
+							costDisplay.innerHTML = 'SPP cost for stat increase (or skill instead): <strong>' + pd.statCost + ' SPP</strong> &nbsp;|&nbsp; Current SPP: <strong>' + pd.spp + '</strong>';
+						}
+
+						function isStatAvailable(statKey, statData) {
+							var sd = statData[statKey];
+							if (!sd) return false;
+							if (sd.improvements >= 2) return false;
+							// Check cap
+							if (statKey === 'ma' || statKey === 'st' || statKey === 'av') {
+								if (sd.current >= STAT_CAPS[statKey]) return false;
+							} else {
+								// ag/pa: improvement lowers the roll target; cap = 1 (can't go below 1+)
+								if (sd.current <= STAT_CAPS[statKey]) return false;
+							}
+							return true;
+						}
+
+						function rollD8() {
+							return Math.floor(Math.random() * 8) + 1;
+						}
+
+						playerSelect.addEventListener('change', function() {
+							rollLocked = false;
+							rollBtn.disabled = false;
+							rollBtn.textContent = 'Roll D8 for Stat Increase';
+							updateCostDisplay();
+						});
+
+						updateCostDisplay();
+
+						rollBtn.addEventListener('click', function() {
+							var pd = getSelectedPlayerData();
+							if (!pd) { alert('Please select a player.'); return; }
+
+							// Confirmation popup
+							if (!confirm(
+								'Rolling a D8 stat increase for:\n\n'
+								+ 'Player: ' + pd.name + '\n'
+								+ 'SPP cost: ' + pd.statCost + ' SPP\n\n'
+								+ 'This cannot be undone. Proceed?'
+							)) return;
+
+							currentStatData = pd.statData;
+							var roll = rollD8();
+							lastRoll = roll;
+							var offered = D8_TABLE[roll];
+							var isAny = (roll === 8);
+
+							// Filter offered stats by availability
+							var available = offered.filter(function(s) {
+								return isStatAvailable(s, pd.statData);
+							});
+
+							var html = '<p style="font-size:15px;">&#127922; D8 roll: <strong>' + roll + '</strong></p>';
+
+							if (!isAny) {
+								html += '<p>Offered stat(s): <strong>' + offered.map(function(s){ return STAT_NAMES[s]; }).join(' or ') + '</strong></p>';
+							} else {
+								html += '<p>Result: <strong>Any</strong> — choose any available stat increase below.</p>';
+							}
+
+							if (available.length === 0) {
+								// No stat available — forced to skill
+								html += '<p style="color:#d32f2f;"><strong>All offered stats are at cap or have been improved twice. You must choose a skill instead.</strong></p>';
+							}
+
+							html += '<hr style="margin:12px 0;">';
+
+							// Stat buttons (only for available stats)
+							if (available.length > 0) {
+								html += '<p style="font-weight:500; margin-bottom:8px;">Choose a stat increase:</p>';
+								window.rstatSelectedStat = null;
+								available.forEach(function(s) {
+									var displayName = STAT_NAMES[s];
+									var desc = getStatDesc(s);
+									html += '<div id="rstat_stat_' + s + '" style="margin:8px 0; padding:12px 15px; border:2px solid #ddd; border-radius:5px; cursor:pointer;" '
+										+ 'onclick="selectStatOption(\'' + s + '\')">'
+										+ '<strong style="font-size:16px;">+ ' + displayName + '</strong>'
+										+ '<span style="color:#666; font-size:13px; margin-left:10px;">' + desc + '</span>'
+										+ '<div style="font-size:12px; color:#888; margin-top:4px;">'
+										+ pd.statCost + ' SPP &nbsp;|&nbsp; improved ' + pd.statData[s].improvements + '/2 times'
+										+ '</div>'
+										+ '</div>';
+								});
+							}
+
+							// Skill-instead section
+							html += '<hr style="margin:12px 0;">';
+							html += '<p style="font-weight:500; margin-bottom:8px;">Or choose a skill instead (same SPP cost):</p>';
+							html += buildSkillInsteadSection(pd);
+
+							html += '<hr style="margin:12px 0;">';
+							html += '<div style="margin-top:12px;">';
+							html += '<button type="button" id="rstat_confirm_btn" style="padding:10px 24px; background:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer; font-size:15px;" onclick="confirmStatChoice(' + pd.id + ', ' + pd.statCost + ')">';
+							html += 'Confirm Choice</button>';
+							html += '</div>';
+
+							modalBody.innerHTML = html;
+
+							// When skill dropdown changes, deselect any chosen stat
+							var skillSel = document.getElementById('rstat_skill_instead');
+							if (skillSel) {
+								skillSel.onchange = function() {
+									window.rstatSelectedStat = null;
+									['ma','st','ag','pa','av'].forEach(function(s) {
+										var el = document.getElementById('rstat_stat_' + s);
+										if (el) { el.style.borderColor = '#ddd'; el.style.background = 'white'; }
+									});
+								};
+							}
+
+							modal.style.display = 'block';
+							rollLocked = true;
+							rollBtn.disabled = true;
+							rollBtn.textContent = 'Roll made — choose above';
+						});
+
+						function getStatDesc(s) {
+							var descs = { ma:'Movement Allowance', st:'Strength', ag:'Agility', pa:'Passing Ability', av:'Armour Value' };
+							return descs[s] || '';
+						}
+
+						function buildSkillInsteadSection(pd) {
+							var catNames = { G:'General', A:'Agility', S:'Strength', P:'Passing', D:'Devious', M:'Mutation' };
+							var normByCat = JSON.parse(playerSelect.options[playerSelect.selectedIndex].getAttribute('data-normbycat') || '{}');
+							var doubByCat = JSON.parse(playerSelect.options[playerSelect.selectedIndex].getAttribute('data-doubbycat') || '{}');
+
+							var html = '<select id="rstat_skill_instead" style="width:100%; margin-top:4px; padding:4px;">';
+							html += '<option value="">-- Select a skill instead (optional) --</option>';
+
+							// Primary categories
+							var primary = pd.primary || '';
+							for (var i = 0; i < primary.length; i++) {
+								var cat = primary.charAt(i);
+								if (!catNames[cat] || !normByCat[cat] || normByCat[cat].length === 0) continue;
+								html += '<optgroup label="' + catNames[cat] + ' (Primary)">';
+								normByCat[cat].forEach(function(skill) {
+									html += '<option value="' + skill.id + '|N|' + pd.statCost + '">' + skill.name + '</option>';
+								});
+								html += '</optgroup>';
+							}
+
+							// Secondary categories
+							var secondary = pd.secondary || '';
+							for (var j = 0; j < secondary.length; j++) {
+								var scat = secondary.charAt(j);
+								if (!catNames[scat] || !doubByCat[scat] || doubByCat[scat].length === 0) continue;
+								html += '<optgroup label="' + catNames[scat] + ' (Secondary)">';
+								doubByCat[scat].forEach(function(skill) {
+									html += '<option value="' + skill.id + '|D|' + pd.statCost + '">' + skill.name + '</option>';
+								});
+								html += '</optgroup>';
+							}
+
+							html += '</select>';
+							return html;
+						}
+						
+						window.selectStatOption = function(statKey) {
+							// Deselect all stat boxes
+							var STAT_NAMES = { ma:'MA', st:'ST', ag:'AG', pa:'PA', av:'AV' };
+							Object.keys(STAT_NAMES).forEach(function(s) {
+								var el = document.getElementById('rstat_stat_' + s);
+								if (el) { el.style.borderColor = '#ddd'; el.style.background = 'white'; }
+							});
+							// Highlight selected
+							var selected = document.getElementById('rstat_stat_' + statKey);
+							if (selected) { selected.style.borderColor = '#4CAF50'; selected.style.background = '#f0f9f0'; }
+							// Store selection and clear skill dropdown
+							window.rstatSelectedStat = statKey;
+							var skillSelect = document.getElementById('rstat_skill_instead');
+							if (skillSelect) skillSelect.value = '';
+						};
+
+						window.confirmStatChoice = function(playerId, sppCost) {
+							var skillSelect = document.getElementById('rstat_skill_instead');
+							var skillVal = skillSelect ? skillSelect.value : '';
+
+							if (window.rstatSelectedStat) {
+								var statLabels = { ma:'MA', st:'ST', ag:'AG', pa:'PA', av:'AV' };
+								var statName = statLabels[window.rstatSelectedStat] || window.rstatSelectedStat;
+								if (!confirm('You selected: +' + statName + ' stat increase\nSPP cost: ' + sppCost + '\n\nAre you sure? This cannot be undone.')) {
+									return;
+								}
+								document.getElementById('rstat_final_player').value = playerId;
+								document.getElementById('rstat_final_stat').value   = window.rstatSelectedStat;
+								document.getElementById('rstat_final_cost').value   = sppCost;
+								document.getElementById('rstat_final_type').value   = 'apply_random_stat';
+								document.getElementById('rstat_final_form').submit();
+							} else if (skillVal) {
+								var parts     = skillVal.split('|');
+								var skillId   = parts[0];
+								var skillType = parts[1];
+								// Get the skill name from the dropdown option text
+								var skillName = skillSelect.options[skillSelect.selectedIndex].text;
+								var typeLabel = (skillType === 'D') ? 'Secondary' : 'Primary';
+								if (!confirm('You selected: ' + skillName + ' (' + typeLabel + ' skill)\nSPP cost: ' + sppCost + '\n\nAre you sure? This cannot be undone.')) {
+									return;
+								}
+								document.getElementById('rstat_final_player').value    = playerId;
+								document.getElementById('rstat_final_stat').value      = '';
+								document.getElementById('rstat_final_skill_id').value  = skillId;
+								document.getElementById('rstat_final_skilltype').value = skillType;
+								document.getElementById('rstat_final_cost').value      = sppCost;
+								document.getElementById('rstat_final_type').value      = 'apply_random_stat_skill';
+								document.getElementById('rstat_final_form').submit();
+							} else {
+								alert('Please either click a stat increase above, or choose a skill from the dropdown.');
+							}
+						};
+
+						// Prevent closing modal by clicking outside once roll is locked
+						modal.addEventListener('click', function(e) {
+							if (e.target === modal && rollLocked) {
+								alert('You must make a choice — select a stat or a skill to proceed.');
+							}
+						});
+					})();
+					</script>
+					<?php
+					$DISABLE = true; // OK button hidden — all submission via JS
+					break;
+	
 				/**************
 				 * Expensive Mistakes
 				 **************/
@@ -2888,14 +3288,21 @@ class Team_HTMLOUT extends Team
 		<input type="hidden" name="skill_type" id="final_skill_type">
 		<input type="hidden" name="type" value="apply_random_skill">
 	</form>
+	<form id="rstat_final_form" method="post" style="display:none;">
+		<input type="hidden" name="player"         id="rstat_final_player">
+		<input type="hidden" name="stat_key"       id="rstat_final_stat">
+		<input type="hidden" name="skill_id"       id="rstat_final_skill_id">
+		<input type="hidden" name="skill_type"     id="rstat_final_skilltype">
+		<input type="hidden" name="spp_cost"       id="rstat_final_cost">
+		<input type="hidden" name="num_skills"     id="rstat_final_skills">
+		<input type="hidden" name="type"           id="rstat_final_type">
+	</form>
 	<script>
-	// Hide OK button for random_skill option
-	if (document.querySelector('select[name="menu_tmanage"]') && 
-	    document.querySelector('select[name="menu_tmanage"]').value === 'random_skill') {
-	    var okButton = document.getElementById('form_ok_button');
-	    if (okButton) {
-	        okButton.style.display = 'none';
-	    }
+	var _menuVal = document.querySelector('select[name="menu_tmanage"]')
+		? document.querySelector('select[name="menu_tmanage"]').value : '';
+	if (_menuVal === 'random_skill' || _menuVal === 'random_stat') {
+		var okButton = document.getElementById('form_ok_button');
+		if (okButton) okButton.style.display = 'none';
 	}
 	</script>
 	<?php

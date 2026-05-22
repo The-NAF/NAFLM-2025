@@ -170,7 +170,8 @@ function racesTrans($str) {
 
 function specialsTrans($str) {
     // Translates a commaseperated string of special rules IDs to a comma (plus space) seperated rule name string.
-    $trans = array_map(create_function('$s', 'global $specialruleididx; return $specialruleididx[$s];'), is_array($str) ? $str : explode(',', $str));
+    if (empty($str) || $str === array()) return is_array($str) ? array() : '';
+    $trans = array_map(function($s) { global $specialruleididx; return isset($specialruleididx[$s]) ? $specialruleididx[$s] : ''; }, is_array($str) ? $str : explode(',', $str));
     return is_array($str) ? $trans : implode(', ', $trans);
 }
 
