@@ -797,7 +797,8 @@ class Team_HTMLOUT extends Team
 					}
 					if ($p->mv_spp >= $c[3] && $rules['randomstatrolls'] == 1) {
 						$x .= "<option value='{$c[3]}|X'>{$c[3]} SPP (Random Stat Improvement)</option>\n";
-						$x .= "<option value='{$c[3]}|S'>{$c[3]} SPP (Chosen Skill instead of Rolled Stat)</option>\n";
+						$x .= "<option value='{$c[3]}|P'>{$c[3]} SPP (Chosen Primary instead of Rolled Stat)</option>\n";
+						$x .= "<option value='{$c[3]}|S'>{$c[3]} SPP (Chosen Secondary instead of Rolled Stat)</option>\n";
 					}
 					$x .= "</select>\n";
 					$x .= "<input type='submit' name='button' value='OK' onClick=\"if(!confirm('".$lng->getTrn('common/confirm_box')."')){return false;}\">\n";
