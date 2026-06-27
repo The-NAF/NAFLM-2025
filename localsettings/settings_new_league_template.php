@@ -79,6 +79,8 @@ $rules['megastars'] 				= 0; 	//Mega-Stars
 $rules['base_inducements'] 			= 1; 	//Base Inducements Only
 // Allow/disallow coaches from firng players that would bring the team to under 11 players: 0 = disable. 1 = enabled.
 $rules['fireunder11'] 				= 0; 	//Allow firing under 11 players
+// Toggle enforcement of post match hire/fire order: 0 = disable. 1 = enabled.
+$rules['enforce_hire_fire_order'] 	= 0; 	//Enforce Hire/Fire Order
 // Additional League Points.
 $rules['major_win_tds'] 			= 0; 	//Major Win for scoring how many TDs
 $rules['major_win_pts'] 			= 0; 	//Bonus points for a Major Win

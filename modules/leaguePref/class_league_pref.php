@@ -115,6 +115,7 @@ public $randomskillmanualentry = 0;
 public $megastars = 0;
 public $base_inducements = 0;
 public $fireunder11 = 0;
+public $enforce_hire_fire_order = 0;
 public $major_win_tds = 0;
 public $major_win_pts = 0;
 public $clean_sheet_pts = 0;
@@ -128,7 +129,7 @@ public $discord_webhook_url = '';
 public $discord_post_permission = 'admins';
 
 function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $helf, $slann, 
-$randomskillrolls, $randomstatrolls, $randomskillmanualentry, $megastars, $base_inducements, $fireunder11, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts, 
+$randomskillrolls, $randomstatrolls, $randomskillmanualentry, $megastars, $base_inducements, $fireunder11, $enforce_hire_fire_order, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts, 
 $prayer_cost, $banned_stars, $megastar_tax, $min_tv, $discord_webhook_url, $discord_post_permission) {
 	global $settings;
 	$this->lid = $lid;
@@ -152,6 +153,7 @@ $prayer_cost, $banned_stars, $megastar_tax, $min_tv, $discord_webhook_url, $disc
     $this->megastars = $megastars;
     $this->base_inducements = $base_inducements;
     $this->fireunder11 = $fireunder11;
+	$this->enforce_hire_fire_order  = $enforce_hire_fire_order;
     $this->major_win_tds = $major_win_tds;
     $this->major_win_pts = $major_win_pts;
     $this->clean_sheet_pts = $clean_sheet_pts;
@@ -186,6 +188,7 @@ public static function getLeaguePreferences() {
 				$rules['helf'],$rules['slann'],
 				$rules['randomskillrolls'],$rules['randomstatrolls'],$rules['randomskillmanualentry'],
 				$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'],
+				isset($rules['enforce_hire_fire_order']) ? $rules['enforce_hire_fire_order'] : 0,
 				$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
 				$rules['major_beat_cas'],$rules['major_beat_pts'],
 				isset($rules['prayer_cost']) ? $rules['prayer_cost'] : 0,
@@ -201,7 +204,7 @@ public static function getLeaguePreferences() {
 			$settings['lang'],
 			$rules['helf'],$rules['slann'],
 			$rules['randomskillrolls'],$rules['randomstatrolls'],$rules['randomskillmanualentry'],
-			$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'],
+			$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'], 0,
 			$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
 			$rules['major_beat_cas'],$rules['major_beat_pts'],
 			0, '', 0, 0, '', 'admins');
@@ -236,6 +239,7 @@ private function syncSettingsWithTemplate() {
         'megastars',
         'base_inducements',
         'fireunder11',
+        'enforce_hire_fire_order',
         'major_win_tds',
         'major_win_pts',
         'clean_sheet_pts',
@@ -336,13 +340,12 @@ function save() {
     $settingsFileContents = $this->updateRule($settingsFileContents, 'megastars', $this->megastars == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'base_inducements', $this->base_inducements == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'fireunder11', $this->fireunder11 == 1 ? 1 : 0);
+    $settingsFileContents = $this->updateRule($settingsFileContents, 'enforce_hire_fire_order', $this->enforce_hire_fire_order == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'major_win_tds', $this->major_win_tds > 0 ? $this->major_win_tds : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'major_win_pts', $this->major_win_pts > 0 ? $this->major_win_pts : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'clean_sheet_pts', $this->clean_sheet_pts > 0 ? $this->clean_sheet_pts : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'major_beat_cas', $this->major_beat_cas > 0 ? $this->major_beat_cas : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'major_beat_pts', $this->major_beat_pts > 0 ? $this->major_beat_pts : 0);
-    
-    // NEW SETTINGS
     $settingsFileContents = $this->updateRule($settingsFileContents, 'prayer_cost', $this->prayer_cost > 0 ? $this->prayer_cost : 0);
     $banned_stars_clean = mysql_real_escape_string(trim($this->banned_stars));
     $settingsFileContents = $this->updateRule($settingsFileContents, 'banned_stars', $banned_stars_clean, true);
@@ -358,6 +361,20 @@ function save() {
     $settings['stylesheet'] = $this->core_theme_id;
     $settings['lang'] = $this->language;
     $rules['initial_treasury'] = $this->tv;
+    $rules['helf'] = $this->helf;
+    $rules['slann'] = $this->slann;
+    $rules['randomskillrolls'] = $this->randomskillrolls;
+    $rules['randomstatrolls'] = $this->randomstatrolls;
+    $rules['randomskillmanualentry'] = $this->randomskillmanualentry;
+    $rules['megastars'] = $this->megastars;
+    $rules['base_inducements'] = $this->base_inducements;
+    $rules['fireunder11'] = $this->fireunder11;
+    $rules['enforce_hire_fire_order'] = $this->enforce_hire_fire_order;
+    $rules['major_win_tds'] = $this->major_win_tds;
+    $rules['major_win_pts'] = $this->major_win_pts;
+    $rules['clean_sheet_pts'] = $this->clean_sheet_pts;
+    $rules['major_beat_cas'] = $this->major_beat_cas;
+    $rules['major_beat_pts'] = $this->major_beat_pts;
     $rules['prayer_cost'] = $this->prayer_cost;
     $rules['banned_stars'] = $this->banned_stars;
     $rules['megastar_tax'] = $this->megastar_tax;
@@ -577,6 +594,15 @@ public static function showLeaguePreferences() {
                             <b><?php echo $lng->getTrn('fireunder11', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
+                    <tr title="<?php echo $lng->getTrn('enforce_hire_fire_order_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('enforce_hire_fire_order_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type='checkbox' name='enforce_hire_fire_order' value='1' onclick='slideToggleFast("enforce_hire_fire_order");'	<?php if($rules['enforce_hire_fire_order'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('enforce_hire_fire_order', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
                     <tr title="<?php echo $lng->getTrn('randomskillrolls_help', 'LeaguePref'); ?>">
                         <td>
                             <?php echo $lng->getTrn('randomskillrolls_title', 'LeaguePref'); ?>
@@ -751,6 +777,7 @@ public static function handleActions() {
 				isset($_POST['megastars']) ? $_POST['megastars'] : 0,
 				isset($_POST['base_inducements']) ? $_POST['base_inducements'] : 0,
 				isset($_POST['fireunder11']) ? $_POST['fireunder11'] : 0,
+				isset($_POST['enforce_hire_fire_order']) ? $_POST['enforce_hire_fire_order'] : 0,
 				$_POST['major_win_tds'],$_POST['major_win_pts'],$_POST['clean_sheet_pts'],
 				$_POST['major_beat_cas'],$_POST['major_beat_pts'],
 				$_POST['prayer_cost'], $banned_stars, $_POST['megastar_tax'], $_POST['min_tv'],

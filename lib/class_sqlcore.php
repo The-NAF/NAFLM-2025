@@ -1445,4 +1445,57 @@ class SQLCore
 		}
 		return array($status,$added,$dropped);
 	}
+	
+	public static function updateCoreTables() {
+        global $core_tables;
+        $status = true;
+        $results = array();
+        foreach ($core_tables as $tblName => $def) {
+            // Step 1: Create table if it does not yet exist
+            $created = Table::createTableIfNotExists($tblName, $def);
+            if (!$created) {
+                $results[] = array(
+                    'table' => $tblName,
+                    'ok'    => false,
+                    'msg'   => 'Failed to create table'
+                );
+                $status = false;
+                continue;
+            }
+            // Step 2: Find columns in $def missing from the live table
+            $descResult = mysql_query("DESCRIBE `$tblName`");
+            if (!$descResult) {
+                $results[] = array(
+                    'table' => $tblName,
+                    'ok'    => false,
+                    'msg'   => 'Could not DESCRIBE table'
+                );
+                $status = false;
+                continue;
+            }
+            $existingCols = array();
+            while ($row = mysql_fetch_assoc($descResult)) {
+                $existingCols[] = $row['Field'];
+            }
+            $added = array();
+            foreach ($def as $colName => $colDef) {
+                if (!in_array($colName, $existingCols)) {
+                    $ok = mysql_query(
+                        "ALTER TABLE `$tblName` ADD COLUMN `$colName` $colDef"
+                    );
+                    $status &= $ok;
+                    $added[] = $colName . ($ok ? '' : ' (FAILED)');
+                }
+            }
+            $msg = empty($added)
+                ? 'OK'
+                : 'Added column(s): ' . implode(', ', $added);
+            $results[] = array(
+                'table' => $tblName,
+                'ok'    => $status,
+                'msg'   => $msg
+            );
+        }
+        return $results;
+    }
 }

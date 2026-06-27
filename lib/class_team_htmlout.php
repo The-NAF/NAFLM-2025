@@ -170,6 +170,13 @@ class Team_HTMLOUT extends Team
 		if (!isset($_POST['type']) || !$ALLOW_EDIT) {
 			return false;
 		}
+		// Handle hire/fire phase skip (session only, no DB write)
+		if ($_POST['type'] === 'skip_hire_phase' && $ALLOW_EDIT) {
+			$_SESSION['hire_fire_phase_' . $this->team_id] = 'fire';
+			$tid = (int) $this->team_id;
+			echo '<script>window.location.replace("index.php?section=objhandler&type=1&obj=2&obj_id=' . $tid . '&subsec=man");</script>';
+			exit;
+		}
 		// Handle request.
 		if (get_magic_quotes_gpc()) {
 			$_POST['name']     = stripslashes(isset($_POST['name'])  ? $_POST['name']  : '');
@@ -233,6 +240,31 @@ class Team_HTMLOUT extends Team
 				$skillType = isset($_POST['skill_type']) ? $_POST['skill_type'] : null;
 				
 				if ($playerId && $skillId && $skillType) {
+					// Validate against pending roll record
+                    $pid_check = (int)$playerId;
+                    $pr = mysql_fetch_assoc(mysql_query(
+                        "SELECT roll_id, roll_data FROM pending_rolls "
+                        . "WHERE player_id = $pid_check AND is_confirmed = 0 "
+                        . "AND roll_type = 'skill' LIMIT 1"
+                    ));
+                    if (!$pr) {
+                        status(false, 'No pending skill roll found for this player. '
+                            . 'Please generate a roll first.');
+                        break;
+                    }
+                    // Verify the submitted skill was one of the two options offered
+                    $offered = json_decode($pr['roll_data'], true);
+                    $validIds = array();
+                    if (is_array($offered)) {
+                        foreach ($offered as $opt) {
+                            $validIds[] = (int)$opt['id'];
+                        }
+                    }
+                    if (!in_array((int)$skillId, $validIds)) {
+                        status(false, 'Submitted skill does not match the pending roll. '
+                            . 'You must choose one of the two skills that were rolled.');
+                        break;
+                    }
 					$p = new Player($playerId);
 					
 					// Third Season Rules: Only Primary random skills allowed
@@ -260,7 +292,19 @@ class Team_HTMLOUT extends Team
 					$type = 'N';
 					
 					// Add the skill with the correct SPP cost and 'R' for Random
-					status($p->addSkill($type, (int)$skillId, $sppCost, 'P'));
+					$applied = $p->addSkill($type, (int)$skillId, $sppCost, 'P');
+                    if ($applied) {
+                        $rid  = (int)$pr['roll_id'];
+                        $cid  = (int)$skillId;
+                        $now  = date('Y-m-d H:i:s');
+                        mysql_query(
+                            "UPDATE pending_rolls "
+                            . "SET is_confirmed = 1, chosen_id = '$cid', "
+                            . "confirmed_at = '$now' "
+                            . "WHERE roll_id = $rid"
+                        );
+                    }
+                    status($applied);
 				}
 				break;
 			case 'retire_player':   status($p->retirePlayer());
@@ -334,6 +378,28 @@ class Team_HTMLOUT extends Team
 				$sppCost  = isset($_POST['spp_cost']) ? (int)$_POST['spp_cost']  : null;
 
 				if ($playerId && $statKey && $sppCost) {
+					// Validate against pending roll record
+                    $pid_check = (int)$playerId;
+                    $pr = mysql_fetch_assoc(mysql_query(
+                        "SELECT roll_id, roll_data FROM pending_rolls "
+                        . "WHERE player_id = $pid_check AND is_confirmed = 0 "
+                        . "AND roll_type = 'stat' LIMIT 1"
+                    ));
+                    if (!$pr) {
+                        status(false, 'No pending stat roll found for this player. '
+                            . 'Please generate a roll first.');
+                        break;
+                    }
+                    // Verify submitted stat was one of the offered options
+                    $pendingData = json_decode($pr['roll_data'], true);
+                    $offeredStats = isset($pendingData['offered'])
+                        ? $pendingData['offered'] : array();
+                    $isAnyRoll = isset($pendingData['is_any']) && $pendingData['is_any'];
+                    $statKey_esc = mysql_real_escape_string($statKey);
+                    if (!$isAnyRoll && !in_array($statKey_esc, $offeredStats)) {
+                        status(false, 'Submitted stat does not match the pending roll.');
+                        break;
+                    }
 					$p = new Player($playerId);
 					global $CHR_CONV;
 					// Find the chr_id for this stat key
@@ -342,8 +408,20 @@ class Team_HTMLOUT extends Team
 						if ($name === $statKey) { $chrId = $id; break; }
 					}
 					if ($chrId !== null) {
-						status($p->addSkill('C', $chrId, $sppCost, 'X'));
-					} else {
+                        $applied = $p->addSkill('C', $chrId, $sppCost, 'X');
+                        if ($applied) {
+                            $rid     = (int)$pr['roll_id'];
+                            $cid_esc = mysql_real_escape_string($statKey);
+                            $now     = date('Y-m-d H:i:s');
+                            mysql_query(
+                                "UPDATE pending_rolls "
+                                . "SET is_confirmed = 1, chosen_id = '$cid_esc', "
+                                . "confirmed_at = '$now' "
+                                . "WHERE roll_id = $rid"
+                            );
+                        }
+                        status($applied);
+                    } else {
 						status(false, 'Invalid stat key: ' . htmlspecialchars($statKey));
 					}
 				} else {
@@ -357,10 +435,35 @@ class Team_HTMLOUT extends Team
 				$sppCost   = isset($_POST['spp_cost'])  ? (int)$_POST['spp_cost']  : null;
 
 				if ($playerId && $skillId && $skillType && $sppCost) {
+					// Validate against pending roll record (stat roll, skill-instead path)
+                    $pid_check = (int)$playerId;
+                    $pr = mysql_fetch_assoc(mysql_query(
+                        "SELECT roll_id FROM pending_rolls "
+                        . "WHERE player_id = $pid_check AND is_confirmed = 0 "
+                        . "AND roll_type = 'stat' LIMIT 1"
+                    ));
+                    if (!$pr) {
+                        status(false, 'No pending stat roll found for this player. '
+                            . 'Please generate a roll first.');
+                        break;
+                    }
 					$p = new Player($playerId);
 					// Validate skill type
-					$type = ($skillType === 'N') ? 'N' : 'D';
-					status($p->addSkill($type, $skillId, $sppCost, 'X'));
+					$type    = ($skillType === 'N') ? 'N' : 'D';
+                    $applied = $p->addSkill($type, $skillId, $sppCost, 'X');
+                    if ($applied) {
+                        $rid     = (int)$pr['roll_id'];
+                        $cid_esc = 'skill:' . (int)$skillId;
+                        $now     = date('Y-m-d H:i:s');
+                        mysql_query(
+                            "UPDATE pending_rolls "
+                            . "SET is_confirmed = 1, "
+                            . "chosen_id = '$cid_esc', "
+                            . "confirmed_at = '$now' "
+                            . "WHERE roll_id = $rid"
+                        );
+                    }
+                    status($applied);
 				} else {
 					status(false, 'Missing parameters for skill-instead submission.');
 				}
@@ -846,7 +949,8 @@ class Team_HTMLOUT extends Team
 				foreach ($s->getStats(T_OBJ_TEAM,$team->team_id) as $k => $v) {
 					$s->$k = $v;
 				}
-				$s->is_dead = $s->is_sold = $s->is_mng = $s->is_journeyman = false;
+				$s->is_dead = $s->is_sold = $s->is_mng = $s->is_journeyman = $s->is_retired = false;
+				$s->keywords = '';
 				$s->HTMLbcolor = COLOR_HTML_STARMERC;
 				$s->href = array('link' => urlcompile(T_URL_PROFILE,T_OBJ_STAR,false,false,false), 'field' => 'obj_id', 'value' => 'player_id'); # Like in below $fields def, but with T_OBJ_STAR instead.
 				array_push($stars, $s);
@@ -882,7 +986,8 @@ class Team_HTMLOUT extends Team
 			$smerc->mv_spp = '-';
 			$smerc->mv_misc = '-';
 			$smerc->value = 0;
-			$smerc->is_dead = $smerc->is_sold = $smerc->is_mng = $smerc->is_journeyman = false;
+			$smerc->is_dead = $smerc->is_sold = $smerc->is_mng = $smerc->is_journeyman = $smerc->is_retired = false;
+			$smerc->keywords = '';
 			$smerc->HTMLbcolor = COLOR_HTML_STARMERC;
 			array_push($players, $smerc);
 		}
@@ -2006,30 +2111,69 @@ class Team_HTMLOUT extends Team
 		);
 	}
 	
+	private static function _getHireFirePhase($team_id) {
+		// Returns: 'unrestricted', 'hire_clean', 'hire_done', or 'fire'
+		global $rules;
+		if (empty($rules['enforce_hire_fire_order'])) {
+			return 'unrestricted';
+		}
+		$tid = $team_id;
+		// Get last match date for this team
+		$res = mysql_query(
+			"SELECT MAX(date_played) AS last_match FROM matches "
+			. "WHERE (team1_id = $tid OR team2_id = $tid) "
+			. "AND date_played IS NOT NULL"
+		);
+		$row = mysql_fetch_assoc($res);
+		$lastMatch = $row ? $row['last_match'] : null;
+		// No matches played yet: no enforcement
+		if (!$lastMatch) {
+			return 'unrestricted';
+		}
+		// Check: any player fired since last match?
+		$res2 = mysql_query(
+			"SELECT COUNT(*) AS cnt FROM players "
+			. "WHERE owned_by_team_id = $tid "
+			. "AND date_sold IS NOT NULL "
+			. "AND date_sold > '$lastMatch'"
+		);
+		$row2 = mysql_fetch_assoc($res2);
+		if ($row2 && $row2['cnt'] > 0) {
+			$_SESSION['hire_fire_phase_' . $tid] = 'fire';
+			return 'fire';
+		}
+		// Check: any player hired since last match and not yet played?
+		$res3 = mysql_query(
+			"SELECT COUNT(*) AS cnt FROM players "
+			. "WHERE owned_by_team_id = $tid "
+			. "AND date_bought > '$lastMatch' "
+			. "AND player_id NOT IN "
+			. "(SELECT DISTINCT f_player_id FROM match_data)"
+		);
+		$row3 = mysql_fetch_assoc($res3);
+		if ($row3 && $row3['cnt'] > 0) {
+			$_SESSION['hire_fire_phase_' . $tid] = 'hire';
+			return 'hire_done';
+		}
+		// Session: coach clicked Skip this session
+		$sessionKey = 'hire_fire_phase_' . $tid;
+		if (isset($_SESSION[$sessionKey]) && $_SESSION[$sessionKey] === 'fire') {
+			return 'fire';
+		}
+		return 'hire_clean';
+	}
+	
 	/**
 	 * Build stat improvement data for a player (current value, improvements, caps).
 	 * Used to populate JS data attributes for the random stat modal.
 	 */
 	private static function _buildStatData($p) {
-		// Count improvements from ach_chr_skills table
-		$result = mysql_query(
-			"SELECT chr_id, COUNT(*) as cnt FROM ach_chr_skills "
-			. "WHERE f_pid = " . (int)$p->player_id . " GROUP BY chr_id"
-		);
-		$improvements = array('ma'=>0,'st'=>0,'ag'=>0,'pa'=>0,'av'=>0);
-		global $CHR_CONV;
-		while ($row = mysql_fetch_assoc($result)) {
-			$chrKey = isset($CHR_CONV[$row['chr_id']]) ? $CHR_CONV[$row['chr_id']] : null;
-			if ($chrKey && isset($improvements[$chrKey])) {
-				$improvements[$chrKey] = (int)$row['cnt'];
-			}
-		}
 		return array(
-			'ma' => array('current' => (int)$p->ma, 'improvements' => $improvements['ma']),
-			'st' => array('current' => (int)$p->st, 'improvements' => $improvements['st']),
-			'ag' => array('current' => (int)$p->ag, 'improvements' => $improvements['ag']),
-			'pa' => array('current' => (int)$p->pa, 'improvements' => $improvements['pa']),
-			'av' => array('current' => (int)$p->av, 'improvements' => $improvements['av']),
+			'ma' => array('current' => (int)$p->ma, 'improvements' => (int)$p->ach_ma),
+			'st' => array('current' => (int)$p->st, 'improvements' => (int)$p->ach_st),
+			'ag' => array('current' => (int)$p->ag, 'improvements' => (int)$p->ach_ag),
+			'pa' => array('current' => (int)$p->pa, 'improvements' => (int)$p->ach_pa),
+			'av' => array('current' => (int)$p->av, 'improvements' => (int)$p->ach_av),
 		);
 	}
 
@@ -2111,6 +2255,12 @@ class Team_HTMLOUT extends Team
 			# If a team captain has already been selected OR if it does not apply, hide option
 			if (($team->getTeamrules() != 22 && strpos($team->getTeamrules(),"22") == FALSE) || (strlen($team->getTeamcaptain()) >0)) {  //add logic for "and team captain has not been selected yet"
 			unset($tmanage['select_captain']);
+			}
+			# Enforce hire/fire order: lock out hiring once fire phase is active
+			$_hireFire_phase = self::_getHireFirePhase($team->team_id);
+			if ($_hireFire_phase === 'fire') {
+				unset($tmanage['hire_player']);
+				unset($tmanage['unbuy_player']);
 			}
 			# If one of these are selected from the menu, a JavaScript confirm prompt is displayed before submitting.
 			# Note: Don't add "hire_player" here - players may be un-bought if not having played any games.
@@ -2301,9 +2451,32 @@ class Team_HTMLOUT extends Team
 				 * Fire player
 				 **************/
 				case 'fire_player':
-					echo $lng->getTrn('profile/team/box_tm/desc/fire_player').' '.$rules['player_refund']*100 . "%.\n";
-					
-					// Get minimum TV setting
+				// Reuse phase variable set earlier when building the tmanage array.
+				// Defensive fallback in case variable is somehow not set.
+				$_fp_phase = isset($_hireFire_phase) ? $_hireFire_phase : 'unrestricted';
+				if ($_fp_phase === 'hire_clean') {
+					// Hire phase, no hires yet: show skip button, lock fire OK button
+					echo $lng->getTrn('profile/team/box_tm/desc/skip_hire');
+					echo '<br><br><form method="POST" style="margin-top:10px;">';
+					echo '<input type="hidden" name="type" value="skip_hire_phase">';
+					echo '<input type="submit" value="Skip Hire Phase" '
+					   . 'style="background:#e07b00;color:white;padding:6px 14px;'
+					   . 'border:none;border-radius:3px;cursor:pointer;">';
+					echo '</form>';
+					$DISABLE = true;
+				} else {
+					// hire_done, fire, or unrestricted: show normal fire UI
+					echo $lng->getTrn('profile/team/box_tm/desc/fire_player')
+						 .' '.$rules['player_refund']*100 . "%.
+			";
+					// Warning banner only in hire_done phase
+					if ($_fp_phase === 'hire_done') {
+						echo '<div style="background:#fff3cd;border:1px solid #e0a800;'
+						   . 'padding:10px;margin:10px 0;border-radius:3px;">';
+						echo $lng->getTrn('profile/team/box_tm/desc/fire_player');
+						echo '</div>';
+					}
+					// Minimum TV display (unchanged from original)
 					$minTV = 0;
 					if (isset($rules['min_tv']) && $rules['min_tv'] > 0) {
 						$minTV = $rules['min_tv'];
@@ -2316,70 +2489,57 @@ class Team_HTMLOUT extends Team
 					<select name="player">
 					<?php
 					$DISABLE = true;
-					
-					// Count rostered players (not sold, not dead, not retired, not journeymen, not MNG)
+					// Count rostered players (unchanged from original)
 					$rostered_players = 0;
 					foreach ($players as $p) {
-						if (!$p->is_dead && !$p->is_sold && !$p->is_retired && !$p->is_journeyman && !$p->is_mng) {
+						if (!$p->is_dead && !$p->is_sold && !$p->is_retired
+							&& !$p->is_journeyman && !$p->is_mng) {
 							$rostered_players++;
 						}
 					}
-					
 					foreach ($players as $p) {
-						// Skip dead, sold players and captains that can't be fired
-						if ($p->is_dead || $p->is_sold || ($p->is_captain && !$p->can_firecap))
-							continue;
-						
-						// Determine if this player can be fired
+						if ($p->is_dead || $p->is_sold
+							|| ($p->is_captain && !$p->can_firecap)) continue;
 						$can_fire = false;
-						$reason = '';
-						
-						// Journeymen can always be fired (no restrictions)
+						$reason   = '';
 						if ($p->is_journeyman) {
 							$can_fire = true;
-						}
-						// Regular players: check global override, roster count, AND minimum TV
-						else {
-							// If global override is enabled, allow firing (subject to min TV)
+						} else {
 							if ($rules['fireunder11'] == 1) {
 								$can_fire = true;
-							}
-							// Otherwise, only allow if team has more than 11 rostered players
-							else {
-								if ($rostered_players <= 11) {
-									$can_fire = false;
+							} else {
+								$can_fire = ($rostered_players > 11);
+								if (!$can_fire)
 									$reason = ' (would drop below 11 players)';
-								} else {
-									$can_fire = true;
-								}
 							}
-							
-							// Additional check for regular players: minimum TV
 							if ($can_fire && $minTV > 0) {
-								$refund = $p->value * $rules['player_refund'];
+								$refund      = $p->value * $rules['player_refund'];
 								$projectedTV = $team->tv - $p->value + $refund;
-								
 								if ($projectedTV < $minTV) {
 									$can_fire = false;
-									$reason = ' (TV would drop below ' . ($minTV/1000) . 'k min)';
+									$reason = ' (TV would drop below '
+											. ($minTV/1000) . 'k min)';
 								}
 							}
 						}
-						
-						// Show player if they can be fired, or show them disabled with reason
 						if ($can_fire) {
-							echo "<option value='$p->player_id'>" . ($rules['player_refund'] ? (($p->value/1000)*$rules['player_refund'])."k refund | " : "") . "$p->nr $p->name</option>\n";
+							echo "<option value='$p->player_id'>"
+							   . ($rules['player_refund']
+								   ? (($p->value/1000)*$rules['player_refund'])."k refund | "
+								   : "")
+							   . "$p->nr $p->name</option>\n";
 							$DISABLE = false;
 						} else if (!empty($reason)) {
-							// Show player as disabled with reason
-							echo "<option value='$p->player_id' disabled style='color: #999;'>" . "$p->nr $p->name$reason</option>\n";
+							echo "<option value='$p->player_id' disabled "
+							   . "style='color:#999;'>$p->nr $p->name$reason</option>\n";
 						}
 					}
 					?>
 					</select>
 					<input type="hidden" name="type" value="fire_player">
 					<?php
-					break;
+				}
+				break;
 				/***************
 				 * Un-buy player
 				 **************/
@@ -2579,7 +2739,6 @@ class Team_HTMLOUT extends Team
 
 				// Attach event listener
 				document.getElementById('random_skill_player').addEventListener('change', function() {
-					// Reset the generated flag when player changes
 					skillsGenerated = false;
 					document.getElementById('generate_random_skills').disabled = false;
 					updateSkillCategories();
@@ -2587,6 +2746,81 @@ class Team_HTMLOUT extends Team
 
 				// Initialize on page load
 				updateSkillCategories();
+				
+				<?php
+				// On page load: check if this team has any player with a pending skill roll
+				$pending_skill = mysql_fetch_assoc(mysql_query(
+					"SELECT pr.roll_id, pr.player_id, pr.roll_data "
+					. "FROM pending_rolls pr "
+					. "JOIN players p ON pr.player_id = p.player_id "
+					. "WHERE p.owned_by_team_id = " . (int)$team->team_id
+					. " AND pr.roll_type = 'skill' AND pr.is_confirmed = 0 LIMIT 1"
+				));
+				if ($pending_skill) {
+					$ps_player = (int)$pending_skill['player_id'];
+					$ps_data   = json_encode($pending_skill['roll_data']);
+					echo "window._pendingSkillPlayer = $ps_player;\n";
+					// Get actual current spp cost for this player
+					$spp_cost_res = mysql_fetch_assoc(mysql_query(
+						"SELECT (COUNT(ps.f_skill_id) + 
+								 COALESCE(p.ach_ma,0) + COALESCE(p.ach_st,0) + 
+								 COALESCE(p.ach_ag,0) + COALESCE(p.ach_pa,0) + 
+								 COALESCE(p.ach_av,0)) as cnt 
+						 FROM players p
+						 LEFT JOIN players_skills ps ON ps.f_pid = p.player_id 
+							 AND ps.type IN ('N','D','C')
+						 WHERE p.player_id = $ps_player"
+					));
+					$actual_num_skills = (int)$spp_cost_res['cnt'];
+					$spp_costs = array(0=>3, 1=>4, 2=>6, 3=>8, 4=>10, 5=>15);
+					$actual_spp_cost = isset($spp_costs[$actual_num_skills]) ? $spp_costs[$actual_num_skills] : 15;
+					echo "window._pendingSkillSppCost = $actual_spp_cost;\n";
+					echo "window._pendingSkillData   = JSON.parse(" . $ps_data . ");\n";
+				}
+				?>
+				if (window._pendingSkillPlayer) {
+					// Pre-select the player
+					var pSel = document.getElementById('random_skill_player');
+					for (var i = 0; i < pSel.options.length; i++) {
+						if (parseInt(pSel.options[i].value) === window._pendingSkillPlayer) {
+							pSel.selectedIndex = i;
+							break;
+						}
+					}
+					// Disable generate button — roll already exists
+					var genBtn = document.getElementById('generate_random_skills');
+					genBtn.disabled = true;
+					genBtn.textContent = 'Roll already generated — choose a skill above';
+					// Show the modal with existing results
+					// (re-use the existing skill display code by triggering the AJAX response handler)
+					var existingModal = document.getElementById('skill_selection_modal');
+					// Build display from pending data
+					var html = '';
+					var data = window._pendingSkillData;
+					data.forEach(function(skill) {
+						var borderColor = skill.is_elite ? '#FF9800' : '#ddd';
+						html += '<div style="margin:10px 0; padding:15px; border:2px solid ' + borderColor + '; border-radius:5px; cursor:pointer;" '
+							+ 'onmouseover="this.style.borderColor=\'' + (skill.is_elite ? '#F57C00' : '#4CAF50') + '\'; this.style.background=\'#f0f9f0\'" '
+							+ 'onmouseout="this.style.borderColor=\'' + borderColor + '\'; this.style.background=\'white\'" '
+							+ 'onclick="selectSkill(' + window._pendingSkillPlayer + ', ' + skill.id + ', \'' + skill.name.replace(/'/g, "\\'") + '\')">';
+						html += '<div style="color:#888; font-size:12px; margin-bottom:5px;">🎲 ' + skill.roll_info + '</div>';
+						html += '<strong style="font-size:18px;">' + skill.name + '</strong>';
+						if (skill.is_elite) {
+							html += ' <span style="background:#FF9800; color:white; padding:2px 6px; border-radius:3px; font-size:11px; font-weight:bold;">ELITE</span>';
+						}
+						html += '<br>';
+						if (skill.description) {
+							html += '<span style="color:#666;">' + skill.description + '</span><br>';
+						}
+						html += '<div style="margin-top:8px; padding-top:8px; border-top:1px solid #eee; font-size:13px; color:#555;">';
+						html += '<span style="margin-right:15px;">💎 <strong>-' + (window._pendingSkillSppCost || skill.spp_cost) + ' SPP</strong></span>';
+						html += '<span>💰 <strong>+' + (parseInt(skill.value_increase) / 1000) + 'k</strong> value</span>';
+						html += '</div>';
+						html += '</div>';
+					});
+					document.getElementById('skill_options').innerHTML = html;
+					existingModal.style.display = 'block';
+				}
 
 				document.getElementById('generate_random_skills').addEventListener('click', function() {
 					const playerId = document.getElementById('random_skill_player').value;
@@ -2627,8 +2861,10 @@ class Team_HTMLOUT extends Team
 						},
 						body: 'player_id=' + playerId + '&skill_type=' + skillType + '&skill_cat=' + skillCat
 					})
-					.then(response => response.json())
-					.then(data => {
+					.then(response => response.text())
+					.then(text => {
+						console.log('Raw response:', text);
+						const data = JSON.parse(text);
 						if (data.error) {
 							skillOptions.innerHTML = '<p style="color:red;">' + data.error + '</p>';
 							// Add close button on error
@@ -2668,7 +2904,7 @@ class Team_HTMLOUT extends Team
 							html += '<span style="margin-right:15px;">💎 <strong>-' + skill.spp_cost + ' SPP</strong></span>';
 							
 							// Format value increase (convert 20000 to 20k, 30000 to 30k)
-							const valueInK = (skill.value_increase / 1000) + 'k';
+							const valueInK = (parseInt(skill.value_increase) / 1000) + 'k';
 							html += '<span>💰 <strong>+' + valueInK + '</strong> value</span>';
 							html += '</div>';
 							
@@ -2683,9 +2919,9 @@ class Team_HTMLOUT extends Team
 						skillOptions.innerHTML = html;
 					})
 					.catch(error => {
+						console.error('Fetch error:', error);
 						skillOptions.innerHTML = '<p style="color:red;">Error generating skills. Please try again.</p>';
 						skillOptions.innerHTML += '<br><button type="button" onclick="closeSkillModal()" style="background:#ccc; padding:8px 16px; border:none; border-radius:4px; cursor:pointer;">Close</button>';
-						console.error('Error:', error);
 					});
 				});
 
@@ -2880,6 +3116,83 @@ class Team_HTMLOUT extends Team
 						});
 
 						updateCostDisplay();
+						
+						<?php
+						$pending_stat = mysql_fetch_assoc(mysql_query(
+							"SELECT pr.roll_id, pr.player_id, pr.roll_data "
+							. "FROM pending_rolls pr "
+							. "JOIN players p ON pr.player_id = p.player_id "
+							. "WHERE p.owned_by_team_id = " . (int)$team->team_id
+							. " AND pr.roll_type = 'stat' AND pr.is_confirmed = 0 LIMIT 1"
+						));
+						if ($pending_stat) {
+							$ps_player = (int)$pending_stat['player_id'];
+							$ps_data   = json_encode($pending_stat['roll_data']);
+							echo "window._pendingStatPlayer = $ps_player;\n";
+							echo "window._pendingStatData   = JSON.parse(" . $ps_data . ");\n";
+						}
+						?>
+						if (window._pendingStatPlayer) {
+							var pSel = document.getElementById('rstat_player_select');
+							for (var i = 0; i < pSel.options.length; i++) {
+								if (parseInt(pSel.options[i].value) === window._pendingStatPlayer) {
+									pSel.selectedIndex = i;
+									pSel.dispatchEvent(new Event('change'));
+									break;
+								}
+							}
+							rollBtn.disabled = true;
+							rollBtn.textContent = 'Roll already generated — choose above';
+							var pd = getSelectedPlayerData();
+							if (pd) {
+								var rd = window._pendingStatData;
+								var roll = rd.roll;
+								var offered = rd.offered;
+								var isAny = rd.is_any;
+								currentStatData = pd.statData;
+								rollLocked = true;
+								var available = offered.filter(function(s) {
+									return isStatAvailable(s, pd.statData);
+								});
+								var html = '<p style="font-size:15px;">⚠️ You have an existing pending roll: <strong>D8 = ' + roll + '</strong></p>';
+								if (!isAny) {
+									html += '<p>Offered stat(s): <strong>'
+										+ offered.map(function(s){ return STAT_NAMES[s]; }).join(' or ')
+										+ '</strong></p>';
+								} else {
+									html += '<p>Result: <strong>Any</strong> — choose any available stat.</p>';
+								}
+								if (available.length === 0) {
+									html += '<p style="color:#d32f2f;"><strong>All offered stats are at cap. You must choose a skill instead.</strong></p>';
+								}
+								html += '<hr style="margin:12px 0;">';
+								if (available.length > 0) {
+									html += '<p style="font-weight:500; margin-bottom:8px;">Choose a stat increase:</p>';
+									window.rstatSelectedStat = null;
+									available.forEach(function(s) {
+										html += '<div id="rstat_stat_' + s + '" '
+											+ 'style="margin:8px 0; padding:12px 15px; border:2px solid #ddd; border-radius:5px; cursor:pointer;" '
+											+ 'onclick="selectStatOption(\'' + s + '\')">'
+											+ '<strong style="font-size:16px;">+ ' + STAT_NAMES[s] + '</strong>'
+											+ '<span style="color:#666; font-size:13px; margin-left:10px;">' + getStatDesc(s) + '</span>'
+											+ '<div style="font-size:12px; color:#888; margin-top:4px;">'
+											+ pd.statCost + ' SPP &nbsp;|&nbsp; improved ' + pd.statData[s].improvements + '/2 times'
+											+ '</div></div>';
+									});
+								}
+								html += '<hr style="margin:12px 0;">';
+								html += '<p style="font-weight:500; margin-bottom:8px;">Or choose a skill instead:</p>';
+								html += buildSkillInsteadSection(pd);
+								html += '<hr style="margin:12px 0;">';
+								html += '<div style="margin-top:12px;">'
+									+ '<button type="button" id="rstat_confirm_btn" '
+									+ 'style="padding:10px 24px; background:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer; font-size:15px;" '
+									+ 'onclick="confirmStatChoice(' + pd.id + ', ' + pd.statCost + ')">'
+									+ 'Confirm Choice</button></div>';
+								modalBody.innerHTML = html;
+								modal.style.display = 'block';
+							}
+						}
 
 						rollBtn.addEventListener('click', function() {
 							var pd = getSelectedPlayerData();
@@ -2894,78 +3207,87 @@ class Team_HTMLOUT extends Team
 							)) return;
 
 							currentStatData = pd.statData;
-							var roll = rollD8();
-							lastRoll = roll;
-							var offered = D8_TABLE[roll];
-							var isAny = (roll === 8);
-
-							// Filter offered stats by availability
-							var available = offered.filter(function(s) {
-								return isStatAvailable(s, pd.statData);
-							});
-
-							var html = '<p style="font-size:15px;">&#127922; D8 roll: <strong>' + roll + '</strong></p>';
-
-							if (!isAny) {
-								html += '<p>Offered stat(s): <strong>' + offered.map(function(s){ return STAT_NAMES[s]; }).join(' or ') + '</strong></p>';
-							} else {
-								html += '<p>Result: <strong>Any</strong> — choose any available stat increase below.</p>';
-							}
-
-							if (available.length === 0) {
-								// No stat available — forced to skill
-								html += '<p style="color:#d32f2f;"><strong>All offered stats are at cap or have been improved twice. You must choose a skill instead.</strong></p>';
-							}
-
-							html += '<hr style="margin:12px 0;">';
-
-							// Stat buttons (only for available stats)
-							if (available.length > 0) {
-								html += '<p style="font-weight:500; margin-bottom:8px;">Choose a stat increase:</p>';
-								window.rstatSelectedStat = null;
-								available.forEach(function(s) {
-									var displayName = STAT_NAMES[s];
-									var desc = getStatDesc(s);
-									html += '<div id="rstat_stat_' + s + '" style="margin:8px 0; padding:12px 15px; border:2px solid #ddd; border-radius:5px; cursor:pointer;" '
-										+ 'onclick="selectStatOption(\'' + s + '\')">'
-										+ '<strong style="font-size:16px;">+ ' + displayName + '</strong>'
-										+ '<span style="color:#666; font-size:13px; margin-left:10px;">' + desc + '</span>'
-										+ '<div style="font-size:12px; color:#888; margin-top:4px;">'
-										+ pd.statCost + ' SPP &nbsp;|&nbsp; improved ' + pd.statData[s].improvements + '/2 times'
-										+ '</div>'
-										+ '</div>';
-								});
-							}
-
-							// Skill-instead section
-							html += '<hr style="margin:12px 0;">';
-							html += '<p style="font-weight:500; margin-bottom:8px;">Or choose a skill instead (same SPP cost):</p>';
-							html += buildSkillInsteadSection(pd);
-
-							html += '<hr style="margin:12px 0;">';
-							html += '<div style="margin-top:12px;">';
-							html += '<button type="button" id="rstat_confirm_btn" style="padding:10px 24px; background:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer; font-size:15px;" onclick="confirmStatChoice(' + pd.id + ', ' + pd.statCost + ')">';
-							html += 'Confirm Choice</button>';
-							html += '</div>';
-
-							modalBody.innerHTML = html;
-
-							// When skill dropdown changes, deselect any chosen stat
-							var skillSel = document.getElementById('rstat_skill_instead');
-							if (skillSel) {
-								skillSel.onchange = function() {
-									window.rstatSelectedStat = null;
-									['ma','st','ag','pa','av'].forEach(function(s) {
-										var el = document.getElementById('rstat_stat_' + s);
-										if (el) { el.style.borderColor = '#ddd'; el.style.background = 'white'; }
-									});
-								};
-							}
-
-							modal.style.display = 'block';
-							rollLocked = true;
 							rollBtn.disabled = true;
-							rollBtn.textContent = 'Roll made — choose above';
+							rollBtn.textContent = 'Rolling...';
+							var formData = new FormData();
+							formData.append('player_id', pd.id);
+							formData.append('spp_cost',  pd.statCost);
+							fetch('lib/class_random_stat.php', {
+								method: 'POST',
+								body:   formData
+							})
+							.then(function(response) { return response.json(); })
+							.then(function(data) {
+								if (data.error) {
+									alert('Error: ' + data.error);
+									rollBtn.disabled = false;
+									rollBtn.textContent = 'Roll D8 for Stat Increase';
+									return;
+								}
+								var rd      = data.roll_data;
+								var roll    = rd.roll;
+								var offered = rd.offered;
+								var isAny   = rd.is_any;
+								// Store roll_id for reference (not used client-side but
+								// confirms the server has recorded the roll)
+								lastRoll = roll;
+								var available = offered.filter(function(s) {
+									return isStatAvailable(s, pd.statData);
+								});
+								var html = '<p style="font-size:15px;">' + (data.pending
+									? '&#9888; You have an existing pending roll: <strong>D8 = ' + roll + '</strong></p>'
+									: '&#127922; D8 roll: <strong>' + roll + '</strong></p>');
+								if (!isAny) {
+									html += '<p>Offered stat(s): <strong>'
+										+ offered.map(function(s){ return STAT_NAMES[s]; }).join(' or ')
+										+ '</strong></p>';
+								} else {
+									html += '<p>Result: <strong>Any</strong> — choose any available stat.</p>';
+								}
+								if (available.length === 0) {
+									html += '<p style="color:#d32f2f;"><strong>All offered stats are at cap. ';
+									html += 'You must choose a skill instead.</strong></p>';
+								}
+								html += '<hr style="margin:12px 0;">';
+								if (available.length > 0) {
+									html += '<p style="font-weight:500; margin-bottom:8px;">Choose a stat increase:</p>';
+									window.rstatSelectedStat = null;
+									available.forEach(function(s) {
+										var displayName = STAT_NAMES[s];
+										var desc = getStatDesc(s);
+										html += '<div id="rstat_stat_' + s + '" ';
+										html += 'style="margin:8px 0; padding:12px 15px; border:2px solid #ddd; ';
+										html += 'border-radius:5px; cursor:pointer;" ';
+										html += 'onclick="selectStatOption(\'' + s + '\')">';
+										html += '<strong style="font-size:16px;">+ ' + displayName + '</strong>';
+										html += '<span style="color:#666; font-size:13px; margin-left:10px;">' + desc + '</span>';
+										html += '<div style="font-size:12px; color:#888; margin-top:4px;">';
+										html += pd.statCost + ' SPP &nbsp;|&nbsp; improved ' + pd.statData[s].improvements + '/2 times';
+										html += '</div></div>';
+									});
+								}
+								html += '<hr style="margin:12px 0;">';
+								html += '<p style="font-weight:500; margin-bottom:8px;">Or choose a skill instead:</p>';
+								html += buildSkillInsteadSection(pd);
+								html += '<hr style="margin:12px 0;">';
+								html += '<div style="margin-top:12px;">';
+								html += '<button type="button" id="rstat_confirm_btn" ';
+								html += 'style="padding:10px 24px; background:#4CAF50; color:white; ';
+								html += 'border:none; border-radius:4px; cursor:pointer; font-size:15px;" ';
+								html += 'onclick="confirmStatChoice(' + pd.id + ', ' + pd.statCost + ')">';
+								html += 'Confirm Choice</button>';
+								html += '</div>';
+								modalBody.innerHTML = html;
+								modal.style.display = 'block';
+								rollLocked  = true;
+								rollBtn.disabled = true;
+								rollBtn.textContent = 'Roll made — choose above';
+							})
+							.catch(function() {
+								alert('Network error contacting server. Please try again.');
+								rollBtn.disabled = false;
+								rollBtn.textContent = 'Roll D8 for Stat Increase';
+							});
 						});
 
 						function getStatDesc(s) {

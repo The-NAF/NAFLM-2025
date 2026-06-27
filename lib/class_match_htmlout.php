@@ -544,6 +544,9 @@ class Match_HTMLOUT extends Match
 				MTS('Saved all MERC player entries in match_data for team '.$id);
 			}
 			$m->finalizeMatchSubmit(); # Required!
+			// Clear hire/fire phase session for both teams after match submission
+			unset($_SESSION['hire_fire_phase_' . $m->team1_id]);
+			unset($_SESSION['hire_fire_phase_' . $m->team2_id]);
 			MTS('Report submit ENDED');
 			
 			//Discord webhook 

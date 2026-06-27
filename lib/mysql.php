@@ -324,6 +324,17 @@ $core_tables = array(
         'name'      => $CT_cols['name'],
         'cat' => 'VARCHAR(1)',
 	),
+	 'pending_rolls' => array(
+        'roll_id'      => 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
+        'player_id'    => $CT_cols[T_OBJ_PLAYER].' NOT NULL',
+        'roll_type'    => 'VARCHAR(10) NOT NULL',
+        'roll_data'    => 'TEXT NOT NULL',
+        'chosen_id'    => 'VARCHAR(20) DEFAULT NULL',
+        'is_confirmed' => 'TINYINT(1) NOT NULL DEFAULT 0',
+        'generated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+        'confirmed_at' => 'TIMESTAMP NULL DEFAULT NULL',
+        'cleared_by'   => 'INT DEFAULT NULL',
+    ),
 );
 
 /*
@@ -931,9 +942,25 @@ function mysql_up($do_table_check = false) {
         }
         $tables_diff = array_diff($tables_expected, $tables_found);
         if (count($tables_diff) > 0) {
-            die("<font color='red'><b>Could not find all the expected tables in database '$db_name'</b>.<br><br>Did you run the install/upgrade script?<br><br>
-                Tables missing:<br><br><i>". implode('<br>', $tables_diff) ."</i>
-                </font>");
+            if (!class_exists('SQLCore')) require_once('lib/class_sqlcore.php');
+            $autoFixed = array();
+            $autoFailed = array();
+            foreach ($tables_diff as $missingTable) {
+                if (isset($core_tables[$missingTable])) {
+                    if (Table::createTableIfNotExists($missingTable, $core_tables[$missingTable])) {
+                        $autoFixed[] = $missingTable;
+                    } else {
+                        $autoFailed[] = $missingTable;
+                    }
+                } else {
+                    $autoFailed[] = $missingTable;
+                }
+            }
+            if (count($autoFailed) > 0) {
+                die("<font color='red'><b>Could not find all the expected tables in database '$db_name'</b>.<br><br>Did you run the install/upgrade script?<br><br>
+                    Tables missing:<br><br><i>". implode('<br>', $autoFailed) ."</i>
+                    </font>");
+            }
         }
     }
     return $conn;

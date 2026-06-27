@@ -334,7 +334,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <select_league>Select team league</select_league>
             <select_rule>Select team special rule</select_rule>
             <select_captain>Select team captain</select_captain>
-            <hire_player>Hire player</hire_player>
+            <hire_player>Hire player/Journeyman</hire_player>
             <hire_journeyman>Perm hire used journeymen</hire_journeyman>
             <fire_player>Fire player</fire_player>
             <unbuy_player>Un-hire player</unbuy_player>
@@ -393,6 +393,8 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <hire_player> <![CDATA[ Hire a new player.<br> Also, hire a new journeyman.<br> Hiring a player as a journeyman is free, but only players from a 0-16 allowed position on your team's roster are hire-able as journeymen.<BR> Tick the Journeyman? box to hire a new journeyman at no cost. ]]> </hire_player>
                 <hire_journeyman> <![CDATA[ Hire one of your used journeymen to permanently play on your team.<br> Must be done before firing the journeymen. ]]> </hire_journeyman>
                 <fire_player> <![CDATA[ Fire a player. Refund rate: ]]> </fire_player>
+                <fire_warning> <![CDATA[ <b>Warning:</b> Once you fire a player you cannot hire any further players until after your next match is played. ]]> </fire_warning>
+                <skip_hire> <![CDATA[ Post-match hiring must be completed before you can fire players.<br>If you do not wish to hire anyone, click Skip below <br>to proceed directly to the fire phase. ]]> </skip_hire>
                 <unbuy_player> <![CDATA[ Regret hiring a player. 100% refund.<br> This is only possible for players which have not participated in any matches. ]]> </unbuy_player>
                 <rename_player> <![CDATA[ Rename a player. ]]> </rename_player>
                 <renumber_player> <![CDATA[ Renumber a player. ]]> </renumber_player>

@@ -51,6 +51,7 @@ $rules['randomskillmanualentry'] 	= 0; 	//Manual Random Skill Rolls
 $rules['megastars'] 				= 0; 	//Mega-Stars
 $rules['base_inducements'] 			= 1; 	//Base Inducements Only
 $rules['fireunder11'] 				= 0; 	//Allow firing under 11 players
+$rules['enforce_hire_fire_order'] 	= 0; 	//Enforce Hire/Fire Order
 
 $rules['major_win_tds'] 			= 0; 	//Major Win for scoring how many TDs
 $rules['major_win_pts'] 			= 0; 	//Bonus points for a Major Win

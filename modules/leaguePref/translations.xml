@@ -70,6 +70,10 @@
 <fireunder11_help>Tick the box to allow coaches to be able to fire players that would bring the team to under 11 players (this should not normally be allowed): Ticked box = Allow.</fireunder11_help>
 <fireunder11>Fire Under 11 Players Allowed</fireunder11>
 
+<enforce_hire_fire_order_title>&lt;br/&gt;&lt;b&gt;Enforce Hire-Fire Order&lt;/b&gt;&lt;br/&gt; Toggle whether or not to enforce the post match hire-fire order.&lt;/i&gt;</enforce_hire_fire_order_title>
+<enforce_hire_fire_order_help>Tick the box to enforce the post match hire-fire order (players must first be hired, before any can be fired): Ticked box = Enabled.</enforce_hire_fire_order_help>
+<enforce_hire_fire_order>Enforce Hire-Fire Order</enforce_hire_fire_order>
+
 <randomskillrolls_title>&lt;br/&gt;&lt;b&gt;Automated Random Skills Generator&lt;/b&gt;&lt;br/&gt; Disable Automated Random Skill option from Team Management Box.&lt;br/&gt;&lt;i&gt;(do not disable this unless you enable Manual Random Skill Entry below)&lt;/i&gt;</randomskillrolls_title>
 <randomskillrolls_help>Tick the box to disable Automated Random Skills from being available on the team management Box, in which case only Random Skill Manual Entry will be allowed: Ticked box = Disabled.</randomskillrolls_help>
 <randomskillrolls>Automated Random Skills Disabled</randomskillrolls>

@@ -28,7 +28,8 @@ function sec_admin() {
         case 'schedule':    include('admin/admin_schedule.php'); break;
         case 'import':      include('admin/admin_import.php'); break;
         case 'log':         Module::run('LogSubSys', array('logViewPage')); break;
-        case 'cpanel':      include('admin/admin_cpanel.php'); break;
+        case 'cpanel':      include('admin/admin_cpanel.php'); break;	
+        case 'roll_log':    include('admin/admin_roll_log.php'); break;
         default:            fatal('The requested admin page does not exist.');
     }
     echo "<br><br>";

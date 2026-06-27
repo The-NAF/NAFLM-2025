@@ -139,31 +139,31 @@ class BloodBowlSkillRoller {
      * Get number of achieved skills for a player
      */
     private function getPlayerAchievedSkillCount($playerId) {
-        $playerId = mysqli_real_escape_string($this->conn, $playerId);
-        
-        // Count skills from players_skills table where it's an achieved skill (not extra)
-        $query = "
-            SELECT COUNT(*) as skill_count
-            FROM players_skills
-            WHERE f_pid = '$playerId'
-            AND type IN ('N', 'D', 'C')
-        ";
-        
-        $result = mysqli_query($this->conn, $query);
-        
-        if (!$result) {
-            throw new Exception("Failed to get player skill count");
-        }
-        
-        $row = mysqli_fetch_assoc($result);
-        if (!$row) {
-            return 0;
-        }
-        
-        $skillCount = (int)$row['skill_count'];
-        
-        return $skillCount;
-    }
+		$playerId = (int)$playerId;
+		
+		// Count skills from players_skills table where it's an achieved skill (not extra)
+		$query = "
+			SELECT 
+				(SELECT COUNT(*) FROM players_skills 
+				 WHERE f_pid = $playerId AND type IN ('N', 'D', 'C')) +
+				COALESCE((SELECT ach_ma + ach_st + ach_ag + ach_pa + ach_av 
+				 FROM players WHERE player_id = $playerId), 0)
+			AS skill_count
+		";
+		
+		$result = mysqli_query($this->conn, $query);
+		
+		if (!$result) {
+			throw new Exception("Failed to get player skill count");
+		}
+		
+		$row = mysqli_fetch_row($result);
+		if (!$row) {
+			return 0;
+		}
+		
+		return (int)$row[0];
+	}
     
     /**
      * Get skills the player already has (both default position skills and earned skills)
@@ -487,6 +487,21 @@ class BloodBowlSkillRoller {
 			$result[] = $skillResult;
 		}
 		
+		// Build roll_data JSON for pending roll record
+        $rollDataArr = array();
+        foreach ($result as $sr) {
+            $rollDataArr[] = array(
+				'id'             => $sr['id'],
+				'name'           => $sr['name'],
+				'roll_info'      => $sr['roll_info'],
+				'spp_cost'       => $sr['spp_cost'],
+				'value_increase' => $sr['value_increase'],
+				'is_elite'       => $sr['is_elite'],
+				'description'    => $sr['description']
+			);
+        }
+        $this->savePendingRoll($playerId, 'skill', json_encode($rollDataArr));
+		
 		return array(
 			'skills' => $result,
 			'player_existing_skills_count' => count($existingSkills),
@@ -499,6 +514,38 @@ class BloodBowlSkillRoller {
 			)
 		);
 	}
+	
+	public function savePendingRoll($playerId, $rollType, $rollData) {
+        $pid  = (int)$playerId;
+        $type = mysqli_real_escape_string($this->conn, $rollType);
+        $data = mysqli_real_escape_string($this->conn, $rollData);
+        // Block if an unconfirmed roll already exists for this player
+        $check = mysqli_query($this->conn,
+            "SELECT roll_id FROM pending_rolls "
+            . "WHERE player_id = $pid AND is_confirmed = 0 LIMIT 1"
+        );
+        if ($check && mysqli_num_rows($check) > 0) {
+            return false; // Existing pending roll — do not overwrite
+        }
+        mysqli_query($this->conn,
+            "INSERT INTO pending_rolls "
+            . "(player_id, roll_type, roll_data, is_confirmed) "
+            . "VALUES ($pid, '$type', '$data', 0)"
+        );
+        return (mysqli_affected_rows($this->conn) === 1);
+    }
+	
+    public function getPendingRoll($playerId) {
+        $pid = (int)$playerId;
+        $res = mysqli_query($this->conn,
+            "SELECT roll_id, roll_data FROM pending_rolls "
+            . "WHERE player_id = $pid AND is_confirmed = 0 LIMIT 1"
+        );
+        if (!$res || mysqli_num_rows($res) === 0) {
+            return null;
+        }
+        return mysqli_fetch_assoc($res);
+    }
     
     public function __destruct() {
         if ($this->conn) {
@@ -523,11 +570,20 @@ try {
         throw new Exception('Invalid skill category format');
     }
     
-    // Create roller and roll skills
     $roller = new BloodBowlSkillRoller($db_host, $db_user, $db_passwd, $db_name);
-    $result = $roller->rollSkills($playerId, $skillType, $skillCat);
-    
-    echo json_encode($result);
+    // If a pending roll already exists for this player, return it unchanged
+    $existing = $roller->getPendingRoll($playerId);
+    if ($existing !== null) {
+        $existingData = json_decode($existing['roll_data'], true);
+        echo json_encode(array(
+            'skills'  => $existingData,
+            'pending' => true,
+            'roll_id' => $existing['roll_id']
+        ));
+    } else {
+        $result = $roller->rollSkills($playerId, $skillType, $skillCat);
+        echo json_encode($result);
+    }
     
 } catch (Exception $e) {
     http_response_code(500);

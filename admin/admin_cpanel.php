@@ -14,6 +14,18 @@ if (isset($_POST['act'])) {
             case 'gdsync': status(SQLCore::syncGameData(), 'PHP game data synced with DB'); break;
             case 'tblidx': status(SQLCore::installTableIndexes(), 'Indices installed'); break;
             case 'funcs': status(SQLCore::installProcsAndFuncs(true), 'DB functions and procedures installed'); break;
+			case 'updatedb':
+            require_once('lib/class_sqlcore.php');
+            $dbResults = SQLCore::updateCoreTables();
+            $idxOk = SQLCore::installTableIndexes();
+            $allOk = $idxOk;
+            foreach ($dbResults as $r) {
+                $allOk &= $r['ok'];
+                $color = $r['ok'] ? 'green' : 'red';
+                echo "<font color='$color'>{$r['msg']} &mdash; {$r['table']}</font><br>\n";
+            }
+            status($allOk, 'DB update complete');
+            break;
         }
     }
 }
@@ -28,8 +40,9 @@ NAFLM database maintenance and synchronisation routines.<br><br>
     <INPUT TYPE=RADIO NAME="act" VALUE="gdsync">Synchronise database with game data files. &mdash; Run this when having changed the PHP game data files <i>lib/game_data*.php</i>.<br>
     <INPUT TYPE=RADIO NAME="act" VALUE="funcs">Re-install database back-end procedures and functions. &mdash; Run this when having altered the "house ranking system" definitions in <i>settings.php</i>.<br>
     <INPUT TYPE=RADIO NAME="act" VALUE="tblidx">Re-install table indices.<br>
-    <br>
+	<br>
     <b>Database synchronisation:</b><br>
+	<INPUT TYPE=RADIO NAME="act" VALUE="updatedb">Update DB &mdash; Creates any missing tables and adds missing columns. Safe to run on existing installs.<br>
     <INPUT TYPE=RADIO NAME="act" VALUE="syncAll()"><i>syncAll()</i> &mdash; Synchronises all stats, relations and dynamic properties. This may take a few minutes!<br>
     <!--
     <INPUT TYPE=RADIO NAME="act" VALUE="syncAllMVs()"><i>syncAllMVs()</i> - Synchronises all stats.<br>

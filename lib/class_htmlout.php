@@ -1079,6 +1079,15 @@ class HTMLOUT
 						echo '<li><a href="handler.php?type=conference">' . $lng->getTrn('name', 'Conference') . '</a></li>';
 					if (Module::isRegistered('Scheduler'))
 						echo '<li><a href="handler.php?type=scheduler">' . $lng->getTrn('menu/admin_menu/schedule') . '</a></li>';
+					if (empty($rules['randomskillrolls']) || empty($rules['randomstatrolls'])) {
+					$admin_menu['roll_log'] = 'Random Roll Log';
+					}
+					// Keep cpanel last
+					if (isset($admin_menu['cpanel'])) {
+						$cpanel = $admin_menu['cpanel'];
+						unset($admin_menu['cpanel']);
+						$admin_menu['cpanel'] = $cpanel;
+					}
 					foreach ($admin_menu as $lnk => $desc) {
 						if (!is_array($desc)) {
 							echo "<li><a href='index.php?section=admin&amp;subsec=$lnk'>$desc</a></li>\n";
