@@ -61,7 +61,7 @@ class BloodBowlSkillRoller {
         ),
         'P' => array( // Passing
             1 => 'Accurate', 2 => 'Cannoneer', 3 => 'Cloud Burster',
-            4 => 'Dump-off', 5 => 'Give and Go', 6 => 'Hail Mary Pass',
+            4 => 'Dump-Off', 5 => 'Give and Go', 6 => 'Hail Mary Pass',
             7 => 'Leader', 8 => 'Nerves of Steel', 9 => 'On the Ball',
             10 => 'Pass', 11 => 'Punt', 12 => 'Safe Pass'
         ),
