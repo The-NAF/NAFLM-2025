@@ -205,10 +205,17 @@ function rollSummary($rollType, $rollData) {
 							}
 						}
 					}
+				} elseif ($row['chosen_id'] && strpos($row['chosen_id'], 'skill:') === 0) {
+					// Stat roll where a skill was chosen instead — resolve the ID to a name
+					global $skillididx;
+					$sid = (int)substr($row['chosen_id'], 6);
+					$chosen = isset($skillididx[$sid])
+						? htmlspecialchars($skillididx[$sid]) . ' <small>(skill instead of stat)</small>'
+						: htmlspecialchars($row['chosen_id']);
 				} elseif ($row['chosen_id']) {
 					$chosen = htmlspecialchars(strtoupper($row['chosen_id'])); // stat key e.g. 'ma'
 				}
-                echo "<td>" . $chosen . "</td>";
+								echo "<td>" . $chosen . "</td>";
                 echo "<td>" . rollStatusLabel($row['is_confirmed']);
                 if ($row['is_confirmed'] == 2 && $row['cleared_by_name']) {
                     echo "<br><small>by " . htmlspecialchars($row['cleared_by_name']) . "</small>";

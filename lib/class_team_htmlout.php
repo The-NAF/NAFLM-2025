@@ -450,7 +450,9 @@ class Team_HTMLOUT extends Team
 					$p = new Player($playerId);
 					// Validate skill type
 					$type    = ($skillType === 'N') ? 'N' : 'D';
-                    $applied = $p->addSkill($type, $skillId, $sppCost, 'X');
+                    // Map to the PV-formula cost bucket: 'P' = Primary/Normal (20k), 'S' = Secondary/Double (40k)
+					$costType = ($type === 'N') ? 'P' : 'S';
+					$applied  = $p->addSkill($type, $skillId, $sppCost, $costType);
                     if ($applied) {
                         $rid     = (int)$pr['roll_id'];
                         $cid_esc = 'skill:' . (int)$skillId;
