@@ -431,7 +431,7 @@ class Match_HTMLOUT extends Match
 						$_POST["agn_$pid"]      = NONE;
 						$_POST["hat_$pid"]      = 99; //99 = No hatred
 					}
-					elseif ($p->getStatus($m->match_id) == RETIRED) {
+                    elseif ($p->getStatus($m->match_id) == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired)) {
 						$_POST["mvp_$pid"]      = 0;
 						$_POST["cp_$pid"]       = 0;
 						$_POST["td_$pid"]       = 0;
