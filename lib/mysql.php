@@ -90,6 +90,7 @@ $core_tables = array(
         'win_pct' => $CT_cols['win_pct'].' DEFAULT 0', # All-time win pct (across all matches).
         'fav_rule'  => 'SMALLINT UNSIGNED DEFAULT NULL', # Stores selected favoured of rule
         'teamleague'  => 'SMALLINT UNSIGNED DEFAULT NULL', # Stores selected league
+        'format'  	=> 'VARCHAR(4) NOT NULL DEFAULT \'BB\'', # Determines if team is for Blood Bowl (BB), Dungeon Bowl (DB), or 7's (7S) - BB is set as default
     ),
     'players' => array(
         'player_id'         => $CT_cols[T_OBJ_PLAYER].' NOT NULL PRIMARY KEY AUTO_INCREMENT',

@@ -136,6 +136,10 @@ class Stats
 		if (!empty($N)) {
 			$query_cnt = str_replace($LIMIT, '', $query);
 			$result = mysql_query($query_cnt); 
+			// Intentionally left in: surfaces the real MySQL error (instead of a
+			// generic mysql_num_rows() warning) if a schema change hasn't had
+			// Update DB run against it yet. Safe to leave permanently.
+			if (!$result) { die("Database error — this usually means a code update needs the database schema updated. Please log in as an admin and run 'Update DB' from the Core Panel. (Details: " . mysql_error() . ")"); }
 			$pages = ceil(mysql_num_rows($result)/$delta);
 		} else {
 			$pages = 1;

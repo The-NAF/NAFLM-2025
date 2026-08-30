@@ -60,6 +60,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (4),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -149,6 +150,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 3,
+            'sevens_tier' 	=> 3,
             'team_league' 	=> array (1),
             'special_rules' => array (12),
             'fav_rules' 	=> array (13,14,15,16,17,18),
@@ -256,6 +258,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (0,1),
             'special_rules' => array (14),
             'fav_rules' 	=> array (),
@@ -379,6 +382,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (2),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -486,6 +490,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (9),
             'special_rules' => array (10,11),
             'fav_rules' 	=> array (),
@@ -593,6 +598,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (2),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -683,6 +689,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 4,
+            'sevens_tier' 	=> 4,
             'team_league' 	=> array (0,7),
             'special_rules' => array (11),
             'fav_rules' 	=> array (),
@@ -841,6 +848,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 4,
+            'sevens_tier' 	=> 3,
             'team_league' 	=> array (3,8),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -931,6 +939,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (2),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -1021,6 +1030,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (5),
             'special_rules' => array (22),
             'fav_rules' 	=> array (),
@@ -1145,6 +1155,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (6),
             'special_rules' => array (20),
             'fav_rules' 	=> array (),
@@ -1235,6 +1246,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (4),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -1325,6 +1337,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (0),
             'special_rules' => array (10,22),
             'fav_rules' 	=> array (),
@@ -1449,6 +1462,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (6),
             'special_rules' => array (20),
             'fav_rules' 	=> array (),
@@ -1556,6 +1570,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (1,5),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -1680,6 +1695,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 3,
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (1),
             'special_rules' => array (10,16),
             'fav_rules' 	=> array (),
@@ -1770,6 +1786,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 4,
+            'sevens_tier' 	=> 4,
             'team_league' 	=> array (0,9),
             'special_rules' => array (10,19),
             'fav_rules' 	=> array (),
@@ -1843,6 +1860,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (6),
             'special_rules' => array (20),
             'fav_rules' 	=> array (),
@@ -1949,6 +1967,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (6),
             'special_rules' => array (20),
             'fav_rules' 	=> array (),
@@ -2055,6 +2074,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (7),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -2162,6 +2182,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (2,8),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -2269,6 +2290,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 3,
+            'sevens_tier' 	=> 3,
             'team_league' 	=> array (1),
             'special_rules' => array (12),
             'fav_rules' 	=> array (13,15,16,17,18),
@@ -2460,6 +2482,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (4),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -2549,6 +2572,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 3,
             'team_league' 	=> array (7),
             'special_rules' => array (11),
             'fav_rules' 	=> array (),
@@ -2706,6 +2730,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (5),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -2915,6 +2940,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 4,
+            'sevens_tier' 	=> 4,
             'team_league' 	=> array (7),
             'special_rules' => array (11,19,21),
             'fav_rules' 	=> array (),
@@ -3039,6 +3065,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 3,
+            'sevens_tier' 	=> 3,
             'team_league' 	=> array (0),
             'special_rules' => array (10,11),
             'fav_rules' 	=> array (),
@@ -3111,7 +3138,8 @@ $DEA = array (
             'bk_qty' 		=> 0,
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
-            'tier' 			=> 2,
+            'tier' 			=> 2,			
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (5),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -3219,6 +3247,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 3,
+            'sevens_tier' 	=> 3,
             'team_league' 	=> array (1),
             'special_rules' => array (10,15),
             'fav_rules' 	=> array (),
@@ -3309,6 +3338,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 4,
+            'sevens_tier' 	=> 4,
             'team_league' 	=> array (3,8),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -3416,6 +3446,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 2,
+            'sevens_tier' 	=> 2,
             'team_league' 	=> array (5),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -3506,6 +3537,7 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
+            'sevens_tier' 	=> 1,
             'team_league' 	=> array (2),
             'special_rules' => array (),
             'fav_rules' 	=> array (),
@@ -5259,8 +5291,89 @@ $inducements = array (
         'reduced_max' => 8, // reduced race max
         'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
         'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
-		'available_formats' => array('BB','DB','SV'),
+		'available_formats' => array('BB','DB'),
+    ),	
+	// Sevens Only Inducement (differently priced than normal)
+	// Available to any team
+    'Extra Team Training (Sevens)' => array (
+        'cost' => 125000,
+        'max'  => 6,
+		'teamrules'  => array(0,1,2,3,4,5,6,7,8,9),
+        'reduced_cost' => 125000,
+        'reduced_cost_races' => array(), // a particular race has a discout
+        'reduced_cost_rules' => array(), // a special rule has a discout
+        'reduced_max' => 6, // reduced race max
+        'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
+        'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
+		'available_formats' => array('SV'),
     ),
+	// Available to any team
+    'Prayers to Nuffle (Sevens)' => array (
+        'cost' => 5000,
+        'max'  => 2,
+		'teamrules'  => array(0,1,2,3,4,5,6,7,8,9),
+        'reduced_cost' => 5000,
+        'reduced_cost_races' => array(), // a particular race has a discout
+        'reduced_cost_rules' => array(), // a special rule has a discout
+        'reduced_max' => 2, // reduced race max
+        'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
+        'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
+		'available_formats' => array('SV'),
+    ),
+	// Available to any team
+	'Part-time Assistant Coaches (Sevens)' => array (
+        'cost' => 15000,
+        'max'  => 2,
+		'teamrules'  => array(0,1,2,3,4,5,6,7,8,9),
+        'reduced_cost' => 15000,
+        'reduced_cost_races' => array(), // a particular race has a discout
+        'reduced_cost_rules' => array(), // a special rule has a discout
+        'reduced_max' => 2, // reduced race max
+        'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
+        'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
+		'available_formats' => array('SV'),
+    ),
+	// Available to any team
+    'Temp Agency Cheerleaders (Sevens)' => array (
+        'cost' => 15000,
+        'max'  => 2,
+		'teamrules'  => array(0,1,2,3,4,5,6,7,8,9),
+        'reduced_cost' => 15000,
+        'reduced_cost_races' => array(), // a particular race has a discout
+        'reduced_cost_rules' => array(), // a special rule has a discout
+        'reduced_max' => 2, // reduced race max
+        'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
+        'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
+		'available_formats' => array('SV'),
+    ),
+	// Available to any team but discounted for the teams with the 'Bribery and Corruption' special rule (and max 6)
+    'Bribes (Sevens)' => array (
+        'cost' => 100000,
+        'max'  => 2, // use reduced races to increase max to 6
+		'teamrules'  => array(0,1,2,3,4,5,6,7,8,9),
+        'reduced_cost' => 50000,
+        'reduced_cost_races' => array(), // a particular race has a discout
+        'reduced_cost_rules' => array(11), // a special rule has a discout
+        'reduced_max' => 2, // reduced race max
+        'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
+        'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
+		'available_formats' => array('SV'),
+    ),
+	// Available to any team
+    'Desperate Measures' => array (
+        'cost' => 50000,
+        'max'  => 5,
+		'teamrules'  => array(0,1,2,3,4,5,6,7,8,9),
+        'reduced_cost' => 50000,
+        'reduced_cost_races' => array(), // a particular race has a discout
+        'reduced_cost_rules' => array(), // a special rule has a discout
+        'reduced_max' => 5, // reduced race max
+        'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
+        'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
+		'available_formats' => array('SV'),
+    ),
+	// End of Sevens Only Inducements////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Available to any team but discounted for the teams with the 'Bribery and Corruption' special rule (and max 6)
     'Bribes' => array (
         'cost' => 100000,
@@ -5285,7 +5398,7 @@ $inducements = array (
         'reduced_max' => 2, // reduced race max
         'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
         'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
-		'available_formats' => array('BB'),
+		'available_formats' => array('BB','SV'),
     ),
     // Available only to the teams with the 'Masters of Undeath' special rule
     'Mortuary Assistant' => array (
@@ -5298,7 +5411,7 @@ $inducements = array (
         'reduced_max' => 1, // reduced race max
         'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
         'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
-		'available_formats' => array('BB'),
+		'available_formats' => array('BB','SV'),
 	),
     // Available only to the teams with the 'Favoured of Nurgle' special rule
     'Plague Doctor' => array (
@@ -5311,7 +5424,7 @@ $inducements = array (
         'reduced_max' => 1, // reduced race max
         'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
         'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
-		'available_formats' => array('BB'),
+		'available_formats' => array('BB','SV'),
     ),	
     // Available only to the teams with the 'Low Cost Linemen' special rule
     'Riotous Rookies' => array (
@@ -5337,7 +5450,7 @@ $inducements = array (
         'reduced_max' => 1, // reduced race max
         'source' => 1, // source 1 = common (base rules), source 2 = other (DZ, spikes etc.)
         'type' => 1, // type 1 = general, type 2 = wizards, type 3 = infamous staff, type 4 = referees
-		'available_formats' => array('BB'),
+		'available_formats' => array('BB','SV'),
     ),
 	////// Spike Magazines Inducements //////
 	// Available only to the teams with the 'Badlands Brawl' special rule
@@ -5904,6 +6017,7 @@ $rules['cost_apothecary_sevens']       = 80000;    // Default is 80000.
 $rules['cost_fan_factor_sevens']       = 20000;    // Default is 20000.
 $rules['cost_ass_coaches_sevens']      = 20000;    // Default is 20000.
 $rules['cost_cheerleaders_sevens']     = 20000;    // Default is 20000.
+$rules['cost_rerolls_sevens']     	   = 100000;    // Default is 100000.
 /*  Stat Decreases  *************************************************************************************** **
     Whenever a player sustains a stat decrease the players value will be reduced by these amounts.
 ** ******************************************************************************************************** */

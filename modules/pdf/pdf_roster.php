@@ -126,9 +126,9 @@ $players = $tmp_players;
 
 // Team specific data
 
-$rerollcost = $DEA[$team->f_rname]['other']['rr_cost'];
-$teamtier = $DEA[$team->f_rname]['other']['tier'];
-$teamformat = $DEA[$team->f_rname]['other']['format'];
+$rerollcost = ($team->format == 'SV') ? $rules['cost_rerolls_sevens'] : $DEA[$team->f_rname]['other']['rr_cost'];
+$teamtier = ($team->format == 'SV') ? $DEA[$team->f_rname]['other']['sevens_tier'] : $DEA[$team->f_rname]['other']['tier'];
+$teamformat = $team->format;
 $teamleague = leaguesTrans($race->team_league);
 $teamspecialrules = specialsTrans($race->special_rules);
 
@@ -299,7 +299,7 @@ foreach ($players as $p) {
   $skillstr = $p->getSkillsStr(false);
   $injstr = $p->getInjsStr(false);
   $hatestr = $p->getHatredStr(false);
-  if ($p->is_captain) $capstr='Pro (Captain)';
+  if ($p->is_captain) $capstr=($team->format == 'SV') ? 'Veteran' : 'Pro (Captain)';
   else $capstr='';
   //begin string build based on four optional strings
 	if ($capstr == '') {  // is not captain
@@ -458,7 +458,7 @@ $pdf->print_box($currentx, $currenty, 140, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR
 $pdf->print_box($currentx+=140, $currenty, 30, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'R', $sum_avail_players . '/' . $sum_players);
 
 $pdf->SetX($currentx=MARGINX+6+538);
-$pdf->print_box($currentx, $currenty, 50, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'R', 'Totals (excl TV for MNG or RET players):');
+$pdf->print_box($currentx, $currenty, 50, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'R', ($team->format == 'SV') ? 'Totals (excl TV for MNG players):' : 'Totals (excl TV for MNG or RET players):');
 $pdf->print_box($currentx+=54, $currenty, 19, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_cp);
 $pdf->print_box($currentx+=19, $currenty, 19, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_td);
 $pdf->print_box($currentx+=19, $currenty, 20, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_def);
@@ -481,24 +481,25 @@ $pdf->RoundedRect(MARGINX+6, $currenty, 792, (560-$currenty-130), 5, 'D');
 $pdf->SetXY($currentx, $currenty+=2);
 $h=14;
 $pdf->SetFont('Tahoma', 'B', 8);
-$pdf->Cell(105, $h, 'Induced Stars and Mercs', 0, 0, 'L', true, '');
-$pdf->Cell(65, $h, 'Keywords', 0, 0, 'L', true, '');
-$pdf->Cell(18, $h, 'MA', 0, 0, 'C', true, '');
-$pdf->Cell(18, $h, 'ST', 0, 0, 'C', true, '');
-$pdf->Cell(18, $h, 'AG', 0, 0, 'C', true, '');
-$pdf->Cell(18, $h, 'PA', 0, 0, 'C', true, '');
-$pdf->Cell(18, $h, 'AV', 0, 0, 'C', true, '');
-$pdf->Cell(260, $h, 'Skills', 0, 0, 'L', true, '');
-$pdf->Cell(86, $h, 'Special Rules', 0, 0, 'L', true, '');
+$isSevens = ($team->format == 'SV');
+$pdf->Cell(105, $h, $isSevens ? '' : 'Induced Stars and Mercs', 0, 0, 'L', true, '');
+$pdf->Cell(65, $h, $isSevens ? '' : 'Keywords', 0, 0, 'L', true, '');
+$pdf->Cell(18, $h, $isSevens ? '' : 'MA', 0, 0, 'C', true, '');
+$pdf->Cell(18, $h, $isSevens ? '' : 'ST', 0, 0, 'C', true, '');
+$pdf->Cell(18, $h, $isSevens ? '' : 'AG', 0, 0, 'C', true, '');
+$pdf->Cell(18, $h, $isSevens ? '' : 'PA', 0, 0, 'C', true, '');
+$pdf->Cell(18, $h, $isSevens ? '' : 'AV', 0, 0, 'C', true, '');
+$pdf->Cell(260, $h, $isSevens ? '' : 'Skills', 0, 0, 'L', true, '');
+$pdf->Cell(86, $h, $isSevens ? '' : 'Special Rules', 0, 0, 'L', true, '');
 //$pdf->Cell(23, $h, 'MNG', 1, 0, 'C', true, ''); // No MNG stars/mercs. They heal. ;-)
-$pdf->Cell(19, $h, 'Cp', 0, 0, 'C', true, '');
-$pdf->Cell(19, $h, 'Td', 0, 0, 'C', true, '');
-$pdf->Cell(20, $h, 'Int', 0, 0, 'C', true, '');
-$pdf->Cell(20, $h, 'Cas', 0, 0, 'C', true, '');
+$pdf->Cell(19, $h, $isSevens ? '' : 'Cp', 0, 0, 'C', true, '');
+$pdf->Cell(19, $h, $isSevens ? '' : 'Td', 0, 0, 'C', true, '');
+$pdf->Cell(20, $h, $isSevens ? '' : 'Int', 0, 0, 'C', true, '');
+$pdf->Cell(20, $h, $isSevens ? '' : 'Cas', 0, 0, 'C', true, '');
 //$pdf->Cell(21, $h, 'MVP', 0, 0, 'C', true, '');
-$pdf->Cell(21, $h, 'Misc', 0, 0, 'C', true, '');
-$pdf->Cell(21, $h, 'SPP', 0, 0, 'C', true, '');
-$pdf->Cell(38, $h, 'Value', 0, 0, 'R', true, '');
+$pdf->Cell(21, $h, $isSevens ? '' : 'Misc', 0, 0, 'C', true, '');
+$pdf->Cell(21, $h, $isSevens ? '' : 'SPP', 0, 0, 'C', true, '');
+$pdf->Cell(38, $h, $isSevens ? '' : 'Value', 0, 0, 'R', true, '');
 $currenty+=14;
 $pdf->SetXY($currentx, $currenty);
 $h=13;
@@ -1028,7 +1029,7 @@ $pdf->print_box($currentx+=40, ($currenty), 65, $h, COLOR_ROSTER_NORMAL, DEFLINE
 
 // Team Value, Inducements Value, Match Value
 $h=13;
-$pdf->print_box($currentx-=40, ($currenty+=$h), 40, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', 'Team Value (incl MNGs/RET value):');
+$pdf->print_box($currentx-=40, ($currenty+=$h), 40, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', ($team->format == 'SV') ? 'Team Value (incl MNGs):' : 'Team Value (incl MNGs/RET value):');
 $pdf->print_box($currentx+=40, ($currenty), 65, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', $pdf->Mf($team->value + $sum_p_missing_value));
 $pdf->print_box($currentx-=40, ($currenty+=$h), 40, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', 'Induced Value:');
 $pdf->print_box($currentx+=40, ($currenty), 65, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', $pdf->Mf($ind_cost));

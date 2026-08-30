@@ -11,23 +11,9 @@ class Race_HTMLOUT extends Race
 		<!-- Following HTML from class_race_htmlout.php profile -->
 		<center><img src="<?php echo RACE_ICONS.'/'.$roster['other']['icon'];?>" alt="Race icon"></center>
 		<ul>
-			<?php if ($rules['dungeon'] == 0 || $rules['sevens'] == 0)  : ?>
-			<li><b><?php echo $lng->getTrn('common/format')?>:</b> 
-			<?php 
-			if ($roster['other']['format'] == 'BB') {
-			echo "Blood Bowl";
-			}
-			elseif ($roster['other']['format'] == 'DB') {
-			echo "Dungeon Bowl";
-			}
-			elseif ($roster['other']['format'] == 'SV') {
-			echo "Sevens";
-			}
-			;?>
-			</li>
-			<?php endif; ?>
-			<?php if ($roster['other']['format'] == 'BB')  : ?>
 			<li><b><?php echo $lng->getTrn('common/tier')?>:</b> <?php echo $roster['other']['tier'];?></li>
+			<?php if ($rules['sevens'] == 0)  : ?>
+			<li><b><?php echo $lng->getTrn('common/sevens_tier')?>:</b> <?php echo $roster['other']['sevens_tier'];?></li>
 			<?php endif; ?>
 			<li><b><?php echo $lng->getTrn('common/reroll')?>:</b> <?php echo $roster['other']['rr_cost']/1000;?>k</li>		
 			<li><b><?php echo $lng->getTrn('common/apothecary')?>:</b> <?php 

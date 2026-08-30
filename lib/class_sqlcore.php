@@ -114,8 +114,8 @@ class SQLCore
 		 *  Re-useable code-chunks for routines.
 		 */
 		// MV syncs
-		$common_fields_keys          = 'td,cp,intcpt,bh,si,ki,misc,mvp,cas,tdcas,spp';
-		$common_fields               = 'IFNULL(SUM(td),0), IFNULL(SUM(cp),0), IFNULL(SUM(intcpt),0), IFNULL(SUM(bh),0), IFNULL(SUM(si),0), IFNULL(SUM(ki),0), IFNULL(SUM(misc),0), IFNULL(SUM(mvp),0), IFNULL(SUM(bh+si+ki),0), IFNULL(SUM(bh+si+ki+td),0), CASE WHEN ((SELECT races.special_rules FROM races WHERE races.race_id = match_data.f_race_id) LIKE "%10%") THEN IFNULL(SUM((cp+misc)*1+(bh+si+ki)*3+intcpt*2+td*2+mvp*4),0) ELSE IFNULL(SUM((cp+misc)*1+(bh+si+ki)*2+intcpt*2+td*3+mvp*4),0) END AS spp'; 
+		$common_fields_keys          = 'td,cp,intcpt,bh,si,ki,misc,mvp,cas,tdcas,spp'; 
+		$common_fields               = 'IFNULL(SUM(td),0), IFNULL(SUM(cp),0), IFNULL(SUM(intcpt),0), IFNULL(SUM(bh),0), IFNULL(SUM(si),0), IFNULL(SUM(ki),0), IFNULL(SUM(misc),0), IFNULL(SUM(mvp),0), IFNULL(SUM(bh+si+ki),0), IFNULL(SUM(bh+si+ki+td),0), CASE WHEN ((SELECT races.special_rules FROM races WHERE races.race_id = match_data.f_race_id) LIKE "%10%") THEN IFNULL(SUM((cp+misc)*1+(bh+si+ki)*3+intcpt*2+td*2+(mvp * IF((SELECT format FROM teams WHERE team_id = match_data.f_team_id) = "SV", 0, 4))),0) ELSE IFNULL(SUM((cp+misc)*1+(bh+si+ki)*2+intcpt*2+td*3+(mvp * IF((SELECT format FROM teams WHERE team_id = match_data.f_team_id) = "SV", 0, 4))),0) END AS spp';
 		//hardcoded case statement above for SPP calculation, to check for rule no 10: Brawlin Brutes, to swap td and cas values
 		$mstat_fields_suffix__common = 'matches.f_tour_id = trid AND matches.date_played IS NOT NULL';
 		$mstat_fields_suffix_player  = "FROM matches,match_data WHERE $mstat_fields_suffix__common AND matches.match_id = match_data.f_match_id AND match_data.f_player_id = pid AND match_data.mg IS FALSE";
@@ -1124,6 +1124,7 @@ class SQLCore
 				DECLARE extra_val '.$CT_cols['pv'].';
 				DECLARE f_pos_id '.$CT_cols['pos_id'].';
                 DECLARE is_sevens BIT;
+                DECLARE mod_total BIGINT SIGNED;
 
 				SELECT
 					players.f_pos_id, players.extra_val, players.ach_ma, players.ach_st, players.ach_ag, players.ach_pa, players.ach_av
@@ -1137,10 +1138,9 @@ class SQLCore
 				SET cnt_skills_elite = (SELECT COUNT(*) FROM players_skills WHERE f_pid = pid AND f_skill_id IN (1,23,52,54)); 
                 SET cnt_skills = cnt_skills_random + cnt_skills_norm + cnt_skills_doub;
                 
-                SET is_sevens = (SELECT CASE WHEN r.format = "SV" THEN 1 ELSE 0 END FROM races r 
-                                    JOIN teams t ON t.f_race_id = r.race_id
-                                    JOIN players p ON  p.owned_by_team_id = t.team_id
-                                    WHERE player_id = pid);
+				SET is_sevens = (SELECT CASE WHEN t.format = "SV" THEN 1 ELSE 0 END FROM teams t 
+                                    JOIN players p ON p.owned_by_team_id = t.team_id
+                                    WHERE p.player_id = pid);
 
 				SELECT
 					IFNULL(SUM(IF(inj = '.NI.', 1, 0) + IF(agn = '.NI.', 1, 0)), 0),
@@ -1153,25 +1153,64 @@ class SQLCore
 					inj_ni,inj_ma,inj_av,inj_ag,inj_pa,inj_st
 				FROM match_data WHERE f_player_id = pid;
 				
-				SET inj_ni = inj_ni + (SELECT ni_mod FROM players WHERE player_id = pid);
-				SET inj_ma = inj_ma + (SELECT ma_mod FROM players WHERE player_id = pid);
-				SET inj_av = inj_av + (SELECT av_mod FROM players WHERE player_id = pid);
-				SET inj_ag = inj_ag + (SELECT ag_mod FROM players WHERE player_id = pid);
-				SET inj_pa = inj_pa + (SELECT pa_mod FROM players WHERE player_id = pid);
-				SET inj_st = inj_st + (SELECT st_mod FROM players WHERE player_id = pid);
+				SET mod_total = inj_ni + (SELECT ni_mod FROM players WHERE player_id = pid);
+				IF mod_total < 0 THEN
+					SET inj_ni = 0;
+					UPDATE players SET ni_mod = 0 WHERE player_id = pid;
+				ELSE
+					SET inj_ni = mod_total;
+				END IF;
+
+				SET mod_total = inj_ma + (SELECT ma_mod FROM players WHERE player_id = pid);
+				IF mod_total < 0 THEN
+					SET inj_ma = 0;
+					UPDATE players SET ma_mod = 0 WHERE player_id = pid;
+				ELSE
+					SET inj_ma = mod_total;
+				END IF;
+
+				SET mod_total = inj_av + (SELECT av_mod FROM players WHERE player_id = pid);
+				IF mod_total < 0 THEN
+					SET inj_av = 0;
+					UPDATE players SET av_mod = 0 WHERE player_id = pid;
+				ELSE
+					SET inj_av = mod_total;
+				END IF;
+
+				SET mod_total = inj_ag + (SELECT ag_mod FROM players WHERE player_id = pid);
+				IF mod_total < 0 THEN
+					SET inj_ag = 0;
+					UPDATE players SET ag_mod = 0 WHERE player_id = pid;
+				ELSE
+					SET inj_ag = mod_total;
+				END IF;
+
+				SET mod_total = inj_pa + (SELECT pa_mod FROM players WHERE player_id = pid);
+				IF mod_total < 0 THEN
+					SET inj_pa = 0;
+					UPDATE players SET pa_mod = 0 WHERE player_id = pid;
+				ELSE
+					SET inj_pa = mod_total;
+				END IF;
+
+				SET mod_total = inj_st + (SELECT st_mod FROM players WHERE player_id = pid);
+				IF mod_total < 0 THEN
+					SET inj_st = 0;
+					UPDATE players SET st_mod = 0 WHERE player_id = pid;
+				ELSE
+					SET inj_st = mod_total;
+				END IF;
 
 				SET value = (SELECT cost FROM game_data_players WHERE game_data_players.pos_id = f_pos_id)
 					+ ach_av            * 10000
 					+ (ach_ma + ach_pa) * 20000
 					+ ach_ag            * 30000
 					+ ach_st            * 60000
-					+ cnt_skills_random * (SELECT CASE WHEN is_sevens =0 THEN 20000 ELSE
-						CASE WHEN cnt_skills <2 THEN 10000 ELSE 20000 END END)
-					+ cnt_skills_norm   * (SELECT CASE WHEN is_sevens =0 THEN 20000 ELSE
-						CASE WHEN cnt_skills <2 THEN 20000 ELSE 30000 END END)
-                    + cnt_skills_doub   * (SELECT CASE WHEN is_sevens =0 THEN 40000 ELSE
-						CASE WHEN cnt_skills <2 THEN 20000 ELSE 30000 END END)
-					- (SELECT CASE WHEN is_sevens =1 AND cnt_skills >1 THEN 10000 ELSE 0 END)
+					+ cnt_skills_random * 20000
+					+ (SELECT CASE WHEN is_sevens = 0 THEN cnt_skills_norm * 20000
+						ELSE IF(cnt_skills_norm >= 1, 10000 + (cnt_skills_norm - 1) * 20000, 0) END)
+					+ (SELECT CASE WHEN is_sevens = 0 THEN cnt_skills_doub * 40000
+						ELSE IF(cnt_skills_doub >= 1, 20000 + (cnt_skills_doub - 1) * 30000, 0) END)
                     + cnt_skills_elite  * 10000
 					+ extra_val
 					- inj_ma * '.$rules['value_reduction_ma'].'
@@ -1253,10 +1292,10 @@ class SQLCore
 
 				SET ff = ff_bought + (SELECT IFNULL(SUM(mv_teams.ff),0) FROM mv_teams WHERE mv_teams.f_tid = tid);
 				
-				SET issevens = (SELECT CASE WHEN format = "SV" then 1 ELSE 0 END FROM races WHERE race_id = f_race_id);
+				SET issevens = (SELECT CASE WHEN format = "SV" then 1 ELSE 0 END FROM teams WHERE team_id = tid);
 
 				SET tv = (SELECT IFNULL(SUM(value),0) FROM players WHERE owned_by_team_id = tid AND players.status = '.NONE.' AND players.date_sold IS NULL)
-					+ rerolls      * (SELECT cost_rr FROM races WHERE races.race_id = f_race_id)
+					+ rerolls      * IF(issevens = 0, (SELECT cost_rr FROM races WHERE races.race_id = f_race_id), '.$rules['cost_rerolls_sevens'].') 
 					+ cheerleaders * IF(issevens = 0,'.$rules['cost_cheerleaders'].','.$rules['cost_cheerleaders_sevens'].')
 					+ apothecary   * IF(issevens = 0,'.$rules['cost_apothecary'].','.$rules['cost_apothecary_sevens'].')
 					+ ass_coaches  * IF(issevens = 0,'.$rules['cost_ass_coaches'].','.$rules['cost_ass_coaches_sevens'].')

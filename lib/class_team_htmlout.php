@@ -11,7 +11,7 @@ class Team_HTMLOUT extends Team
 		*/
 		list($sel_node, $sel_node_id, $sel_state, $sel_race, $sel_format) = HTMLOUT::nodeSelector(array('race' => true, 'state' => true, 'format' => true));
 		$ALL_TIME = ($sel_node === false && $sel_node_id === false);
-		$fields = '_RRP AS "team_id", owned_by_coach_id, f_race_id, teams.name AS "tname", f_cname, f_rname, tv, teams.rdy AS "rdy", teams.retired AS "retired", races.format AS "format"';
+		$fields = '_RRP AS "team_id", owned_by_coach_id, f_race_id, teams.name AS "tname", f_cname, f_rname, tv, teams.rdy AS "rdy", teams.retired AS "retired", teams.format AS "format"';
 		$where = array();
 		if ($sel_state == T_STATE_ACTIVE) $where[] = 'teams.rdy IS TRUE AND teams.retired IS FALSE';
 		if ($sel_race != T_RACE_ALL) 	  $where[] = "teams.f_race_id = $sel_race";
@@ -60,7 +60,7 @@ class Team_HTMLOUT extends Team
 			$img = new ImageSubSys(IMGTYPE_TEAMLOGO, $t->team_id);
 			$t->logo = "<img border='0px' height='20' width='20' alt='Team race picture' src='".$img->getPath($t->f_race_id)."'>";
 			$format = $t->format;
-			$t->format = $lng->getTrn('common/'.strtolower($DEA[$t->f_rname]['other']['format']));
+			$t->format = $lng->getTrn('common/'.strtolower($t->format));
 			$retired = $t->retired;
 			$t->retired = ($t->retired) ? '<b>'.$lng->getTrn('common/yes').'</b>' : $lng->getTrn('common/no');
 			$t->rdy = ($t->rdy && !$retired) ? '<font color="green">'.$lng->getTrn('common/yes').'</font>' : '<font color="red">'.$lng->getTrn('common/no').'</font>';
@@ -566,6 +566,9 @@ class Team_HTMLOUT extends Team
 			$p->position = preg_replace('/\s/', '&nbsp;', $p->position);
 			$p->info = '<i class="icon-info"></i>';
 			$p->team_id = $team->team_id;
+			if ($team->format == 'SV') {
+				$p->mv_mvp = 0;
+			}
 			/*
 				Colors
 			*/
@@ -583,15 +586,15 @@ class Team_HTMLOUT extends Team
 			if ($p->is_captain)  {
 				if (strlen($p->getSkillsStr(true)) == 0 ) {				
 					if (strlen($p->getHatredStr(true)) == 0 ) {
-						$p->skills   = '<small><i>Pro (Captain)</i></small>';
+						$p->skills   = '<small><i>'.($team->format == 'SV' ? 'Veteran' : 'Pro (Captain)').'</i></small>';
 					} else {
-						$p->skills   = '<small><i>Pro (Captain), Hatred ('.$p->getHatredStr(true).')</i></small>';
+						$p->skills   = '<small><i>'.($team->format == 'SV' ? 'Veteran' : 'Pro (Captain)').', Hatred ('.$p->getHatredStr(true).')</i></small>';
 					}
 				} else {				
 					if (strlen($p->getHatredStr(true)) == 0 ) {
-						$p->skills   = '<small><i>Pro (Captain), </i>'.$p->getSkillsStr(true).'</small>';
+						$p->skills   = '<small><i>'.($team->format == 'SV' ? 'Veteran' : 'Pro (Captain)').', </i>'.$p->getSkillsStr(true).'</small>';
 					} else {
-						$p->skills   = '<small><i>Pro (Captain), </i>'.$p->getSkillsStr(true).'<i> , Hatred ('.$p->getHatredStr(true).')</i></small>';
+						$p->skills   = '<small><i>'.($team->format == 'SV' ? 'Veteran' : 'Pro (Captain)').', </i>'.$p->getSkillsStr(true).'<i> , Hatred ('.$p->getHatredStr(true).')</i></small>';
 					}					
 				}
 			} else {
@@ -671,9 +674,11 @@ class Team_HTMLOUT extends Team
 				$numSkills = $p->numberOfAchSkill();
 				$chosenPrimaryCosts = array(0 => 6, 1 => 8, 2 => 12, 3 => 16, 4 => 20, 5 => 30);
 				$hasEnoughForChosen = ($p->mv_spp >= $chosenPrimaryCosts[$numSkills]);
+				$isSevens = ($team->format == 'SV');
 				
 				// If random skills are manual entry only and player doesn't have enough for chosen skill
-				if ($rules['randomskillmanualentry'] == 1 && !$hasEnoughForChosen) {
+				// (Sevens always goes straight to the full dropdown - there is no "wait for enough for chosen" state)
+				if (!$isSevens && $rules['randomskillmanualentry'] == 1 && !$hasEnoughForChosen) {
 					$x .= "<BR><small>&nbsp;&nbsp;&nbsp;<u>Random skill available, see Team management box below</u></small>";
 				} else {
 					// Get player's existing skills for filtering (both default and earned)
@@ -891,14 +896,14 @@ class Team_HTMLOUT extends Team
 					$n = min($p->numberOfAchSkill(), 5);
 					$c = $costs[$n];
 
-					if ($rules['randomskillmanualentry'] != 1) {
+					if (!$isSevens && $rules['randomskillmanualentry'] != 1) {
 						$x .= "<option value='{$c[0]}|R'>{$c[0]} SPP (Random Primary)</option>\n";
 					}
 					if ($p->mv_spp >= $c[1]) {
-						$x .= "<option value='{$c[1]}|P'>{$c[1]} SPP (Chosen Primary)</option>\n";
+						$x .= "<option value='{$c[1]}|P'>{$c[1]} SPP (".($isSevens ? 'Primary Skill' : 'Chosen Primary').")</option>\n";
 					}
 					if ($p->mv_spp >= $c[2]) {
-						$x .= "<option value='{$c[2]}|S'>{$c[2]} SPP (Chosen Secondary)</option>\n";
+						$x .= "<option value='{$c[2]}|S'>{$c[2]} SPP (".($isSevens ? 'Secondary Skill' : 'Chosen Secondary').")</option>\n";
 					}
 					if ($p->mv_spp >= $c[3] && $rules['randomstatrolls'] == 1) {
 						$x .= "<option value='{$c[3]}|X'>{$c[3]} SPP (Random Stat Improvement)</option>\n";
@@ -1019,7 +1024,7 @@ class Team_HTMLOUT extends Team
 			'mv_td'     => array('desc' => 'Td'),
 			'mv_intcpt' => array('desc' => 'Int'),
 			'mv_cas'    => array('desc' => ($DETAILED) ? 'BH/SI/Ki' : 'Cas', 'nosort' => ($DETAILED) ? true : false),
-			'mv_mvp'    => array('desc' => 'MVP'),
+			'mv_mvp'    => array('desc' => 'MVP'),	
 			'mv_misc'   => array('desc' => 'Misc'),
 			'mv_spp'    => array('desc' => ($DETAILED) ? 'SPP/extra' : 'SPP', 'nosort' => ($DETAILED) ? true : false),
 			'value'     => array('desc' => $lng->getTrn('common/value'), 'kilo' => true, 'suffix' => 'k'),
@@ -1304,6 +1309,10 @@ class Team_HTMLOUT extends Team
 					<tr>
 						<td><?php echo $lng->getTrn('common/race');?></td>
 						<td><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_RACE,$team->f_race_id,false,false);?>"><?php echo $lng->getTrn('race/'.strtolower(str_replace(' ','', $team->f_rname))); ?></a></td>
+					</tr>
+					<tr>
+						<td><?php echo $lng->getTrn('common/format');?></td>
+						<td><?php echo $lng->getTrn('common/'.strtolower($team->format)); ?></td>
 					</tr>
 					<tr>
 						<td><?php echo $lng->getTrn('common/teamleagues');?></td>
@@ -1948,7 +1957,7 @@ class Team_HTMLOUT extends Team
 									<?php
 									$DISABLE = true;
 									foreach ($players as $p) {
-										if ($p->is_sold || $p->is_dead || $p->is_journeyman || $p->inj_ni == 0)
+										if ($p->is_sold || $p->is_dead || $p->is_journeyman || $p->getCurrentNiggleCount() <= 0)
 											continue;
 
 										echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
@@ -2100,7 +2109,7 @@ class Team_HTMLOUT extends Team
 		}
 	}
 	
-	private static function _sppCostTable() {
+	public static function _sppCostTable() {
 		// Indexed by numberOfAchSkill() (0-5)
 		// [random_primary, chosen_primary, chosen_secondary, stat_increase]
 		return array(
@@ -2220,10 +2229,10 @@ class Team_HTMLOUT extends Team
 				$tmanage = array(
 					'select_league'     => $lng->getTrn($base.'/box_tm/select_league'),
 					'select_rule'       => $lng->getTrn($base.'/box_tm/select_rule'),
-					'select_captain'    => $lng->getTrn($base.'/box_tm/select_captain'),
+					'select_captain'    => $team->format == 'SV' ? $lng->getTrn($base.'/box_tm/select_veteran') : $lng->getTrn($base.'/box_tm/select_captain'),
 					'hire_player'       => $lng->getTrn($base.'/box_tm/hire_player'),
 					'hire_journeyman'   => $lng->getTrn($base.'/box_tm/hire_journeyman'),
-					'fire_player'       => $lng->getTrn($base.'/box_tm/fire_player'),
+					'fire_player'       => $team->format == 'SV' ? $lng->getTrn($base.'/box_tm/fire_jm') : $lng->getTrn($base.'/box_tm/fire_player'),
 					'unbuy_player'      => $lng->getTrn($base.'/box_tm/unbuy_player'),
 					'rename_player'     => $lng->getTrn($base.'/box_tm/rename_player'),
 					'renumber_player'   => $lng->getTrn($base.'/box_tm/renumber_player'),				
@@ -2254,9 +2263,26 @@ class Team_HTMLOUT extends Team
 			if (strlen($team->getFavrulechosen()) >= 1 || strlen($team->getFavruleoptions()) == 0  ) { 
 			unset($tmanage['select_rule']);
 			}
-			# If a team captain has already been selected OR if it does not apply, hide option
-			if (($team->getTeamrules() != 22 && strpos($team->getTeamrules(),"22") == FALSE) || (strlen($team->getTeamcaptain()) >0)) {  //add logic for "and team captain has not been selected yet"
-			unset($tmanage['select_captain']);
+			# If a team captain/veteran has already been selected, or neither applies, hide option
+            if ((($team->getTeamrules() != 22 && strpos($team->getTeamrules(),"22") == FALSE) && $team->format != 'SV') || (strlen($team->getTeamcaptain()) >0)) {
+            unset($tmanage['select_captain']);
+			}
+			# Sevens rules do not allow temporary retirement or dropping goods; firing is still
+			# allowed but restricted to journeymen only (see fire_player case below), and only
+			# shown at all if the team actually has a journeyman on the roster
+			if ($team->format == 'SV') {
+				unset($tmanage['retire_player']);
+				unset($tmanage['drop_goods']);
+				$hasJourneyman = false;
+				foreach ($players as $p) {
+					if ($p->is_journeyman && !$p->is_dead && !$p->is_sold) {
+						$hasJourneyman = true;
+						break;
+					}
+				}
+				if (!$hasJourneyman) {
+					unset($tmanage['fire_player']);
+				}
 			}
 			# Enforce hire/fire order: lock out hiring once fire phase is active
 			$_hireFire_phase = self::_getHireFirePhase($team->team_id);
@@ -2335,7 +2361,7 @@ class Team_HTMLOUT extends Team
 				 * Select teams captain
 				 **************/
 				case 'select_captain':				
-					echo $lng->getTrn('profile/team/box_tm/desc/select_captain');
+					echo $lng->getTrn($base.'/box_tm/desc/'.($team->format == 'SV' ? 'select_veteran' : 'select_captain'));
 					?>
 					<hr><br>
 					<?php echo $lng->getTrn('common/player');?>:<br>
@@ -2345,6 +2371,16 @@ class Team_HTMLOUT extends Team
 					foreach ($players as $p) {
 						if ($p->is_dead || $p->is_sold || $p->is_bigguy || $p->is_retired || $p->is_captain)
 							continue;
+						if ($team->format == 'SV') {
+							$isLineman = false;
+							foreach ($DEA[$team->f_rname]['players'] as $posDetails) {
+								if ($posDetails['pos_id'] == $p->f_pos_id && $posDetails['pos_type'] == 'LN') {
+									$isLineman = true;
+									break;
+								}
+							}
+							if (!$isLineman) continue;
+						}
 
 						echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
 						$DISABLE = false;
@@ -2368,7 +2404,7 @@ class Team_HTMLOUT extends Team
 					$DISABLE = true;
 					foreach ($DEA[$team->f_rname]['players'] as $pos => $details) {
 						// Show players on the select list if buyable, or if player is a potential journeyman AND team has not reached journeymen limit. Also Checking for big guy limits via isMaxBigGuys and dungeon bowl positional limits via isPlayerBuyable
-						if ($DEA[$team->f_rname]['other']['format'] =='SV') {
+						if ($team->format =='SV') {
 							if ($team->isMaxBigGuys()) {
 								if (($team->isPlayerBuyable($details['pos_id']) && $team->treasury >= $details['cost'] && $details['is_bigguy'] == 0) ||
 									(($details['qty'] == 11) && count($active_players) < $rules['journeymen_limit_sevens'])) {
@@ -2455,7 +2491,8 @@ class Team_HTMLOUT extends Team
 				case 'fire_player':
 				// Reuse phase variable set earlier when building the tmanage array.
 				// Defensive fallback in case variable is somehow not set.
-				$_fp_phase = isset($_hireFire_phase) ? $_hireFire_phase : 'unrestricted';
+				// Sevens teams can only fire journeymen, so the hire/fire ordering rule doesn't apply to them.
+				$_fp_phase = ($team->format == 'SV') ? 'unrestricted' : (isset($_hireFire_phase) ? $_hireFire_phase : 'unrestricted');
 				if ($_fp_phase === 'hire_clean') {
 					// Hire phase, no hires yet: show skip button, lock fire OK button
 					echo $lng->getTrn('profile/team/box_tm/desc/skip_hire');
@@ -2468,9 +2505,12 @@ class Team_HTMLOUT extends Team
 					$DISABLE = true;
 				} else {
 					// hire_done, fire, or unrestricted: show normal fire UI
-					echo $lng->getTrn('profile/team/box_tm/desc/fire_player')
-						 .' '.$rules['player_refund']*100 . "%.
-			";
+					if ($team->format == 'SV') {
+						echo $lng->getTrn('profile/team/box_tm/desc/fire_jm');
+					} else {
+						echo $lng->getTrn('profile/team/box_tm/desc/fire_player')
+							 .' '.$rules['player_refund']*100 . "%.";
+					}
 					// Warning banner only in hire_done phase
 					if ($_fp_phase === 'hire_done') {
 						echo '<div style="background:#fff3cd;border:1px solid #e0a800;'
@@ -2494,14 +2534,13 @@ class Team_HTMLOUT extends Team
 					// Count rostered players (unchanged from original)
 					$rostered_players = 0;
 					foreach ($players as $p) {
-						if (!$p->is_dead && !$p->is_sold && !$p->is_retired
-							&& !$p->is_journeyman && !$p->is_mng) {
+						if (!$p->is_dead && !$p->is_sold && !$p->is_retired	&& !$p->is_journeyman && !$p->is_mng) {
 							$rostered_players++;
 						}
 					}
 					foreach ($players as $p) {
-						if ($p->is_dead || $p->is_sold
-							|| ($p->is_captain && !$p->can_firecap)) continue;
+						if ($p->is_dead || $p->is_sold || ($p->is_captain && !$p->can_firecap)) continue;
+						if ($team->format == 'SV' && !$p->is_journeyman) continue;
 						$can_fire = false;
 						$reason   = '';
 						if ($p->is_journeyman) {
@@ -3504,7 +3543,7 @@ class Team_HTMLOUT extends Team
 				case 'buy_goods':
 					echo $lng->getTrn('profile/team/box_tm/desc/buy_goods');
 					$goods_temp = $team->getGoods();
-					if ($DEA[$team->f_rname]['other']['rr_cost'] != $goods_temp['rerolls']['cost'] && $DEA[$team->f_rname]['other']['format'] != 'SV') {
+					if ($DEA[$team->f_rname]['other']['rr_cost'] != $goods_temp['rerolls']['cost'] && $team->format != 'SV') {
 						echo $lng->getTrn('profile/team/box_tm/desc/buy_goods_warn');
 					}
 					?>
@@ -3516,7 +3555,7 @@ class Team_HTMLOUT extends Team
 					foreach ($team->getGoods() as $name => $details) {
 						if ($name == 'ff_bought' && !$team->mayBuyFF())
 							continue;
-						if ($DEA[$team->f_rname]['other']['format'] =='SV' && $name == 'rerolls' && !$team->mayBuyRR())
+						if ($team->format =='SV' && $name == 'rerolls' && !$team->mayBuyRR())
 							continue;
 						if (($team->$name < $details['max'] || $details['max'] == -1) && $team->treasury >= $details['cost']) {
 							echo "<option value='$name'>" . $details['cost']/1000 . "k | $details[item]</option>\n";

@@ -66,12 +66,14 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <pos>Position</pos>
     <keywords>Keywords</keywords>
     <captain>Captain</captain>
+    <veteran>Veteran</veteran>
     <exp>Experience</exp>
     <maxqty>Max. Qty</maxqty>
     <price>Price</price>
     <number>Number</number>
     <opponent>Opponent</opponent>
     <tier>Tier</tier>
+    <sevens_tier>Sevens Tier</sevens_tier>
     <format>Format</format>
     <reroll>Re-roll</reroll>
     <maxbigguys>Max no of big guys allowed</maxbigguys>
@@ -334,9 +336,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <select_league>Select team league</select_league>
             <select_rule>Select team special rule</select_rule>
             <select_captain>Select team captain</select_captain>
+            <select_veteran>Select veteran</select_veteran>
             <hire_player>Hire player/Journeyman</hire_player>
             <hire_journeyman>Perm hire used journeymen</hire_journeyman>
             <fire_player>Fire player</fire_player>
+            <fire_jm>Fire Journeyman</fire_jm>
             <unbuy_player>Un-hire player</unbuy_player>
             <rename_player>Rename player</rename_player>
             <renumber_player>Renumber player</renumber_player>
@@ -390,9 +394,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <select_league> <![CDATA[ Select a team league.<br> Teams that have multiple leagues to choose from must make a selection here, to determine which star players they can induce.<br> Please select carefully as once chosen it cannot be changed.<br> <b>Please Note:</b> Some stars will not be available in inducements try-out until a league choice is selected. ]]> </select_league>
                 <select_rule> <![CDATA[ Select a team special rule.<br> Teams that have multiple special rules to choose from must make a selection here, to determine which star players they can induce.<br> Please select carefully as once chosen it cannot be changed.<br> <b>Please Note:</b> Some stars will not be available in inducements try-out until a rule choice is selected. ]]> </select_rule>
                 <select_captain> <![CDATA[ Select a team captain.<br> Please select carefully as once chosen it cannot be changed.<br> <b>Please Note:</b> A captain cannot be fired unless they have a stat bust.  ]]> </select_captain>
+                <select_veteran> <![CDATA[ Select a veteran (must be a lineman).<br> Please select carefully as once chosen it cannot be changed. ]]> </select_veteran>
                 <hire_player> <![CDATA[ Hire a new player.<br> Also, hire a new journeyman.<br> Hiring a player as a journeyman is free, but only players from a 0-16 allowed position on your team's roster are hire-able as journeymen.<BR> Tick the Journeyman? box to hire a new journeyman at no cost. ]]> </hire_player>
                 <hire_journeyman> <![CDATA[ Hire one of your used journeymen to permanently play on your team.<br> Must be done before firing the journeymen. ]]> </hire_journeyman>
                 <fire_player> <![CDATA[ Fire a player. Refund rate: ]]> </fire_player>
+                <fire_jm> <![CDATA[ Fire a Journeyman. ]]> </fire_jm>
                 <fire_warning> <![CDATA[ <b>Warning:</b> Once you fire a player you cannot hire any further players until after your next match is played. ]]> </fire_warning>
                 <skip_hire> <![CDATA[ Post-match hiring must be completed before you can fire players.<br>If you do not wish to hire anyone, click Skip below <br>to proceed directly to the fire phase. ]]> </skip_hire>
                 <unbuy_player> <![CDATA[ Regret hiring a player. 100% refund.<br> This is only possible for players which have not participated in any matches. ]]> </unbuy_player>
@@ -428,7 +434,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <ff>Manage team Dedicated Fans</ff>
             <resetleague>Reset selected team league</resetleague>
             <resetrule>Reset selected team special rule</resetrule>
-            <resetcaptain>Reset selected team captain</resetcaptain>
+            <resetcaptain>Reset selected team captain/veteran</resetcaptain>
             <transferteam>Transfer team</transferteam>
             <removeNiggle>Remove player niggle</removeNiggle>
             <addniggle>Add player niggle</addniggle>
@@ -449,7 +455,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <ff> <![CDATA[ Make changes to team's Dedicated Fans. ]]> </ff>
                 <resetleague> <![CDATA[ Reset the currently selected team league.<br> If resetting Norse, please reset the team special rule also. ]]> </resetleague>
                 <resetrule> <![CDATA[ Reset the currently selected team special rule.<br> If resetting Norse, please reset the team league also. ]]> </resetrule>
-                <resetcaptain> <![CDATA[ Reset the currently selected team captain. ]]> </resetcaptain>
+                <resetcaptain> <![CDATA[ Reset the currently selected team captain/veteran. ]]> </resetcaptain>
                 <transferteam> <![CDATA[ Transfer this team to another coach. ]]> </transferteam>
                 <removeNiggle> <![CDATA[ Remove a niggling injury from a player. ]]> </removeNiggle>
                 <addniggle> <![CDATA[ Add a niggling injury to a player. ]]> </addniggle>
@@ -542,7 +548,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	
 	<sevens>
 		<instructionshead>Instructions for Sevens Matches</instructionshead>
-		<instructionstext><![CDATA[In Sevens only one player can gain an advancement. Please use the 'Misc SPP' box to assign SPP to ONE player per team.<br>Use the 'Next Skill x/y SPP' information next to each player to determine how many SPP to assign: x for a Primary skill (on a chosen player) or y for a Secondary skill (on a random player).<br>Please note that although you can choose a player to advance (Primary skill only), all skill advancements will be random.<br>Remember also to roll for "The Draft"- after every match roll a D6 for every player that has extra skills: unless the roll is higher than the number of skills the player(s) achieved, they will leave your team for the big leagues! (Mark the player(s) as DEAD in the Injury Box)]]></instructionstext>
+		<instructionstext><![CDATA[In Sevens only one player can gain an advancement after a match. Please use the 'Misc SPP' box to assign SPP to ONE player per team.<br>Use the 'Next Skill x/y SPP' information next to each player to determine how many SPP to assign: x for a Primary skill (on a chosen player) or y for a Secondary skill (on a random player).<br>Please note that although you can choose a player to advance (Primary skill only), all skill advancements are randomly chosen from 3 skills: 2 chosen by the coach and 1 by the opposing coach, so you must pick those skills and roll for which one applies post game.<br>After you assign the relevant SPP to the relevant player you will be able to assign the skill on the team page.<BR>Remember also to roll for "The Draft"- after every match roll a D6 for every player that has extra skills: unless the roll is higher than the number of skills the player(s) achieved, they will leave your team for the big leagues (mark the player(s) as DEAD in the Injury Box) UNLESS you pay them their Current Value (deduct that from your Winnings/Treasury). If you do, tick the Draft Payoff box for that player to trigger a 15k increase to that player's value.]]></instructionstext>
 	</sevens>
 </matches>
 

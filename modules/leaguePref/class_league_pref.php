@@ -106,9 +106,11 @@ public $existing = false;
 public $theme_css = '';
 public $core_theme_id = 0;
 public $tv = 0;
+public $initial_treasury_sevens = 0;  
 public $language = 'en-GB';
 public $helf = 0;
 public $slann = 0;
+public $sevens = 1;  
 public $randomskillrolls = 0;
 public $randomstatrolls = 0;
 public $randomskillmanualentry = 0;
@@ -128,25 +130,26 @@ public $min_tv = 0;
 public $discord_webhook_url = '';
 public $discord_post_permission = 'admins';
 
-function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $helf, $slann, 
-$randomskillrolls, $randomstatrolls, $randomskillmanualentry, $megastars, $base_inducements, $fireunder11, $enforce_hire_fire_order, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts, 
-$prayer_cost, $banned_stars, $megastar_tax, $min_tv, $discord_webhook_url, $discord_post_permission) {
+
+function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $initial_treasury_sevens, $language, $helf, $slann, $sevens, $randomskillrolls, $randomstatrolls, $randomskillmanualentry, $megastars, $base_inducements, $fireunder11, $enforce_hire_fire_order, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts, $prayer_cost, $banned_stars, $megastar_tax, $min_tv, $discord_webhook_url, $discord_post_permission) {
 	global $settings;
 	$this->lid = $lid;
 	$this->l_name = $name;
 	$this->p_tour = $ptid;
 	$this->s_tour = $stid;
 	$this->league_name = isset($league_name) ? $league_name: $settings['league_name'];
-	$this->forum_url = isset($forum_url) ? $forum_url: $settings['forum_url'];
+	$this->forum_url = isset($forum_url) ? $forum_url: (isset($settings['forum_url']) ? $settings['forum_url'] : '');
 	$this->welcome = isset($welcome) ? $welcome: $settings['welcome'];
 	$this->rules = isset($rules) ? $rules: $settings['rules'];
 	$this->existing = $existing;
     $this->theme_css = $theme_css;
     $this->core_theme_id = $core_theme_id;
     $this->tv = $tv;
+    $this->initial_treasury_sevens = $initial_treasury_sevens;
     $this->language = $language;
     $this->helf = $helf;
     $this->slann = $slann;
+    $this->sevens = $sevens;
     $this->randomskillrolls = $randomskillrolls;
     $this->randomstatrolls = $randomstatrolls;
     $this->randomskillmanualentry = $randomskillmanualentry;
@@ -183,9 +186,9 @@ public static function getLeaguePreferences() {
             return new LeaguePref($row['lid'], $row['name'],
                 $row['prime_tid'], $row['second_tid'], $row['league_name'], $row['forum_url'],
                 $row['welcome'], $row['rules'], true, $theme_css, 
-                $settings['stylesheet'], $rules['initial_treasury'], 
+                $settings['stylesheet'], $rules['initial_treasury'], $rules['initial_treasury_sevens'],  
 				$settings['lang'],
-				$rules['helf'],$rules['slann'],
+				$rules['helf'],$rules['slann'],$rules['sevens'],
 				$rules['randomskillrolls'],$rules['randomstatrolls'],$rules['randomskillmanualentry'],
 				$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'],
 				isset($rules['enforce_hire_fire_order']) ? $rules['enforce_hire_fire_order'] : 0,
@@ -199,10 +202,10 @@ public static function getLeaguePreferences() {
 				isset($rules['discord_post_permission']) ? $rules['discord_post_permission'] : 'admins');
         }
     } else {
-		return new LeaguePref($sel_lid, $leagues['lname'], null, null, null, null, null, null, false, null, 
-            $settings['stylesheet'], $rules['initial_treasury'], 
+		return new LeaguePref($sel_lid, isset($leagues[$sel_lid]['lname']) ? $leagues[$sel_lid]['lname'] : '', null, null, null, null, null, null, false, null,
+            $settings['stylesheet'], $rules['initial_treasury'], $rules['initial_treasury_sevens'], 
 			$settings['lang'],
-			$rules['helf'],$rules['slann'],
+			$rules['helf'],$rules['slann'],$rules['sevens'],
 			$rules['randomskillrolls'],$rules['randomstatrolls'],$rules['randomskillmanualentry'],
 			$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'], 0,
 			$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
@@ -231,8 +234,10 @@ private function syncSettingsWithTemplate() {
     // IMPORTANT: These must be in the same order as they appear in the template
     $managedRules = array(
         'initial_treasury',
+        'initial_treasury_sevens',
         'helf',
         'slann',
+        'sevens',
         'randomskillrolls',
         'randomstatrolls',
         'randomskillmanualentry',
@@ -250,7 +255,7 @@ private function syncSettingsWithTemplate() {
         'megastar_tax',
         'min_tv',
         'discord_webhook_url',
-        'discord_post_permission'
+        'discord_post_permission',
     );
     
     // Process in reverse order so insertions don't mess up positions
@@ -327,13 +332,15 @@ function save() {
     $settingsFileContents = $this->syncSettingsWithTemplate();
     
     // Update stylesheet and language (these use different patterns)
-    $settingsFileContents = preg_replace("/settings\['stylesheet'\]\s*=\s*[^;]+;/", "settings['stylesheet'] = $this->core_theme_id;", $settingsFileContents);
+    $settingsFileContents = preg_replace("/settings\['stylesheet'\]\s*=\s*[^;]+;/","settings['stylesheet'] = '" . addslashes($this->core_theme_id) . "';",$settingsFileContents);
     $settingsFileContents = preg_replace("/settings\['lang'\]\s*=\s*[^;]+;/", "settings['lang'] = '$this->language';", $settingsFileContents);
     
     // Update all the rules using the helper method
     $settingsFileContents = $this->updateRule($settingsFileContents, 'initial_treasury', $this->tv);
+    $settingsFileContents = $this->updateRule($settingsFileContents, 'initial_treasury_sevens', $this->initial_treasury_sevens);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'helf', $this->helf == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'slann', $this->slann == 1 ? 1 : 0);
+    $settingsFileContents = $this->updateRule($settingsFileContents, 'sevens', $this->sevens == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'randomskillrolls', $this->randomskillrolls == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'randomstatrolls', $this->randomstatrolls == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'randomskillmanualentry', $this->randomskillmanualentry == 1 ? 1 : 0);
@@ -361,8 +368,10 @@ function save() {
     $settings['stylesheet'] = $this->core_theme_id;
     $settings['lang'] = $this->language;
     $rules['initial_treasury'] = $this->tv;
+    $rules['initial_treasury_sevens'] = $this->initial_treasury_sevens;
     $rules['helf'] = $this->helf;
     $rules['slann'] = $this->slann;
+    $rules['sevens'] = $this->sevens;
     $rules['randomskillrolls'] = $this->randomskillrolls;
     $rules['randomstatrolls'] = $this->randomstatrolls;
     $rules['randomskillmanualentry'] = $this->randomskillmanualentry;
@@ -474,6 +483,14 @@ public static function showLeaguePreferences() {
                             <input type="number" min="0" step="5000" name="min_tv" <?php echo $canEdit; ?> value="<?php echo $l_pref->min_tv; ?>" />
                         </td>
                     </tr>
+                    <tr title="<?php echo $lng->getTrn('tv_sevens_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('tv_sevens_title', 'LeaguePref'); ?>:
+                        </td>
+                        <td>
+                            <input type="number" min="0" step="5000" name="initial_treasury_sevens" <?php echo $canEdit; ?> value="<?php echo $l_pref->initial_treasury_sevens; ?>" />
+                        </td>
+                    </tr>
                     <tr title="<?php echo $lng->getTrn('language_help', 'LeaguePref'); ?>">
                         <td>
                             <?php echo $lng->getTrn('language_title', 'LeaguePref'); ?>:
@@ -583,6 +600,15 @@ public static function showLeaguePreferences() {
 							<br>
 							<input type='checkbox' name='slann' value='1' onclick='slideToggleFast("slann");'	<?php if($rules['slann'] == 1) {echo 'checked';}?>>
                             <b><?php echo $lng->getTrn('teams_legend_slann', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
+					<tr title="<?php echo $lng->getTrn('sevens_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('sevens_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type='checkbox' name='sevens' value='1' onclick='slideToggleFast("sevens");'	<?php if($rules['sevens'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('sevens', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
                     <tr title="<?php echo $lng->getTrn('fireunder11_help', 'LeaguePref'); ?>">
@@ -768,9 +794,11 @@ public static function handleActions() {
                 $_POST['league_name'], $_POST['forum_url'], $_POST['welcome'], 
                 $_POST['rules'], $_POST['existing'], $_POST['theme_css'], 
                 $_POST['core_theme_id'], $_POST['tv'], 
+				isset($_POST['initial_treasury_sevens']) ? $_POST['initial_treasury_sevens'] : 0,
 				$_POST['language'],
 				isset($_POST['helf']) ? $_POST['helf'] : 0,
 				isset($_POST['slann']) ? $_POST['slann'] : 0,
+				isset($_POST['sevens']) ? $_POST['sevens'] : 0,
 				isset($_POST['randomskillrolls']) ? $_POST['randomskillrolls'] : 0,
 				isset($_POST['randomstatrolls']) ? $_POST['randomstatrolls'] : 0,
 				isset($_POST['randomskillmanualentry']) ? $_POST['randomskillmanualentry'] : 0,

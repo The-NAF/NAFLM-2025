@@ -23,10 +23,15 @@ class FileManager
     
     static function readFile($fileName) {
         $fileContents = '';
+        if (!file_exists($fileName)) {
+            return $fileContents;
+        }
         $file = fopen($fileName, 'r');
         while($file && !feof($file))
              $fileContents .= fgets($file);
-        fclose($file);
+        if ($file) {
+            fclose($file);
+        }
         return $fileContents;
     }
     

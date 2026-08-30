@@ -274,7 +274,7 @@ class Player_HTMLOUT extends Player
 							<td><b><?php echo $lng->getTrn('common/skills');?></b></td>
 							<td><?php
 								if ($p->is_captain)  {
-								echo (empty($p->skills)) ? '<i>Pro (Captain)</i>' : '<i>Pro (Captain), </i>'.$p->skills; 
+								echo (empty($p->skills)) ? '<i>'.($team->format == 'SV' ? 'Veteran' : 'Pro (Captain)').'</i>' : '<i>'.($team->format == 'SV' ? 'Veteran' : 'Pro (Captain)').', </i>'.$p->skills; 
 								} else {
 								echo (empty($p->skills)) ? '<i>'.$lng->getTrn('common/none').'</i>' : $p->skills; 
 								}								

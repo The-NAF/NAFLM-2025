@@ -639,40 +639,11 @@ class HTMLOUT
 					}
 					echo "</optgroup>";
 				}
-				if ($rules['sevens'] == 0) {
-					echo  "<optgroup label='Sevens Teams'>";
-					foreach ($raceididx as $rid => $rname) {
-						if ( substr($rname, 0, 6) == 'Sevens' ) {
-							echo "<option value='$rid'".(($_SESSION[$s_race] == $rid) ? 'SELECTED' : '').">".$lng->getTrn('race/'.str_replace(' ', '', strtolower($rname)).'')."</option>\n";
-						}
-					}
-					echo "</optgroup>";
-				}
 				?>
 			</select>
 			</div>
 			<?php
 		}
-		/*if ($setFormat || ($rules['dungeon'] == 0 || $rules['sevens'] == 0)) {
-			echo $lng->getTrn('common/format');
-			?>
-			<select name="format_in" id="format_in">
-				<?php
-				echo "<option style='font-weight: bold;' value='".T_FORMAT_ALL."'>-".$lng->getTrn('common/all')."-</option>\n";
-				echo "<option value='BB'".(($_SESSION[$s_format] == 'BB') ? 'SELECTED' : '').">".$lng->getTrn('common/bb')."</option>\n";
-
-				if ($rules['dungeon'] == 0) {
-					echo "<option value='DB'".(($_SESSION[$s_format] == 'DB') ? 'SELECTED' : '').">".$lng->getTrn('common/db')."</option>\n";
-					}
-					echo "</optgroup>";
-				if ($rules['sevens'] == 0) {
-					echo "<option value='SV'".(($_SESSION[$s_format] == 'SV') ? 'SELECTED' : '').">".$lng->getTrn('common/sv')."</option>\n";
-					}
-					echo "</optgroup>";
-				?>
-			</select>
-			<?php
-		}*/
 		if ($setSGrp) {
 			echo "<div class=\"statsSelection\">";
 			echo $lng->getTrn('common/sgrp');
@@ -1212,48 +1183,15 @@ class HTMLOUT
 			</ul></li>
 			<?php endif; ?>
 			
-			<?php if ($rules['sevens'] == 0)  : ?>
-			<li class="subfirst"><a rel="nofollow" href="#">Sevens Rosters ></a>
-				<ul>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=60" >Sevens Amazon</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=86" >Sevens Black Orc</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=61" >Sevens Chaos Chosen</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=62" >Sevens Chaos Dwarf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=81" >Sevens Chaos Renegades</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=63" >Sevens Dark Elf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=64" >Sevens Dwarf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=65" >Sevens Elven Union</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=89" >Sevens Gnome</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=66" >Sevens Goblin</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=67" >Sevens Halfling</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=68" >Sevens High Elf</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=69" >Sevens Human</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=87" >Sevens Imperial Nobility</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=88" >Sevens Khorne</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=71" >Sevens Lizardman</a></li>
-			    <li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=73" >Sevens Necromantic Horror</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=74" >Sevens Norse</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=75" >Sevens Nurgle</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=84" >Sevens Old World Alliance</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=76" >Sevens Ogre</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=72" >Sevens Orc</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=79" >Sevens Skaven</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=77" >Sevens Shambling Undead</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=82" >Sevens Slaan</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=85" >Sevens Snotling</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=70" >Sevens Tomb Kings</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=83" >Sevens Underworld Denizens</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=78" >Sevens Vampire</a></li>
-				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=80" >Sevens Wood Elf</a></li>
-			</ul></li>
-			<?php endif; ?>
-			
 			<li><a href="index.php?section=skills" >Skills & Traits List</a></li>
 			<li><a href="index.php?section=stars" >Star Players List</a></li>
 			<li class="subfirst"><a rel="nofollow" href="#">Inducements ></a>
 				<ul>
 				<li><a href="index.php?section=inducements" >Inducements List</a></li>
 				<li><a href="index.php?section=ptn" >Prayers to Nuffle</a></li>
+				<?php if ($rules['sevens'] == 0) : ?>
+				<li><a href="index.php?section=desperatemeasures" >Desperate Measures</a></li>
+				<?php endif; ?>
 				</ul></li>
 			<li><a href="index.php?section=sequence" >Pre & Post Match Sequence</a></li>
 			<li><a href="index.php?section=cheatsheet" >Cheat Sheet</a></li>

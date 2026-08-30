@@ -147,7 +147,8 @@ class Player
         }
         if ($this->type == PLAYER_TYPE_JOURNEY) { # Check if player is journeyman like this - don't assume setStatusses() has ben called setting $this->is_journeyman.
             $this->position .= ' [J]';
-			if ($DEA[$this->f_rname]['other']['format'] <> 'SV') {
+			$team = new Team($this->owned_by_team_id);
+			if ($team->format <> 'SV') {
 				$this->def_skills[] = 99; # 4+ Loner.
 			} else {
 				$this->def_skills[] = 120; # Sevens 5+ Loner.
@@ -244,6 +245,11 @@ class Player
 		// Check if player has Saboteur prerequisite (needs Secret Weapon, ID=105)
 		if (!in_array('105', $current_skills)) {
 			$illegal_skills = array_merge($illegal_skills, array('36')); // add Saboteur to illegal skills if they don't have Secret Weapon
+		}
+		// Pro and Leader are not available to Sevens teams
+		$team = new Team($this->owned_by_team_id);
+		if ($team->format == 'SV') {
+			$illegal_skills = array_merge($illegal_skills, array('9', '43')); // Pro, Leader
 		}
         foreach ($illegal_skills_arr as $hasSkill => $dropSkills) {
             $illegal_skills = array_merge($illegal_skills, $dropSkills);
@@ -482,13 +488,38 @@ class Player
     
     public function selectCaptain() {
         if ($this->is_journeyman || $this->is_sold || $this->is_dead)
-            return false;
-        $query = "UPDATE players SET is_captain = 1 WHERE player_id = $this->player_id";
-        return mysql_query($query);
+            return false;		
+        $team = new Team($this->owned_by_team_id);
+        if ($team->format == 'SV') {
+            global $DEA;
+            $isLineman = false;
+            foreach ($DEA[$team->f_rname]['players'] as $posDetails) {
+                if ($posDetails['pos_id'] == $this->f_pos_id && $posDetails['pos_type'] == 'LN') {
+                    $isLineman = true;
+                    break;
+                }
+            }
+            if (!$isLineman) {
+                return false;
+            }
+            $query = "UPDATE players SET is_captain = 1, ma_mod = ma_mod + 1 WHERE player_id = $this->player_id";
+        } else {
+            $query = "UPDATE players SET is_captain = 1 WHERE player_id = $this->player_id";
+        }
+        return mysql_query($query) && SQLTriggers::run(T_SQLTRIG_PLAYER_DPROPS, array('id' => $this->player_id, 'obj' => $this)); # Update PV and TV.
     }
     
+    public function getCurrentNiggleCount() {
+        $query = "SELECT IFNULL(SUM(IF(inj = '.NI.', 1, 0) + IF(agn = '.NI.', 1, 0)), 0) AS raw_cnt
+                  FROM match_data WHERE f_player_id = $this->player_id";
+        $row = mysql_fetch_assoc(mysql_query($query));
+        return (int)$row['raw_cnt'] + (int)$this->ni_mod;
+    }
+
     public function removeNiggle() {
         if ($this->is_journeyman || $this->is_sold || $this->is_dead)
+            return false;
+        if ($this->getCurrentNiggleCount() <= 0)
             return false;
         $query = "UPDATE players SET inj_ni = GREATEST(inj_ni -1 ,0), ni_mod = ni_mod -1 WHERE player_id = $this->player_id";
         return mysql_query($query);
@@ -546,6 +577,11 @@ class Player
         return mysql_query($query) && SQLTriggers::run(T_SQLTRIG_PLAYER_DPROPS, array('id' => $this->player_id, 'obj' => $this)); # Update PV and TV.
     }
 
+    public function addValue($amount) {
+        $query = "UPDATE players SET extra_val = extra_val + $amount WHERE player_id = $this->player_id";
+        return mysql_query($query);
+    }
+	
     public function randomSkill($skill_type, $skill_cat) {
         $query = "CALL `random_player_skill`('$skill_cat','$skill_type',$this->player_id,@skill_type,@first_roll,@second_roll,@random_skill,@skill_text,@comments)";
         return mysql_query($query) && SQLTriggers::run(T_SQLTRIG_PLAYER_DPROPS, array('id' => $this->player_id, 'obj' => $this)); # Update PV and TV.

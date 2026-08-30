@@ -132,7 +132,8 @@ class Team
         global $rules;
         setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => $this->f_lid)); // Load correct $rules for league.
         $race = new Race($this->f_race_id);
-        return $race->getGoods($use_dynamic_RR_prices ? $this->doubleRRprice() : false);
+        $atCreation = ($this->mv_played == 0 || $this->mv_played == $this->played_0);
+        return $race->getGoods($use_dynamic_RR_prices ? $this->doubleRRprice() : false, $atCreation, $this->format);
     }
 
     public function delete() {
@@ -389,7 +390,7 @@ class Team
     public function isJMLimitReached() {
         global $DEA, $rules;
         setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => $this->f_lid)); // Load correct $rules for league.
-		if ($DEA[$this->f_rname]['other']['format'] <>'SV') {
+		if ($this->format <>'SV') {
 			return ($rules['journeymen_limit'] <= (int) SQLFetchField("SELECT COUNT(*) FROM players WHERE owned_by_team_id = $this->team_id AND date_sold IS NULL AND date_died IS NULL AND status = ".NONE));
 		} else {
 			return ($rules['journeymen_limit_sevens'] <= (int) SQLFetchField("SELECT COUNT(*) FROM players WHERE owned_by_team_id = $this->team_id AND date_sold IS NULL AND date_died IS NULL AND status = ".NONE));
@@ -541,7 +542,9 @@ class Team
 
     public function resetCaptain() {
 		$teamid = $this->team_id;
-        $query = "UPDATE players SET is_captain = NULL WHERE owned_by_team_id = $teamid";
+		$query = ($this->format == 'SV')
+            ? "UPDATE players SET is_captain = NULL, ma_mod = ma_mod - 1 WHERE owned_by_team_id = $teamid AND is_captain = 1"
+            : "UPDATE players SET is_captain = NULL WHERE owned_by_team_id = $teamid";
         return mysql_query($query);
     }
 	
@@ -691,6 +694,7 @@ class Team
 		'gf_0',
 		'ga_0',
 		'imported',
+		'format',
     );
 
     public static function create(array $input) {
@@ -713,6 +717,7 @@ class Team
             if ($halt) return array($exitStatus, null);
         }
         $input['name'] = "'".mysql_real_escape_string($input['name'])."'"; # Need to quote strings when using INSERT statement.
+        $input['format'] = "'".mysql_real_escape_string($input['format'])."'";
         $query = "INSERT INTO teams (".implode(',',$EXPECTED).") VALUES (".implode(',', $input).")";
         if (mysql_query($query))
             $tid = mysql_insert_id();

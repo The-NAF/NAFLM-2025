@@ -886,13 +886,26 @@ function sec_stars() {
 function sec_inducements() {
     global $lng, $settings, $leagues, $DEA, $inducements, $specialruleididx, $rules;
     title($lng->getTrn('common/inducementlist'));
+    $selectedFormat = 'BB';
+    if ($rules['sevens'] == 0 && isset($_GET['format']) && $_GET['format'] == 'SV') {
+        $selectedFormat = 'SV';
+    }
     ?>
     <div class="boxWide">
         <div class="boxBody">
 		<div>
-		<?php	
+		<?php
+		if ($rules['sevens'] == 0) {
+			$bbUrl = 'index.php?section=inducements&format=BB';
+			$svUrl = 'index.php?section=inducements&format=SV';
+			echo '<p><b>Format:</b> ';
+			echo ($selectedFormat == 'BB') ? '<b>Blood Bowl</b>' : "<a href='$bbUrl'>Blood Bowl</a>";
+			echo ' | ';
+			echo ($selectedFormat == 'SV') ? '<b>Sevens</b>' : "<a href='$svUrl'>Sevens</a>";
+			echo '</p>';
+		}
 		$inducementslist = array(); 
-		foreach ($inducements as $ind_name => $ind) {	  
+		foreach ($inducements as $ind_name => $ind) {  
 			$inducementrules = implode(",", specialsTrans($ind['teamrules']));
 			if (preg_match('/Badlands Brawl,Chaos Clash,Elven Kingdoms League,Halfling Thimble Cup,Lustrian Superleague,Old World Classic,Sylvanian Spotlight,Underworld Challenge,Woodlands League,Worlds Edge Superleague/',$inducementrules)) {       
 				$inducementrules = preg_replace("/Badlands Brawl,Chaos Clash,Elven Kingdoms League,Halfling Thimble Cup,Lustrian Superleague,Old World Classic,Sylvanian Spotlight,Underworld Challenge,Woodlands League,Worlds Edge Superleague/", "Any Team", $inducementrules);
@@ -908,8 +921,8 @@ function sec_inducements() {
 				$redinducementrules = preg_replace("/Favoured of...,Favoured of Chaos Undivided,Favoured of Hashut,Favoured of Khorne,Favoured of Nurgle,Favoured of Slaanesh,Favoured of Tzeentch/", "Favoured of...", $redinducementrules);
 			}  			
 			$redinducementraces = implode(",", racesTrans($ind['reduced_cost_races']));			
-			// Check for base inducements rule 
-			if (($rules['base_inducements'] == 0 || ($ind['source'] == 1 && $rules['base_inducements'] == 1))) {				
+			// Check for base inducements rule, and match the selected format
+			if (($rules['base_inducements'] == 0 || ($ind['source'] == 1 && $rules['base_inducements'] == 1)) && in_array($selectedFormat, $ind['available_formats'])) {			
 				// Determine type
 				$type = '';
 				if ($ind['type'] == 1) {
@@ -1143,7 +1156,7 @@ function sec_skills() {
  *  Cheat Sheet
  *************************/
 function sec_cheatsheet() {
-    global $lng;
+    global $lng, $rules;
     title($lng->getTrn('common/cheatsheet'));
     ?>
     <div class="boxWide">
@@ -1344,12 +1357,127 @@ function sec_cheatsheet() {
 
 				<tr><td colspan="6" class="bg">&nbsp;</td></tr>
 
-				<!-- IMAGE -->
+				<!-- THROWING TEMPLATE IMAGE -->
 				<tr>
 					<td colspan="6" align="center">
 						<img src="images/range.png" alt="Throwing Range Table" width="500">
 					</td>
 				</tr>
+								
+				<tr><td colspan="6" class="bg">&nbsp;</td></tr>
+				
+				<?php if ($rules['sevens'] == 0) : ?>
+
+				<!-- SEVENS KICK-OFF TABLE -->
+				<tr>
+					<th>2D6</th>
+					<th colspan="5">SEVENS KICK-OFF EVENT</th>
+				</tr>
+
+				<tr>
+					<td><strong>2</strong></td>
+					<td colspan="5"><strong>GET THE REF:</strong> Each team immediately receives one free Bribe Inducement. This Bribe must be used by the end of the game or it is lost.</td>
+				</tr>
+
+				<tr>
+					<td><strong>3</strong></td>
+					<td colspan="5"><strong>TIME-OUT:</strong> If the kicking team's Turn Marker is on turn 5 or 6 for the half, move both teams' Turn Marker back one space. Otherwise, move both teams' Turn Marker forwards one space.</td>
+				</tr>
+
+				<tr>
+					<td><strong>4</strong></td>
+					<td colspan="5"><strong>ALERT DEFENCE:</strong> The Coach of the kicking team selects up to D3+1 Open players on their team. The selected players may immediately move one square in any direction, even if this takes them into No Man's Land.</td>
+				</tr>
+
+				<tr>
+					<td><strong>5</strong></td>
+					<td colspan="5"><strong>HIGH KICK:</strong> If the ball is set to land in a square within the area between the receiving team's End Zone and Line of Scrimmage (but not No Man's Land), then one Open player on the receiving team may immediately be placed in the square the ball is going to land in.</td>
+				</tr>
+
+				<tr>
+					<td><strong>6</strong></td>
+					<td colspan="5"><strong>CHEERING FANS:</strong> Both Coaches roll a D6 and add the number of Cheerleaders on their Team Roster. The first Block Action performed during the Coach with the highest roll's next Turn receives an additional Offensive Assist. If both Coaches roll the same, both will receive this benefit during their next Turn.</td>
+				</tr>
+
+				<tr>
+					<td><strong>7</strong></td>
+					<td colspan="5"><strong>BRILLIANT COACHING:</strong> Both Coaches roll a D6 and add the number of Assistant Coaches on their Team Roster. The Coach with the highest total, or both Coaches if the result is a tie, immediately gains a free Team Re-roll for the Drive ahead. If this free Team Re-roll has not been used by the end of the Drive, it is lost.</td>
+				</tr>
+
+				<tr>
+					<td><strong>8</strong></td>
+					<td colspan="5"><strong>CHANGING WEATHER:</strong> Immediately make a new roll on the Weather Table. If the new result is Perfect Conditions, the ball will Scatter (3) in the air before it lands.</td>
+				</tr>
+
+				<tr>
+					<td><strong>9</strong></td>
+					<td colspan="5"><strong>QUICK SNAP:</strong> The Coach of the receiving team selects up to D3+1 Open players on their team. The selected players may immediately move one square in any direction, even if this takes them into No Man's Land.</td>
+				</tr>
+
+				<tr>
+					<td><strong>10</strong></td>
+					<td colspan="5"><strong>CHARGE!:</strong> The Coach of the kicking team selects up to D3+1 Open players on their team. The selected players may then be activated one at a time, exactly as if it was their team's Turn, and perform a free Move Action. One of the selected players may instead perform a free Blitz Action, one may perform a free Throw Team-mate Action, and one may perform a free Kick Team-mate Action. If a selected player Falls Over or is Knocked Down during their activation, no further selected players can be activated and the Charge ends.</td>
+				</tr>
+
+				<tr>
+					<td><strong>11</strong></td>
+					<td colspan="5"><strong>DODGY SNACK:</strong> Both Coaches roll a D6. The Coach that rolled the lowest, or both Coaches in the result of a tie, randomly selects one of their players on the pitch and rolls a D6. On a 2+, the player's pre-drive snack has not gone down well and for the duration of the Drive the player reduces their MA and AV by 1. On a 1, the player's pre-drive snack has violently disagreed with them; place the player in the Reserves box as they spend the rest of the Drive locked in the lavatory!</td>
+				</tr>
+
+				<tr>
+					<td><strong>12</strong></td>
+					<td colspan="5"><strong>PITCH INVASION:</strong> Both Coaches roll a D6 and add their Fan Factor. The Coach that rolled lowest, or both Coaches in the result of a tie, randomly selects one of their players on the pitch. The selected players are immediately Placed Prone and become Stunned.</td>
+				</tr>
+
+				<tr><td colspan="6" class="bg">&nbsp;</td></tr>
+
+				<!-- SEVENS INJURY TABLE -->
+				<tr>
+					<th>2D6</th>
+					<th>SEVENS INJURY TABLE</th>
+					<td rowspan="6"></td>
+					<th>2D6</th>
+					<th colspan="2">SEVENS STUNTY INJURY TABLE</th>
+				</tr>
+
+				<tr>
+					<td><strong>2-7</strong></td>
+					<td><strong>STUNNED:</strong> The player is immediately Stunned.</td>
+					<td><strong>2-6</strong></td>
+					<td colspan="2"><strong>STUNNED:</strong> The player is immediately Stunned.</td>
+				</tr>
+
+				<tr>
+					<td><strong>8-9</strong></td>
+					<td><strong>KNOCKED-OUT:</strong> The player is immediately Knocked-out. Remove them from the pitch and place them in the Knocked-out box of their Dugout.</td>
+					<td><strong>7-8</strong></td>
+					<td colspan="2"><strong>KNOCKED-OUT:</strong> The player is immediately Knocked-out. Remove them from the pitch and place them in the Knocked-out box of their Dugout.</td>
+				</tr>
+
+				<tr>
+					<td><strong>10</strong></td>
+					<td><strong>BADLY HURT:</strong> The player suffers a Casualty. Remove them from the pitch and place them in their team's Casualty box. Do not make a Casualty Roll for them, instead they just miss the rest of this game but suffer no further effects.</td>
+					<td><strong>9-10</strong></td>
+					<td colspan="2"><strong>BADLY HURT:</strong> The player suffers a Casualty. Remove them from the pitch and place them in their team's Casualty box. Do not make a Casualty Roll for them, instead they just miss the rest of this game but suffer no further effects.</td>
+				</tr>
+
+				<tr>
+					<td><strong>11</strong></td>
+					<td><strong>SERIOUSLY HURT:</strong> The player suffers a Casualty. Remove them from the pitch and place them in their team's Casualty box. Do not make a Casualty Roll for them, instead they just miss the rest of this game, and in League Play must miss their next game as well.</td>
+					<td><strong>11</strong></td>
+					<td colspan="2"><strong>SERIOUSLY HURT:</strong> The player suffers a Casualty. Remove them from the pitch and place them in their team's Casualty box. Do not make a Casualty Roll for them, instead they just miss the rest of this game, and in League Play must miss their next game as well.</td>
+				</tr>
+
+				<tr>
+					<td><strong>12</strong></td>
+					<td><strong>DEAD:</strong> The player suffers a Casualty. Remove them from the pitch and place them in their team's Casualty box. Do not make a Casualty Roll for them, they are dead and take no further part in the game. In League Play, permanently remove the player from their Team Draft List.</td>
+					<td><strong>12</strong></td>
+					<td colspan="2"><strong>DEAD:</strong> The player suffers a Casualty. Remove them from the pitch and place them in their team's Casualty box. Do not make a Casualty Roll for them, they are dead and take no further part in the game. In League Play, permanently remove the player from their Team Draft List.</td>
+				</tr>
+
+				<tr><td colspan="6" class="bg">&nbsp;</td></tr>
+
+				<?php endif; ?>
 
 			</tbody>
 		</table>
@@ -1584,6 +1712,66 @@ function sec_ptn() {
 		<tr style="height: 15.0pt;">
 		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>16</strong></td>
 		<td><strong>INTENSIVE TRAINING:</strong> Randomly select one player on your team that is playing this game. The selected player gains a single Primary Skill of your choice for the duration&nbsp;of&nbsp;the&nbsp;game.</td>
+		</tr>
+		</tbody>
+		</table>
+		</div>
+        </div>
+        </div>
+    </div>
+    <?php
+}
+/*************************
+ *  Desperate Measures (Sevens)
+ *************************/
+function sec_desperate_measures() {
+    global $lng, $rules;
+    if ($rules['sevens'] != 0) {
+        fatal("This page is not available.");
+    }
+    title('Desperate Measures');
+    ?>
+    <div class="boxWide">
+        <div class="boxBody">
+		<div>
+		<div class='tableResponsive'>
+		<table style="border-collapse: collapse;" border="0" cellspacing="0" cellpadding="5">
+		<tbody>
+		<tr style="height: 15.0pt;">
+		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>D8</strong></td>
+		<td style="text-align: left;"><strong>RESULT</strong></td>
+		</tr>
+		<tr style="height: 15.0pt;">
+		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>1</strong></td>
+		<td><strong>YOU DOPE!:</strong> One of your players has been experimenting with performance-enhancing potions. You may use this Desperate Measure after both teams have set up, but before the Kick-off happens. Choose one player on your team to have either their ST or AG (your choice) improved by 1 for the remainder of the game. However, at the end of any Drive they took part in, roll a D6. On a 3+, they are fine and may continue. However, on a 1-2 the player falls ill and is immediately Knocked-out. You may not roll to recover them during this end of Drive phase.</td>
+		</tr>
+		<tr style="height: 15.0pt;">
+		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>2</strong></td>
+		<td><strong>RAZZLE-DAZZLE:</strong> You may use this Desperate Measure when you Activate a player. The player may declare two Actions during their activation rather than one. However, they may not declare the same Action twice, and may not declare two Actions that both contain a Move Action.</td>
+		</tr>
+		<tr style="height: 15.0pt;">
+		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>3</strong></td>
+		<td><strong>HANGOVER:</strong> You may use this Desperate Measure before either team is set up at the start of the game. Choose one opposition player; the chosen player cannot take part in the first Drive of the game.</td>
+		</tr>
+		<tr style="height: 15.0pt;">
+		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>4</strong></td>
+		<td><strong>GRUDGE MATCH:</strong> You may use this Desperate Measure when you Activate a player. The player can declare a Foul Action even if your team has already declared a Foul Action this Turn. Additionally, the player cannot be Sent-off when committing this Foul Action.</td>
+		</tr>
+		<tr style="height: 15.0pt;">
+		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>5</strong></td>
+		<td><strong>SET PIECE:</strong> You may use this Desperate Measure when one of your players performs a Pass Action. Ignore the PA of the throwing player; the Pass will automatically be an Accurate Pass on any roll of a 2+. Additionally, ignore the AG of the receiving player; they will automatically catch the ball on any roll of a 2+.</td>
+		</tr>
+		<tr style="height: 15.0pt;">
+		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>6</strong></td>
+		<td><strong>SPORTS ESPIONAGE:</strong> You may use this Desperate Measure when your team suffers a Turnover. Your team gains two Team Re-rolls after the Turnover has been resolved (these cannot be used to re-roll the dice that caused the Turnover).</td>
+		</tr>
+		<tr style="height: 15.0pt;">
+		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>7</strong></td>
+		<td><strong>DISCARDED BANANA SKIN:</strong> You may use this Desperate Measure when an opposition player enters the Tackle Zone of one of your players. The opposition player is immediately Placed Prone and their Activation immediately ends. This will not cause a Turnover unless the player was holding the ball.</td>
+		</tr>
+		<tr style="height: 15.0pt;">
+		<td style="height: 15pt; text-align: center;" align="right" height="20"><strong>8</strong></td>
+		<td><strong>MAGIC SCROLL:</strong> A suspicious-looking man from a betting syndicate has given you a strange scroll. You'd be foolish not to read it aloud... wouldn't you? You may use this Desperate Measure before either team is set up. Your team gains a single Sports-Wizard Inducement for free (see the Blood Bowl Rulebook page 149).</td>
 		</tr>
 		</tbody>
 		</table>

@@ -42,19 +42,19 @@ class Race
         return $roptions;
     }
 	
-	public function getGoods($double_RRs = false) {
+	public function getGoods($double_RRs = false, $atCreation = true, $format = 'BB') {
 		/**
 		 * Returns buyable stuff for this race.
 		 **/
 		global $DEA, $rules, $racesNoApothecary, $lng;
 		$rr_price = $DEA[$this->race]['other']['rr_cost'] * (($double_RRs) ? 2 : 1);
 		$apoth = !in_array($this->race_id, $racesNoApothecary);
-		if  ($DEA[$this->race]['other']['format'] <> 'SV') {
+		if  ($format <> 'SV') {
 		return array(
 				// MySQL column names as keys
 				'apothecary'    => array('cost' => $rules['cost_apothecary'],   'max' => ($apoth ? 1 : 0),              'item' => $lng->GetTrn('common/apothecary')),
 				'rerolls'       => array('cost' => $rr_price,                   'max' => $rules['max_rerolls'],         'item' => $lng->GetTrn('common/reroll')),
-				'ff_bought'     => array('cost' => $rules['cost_fan_factor'],   'max' => $rules['max_fan_factor'],      'item' => $lng->GetTrn('matches/report/ff')),
+				'ff_bought'     => array('cost' => $rules['cost_fan_factor'],   'max' => $atCreation ? $rules['max_ini_fan_factor'] : $rules['max_fan_factor'],      'item' => $lng->GetTrn('matches/report/ff')),
 				'ass_coaches'   => array('cost' => $rules['cost_ass_coaches'],  'max' => $rules['max_ass_coaches'],     'item' => $lng->GetTrn('common/ass_coach')),
 				'cheerleaders'  => array('cost' => $rules['cost_cheerleaders'], 'max' => $rules['max_cheerleaders'],    'item' => $lng->GetTrn('common/cheerleader')),
 		);
@@ -62,8 +62,8 @@ class Race
 		return array(
 				// MySQL column names as keys
 				'apothecary'    => array('cost' => $rules['cost_apothecary_sevens'],   'max' => ($apoth ? 1 : 0),              'item' => $lng->GetTrn('common/apothecary')),
-				'rerolls'       => array('cost' => $rr_price,                   'max' => $rules['max_rerolls_sevens'],         'item' => $lng->GetTrn('common/reroll')),
-				'ff_bought'     => array('cost' => $rules['cost_fan_factor_sevens'],   'max' => $rules['max_fan_factor'],      'item' => $lng->GetTrn('matches/report/ff')),
+				'rerolls'       => array('cost' => $rules['cost_rerolls_sevens'],      'max' => $rules['max_rerolls_sevens'],  'item' => $lng->GetTrn('common/reroll')),
+				'ff_bought'     => array('cost' => $rules['cost_fan_factor_sevens'],   'max' => $atCreation ? $rules['max_ini_fan_factor_sevens'] : $rules['max_fan_factor_sevens'],      'item' => $lng->GetTrn('matches/report/ff')),
 				'ass_coaches'   => array('cost' => $rules['cost_ass_coaches_sevens'],  'max' => $rules['max_ass_coaches_sevens'],     'item' => $lng->GetTrn('common/ass_coach')),
 				'cheerleaders'  => array('cost' => $rules['cost_cheerleaders_sevens'], 'max' => $rules['max_cheerleaders_sevens'],    'item' => $lng->GetTrn('common/cheerleader')),
 		);

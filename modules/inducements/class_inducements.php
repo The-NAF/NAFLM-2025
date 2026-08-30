@@ -140,7 +140,7 @@ function SendToPDF()
 <div class='tableResponsive'>
 <table> <!-- Star Players -->
 <?php 
-	if ($DEA[$t->f_rname]['other']['format'] <> 'SV') {
+	if ($t->format <> 'SV') {
 		 print "<tr>
         <th class='left'>Star Name</th>
         <th>Cost</th>
@@ -156,7 +156,7 @@ function SendToPDF()
     }
 		$i=1;
         $starcnt = 1;
-        while ($i <= MAX_STARS && $DEA[$t->f_rname]['other']['format'] <> 'SV') {
+        while ($i <= MAX_STARS && $t->format <> 'SV') {
             print "  <tr>\n";
             if (array_key_exists("Star$starcnt", $_POST)) {
                 $sid=$_POST["Star$starcnt"];
@@ -225,6 +225,7 @@ function SendToPDF()
 ?>
 </table>
 </div> <!-- End of Star Player Table -->
+<?php if ($t->format <> 'SV') { ?>
 <div class='tableResponsive'>
 <table> <!-- Mercenaries Table -->
     <tr>
@@ -305,6 +306,7 @@ function SendToPDF()
 ?>
 </table>
 </div>  <!--End of Mercenaries Table -->
+<?php } ?>
 <div class='tableResponsive'>
 <table> <!-- Inducements Table -->
 <tr><td>
@@ -341,7 +343,7 @@ function SendToPDF()
           if (($rules['base_inducements'] == 0 || ($ind['source'] == 1 && $rules['base_inducements'] == 1)) && $ind['type'] == 1) {
             $this_cost = (array_intersect($allteamrules, $ind['reduced_cost_rules']) || in_array($rid, $ind['reduced_cost_races'])) ? $ind['reduced_cost'] : $ind['cost']; # Reduced cost?
             $this_max = array_intersect($allteamrules, $ind['reduced_cost_rules']) ? $ind['reduced_max'] : $ind['max']; # Change amount of bribes available for Bribery & Corruption
-            if ($this_cost > 0 && in_array($DEA[$t->f_rname]['other']['format'], $ind['available_formats']) && array_intersect($allteamrules, $ind['teamrules'])) {   // Do not display ineligible Inducements 
+            if ($this_cost > 0 && in_array($t->format, $ind['available_formats']) && array_intersect($allteamrules, $ind['teamrules'])) {   // Do not display ineligible Inducements 
                 echo '<tr>';
 				print '<td>'.$ind_name.' (0-'.$this_max.')</td>';
 				echo '<td><SELECT name="'.str_replace(' ','_',$ind_name).'" onChange="this.form.submit()">'; // Changing spaces to underscores for (ugly?) POST workaround
@@ -366,13 +368,13 @@ function SendToPDF()
 		  }
         }
 		//Wizards
-		print '<tr><td><b>Wizards<b></td></tr>';
+		ob_start();
         foreach ($inducements as $ind_name => $ind) {
 		  //Checking for base inducements rule and type/category
           if (($rules['base_inducements'] == 0 || ($ind['source'] == 1 && $rules['base_inducements'] == 1)) && $ind['type'] == 2) {
             $this_cost = (array_intersect($allteamrules, $ind['reduced_cost_rules']) || in_array($rid, $ind['reduced_cost_races'])) ? $ind['reduced_cost'] : $ind['cost']; # Reduced cost?
             $this_max = array_intersect($allteamrules, $ind['reduced_cost_rules']) ? $ind['reduced_max'] : $ind['max']; # Change amount of bribes available for Bribery & Corruption
-            if ($this_cost > 0 && in_array($DEA[$t->f_rname]['other']['format'], $ind['available_formats']) && array_intersect($allteamrules, $ind['teamrules'])) {   // Do not display ineligible Inducements 
+            if ($this_cost > 0 && in_array($t->format, $ind['available_formats']) && array_intersect($allteamrules, $ind['teamrules'])) {   // Do not display ineligible Inducements 
                 echo '<tr>';
 				print '<td>'.$ind_name.' (0-'.$this_max.')</td>';
 				echo '<td><SELECT name="'.str_replace(' ','_',$ind_name).'" onChange="this.form.submit()">'; // Changing spaces to underscores for (ugly?) POST workaround
@@ -396,14 +398,19 @@ function SendToPDF()
             }
 		  }
         }
+        $section_html = ob_get_clean();
+        if (!empty($section_html)) {
+            print '<tr><td><b>Wizards<b></td></tr>';
+            print $section_html;
+        }
 		//Infamous Coaching Staff
-		print '<tr><td><b>Infamous Coaching Staff<b></td></tr>';
+		ob_start();
         foreach ($inducements as $ind_name => $ind) {
 		  //Checking for base inducements rule and type/category
           if (($rules['base_inducements'] == 0 || ($ind['source'] == 1 && $rules['base_inducements'] == 1)) && $ind['type'] == 3) {
             $this_cost = (array_intersect($allteamrules, $ind['reduced_cost_rules']) || in_array($rid, $ind['reduced_cost_races'])) ? $ind['reduced_cost'] : $ind['cost']; # Reduced cost?
             $this_max = array_intersect($allteamrules, $ind['reduced_cost_rules']) ? $ind['reduced_max'] : $ind['max']; # Change amount of bribes available for Bribery & Corruption
-            if ($this_cost > 0 && in_array($DEA[$t->f_rname]['other']['format'], $ind['available_formats']) && array_intersect($allteamrules, $ind['teamrules'])) {   // Do not display ineligible Inducements 
+            if ($this_cost > 0 && in_array($t->format, $ind['available_formats']) && array_intersect($allteamrules, $ind['teamrules'])) {   // Do not display ineligible Inducements 
                 echo '<tr>';
 				print '<td>'.$ind_name.' (0-'.$this_max.')</td>';
 				echo '<td><SELECT name="'.str_replace(' ','_',$ind_name).'" onChange="this.form.submit()">'; // Changing spaces to underscores for (ugly?) POST workaround
@@ -427,14 +434,19 @@ function SendToPDF()
             }
 		  }
         }
+        $section_html = ob_get_clean();
+        if (!empty($section_html)) {
+            print '<tr><td><b>Infamous Coaching Staff<b></td></tr>';
+            print $section_html;
+        }
 		//Biased Referees
-		print '<tr><td><b>Biased Referees<b></td></tr>';
+		ob_start();
         foreach ($inducements as $ind_name => $ind) {
 		  //Checking for base inducements rule and type/category
           if (($rules['base_inducements'] == 0 || ($ind['source'] == 1 && $rules['base_inducements'] == 1)) && $ind['type'] == 4) {
             $this_cost = (array_intersect($allteamrules, $ind['reduced_cost_rules']) || in_array($rid, $ind['reduced_cost_races'])) ? $ind['reduced_cost'] : $ind['cost']; # Reduced cost?
             $this_max = array_intersect($allteamrules, $ind['reduced_cost_rules']) ? $ind['reduced_max'] : $ind['max']; # Change amount of bribes available for Bribery & Corruption
-            if ($this_cost > 0 && in_array($DEA[$t->f_rname]['other']['format'], $ind['available_formats']) && array_intersect($allteamrules, $ind['teamrules'])) {   // Do not display ineligible Inducements 
+            if ($this_cost > 0 && in_array($t->format, $ind['available_formats']) && array_intersect($allteamrules, $ind['teamrules'])) {   // Do not display ineligible Inducements 
                 echo '<tr>';
 				print '<td>'.$ind_name.' (0-'.$this_max.')</td>';
 				echo '<td><SELECT name="'.str_replace(' ','_',$ind_name).'" onChange="this.form.submit()">'; // Changing spaces to underscores for (ugly?) POST workaround
@@ -457,6 +469,11 @@ function SendToPDF()
                 echo '</tr>';
             }
 		  }
+        }
+        $section_html = ob_get_clean();
+        if (!empty($section_html)) {
+            print '<tr><td><b>Biased Referees<b></td></tr>';
+            print $section_html;
         }
 
 ?>

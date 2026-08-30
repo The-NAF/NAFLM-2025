@@ -35,6 +35,8 @@ $rules['max_rerolls']          		= 8;
 $rules['max_rerolls_sevens']    	= 6;
 $rules['max_fan_factor']       		= 7;
 $rules['max_ini_fan_factor']   		= 2; 
+$rules['max_fan_factor_sevens']     = 5;
+$rules['max_ini_fan_factor_sevens'] = 1;
 $rules['max_ass_coaches']      		= 6;
 $rules['max_cheerleaders']     		= 6; 
 $rules['max_ass_coaches_sevens'] 	= 3;
@@ -67,7 +69,7 @@ $rules['min_tv'] 					= 0;	// Minimum team value required
 $rules['discord_webhook_url'] = '';
 $rules['discord_post_permission'] = 'admins';
 
-$rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
+$rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon
 											//	1			=>	1000000,	// Chaos Chosen
 											//	2			=>	1000000,	// Chaos Dwarf
 											//	3			=>	1000000,	// Dark Elf
@@ -75,7 +77,7 @@ $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of 
 											//	5			=>	1000000,	// Elf Union
 											//	6			=>	1000000,	// Goblin
 											//	7			=>	1000000,	// Halfling
-											//	8			=>	1000000,	// High Elf
+											//	8			=>	1000000,	// High Elf (teams of legend)
 											//	9			=>	1000000,	// Human
 											//	10			=>	1000000,	// Tomb Kings
 											//	11			=>	1000000,	// Lizardman
@@ -85,7 +87,7 @@ $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of 
 											//	15			=>	1000000,	// Nurgle
 											//	16			=>	1000000,	// Ogre
 											//	17			=>	1000000,	// Shambling Undead
-											//	18			=>	1000000,	// Vampire (teams of legend)
+											//	18			=>	1000000,	// Vampire
 											//	19			=>	1000000,	// Skaven
 											//	20			=>	1000000,	// Wood Elf
 											//	21			=>	1000000,	// Chaos Renegades
@@ -96,9 +98,9 @@ $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of 
 											//	26			=>	1000000,	// Black Orc
 											//	27			=>	1000000,	// Imperial Nobility
 											//	28			=>	1000000,	// Khorne
-											//	29			=>	1000000,	// Amazon
-											//	30			=>	1000000,	// Vampire
-											//	34			=>	1000000,	// Gnomes
+											//	29			=>	1000000,	// Gnome
+											//	30			=>	1000000,	// Bretonnian
+											//	31			=>	1000000,	// High Elf
 										);
 
 $settings['standings']['length_players'] = 30;

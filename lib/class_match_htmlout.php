@@ -247,6 +247,11 @@ class Match_HTMLOUT extends Match
 		$m = new Match($match_id);
 		$team1 = new Team($m->team1_id);
 		$team2 = new Team($m->team2_id);
+		if ($team1->format =='SV' && $team2->format == 'SV') {
+			$is_sevens = true;
+		} else {
+			$is_sevens = false;
+		}
 		// Determine visitor privileges.
 		$lid = $divisions[$tours[$m->f_tour_id]['f_did']]['f_lid'];
 		$ALLOW_EDIT = (!$m->locked && is_object($coach) && ($coach->ring == Coach::T_RING_GLOBAL_ADMIN || $leagues[$lid]['ring'] == Coach::T_RING_LOCAL_ADMIN || $coach->isInMatch($m->match_id)));
@@ -450,15 +455,28 @@ class Match_HTMLOUT extends Match
 						$_POST["agn_$pid"]      = NONE;
 						$_POST["hat_$pid"]      = 99; //99 = No hatred
 					}
+					// Sevens: Draft Payoff (reusing the mvp field) permanently adds 15k to a paid-off
+					// player's value. Match reports can be re-saved, so only apply the delta when the
+					// checkbox state actually changes from what's already stored, in either direction.
+					if ($is_sevens) {
+						$newPayoff = (isset($_POST["mvp_$pid"]) && $_POST["mvp_$pid"]) ? 1 : 0;
+						$oldEntry  = $m->getPlayerEntry($pid);
+						$oldPayoff = (isset($oldEntry['mvp']) && $oldEntry['mvp'] == 1) ? 1 : 0;
+						if ($newPayoff == 1 && $oldPayoff == 0) {
+							$p->addValue(15000);
+						} elseif ($newPayoff == 0 && $oldPayoff == 1) {
+							$p->addValue(-15000);
+						}
+					}
 					$m->entry($p->player_id, array(
 						'mvp'     => (isset($_POST["mvp_$pid"]) && $_POST["mvp_$pid"]) ? 1 : 0, # Checkbox
 						//'mvp'     => $_POST["mvp_$pid"], # NOT checkbox
-						'cp'      => $_POST["cp_$pid"],
-						'td'      => $_POST["td_$pid"],
-						'intcpt'  => $_POST["intcpt_$pid"],
-						'bh'      => $_POST["bh_$pid"],
-						'si'      => $_POST["si_$pid"],
-						'ki'      => $_POST["ki_$pid"],
+						'cp'      => isset($_POST["cp_$pid"]) ? $_POST["cp_$pid"] : 0,
+						'td'      => isset($_POST["td_$pid"]) ? $_POST["td_$pid"] : 0,
+						'intcpt'  => isset($_POST["intcpt_$pid"]) ? $_POST["intcpt_$pid"] : 0,
+						'bh'      => isset($_POST["bh_$pid"]) ? $_POST["bh_$pid"] : 0,
+						'si'      => isset($_POST["si_$pid"]) ? $_POST["si_$pid"] : 0,
+						'ki'      => isset($_POST["ki_$pid"]) ? $_POST["ki_$pid"] : 0,
 						'misc'    => $_POST["misc_$pid"],
 						'ir1_d1'  => 0,
 						'ir1_d2'  => 0,
@@ -467,7 +485,7 @@ class Match_HTMLOUT extends Match
 						'ir3_d1'  => 0,
 						'ir3_d2'  => 0,
 						'inj'     => $_POST["inj_$pid"],
-						'agn'     => $_POST["agn_$pid"],
+						'agn'     => isset($_POST["agn_$pid"]) ? $_POST["agn_$pid"] : NONE,
 						'hat'     => $_POST["hat_$pid"],
 					));
 				}
@@ -617,12 +635,23 @@ class Match_HTMLOUT extends Match
 				curl_close($ch);
 			}
 			//End Discord webhook 
-			
-			// Refresh objects used to display form.
-			$m = new Match($match_id);
-			$team1 = new Team($m->team1_id);
-			$team2 = new Team($m->team2_id);
+		}	
+		
+		// Refresh objects used to display form.
+		$m = new Match($match_id);
+		$team1 = new Team($m->team1_id);
+		$team2 = new Team($m->team2_id);
+		if ($team1->format =='SV' && $team2->format == 'SV') {
+			$is_sevens = true;
+			$format_txt = 'Sevens';
+		} elseif ($team1->format =='DB' && $team2->format == 'DB') {
+			$is_sevens = false;
+			$format_txt = 'Dungeon Bowl';
+		} else {
+			$is_sevens = false;
+			$format_txt = 'Blood Bowl';
 		}
+		
 		// Change round form submitted?
 		if ($IS_LOCAL_ADMIN && isset($_POST['round'])) {
 			status($m->chRound((int) $_POST['round']));
@@ -642,17 +671,6 @@ class Match_HTMLOUT extends Match
 		$divUrl = "<a href=\"" . urlcompile(T_URL_STANDINGS,T_OBJ_TEAM,false,T_NODE_DIVISION,get_parent_id(T_NODE_MATCH, $m->match_id, T_NODE_DIVISION)) . "\">" . get_parent_name(T_NODE_MATCH, $m->match_id, T_NODE_DIVISION) . "</a>";
 		$tourUrl = Tour::getTourUrl(get_parent_id(T_NODE_MATCH, $m->match_id, T_NODE_TOURNAMENT));
 
-		if ($DEA[$team1->f_rname]['other']['format'] =='SV' && $DEA[$team2->f_rname]['other']['format'] == 'SV') {
-			$is_sevens = true;
-			$format_txt = 'Sevens';
-		} elseif ($DEA[$team1->f_rname]['other']['format'] =='DB' && $DEA[$team2->f_rname]['other']['format'] == 'DB') {
-			$is_sevens = false;
-			$format_txt = 'Dungeon Bowl';
-		} else {
-			$is_sevens = false;
-			$format_txt = 'Blood Bowl';
-		}
-		
 		title($teamUrl1 . " - " . $teamUrl2);
 		
 		if ($rules['major_win_pts'] > 0 || $rules['major_beat_pts'] > 0 || $rules['clean_sheet_pts'] > 0) {
@@ -793,6 +811,11 @@ class Match_HTMLOUT extends Match
 
 			<?php
 			$playerFields = array_merge($T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_INJ, $T_MOUT_HAT);
+			if ($is_sevens) {
+				foreach (array('cp','td','intcpt','bh','si','ki','agn') as $hf) {
+					unset($playerFields[$hf]);
+				}
+			}
 			$CPP = count($playerFields);
 			if ($is_sevens == true) {
 				echo "<br><br><tr><td colspan=$CPP><b><i>".$lng->getTrn('matches/sevens/instructionshead')."</i></b><br>\n";
@@ -815,7 +838,7 @@ class Match_HTMLOUT extends Match
 				   switch(strtolower(str_replace(' ', '', $f)))
 				   {
 					   case 'name': $header_text = $lng->getTrn('common/name'); break;
-					   case 'mvp': $header_text = $lng->getTrn('matches/report/mvp'); break;
+					   case 'mvp': $header_text = $is_sevens ? 'Draft Payoff' : $lng->getTrn('matches/report/mvp'); break;
 					   case 'cp': $header_text = $lng->getTrn('matches/report/cp'); break;
 					   case 'bh': $header_text = $lng->getTrn('matches/report/bh'); break;
 					   case 'si': $header_text = $lng->getTrn('matches/report/si'); break;
@@ -852,7 +875,7 @@ class Match_HTMLOUT extends Match
 					elseif ($status == RETIRED)                     {$bgcolor = COLOR_HTML_RETIRED;  $NORMSTAT = false;}
 					elseif ($p->mayHaveNewSkill())                  {$bgcolor = COLOR_HTML_NEWSKILL;        $NORMSTAT = false;}
 					else {$bgcolor = false;}
-					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired)) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || $status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired),$is_sevens, $p->numberOfAchSkill());
+					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired)) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || $status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired),$is_sevens, $p->numberOfAchSkill(), $p->value);
 				}
 				echo "</table>\n";
 				echo "<br>\n";
@@ -1054,38 +1077,33 @@ class Match_HTMLOUT extends Match
 		}
 	}
 
-	protected static function _print_player_row($FS, $name, $nr, $pos, $bgcolor, $mdat, $DISABLE, $is_sevens, $skillno) {
+	protected static function _print_player_row($FS, $name, $nr, $pos, $bgcolor, $mdat, $DISABLE, $is_sevens, $skillno, $value = 0) {
 		global $T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_IR, $T_MOUT_INJ, $T_MOUT_HAT, $DEA;
 		$DIS = ($DISABLE) ? 'DISABLED' : '';
 		echo "<tr".(($bgcolor) ? " style='background-color: $bgcolor;'" : '').">\n";
 		echo "<td>$nr</td>\n";
 		echo "<td>$name</td>\n";
 		if ($is_sevens == true) {
-			if ($skillno == 0) {
-				echo "<td>$pos - Next Skill 3/6 SPP</td>\n";
-			} elseif ($skillno == 1) {
-				echo "<td>$pos - Next Skill 4/8 SPP</td>\n";
-			} elseif ($skillno == 2) {
-				echo "<td>$pos - Next Skill 6/12 SPP</td>\n";
-			} elseif ($skillno == 3) {
-				echo "<td>$pos - Next Skill 8/16 SPP</td>\n";
-			} elseif ($skillno == 4) {
-				echo "<td>$pos - Next Skill 10/20 SPP</td>\n";
-			} elseif ($skillno == 5) {
-				echo "<td>$pos - Next Skill 15/30 SPP</td>\n";
-			}  			
+			$valueTxt = ' ('.($value/1000).'k)';
+			$costs = Team_HTMLOUT::_sppCostTable();
+			$n = min($skillno, 5);
+			$c = $costs[$n];
+			echo "<td>$pos - Next Skill {$c[1]}/{$c[2]} SPP$valueTxt</td>\n";
 		} else {
 		echo "<td>$pos</td>\n";
 		}
 		// MVP
 		echo "<!-- Following HTML from ./lib/class_match_htmlout.php _print_player_row -->";
 		//echo "<td><input $DIS type='checkbox' name='mvp_$FS' value='1'>\n";
-		echo "<td><input $DIS type='checkbox' name='mvp_$FS' value='1' ".((isset($mdat['mvp']) && $mdat['mvp'] == 1) ? 'CHECKED' : '').">\n";
+		echo "<td><input $DIS type='checkbox' name='mvp_$FS' value='1' ".((isset($mdat['mvp']) && $mdat['mvp'] == 1) ? 'CHECKED' : '').">".($is_sevens ? ' '.($value/1000).'k' : '')."\n";
 		//echo "<td><select $DIS name='mvp_$FS'>";
 		//foreach (range(0,1) as $n) {echo "<option value='$n' ".((isset($mdat['mvp']) && $mdat['mvp'] == $n) ? 'SELECTED' : '').">$n</option>";}
 		//echo "</select>\n";
 		// Rest of ACH.
 		foreach (array_diff(array_keys($T_MOUT_ACH), array('mvp')) as $f) {
+			if ($is_sevens && in_array($f, array('cp','td','intcpt','bh','si','ki'))) {
+				continue;
+			}
 			echo "<td><input $DIS type='text' onChange='numError(this);' size='1' maxlength='2' name='${f}_$FS' value='".(isset($mdat[$f]) ? $mdat[$f] : 0)."'></td>\n";
 		}
 		//foreach (array_keys($T_MOUT_IR) as $irl) {
@@ -1097,7 +1115,11 @@ class Match_HTMLOUT extends Match
 		//}
 		global $T_INJS;
 		$T_INJS_AGN = array_diff_key($T_INJS, array(MNG => null, DEAD => null));
-		foreach (array_combine(array_keys($T_MOUT_INJ), array($T_INJS, $T_INJS_AGN)) as $f => $opts) {
+		$T_INJS_MAIN = $is_sevens ? array_intersect_key($T_INJS, array(NONE => null, MNG => null, DEAD => null)) : $T_INJS;
+		foreach (array_combine(array_keys($T_MOUT_INJ), array($T_INJS_MAIN, $T_INJS_AGN)) as $f => $opts) {
+			if ($is_sevens && $f == 'agn') {
+				continue;
+			}
 			echo "<td><select name='${f}_$FS' $DIS>";
 			$DISABLE = true;
 			foreach ($opts as $status => $name) {
