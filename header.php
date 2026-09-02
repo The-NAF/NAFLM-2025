@@ -58,7 +58,7 @@ $naflmcredits = array(
 define('MAX_RECENT_GAMES', 30); // This limits the number of rows shown in the "recent/upcoming games" tables.
 define('MAX_TNEWS', 3); // This number of entries are shown on the team news board.
 define('DOC_URL', 'http://github.com/nicholasmr/obblm/wiki');
-define('DOC_URL_GUIDE', 'http://github.com/nicholasmr/obblm/wiki/User-guide');
+define('DOC_URL_GUIDE', 'NAFLM_2025_Coach_and_Administrator_Guide.pdf');
 define('DOC_URL_CUSTOM', 'http://github.com/nicholasmr/obblm/wiki/Customization');
 
 /*********************

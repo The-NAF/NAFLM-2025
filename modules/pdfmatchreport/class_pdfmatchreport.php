@@ -177,6 +177,7 @@ class PDFMatchReport implements ModuleInterface
         $i = 0;
         while ($i < 2) {
             $i++;
+            $isSevens = ($FILLED && ${"team$i"}->format == 'SV');
 
             $currenty += 15;
             $currentx = MARGINX + 6;
@@ -278,15 +279,15 @@ class PDFMatchReport implements ModuleInterface
 	        $pdf->Cell($smallFieldSize, $h, 'PA', 1, 0, 'C', true, '');
 	        $pdf->Cell($smallFieldSize, $h, 'AV', 1, 0, 'C', true, '');
             $pdf->Cell($skillFieldSize, $h, 'Skills', 1, 0, 'L', true, '');
-            $pdf->Cell($smallFieldSize, $h, 'SPP', 1, 0, 'C', true, '');
-            $pdf->Cell($smallFieldSize, $h, 'MVP', 1, 0, 'C', true, '');
-            $pdf->Cell($smallFieldSize, $h, 'Cp', 1, 0, 'C', true, '');
-            $pdf->Cell($smallFieldSize, $h, 'Td', 1, 0, 'C', true, '');
-            $pdf->Cell($smallFieldSize, $h, 'Int', 1, 0, 'C', true, '');
-            $pdf->Cell($smallFieldSize, $h, 'BH', 1, 0, 'C', true, '');
-            $pdf->Cell($smallFieldSize, $h, 'SI', 1, 0, 'C', true, '');
-            $pdf->Cell($smallFieldSize, $h, 'Ki', 1, 0, 'C', true, '');
-            $pdf->Cell($smallFieldSize, $h, 'Misc', 1, 0, 'C', true, '');
+            $pdf->Cell($smallFieldSize, $h, $isSevens ? '' : 'SPP', 1, 0, 'C', true, '');
+            $pdf->Cell($smallFieldSize, $h, $isSevens ? '' : 'MVP', 1, 0, 'C', true, '');
+            $pdf->Cell($smallFieldSize, $h, $isSevens ? '' : 'Cp', 1, 0, 'C', true, '');
+            $pdf->Cell($smallFieldSize, $h, $isSevens ? '' : 'Td', 1, 0, 'C', true, '');
+            $pdf->Cell($smallFieldSize, $h, $isSevens ? '' : 'Int', 1, 0, 'C', true, '');
+            $pdf->Cell($smallFieldSize, $h, $isSevens ? '' : 'BH', 1, 0, 'C', true, '');
+            $pdf->Cell($smallFieldSize, $h, $isSevens ? '' : 'SI', 1, 0, 'C', true, '');
+            $pdf->Cell($smallFieldSize, $h, $isSevens ? '' : 'Ki', 1, 0, 'C', true, '');
+            $pdf->Cell($smallFieldSize, $h, $isSevens ? '' : 'Misc', 1, 0, 'C', true, '');
             $pdf->Cell($smallFieldSize, $h, 'Inj', 1, 0, 'C', true, '');
 
             $currenty+=13;
@@ -371,7 +372,7 @@ class PDFMatchReport implements ModuleInterface
 				  $skillstr = $p->getSkillsStr(false);
 				  $injstr = $p->getInjsStr(false);
 				  $hatestr = $p->getHatredStr(false);
-				  if ($p->is_captain) $capstr='Pro (Captain)';
+				  if ($p->is_captain) $capstr=$isSevens ? 'Veteran' : 'Pro (Captain)';
 				  else $capstr='';
 				  //begin string build based on four optional strings
 					if ($capstr == '') {  // is not captain
@@ -436,7 +437,7 @@ class PDFMatchReport implements ModuleInterface
 						}	
 					}  
 
-                  $spp = $p->mv_spp;  //Current Star Player Points
+                  $spp = $isSevens ? '' : $p->mv_spp;  //Current Star Player Points (not tracked per-category in Sevens)
                 }
 
 

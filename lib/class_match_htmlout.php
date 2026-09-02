@@ -237,7 +237,7 @@ class Match_HTMLOUT extends Match
 		if (!get_alt_col('matches', 'match_id', $match_id, 'match_id'))
 			fatal("Invalid match ID.");
 		global $lng, $stars, $rules, $settings, $coach, $racesHasNecromancer, $racesHasSkelemancer, $racesMayRaiseRotters, $racesMayRaiseThrall, $DEA, $T_PMD__ENTRY_EXPECTED;
-		global $T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_IR, $T_MOUT_INJ, $T_MOUT_HAT;
+		global $T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_IR, $T_MOUT_INJ, $T_MOUT_HAT, $T_HATS;
 		global $leagues,$divisions,$tours;
 		$T_ROUNDS = Match::getRounds();
 		// Perform actions (delete, lock/unlock and reset). Needs the
@@ -272,12 +272,33 @@ class Match_HTMLOUT extends Match
 		}
 		$easyconvert = new array_to_js();
 		@$easyconvert->add_array($stars, 'phpStars'); // Load stars array into JavaScript array.
+		// Keyword id -> display name, so addStarMerc() (misc_functions.js) can add a newly-added Star's Hatred
+		// keyword(s) to the OPPOSING team's Hatred dropdowns live, without requiring the report to be saved first.
+		@$easyconvert->add_array($T_HATS, 'phpHatNames');
 		echo $easyconvert->output_all();
 		echo '<!-- Following HTML from ./lib/class_match_htmlout.php report -->
 			<script language="JavaScript" type="text/javascript">
 			var ID_MERCS = '.ID_MERCS.';
 			var ID_STARS_BEGIN = '.ID_STARS_BEGIN.';
 			</script>';
+
+		if ($ALLOW_EDIT) {
+			// Greys the Hatred select back out (and resets it to "NONE") whenever its row's "inj" select is changed to
+			// something that can't have caused Hatred — mirrors the DISABLED state _print_player_row() already renders
+			// server-side for the initial page load; this just keeps it in sync live as the coach fills the form in.
+			// NOTE: kept as plain string concatenation (no heredoc/nowdoc) for PHP 5.6 compatibility.
+			echo "<script language=\"JavaScript\" type=\"text/javascript\">\n"
+			   . "var HAT_INJ_NONE = ".NONE.", HAT_INJ_DEAD = ".DEAD.";\n"
+			   . "function bbSyncHatredEnabled(injSelect) {\n"
+			   . "	var suffix = injSelect.name.replace(/^inj_/, '');\n"
+			   . "	var hatSelect = injSelect.form.elements['hat_' + suffix];\n"
+			   . "	if (!hatSelect) { return; }\n"
+			   . "	var qualifies = injSelect.value != '' + HAT_INJ_NONE && injSelect.value != '' + HAT_INJ_DEAD;\n"
+			   . "	hatSelect.disabled = !qualifies;\n"
+			   . "	if (!qualifies) { hatSelect.value = '99'; }\n" // Reset to NONE so a stale pick can't be re-enabled and submitted by mistake later.
+			   . "}\n"
+			   . "</script>\n";
+		}
 
 		/*****************
 		 * Submitted form?
@@ -486,7 +507,10 @@ class Match_HTMLOUT extends Match
 						'ir3_d2'  => 0,
 						'inj'     => $_POST["inj_$pid"],
 						'agn'     => isset($_POST["agn_$pid"]) ? $_POST["agn_$pid"] : NONE,
-						'hat'     => $_POST["hat_$pid"],
+						// The Hatred select is now DISABLED (and so omitted from $_POST entirely by the browser) whenever
+						// "inj" doesn't qualify for it — that's the normal case for most players in most matches, so this
+						// must default rather than assume the key is present.
+						'hat'     => isset($_POST["hat_$pid"]) ? $_POST["hat_$pid"] : 99,
 					));
 				}
 				MTS('Saved all REGULAR player entries in match_data for team '.$id);
@@ -811,8 +835,10 @@ class Match_HTMLOUT extends Match
 
 			<?php
 			$playerFields = array_merge($T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_INJ, $T_MOUT_HAT);
+			// Ageing isn't part of the current ruleset, so its column is hidden for every match, not just Sevens.
+			unset($playerFields['agn']);
 			if ($is_sevens) {
-				foreach (array('cp','td','intcpt','bh','si','ki','agn') as $hf) {
+				foreach (array('cp','td','intcpt','bh','si','ki') as $hf) {
 					unset($playerFields[$hf]);
 				}
 			}
@@ -823,9 +849,14 @@ class Match_HTMLOUT extends Match
 				echo "</td></tr>\n";
 				}
 			foreach (array(1 => $team1, 2 => $team2) as $id => $t) {
+				// Hatred is only ever gained against whoever's actually on the other side of the pitch, so build the
+				// filtered option list once per team from the OPPONENT's roster + any Star Players they've hired for
+				// this match (see _hatredKeywordOptions()) — used for every one of this team's own player rows below.
+				$opponent  = ($id == 1) ? $team2 : $team1;
+				$hatOptions = self::_hatredKeywordOptions($opponent, $m);
 				?>
 				<div class='tableResponsive'>
-				<table class='common'>
+				<table class='common' data-team='<?php echo $id;?>'>
 				<tr><td class='seperator' colspan='<?php echo $CPP;?>'></td></tr>
 				<tr class='commonhead'><td colspan='<?php echo $CPP;?>'>
 					<b><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$t->team_id,false,false);?>"><?php echo $t->name;?></a> <?php echo $lng->getTrn('matches/report/report');?></b>
@@ -875,7 +906,7 @@ class Match_HTMLOUT extends Match
 					elseif ($status == RETIRED)                     {$bgcolor = COLOR_HTML_RETIRED;  $NORMSTAT = false;}
 					elseif ($p->mayHaveNewSkill())                  {$bgcolor = COLOR_HTML_NEWSKILL;        $NORMSTAT = false;}
 					else {$bgcolor = false;}
-					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired)) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || $status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired),$is_sevens, $p->numberOfAchSkill(), $p->value);
+					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired)) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || $status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired),$is_sevens, $p->numberOfAchSkill(), $p->value, $hatOptions);
 				}
 				echo "</table>\n";
 				echo "<br>\n";
@@ -909,8 +940,8 @@ class Match_HTMLOUT extends Match
 					<b>Raised Zombie?:</b> <input type='checkbox' name='t${id}zombie' value='1' onclick='slideToggleFast(\"t${id}zombie\");'><br>\n";
 					echo "<div id='t${id}zombie' style='display:none;'>\n";
 					echo "<div class='tableResponsive'>\n";
-					echo "<table class='common'>\n";
-					self::_print_player_row("t${id}zombie", 'Raised Zombie', '&mdash;', 'Zombie Lineman', false, array(), $DIS);
+					echo "<table class='common' data-team='$id'>\n";
+					self::_print_player_row("t${id}zombie", 'Raised Zombie', '&mdash;', 'Zombie Lineman', false, array(), $DIS, $is_sevens, 0, 0, $hatOptions);
 					echo "</table>\n";
 					echo "</div>\n";
 					echo "</div>\n";
@@ -922,8 +953,8 @@ class Match_HTMLOUT extends Match
 					<b>Raised Skeleton?:</b> <input type='checkbox' name='t${id}skeleton' value='1' onclick='slideToggleFast(\"t${id}skeleton\");'><br>\n";
 					echo "<div id='t${id}skeleton' style='display:none;'>\n";
 					echo "<div class='tableResponsive'>\n";
-					echo "<table class='common'>\n";
-					self::_print_player_row("t${id}skeleton", 'Raised skeleton', '&mdash;', 'Skeleton Lineman', false, array(), $DIS);
+					echo "<table class='common' data-team='$id'>\n";
+					self::_print_player_row("t${id}skeleton", 'Raised skeleton', '&mdash;', 'Skeleton Lineman', false, array(), $DIS, $is_sevens, 0, 0, $hatOptions);
 					echo "</table>\n";
 					echo "</div>\n";
 					echo "</div>\n";
@@ -936,8 +967,8 @@ class Match_HTMLOUT extends Match
 					<b>Raised Rotter?:</b>  <input type='checkbox' name='t${id}rotter' value='1' onclick='slideToggleFast(\"t${id}rotter\");'><br>\n";
 					echo "<div id='t${id}rotter' style='display:none;'>\n";
 					echo "<div class='tableResponsive'>\n";
-					echo "<table class='common'>\n";
-					self::_print_player_row("t${id}rotter", "Raised Rotter Journeyman", '&mdash;', 'Rotter Lineman', false, array(), $DIS);
+					echo "<table class='common' data-team='$id'>\n";
+					self::_print_player_row("t${id}rotter", "Raised Rotter Journeyman", '&mdash;', 'Rotter Lineman', false, array(), $DIS, $is_sevens, 0, 0, $hatOptions);
 					echo "</table></div>\n";
 					echo "</div>\n";	
 				}
@@ -948,8 +979,8 @@ class Match_HTMLOUT extends Match
 					<b>Summoned Thrall?:</b>  <input type='checkbox' name='t${id}thrall' value='1' onclick='slideToggleFast(\"t${id}thrall\");'><br>\n";
 					echo "<div id='t${id}thrall' style='display:none;'>\n";
 					echo "<div class='tableResponsive'>\n";
-					echo "<table class='common'>\n";
-					self::_print_player_row("t${id}thrall", "Summoned Thrall", '&mdash;', 'Thrall Lineman', false, array(), $DIS);
+					echo "<table class='common' data-team='$id'>\n";
+					self::_print_player_row("t${id}thrall", "Summoned Thrall", '&mdash;', 'Thrall Lineman', false, array(), $DIS, $is_sevens, 0, 0, $hatOptions);
 					echo "</table></div>\n";
 					echo "</div>\n";	
 				}
@@ -1077,7 +1108,47 @@ class Match_HTMLOUT extends Match
 		}
 	}
 
-	protected static function _print_player_row($FS, $name, $nr, $pos, $bgcolor, $mdat, $DISABLE, $is_sevens, $skillno, $value = 0) {
+	protected static function _hatredKeywordOptions($opponent, $m) {
+		/*
+			Builds the Hatred dropdown's option list for players on the team FACING $opponent in match $m: just
+			"NONE" plus whichever non-positional (race/creature-type) keywords are actually present on $opponent's
+			side for this match — that team's current roster, plus any Star Players they've hired for this specific
+			match. Mercenaries are deliberately not considered here: a hired mercenary is drawn from the team's own
+			standard roster, so its keywords are already covered by the roster loop below (per Val).
+
+			Positional keywords (Blitzer, Lineman, etc.) are excluded by only keeping ids that exist in $T_HATS,
+			which never lists them in the first place.
+		*/
+		global $T_HATS, $playerkeywordsarray, $stars;
+		$present = array();
+		foreach ($opponent->getPlayers() as $op) {
+			if (!self::player_validation($op, $m)) {
+				continue;
+			}
+			foreach ((array) $op->keywords as $kw) {
+				$present[(int) $kw] = true;
+			}
+		}
+		foreach (Star::getStars(STATS_TEAM, $opponent->team_id, STATS_MATCH, $m->match_id) as $s) {
+			foreach ($stars as $starDef) {
+				if ($starDef['id'] == $s->star_id && isset($starDef['keyword'])) {
+					foreach ($starDef['keyword'] as $kw) {
+						$present[(int) $kw] = true;
+					}
+					break;
+				}
+			}
+		}
+		$opts = array(99 => $T_HATS[99]); // "NONE" is always selectable, eg. to clear a previous mistaken choice.
+		foreach (array_keys($playerkeywordsarray['K']) as $kid) {
+			if (isset($present[$kid]) && isset($T_HATS[$kid])) {
+				$opts[$kid] = $T_HATS[$kid];
+			}
+		}
+		return $opts;
+	}
+
+	protected static function _print_player_row($FS, $name, $nr, $pos, $bgcolor, $mdat, $DISABLE, $is_sevens, $skillno, $value = 0, $hatOptions = null) {
 		global $T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_IR, $T_MOUT_INJ, $T_MOUT_HAT, $DEA;
 		$DIS = ($DISABLE) ? 'DISABLED' : '';
 		echo "<tr".(($bgcolor) ? " style='background-color: $bgcolor;'" : '').">\n";
@@ -1117,10 +1188,14 @@ class Match_HTMLOUT extends Match
 		$T_INJS_AGN = array_diff_key($T_INJS, array(MNG => null, DEAD => null));
 		$T_INJS_MAIN = $is_sevens ? array_intersect_key($T_INJS, array(NONE => null, MNG => null, DEAD => null)) : $T_INJS;
 		foreach (array_combine(array_keys($T_MOUT_INJ), array($T_INJS_MAIN, $T_INJS_AGN)) as $f => $opts) {
-			if ($is_sevens && $f == 'agn') {
+			// Ageing isn't part of the current ruleset, so its column is hidden for every match, not just Sevens.
+			if ($f == 'agn') {
 				continue;
 			}
-			echo "<td><select name='${f}_$FS' $DIS>";
+			// The main "inj" select drives bbSyncHatredEnabled() below, which greys the Hatred select out again whenever
+			// it's changed back to a non-injury result.
+			$injOnchange = ($f == 'inj') ? " onchange='bbSyncHatredEnabled(this);'" : '';
+			echo "<td><select name='${f}_$FS' $DIS$injOnchange>";
 			$DISABLE = true;
 			foreach ($opts as $status => $name) {
 				if ($status == 'RETIRE')
@@ -1132,14 +1207,18 @@ class Match_HTMLOUT extends Match
 		}
 
 		global $T_HATS;
-		foreach (array($T_HATS) as $id => $hatred) {
-			echo "<td><select name='hat_$FS' $DIS>";
-			$DISABLE = true;
+		// Hatred can only ever be gained from an injury, so grey the select out unless "inj" is currently something other
+		// than NONE or DEAD (a dead player didn't live to hate anyone). $hatOptions (built by _hatredKeywordOptions()) is
+		// also pre-filtered to only the keywords actually present on the opposing side for this match; NONE (99) is
+		// always kept so a coach can clear a previous selection. Falls back to the full, unfiltered list if a caller
+		// hasn't been updated to pass $hatOptions (eg. a future call site) so nothing silently breaks.
+		$hatOptions = is_array($hatOptions) ? $hatOptions : $T_HATS;
+		$hasQualifyingInjury = isset($mdat['inj']) && !in_array($mdat['inj'], array(NONE, DEAD));
+		$hatDIS = ($DISABLE || !$hasQualifyingInjury) ? 'DISABLED' : '';
+		foreach (array($hatOptions) as $id => $hatred) {
+			echo "<td><select name='hat_$FS' $hatDIS>";
 			foreach ($hatred as $id => $hatred) {
-				if ($status == 'RETIRE')
-					continue;
 				echo "<option value='$id' ".((isset($mdat['hat']) && $mdat['hat'] == $id) ? 'SELECTED' : '').">$hatred</option>";
-				$DISABLE = false;
 			}
 			echo "</select></td>\n";
 		}
@@ -1416,4 +1495,4 @@ class Match_HTMLOUT extends Match
 		</div>
 		<?php
 	}
-}
+}

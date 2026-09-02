@@ -164,7 +164,7 @@ class Team_HTMLOUT extends Team
 	}
 
 	public function handleActions($ALLOW_EDIT) {
-		global $coach;
+		global $coach, $rules;
 		$team = $this; // Copy. Used instead of $this for readability.
 		// No request sent?
 		if (!isset($_POST['type']) || !$ALLOW_EDIT) {
@@ -318,12 +318,40 @@ class Team_HTMLOUT extends Team
 			case 'delete':          status(isset($_POST['bool']) && $team->delete()); break;
 			case 'skill':
 				$type = null;
-				$skillcost = $_POST['skillcost'];
-				list($skcost, $skcosttype) = explode('|', $skillcost);
+				$skillcost = isset($_POST['skillcost']) ? $_POST['skillcost'] : '';
+				$costParts = explode('|', $skillcost);
+				$skcost     = $costParts[0];
+				$skcosttype = isset($costParts[1]) ? $costParts[1] : null;
 				$p->setChoosableSkills();
 				if     (in_array($_POST['skill'], $p->choosable_skills['norm'])) $type = 'N';
 				elseif (in_array($_POST['skill'], $p->choosable_skills['doub'])) $type = 'D';
 				else                                                             $type = 'C'; # Assume it's a characteristic.
+
+				// Cross-check the submitted cost against the actual category of skill selected, rather than trusting
+				// it as posted — the "skill" and "skillcost" dropdowns are independent UI elements, so nothing stops
+				// a tampered/replayed request from pairing a Secondary (Double) skill with the cheaper Primary cost
+				// (or a Characteristic with any arbitrary cost). Recompute the real cost table here and only accept
+				// one of the legitimate (type, cost, cost-type) combinations for the player's current SPP band.
+				$costs = self::_sppCostTable();
+				$n = min($p->numberOfAchSkill(), 5);
+				$c = $costs[$n];
+				$validCombo =
+					   ($type == 'N' && $skcosttype == 'P' && (int) $skcost === (int) $c[1])
+					|| ($type == 'D' && $skcosttype == 'S' && (int) $skcost === (int) $c[2])
+					// Either a Primary or Secondary skill may instead be bought at the "instead of a rolled
+					// characteristic" price, but only while that band is actually offered.
+					|| (($type == 'N' || $type == 'D') && $skcosttype == 'S' && (int) $skcost === (int) $c[3] && $rules['randomstatrolls'] == 1)
+					|| ($type == 'C' && $skcosttype == 'X' && (int) $skcost === (int) $c[3])
+					// Random skills are always Primary (there's no such thing as a random Secondary), so the
+					// "Random Primary" cost may only pair with a Primary skill — and only in leagues that still
+					// let coaches record a manually-rolled skill this way instead of forcing the built-in
+					// automated roller (rules['randomskillmanualentry'] != 1), and never for Sevens teams.
+					|| ($type == 'N' && $skcosttype == 'R' && (int) $skcost === (int) $c[0] && $team->format != 'SV' && $rules['randomskillmanualentry'] != 1);
+				if (!$validCombo) {
+					status(false, 'The selected SPP cost does not match the selected skill. Please re-select both and try again.');
+					break;
+				}
+
 				status($p->addSkill($type, ($type == 'C') ? (int) str_replace('ach_','',$_POST['skill']) : (int) $_POST['skill'], $skcost, $skcosttype));
 				break;
 			case 'teamtext': 	status($team->saveText($_POST['teamtext'])); break;
@@ -554,6 +582,36 @@ class Team_HTMLOUT extends Team
 	private function _roster($ALLOW_EDIT, $DETAILED, $players) {
 		global $rules, $settings, $lng, $skillididx, $coach, $DEA;
 		$team = $this; // Copy. Used instead of $this for readability.
+
+		if ($ALLOW_EDIT) {
+			// Keeps each player's "skillcost" dropdown in sync with whatever was picked in their "skill" dropdown, so a
+			// Secondary (Double) skill can't be submitted paired with the cheaper Primary cost (or vice versa). Each
+			// <option> is tagged with a data-type of N (Primary), D (Secondary) or C (Characteristic); options tagged
+			// with more than one type (space-separated) are legal for either. This is a UX convenience only — the
+			// authoritative check is server-side in Team_HTMLOUT::handleActions().
+			// NOTE: kept as plain string concatenation (no heredoc/nowdoc) for PHP 5.6 compatibility.
+			echo "<script language=\"JavaScript\" type=\"text/javascript\">\n"
+			   . "function bbSyncSkillCost(skillSelect) {\n"
+			   . "	var opt = skillSelect.options[skillSelect.selectedIndex];\n"
+			   . "	var type = opt.getAttribute('data-type');\n"
+			   . "	var costSelect = skillSelect.form.elements['skillcost'];\n"
+			   . "	if (!costSelect) { return; }\n"
+			   . "	var firstAllowedIndex = null;\n"
+			   . "	var defaultAllowedIndex = null;\n"
+			   . "	for (var i = 0; i < costSelect.options.length; i++) {\n"
+			   . "		var costOpt = costSelect.options[i];\n"
+			   . "		var allowed = costOpt.getAttribute('data-type');\n"
+			   . "		if (allowed === null) { continue; }\n" // The placeholder "-- Select Skill Cost --" option: leave it alone.
+			   . "		if (!type) { costOpt.disabled = false; continue; }\n" // No real skill chosen yet: leave every cost choice open.
+			   . "		var ok = (' ' + allowed + ' ').indexOf(' ' + type + ' ') !== -1;\n"
+			   . "		costOpt.disabled = !ok;\n"
+			   . "		if (ok && firstAllowedIndex === null) { firstAllowedIndex = i; }\n"
+			   . "		if (ok && defaultAllowedIndex === null && costOpt.getAttribute('data-default') === '1') { defaultAllowedIndex = i; }\n"
+			   . "	}\n"
+			   . "	costSelect.selectedIndex = (!type) ? 0 : (defaultAllowedIndex !== null ? defaultAllowedIndex : (firstAllowedIndex !== null ? firstAllowedIndex : 0));\n"
+			   . "}\n"
+			   . "</script>\n";
+		}
 
 		/******************************
 		 *   Make the players ready for roster printing.
@@ -803,7 +861,7 @@ class Team_HTMLOUT extends Team
 					};
 					
 					$x .= "<form method='POST'>\n";
-					$x .= "<select name='skill'>\n";
+					$x .= "<select name='skill' onchange='bbSyncSkillCost(this);'>\n";
 					$x .= "<option selected value='999'>-- Select Skill --</option>\n";
 					
 					// Primary skills - grouped by category and sorted
@@ -835,7 +893,8 @@ class Team_HTMLOUT extends Team
 									// Mark Elite skills with asterisks
 									$eliteSkills = array('Block', 'Dodge', 'Guard', 'Mighty Blow');
 									$displayName = in_array($skillName, $eliteSkills) ? $skillName . ' *' : $skillName;
-									$x .= "<option value='$skillId'>&nbsp;&nbsp;&nbsp;&nbsp;$displayName</option>\n";
+									// data-type='N' lets the skill-cost dropdown grey out any cost option that doesn't belong to a Primary (Normal) skill.
+									$x .= "<option value='$skillId' data-type='N'>&nbsp;&nbsp;&nbsp;&nbsp;$displayName</option>\n";
 								}
 								$x .= "</optgroup>\n";
 							}
@@ -864,7 +923,8 @@ class Team_HTMLOUT extends Team
 										// Mark Elite skills with asterisks
 										$eliteSkills = array('Block', 'Dodge', 'Guard', 'Mighty Blow');
 										$displayName = in_array($skillName, $eliteSkills) ? $skillName . ' *' : $skillName;
-										$x .= "<option value='$skillId'>&nbsp;&nbsp;&nbsp;&nbsp;$displayName</option>\n";
+										// data-type='D' lets the skill-cost dropdown grey out any cost option that doesn't belong to a Secondary (Double) skill.
+										$x .= "<option value='$skillId' data-type='D'>&nbsp;&nbsp;&nbsp;&nbsp;$displayName</option>\n";
 									}
 									$x .= "</optgroup>\n";
 								}
@@ -879,10 +939,11 @@ class Team_HTMLOUT extends Team
 							$x .= "<optgroup label='Characteristic improvement'>\n";
 							foreach ($p->choosable_skills['chr'] as $s) {
 								global $CHR_CONV;
+								// data-type='C' lets the skill-cost dropdown grey out any cost option that isn't the Characteristic improvement cost.
 								if ($CHR_CONV[$s] == 'ma' || $CHR_CONV[$s] == 'av' || $CHR_CONV[$s] == 'st') {
-									$x .= "<option value='ach_$s'>+ ".ucfirst($CHR_CONV[$s])."</option>\n";
+									$x .= "<option value='ach_$s' data-type='C'>+ ".ucfirst($CHR_CONV[$s])."</option>\n";
 								} else {
-									$x .= "<option value='ach_$s'>- ".ucfirst($CHR_CONV[$s])."</option>\n";	
+									$x .= "<option value='ach_$s' data-type='C'>- ".ucfirst($CHR_CONV[$s])."</option>\n";
 								}
 							}
 							$x .= "</optgroup>\n";
@@ -896,18 +957,24 @@ class Team_HTMLOUT extends Team
 					$n = min($p->numberOfAchSkill(), 5);
 					$c = $costs[$n];
 
+					// data-type on each cost option lists which skill-dropdown type(s) (N/D/C) it is legal for; bbSyncSkillCost()
+					// uses this to grey out any cost that doesn't match the skill just selected. data-default='1' marks
+					// the one to preselect for that type when more than one is legal (eg. a Primary skill legally allows
+					// both the "Random Primary" cost — for a coach recording a manually-rolled result — and "Chosen
+					// Primary"; Chosen Primary is the sane default, Random Primary stays picked manually).
+					// Random skills are always Primary (never Secondary), so Random Primary is tagged data-type='N' only.
 					if (!$isSevens && $rules['randomskillmanualentry'] != 1) {
-						$x .= "<option value='{$c[0]}|R'>{$c[0]} SPP (Random Primary)</option>\n";
+						$x .= "<option value='{$c[0]}|R' data-type='N'>{$c[0]} SPP (Random Primary)</option>\n";
 					}
 					if ($p->mv_spp >= $c[1]) {
-						$x .= "<option value='{$c[1]}|P'>{$c[1]} SPP (".($isSevens ? 'Primary Skill' : 'Chosen Primary').")</option>\n";
+						$x .= "<option value='{$c[1]}|P' data-type='N' data-default='1'>{$c[1]} SPP (".($isSevens ? 'Primary Skill' : 'Chosen Primary').")</option>\n";
 					}
 					if ($p->mv_spp >= $c[2]) {
-						$x .= "<option value='{$c[2]}|S'>{$c[2]} SPP (".($isSevens ? 'Secondary Skill' : 'Chosen Secondary').")</option>\n";
+						$x .= "<option value='{$c[2]}|S' data-type='D' data-default='1'>{$c[2]} SPP (".($isSevens ? 'Secondary Skill' : 'Chosen Secondary').")</option>\n";
 					}
 					if ($p->mv_spp >= $c[3] && $rules['randomstatrolls'] == 1) {
-						$x .= "<option value='{$c[3]}|X'>{$c[3]} SPP (Random Stat Improvement)</option>\n";
-						$x .= "<option value='{$c[3]}|S'>{$c[3]} SPP (Chosen Skill instead of Rolled Stat)</option>\n";
+						$x .= "<option value='{$c[3]}|X' data-type='C' data-default='1'>{$c[3]} SPP (Random Stat Improvement)</option>\n";
+						$x .= "<option value='{$c[3]}|S' data-type='N D'>{$c[3]} SPP (Chosen Skill instead of Rolled Stat)</option>\n";
 					}
 					$x .= "</select>\n";
 					$x .= "<input type='submit' name='button' value='OK' onClick=\"if(!confirm('".$lng->getTrn('common/confirm_box')."')){return false;}\">\n";
@@ -3837,4 +3904,4 @@ class Team_HTMLOUT extends Team
 		echo "<br>";
 		HTMLOUT::upcomingGames(T_OBJ_TEAM, $team->team_id, false, false, false, false, array('url' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$team->team_id,false,false).'&amp;subsec=games', 'n' => MAX_RECENT_GAMES, 'GET_SS' => 'ug'));
 	}
-}
+}

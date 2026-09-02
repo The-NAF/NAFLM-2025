@@ -900,7 +900,7 @@ class HTMLOUT
 			<link type="text/css" href="css/league_override_<?php echo self::getSelectedNodeLidOrDefault(); ?>.css" rel="stylesheet">
 			<link type="text/css" href="css/mobile-menu.css" rel="stylesheet">
 			<link rel="alternate" type="application/rss+xml" title="RSS Feed"href="rss.xml">
-			<script type="text/javascript" src="lib/misc_functions.js"></script>
+			<script type="text/javascript" src="lib/misc_functions.js?v=<?php echo filemtime(dirname(__FILE__).'/misc_functions.js'); ?>"></script>
 			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
 			<script type="text/javascript" src="js/lib/underscore-1.8.3.min.js"></script>
@@ -953,7 +953,7 @@ class HTMLOUT
 			<link type="text/css" href="css/stylesheet<?php echo $settings['stylesheet']; ?>.css" rel="stylesheet">
 			<link type="text/css" href="css/league_override_<?php echo self::getSelectedNodeLidOrDefault(); ?>.css" rel="stylesheet">
 			<link type="text/css" href="css/mobile-menu.css" rel="stylesheet">
-			<script type="text/javascript" src="lib/misc_functions.js"></script>
+			<script type="text/javascript" src="lib/misc_functions.js?v=<?php echo filemtime(dirname(__FILE__).'/misc_functions.js'); ?>"></script>
 			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 			<script type="text/javascript" src="js/lib/underscore-1.8.3.min.js"></script>
 			<script type="text/javascript" src="js/lib/knockout-3.3.0.min.js"></script>
@@ -1198,7 +1198,8 @@ class HTMLOUT
 			<li><a href="handler.php?type=tournamentteam&obj=builder" >Tournament Team Builder</a></li>
 			<li><a href="handler.php?type=calculator" >Dice Probability Calculator</a></li>
 			<li><a href="https://assets.warhammer-community.com/eng_20-05_blood_bowl_faq_errata-gytvlserev-ngihd3chox.pdf">BB2025 Latest FAQ & Errata</a></li>
-			<li><a href="https://www.thenaf.net/wp-content/uploads/2026/01/NAF-FAQ-for-BB2025_v20260127_A4.pdf">BB2025 NAF Tournament Clarifications</a></li>
+			<li><a href="https://www.thenaf.net/wp-content/uploads/2026/08/NAF-FAQ-for-BB2025_v20260810_A4.pdf">BB2025 NAF Tournament Clarifications</a></li>
+			<li><a href="NAFLM_2025_Coach_and_Administrator_Guide.pdf" TARGET="_blank">NAFLM Guide</a></li>
 		</ul>
 	</li>  
 
