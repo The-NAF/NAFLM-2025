@@ -118,6 +118,7 @@ public $megastars = 0;
 public $base_inducements = 0;
 public $fireunder11 = 0;
 public $enforce_hire_fire_order = 0;
+public $disable_match_autolock = 0;
 public $major_win_tds = 0;
 public $major_win_pts = 0;
 public $clean_sheet_pts = 0;
@@ -131,7 +132,7 @@ public $discord_webhook_url = '';
 public $discord_post_permission = 'admins';
 
 
-function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $initial_treasury_sevens, $language, $helf, $slann, $sevens, $randomskillrolls, $randomstatrolls, $randomskillmanualentry, $megastars, $base_inducements, $fireunder11, $enforce_hire_fire_order, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts, $prayer_cost, $banned_stars, $megastar_tax, $min_tv, $discord_webhook_url, $discord_post_permission) {
+function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $initial_treasury_sevens, $language, $helf, $slann, $sevens, $randomskillrolls, $randomstatrolls, $randomskillmanualentry, $megastars, $base_inducements, $fireunder11, $enforce_hire_fire_order, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts, $prayer_cost, $banned_stars, $megastar_tax, $min_tv, $discord_webhook_url, $discord_post_permission, $disable_match_autolock = 0) {
 	global $settings;
 	$this->lid = $lid;
 	$this->l_name = $name;
@@ -157,6 +158,7 @@ function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welco
     $this->base_inducements = $base_inducements;
     $this->fireunder11 = $fireunder11;
 	$this->enforce_hire_fire_order  = $enforce_hire_fire_order;
+    $this->disable_match_autolock = $disable_match_autolock;
     $this->major_win_tds = $major_win_tds;
     $this->major_win_pts = $major_win_pts;
     $this->clean_sheet_pts = $clean_sheet_pts;
@@ -199,18 +201,19 @@ public static function getLeaguePreferences() {
 				isset($rules['megastar_tax']) ? $rules['megastar_tax'] : 0,
 				isset($rules['min_tv']) ? $rules['min_tv'] : 0,
 				isset($rules['discord_webhook_url']) ? $rules['discord_webhook_url'] : '',
-				isset($rules['discord_post_permission']) ? $rules['discord_post_permission'] : 'admins');
+				isset($rules['discord_post_permission']) ? $rules['discord_post_permission'] : 'admins',
+				isset($rules['disable_match_autolock']) ? $rules['disable_match_autolock'] : 0);
         }
     } else {
 		return new LeaguePref($sel_lid, isset($leagues[$sel_lid]['lname']) ? $leagues[$sel_lid]['lname'] : '', null, null, null, null, null, null, false, null,
-            $settings['stylesheet'], $rules['initial_treasury'], $rules['initial_treasury_sevens'], 
+            $settings['stylesheet'], $rules['initial_treasury'], $rules['initial_treasury_sevens'],
 			$settings['lang'],
 			$rules['helf'],$rules['slann'],$rules['sevens'],
 			$rules['randomskillrolls'],$rules['randomstatrolls'],$rules['randomskillmanualentry'],
 			$rules['megastars'],$rules['base_inducements'],$rules['fireunder11'], 0,
 			$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
 			$rules['major_beat_cas'],$rules['major_beat_pts'],
-			0, '', 0, 0, '', 'admins');
+			0, '', 0, 0, '', 'admins', 0);
 	}
 }
 
@@ -237,6 +240,7 @@ private function syncSettingsWithTemplate() {
         'initial_treasury_sevens',
         'helf',
         'slann',
+        'disable_match_autolock',
         'sevens',
         'randomskillrolls',
         'randomstatrolls',
@@ -340,6 +344,7 @@ function save() {
     $settingsFileContents = $this->updateRule($settingsFileContents, 'initial_treasury_sevens', $this->initial_treasury_sevens);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'helf', $this->helf == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'slann', $this->slann == 1 ? 1 : 0);
+    $settingsFileContents = $this->updateRule($settingsFileContents, 'disable_match_autolock', $this->disable_match_autolock == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'sevens', $this->sevens == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'randomskillrolls', $this->randomskillrolls == 1 ? 1 : 0);
     $settingsFileContents = $this->updateRule($settingsFileContents, 'randomstatrolls', $this->randomstatrolls == 1 ? 1 : 0);
@@ -371,6 +376,7 @@ function save() {
     $rules['initial_treasury_sevens'] = $this->initial_treasury_sevens;
     $rules['helf'] = $this->helf;
     $rules['slann'] = $this->slann;
+    $rules['disable_match_autolock'] = $this->disable_match_autolock;
     $rules['sevens'] = $this->sevens;
     $rules['randomskillrolls'] = $this->randomskillrolls;
     $rules['randomstatrolls'] = $this->randomstatrolls;
@@ -602,6 +608,15 @@ public static function showLeaguePreferences() {
                             <b><?php echo $lng->getTrn('teams_legend_slann', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
+					<tr title="<?php echo $lng->getTrn('disable_match_autolock_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('disable_match_autolock_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>
+							<input type='checkbox' name='disable_match_autolock' value='1' onclick='slideToggleFast("disable_match_autolock");'	<?php if($rules['disable_match_autolock'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('disable_match_autolock', 'LeaguePref'); ?></b>
+                        </td>
+                    </tr>
 					<tr title="<?php echo $lng->getTrn('sevens_help', 'LeaguePref'); ?>">
                         <td>
                             <?php echo $lng->getTrn('sevens_title', 'LeaguePref'); ?>
@@ -810,7 +825,8 @@ public static function handleActions() {
 				$_POST['major_beat_cas'],$_POST['major_beat_pts'],
 				$_POST['prayer_cost'], $banned_stars, $_POST['megastar_tax'], $_POST['min_tv'],
 				isset($_POST['discord_webhook_url']) ? $_POST['discord_webhook_url'] : '',
-				isset($_POST['discord_post_permission']) ? $_POST['discord_post_permission'] : 'admins');
+				isset($_POST['discord_post_permission']) ? $_POST['discord_post_permission'] : 'admins',
+				isset($_POST['disable_match_autolock']) ? $_POST['disable_match_autolock'] : 0);
 			if($l_pref->validate()) {
 				if($l_pref->save()) {
 					// Redirect back to the same page so the form re-renders with fresh data from the saved file.
@@ -842,4 +858,4 @@ public static function handleActions() {
     }
 }
 }
-?>
+?>

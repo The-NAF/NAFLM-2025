@@ -45,6 +45,7 @@ $rules['max_cheerleaders_sevens'] 	= 3;
 $rules['helf'] 						= 0; 	//High Elf (teams of legend)
 $rules['slann'] 					= 0; 	//Slann (teams of legend)
 
+$rules['disable_match_autolock'] 	= 0; 	//Disable Auto-Lock Old Matches
 $rules['sevens'] 					= 1; 	//Sevens Teams
 $rules['dungeon'] 					= 1; 	//Dungeon Bowl Teams
 $rules['randomskillrolls'] 			= 1; 	//Automated Random Skill Rolls

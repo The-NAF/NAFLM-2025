@@ -510,7 +510,12 @@ class Player
     }
     
     public function getCurrentNiggleCount() {
-        $query = "SELECT IFNULL(SUM(IF(inj = '.NI.', 1, 0) + IF(agn = '.NI.', 1, 0)), 0) AS raw_cnt
+        // NI is a PHP constant, not a literal - it has to break out of the string to be interpolated
+        // (a previous version wrote it as '.NI.' *inside* the double-quoted string, which sent the
+        // literal, non-numeric text ".NI." to MySQL instead of the constant's value; MySQL silently
+        // coerced that to 0, so this always matched nothing and the function silently fell back to
+        // just $this->ni_mod, ignoring every genuine historical niggle recorded in match_data).
+        $query = "SELECT IFNULL(SUM(IF(inj = ".NI.", 1, 0) + IF(agn = ".NI.", 1, 0)), 0) AS raw_cnt
                   FROM match_data WHERE f_player_id = $this->player_id";
         $row = mysql_fetch_assoc(mysql_query($query));
         return (int)$row['raw_cnt'] + (int)$this->ni_mod;
@@ -547,8 +552,57 @@ class Player
 	 public function removeMNG() {
         if ($this->is_journeyman || $this->is_sold || $this->is_dead)
             return false;
-        $query = "UPDATE players SET status = 1, date_retired = NULL WHERE player_id = $this->player_id";
-        return mysql_query($query); 
+        /*
+            getPlayerStatus() (used by the match report to grey out MNG rows) recomputes status live
+            from the 'inj' column of the player's most recently played match_data row - it never reads
+            players.status. So clearing players.status alone fixes pages that read it directly (roster,
+            PDF roster) but leaves the match report re-deriving MNG every time. Clear the source row too,
+            but only when it's actually what's flagging the player as MNG (mirrors getPlayerStatus()'s
+            own "most recent played match" lookup, so we never touch an older, superseded row).
+
+            If that row is a real injury (NI or a stat bust) rather than a bare MNG placeholder, clearing
+            its 'inj' value would also erase the injury itself - it's what getPlayerDProps() recounts
+            match_data for to derive inj_ni/inj_ma/etc (and PV). So in that case we also bump the matching
+            _mod field by 1 to exactly offset the drop in that historical count: the permanent injury
+            (and PV) comes out unchanged, only the "sits out next match" effect is lifted.
+        */
+        $mod_col_by_inj = array(NI => 'ni_mod', MA => 'ma_mod', AV => 'av_mod', AG => 'ag_mod', ST => 'st_mod', PA => 'pa_mod');
+        $result = mysql_query("SELECT match_data.f_match_id, match_data.inj FROM match_data, matches
+            WHERE match_data.f_player_id = $this->player_id
+            AND matches.match_id = match_data.f_match_id
+            AND matches.date_played IS NOT NULL
+            ORDER BY matches.date_played DESC LIMIT 1");
+        if (is_resource($result) && mysql_num_rows($result) > 0) {
+            list($last_mid, $last_inj) = mysql_fetch_row($result);
+            $touched = false;
+            if ($last_inj == MNG) {
+                mysql_query("UPDATE match_data SET inj = ".NONE." WHERE f_player_id = $this->player_id AND f_match_id = $last_mid");
+                $touched = true;
+            } elseif (isset($mod_col_by_inj[$last_inj])) {
+                $mod_col = $mod_col_by_inj[$last_inj];
+                mysql_query("UPDATE match_data SET inj = ".NONE." WHERE f_player_id = $this->player_id AND f_match_id = $last_mid");
+                mysql_query("UPDATE players SET $mod_col = $mod_col + 1 WHERE player_id = $this->player_id");
+                $touched = true;
+            }
+            if ($touched) {
+                // Lock the match so a coach can't go back and resubmit it afterwards - re-entering an
+                // inj value there would either double up against the _mod compensation above, or just
+                // reintroduce the MNG we cleared. An admin can always unlock it manually if needed.
+                mysql_query("UPDATE matches SET locked = 1 WHERE match_id = $last_mid");
+            }
+        }
+        mysql_query("UPDATE players SET date_retired = NULL WHERE player_id = $this->player_id");
+        /*
+            Recompute the cached inj_ma/inj_ni/etc columns (and players.status) from the match_data/mod
+            state just written above, the same way every other admin tool that touches a _mod column
+            does (setCaptain, dspp, dval, ...). Without this, those cached columns - which is what the
+            Remove Niggle / Remove Stat Bust dropdowns filter players by - are left however they were
+            before this call until some unrelated future action happens to refresh them. status comes
+            out of this the same way it would from a direct assignment (getPlayerStatus() now reads
+            NONE straight off the row we just cleared/unretired above), so a separate manual status
+            write isn't needed on top of this.
+        */
+        return SQLTriggers::run(T_SQLTRIG_PLAYER_DPROPS, array('id' => $this->player_id, 'obj' => $this));
     }
 
     public function rename($new_name) {

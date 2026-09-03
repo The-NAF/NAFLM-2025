@@ -62,6 +62,10 @@
 <dungeonbowl_help>Tick the box to disable Dungeon Bowl teams from being available on the team creation page: Ticked box = Disabled.</dungeonbowl_help>
 <dungeonbowl>Dungeon Bowl Teams</dungeonbowl>
 
+<disable_match_autolock_title>&lt;br/&gt;&lt;b&gt;Disable Auto-Lock Old Matches&lt;/b&gt;&lt;br/&gt; Toggle whether saving a match report automatically locks that team's earlier match reports.&lt;/i&gt;</disable_match_autolock_title>
+<disable_match_autolock_help>By default, upon a match report save, any previous match report will be automatically locked, ticking this box will disable this feature: Ticked box = Disabled.</disable_match_autolock_help>
+<disable_match_autolock>Disable Auto-Lock Old Matches</disable_match_autolock>
+
 <sevens_title>&lt;br/&gt;&lt;b&gt;Sevens Team Rosters&lt;/b&gt;&lt;br/&gt; Disable Sevens team rosters from the team creation page.&lt;br/&gt;&lt;i&gt;(does not interfere with teams already created)&lt;/i&gt;</sevens_title>
 <sevens_help>Tick the box to disable Sevens teams from being available on the team creation page: Ticked box = Disabled.</sevens_help>
 <sevens>Sevens Teams</sevens>

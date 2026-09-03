@@ -459,7 +459,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <transferteam> <![CDATA[ Transfer this team to another coach. ]]> </transferteam>
                 <removeNiggle> <![CDATA[ Remove a niggling injury from a player. ]]> </removeNiggle>
                 <addniggle> <![CDATA[ Add a niggling injury to a player. ]]> </addniggle>
-                <removeMNG> <![CDATA[ Remove the player's MNG status OR Unretire player.<br><b>WARNING</b>: Cannot be undone! ]]> </removeMNG>
+                <removeMNG> <![CDATA[ Remove the player's MNG status OR Unretire player.<br><b>WARNING</b>: Cannot be undone! This will alter the last match report and will lock it so it cannot be re-submitted. ]]> </removeMNG>
                 <removenegastat> <![CDATA[ Remove a player's stat injury.<br><b>WARNING</b>: Cannot be undone! ]]> </removenegastat>
             </desc>
         </box_admin>

@@ -67,6 +67,8 @@ $rules['helf'] 						= 0; 	//High Elf (teams of legend)
 $rules['slann'] 					= 0; 	//Slann (teams of legend)
 // Allow/disallow dungeon bowl teams: 0 = enabled. 1 = disabled.
 $rules['dungeon'] 					= 1; 	//Dungeon Bowl Teams
+// Toggle whether saving a match report auto-locks that team's earlier, unlocked match reports: 0 = auto-lock enabled (default). 1 = disabled.
+$rules['disable_match_autolock'] 	= 0; 	//Disable Auto-Lock Old Matches
 // Allow/disallow sevens teams: 0 = enabled. 1 = disabled.
 $rules['sevens'] 					= 1; 	//Sevens Teams
 // Toggle Automated Random Skill Rolls: 0 = enabled. 1 = disabled.

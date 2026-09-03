@@ -310,9 +310,58 @@ class Match
         foreach (Star::getStars(false,false, STATS_MATCH, $this->match_id) as $s) {
             mysql_query("SELECT syncMVplayer($s->star_id, $this->f_tour_id)");
         }
+        $this->lockPriorMatches();
         return true;
     }
-    
+
+    // Auto-locks every already-played, not-yet-locked match either team in this match has played
+    // BEFORE this one, WITHIN THE SAME LEAGUE (across any of that league's tournaments) - run after
+    // every report save so historical data can't be quietly re-edited later. This match itself is
+    // deliberately left unlocked (still correctable). An admin can always unlock any match manually.
+    // League admins can turn this off entirely via LeaguePref (disable_match_autolock).
+    // Re-fetches date_played fresh rather than trusting $this->date_played, since $this may have been
+    // constructed before this same submission set it for the first time.
+    public function lockPriorMatches() {
+        global $rules;
+        // This match's own played date and league (via tour -> division -> league), fetched fresh
+        // rather than trusting $this's in-memory properties.
+        $result = mysql_query("SELECT matches.date_played, divisions.f_lid
+            FROM matches, tours, divisions
+            WHERE matches.match_id = $this->match_id
+            AND tours.tour_id = matches.f_tour_id
+            AND divisions.did = tours.f_did");
+        if (!is_resource($result) || mysql_num_rows($result) == 0)
+            return false;
+        list($played_date, $lid) = mysql_fetch_row($result);
+        if (empty($played_date))
+            return false;
+        // $rules as loaded at the start of the request reflects whichever league is "selected" in the
+        // node selector/session, which is not necessarily this match's own league (e.g. an admin left
+        // browsing a different league before opening this report). Every other league-scoped action in
+        // this codebase (Team, Player, PDF roster, team creator, ...) re-loads $rules for its own entity's
+        // real league id before trusting it - do the same here so the correct league's toggle is honored.
+        setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => (int) $lid));
+        if (isset($rules['disable_match_autolock']) && $rules['disable_match_autolock'] == 1)
+            return false;
+        $t1 = (int) $this->team1_id;
+        $t2 = (int) $this->team2_id;
+        $lid = (int) $lid;
+        $played_date = mysql_real_escape_string($played_date);
+        // matches.locked is NULL on older/pre-existing rows rather than 0 (the app treats both the same
+        // way everywhere else via (bool) casts - see Match::__construct()) - "= 0" alone would silently
+        // skip every one of those NULL rows since NULL = 0 is never true in SQL, so match both explicitly.
+        return mysql_query("UPDATE matches, tours, divisions
+            SET matches.locked = 1
+            WHERE tours.tour_id = matches.f_tour_id
+            AND divisions.did = tours.f_did
+            AND divisions.f_lid = $lid
+            AND (matches.team1_id IN ($t1, $t2) OR matches.team2_id IN ($t1, $t2))
+            AND matches.match_id != $this->match_id
+            AND matches.date_played IS NOT NULL
+            AND matches.date_played < '$played_date'
+            AND (matches.locked = 0 OR matches.locked IS NULL)");
+    }
+
     public function saveText($str) {
         $txt = new MatchSummary($this->match_id);
         return $txt->save($str);
