@@ -457,25 +457,10 @@ class Match_HTMLOUT extends Match
 						$_POST["agn_$pid"]      = NONE;
 						$_POST["hat_$pid"]      = 99; //99 = No hatred
 					}
-					elseif ($p->getStatus($m->match_id) == RETIRED) {
-						$_POST["mvp_$pid"]      = 0;
-						$_POST["cp_$pid"]       = 0;
-						$_POST["td_$pid"]       = 0;
-						$_POST["intcpt_$pid"]   = 0;
-						$_POST["bh_$pid"]       = 0;
-						$_POST["si_$pid"]       = 0;
-						$_POST["ki_$pid"]       = 0;
-						$_POST["misc_$pid"]     = 0;
-						$_POST["ir1_d1_$pid"]   = 0;
-						$_POST["ir1_d2_$pid"]   = 0;
-						$_POST["ir2_d1_$pid"]   = 0;
-						$_POST["ir2_d2_$pid"]   = 0;
-						$_POST["ir3_d1_$pid"]   = 0;
-						$_POST["ir3_d2_$pid"]   = 0;
-						$_POST["inj_$pid"]      = MNG;
-						$_POST["agn_$pid"]      = NONE;
-						$_POST["hat_$pid"]      = 99; //99 = No hatred
-					}
+					// NOTE: no elseif for RETIRED here - Match::player_validation() already excludes a
+					// retired player from this loop entirely for any match played after their retirement
+					// (and getPlayerStatus() no longer reports RETIRED for a match at/before it), so a
+					// player reaching this point is never RETIRED for the purposes of this match.
 					// Sevens: Draft Payoff (reusing the mvp field) permanently adds 15k to a paid-off
 					// player's value. Match reports can be re-saved, so only apply the delta when the
 					// checkbox state actually changes from what's already stored, in either direction.
@@ -900,13 +885,16 @@ class Match_HTMLOUT extends Match
 					$mdat   = $m->getPlayerEntry($p->player_id);
 
 					// Print player row
+					// NOTE: no RETIRED case here - Match::player_validation() already excludes a retired
+					// player from this loop entirely for any match played after their retirement (and
+					// getPlayerStatus() no longer reports RETIRED for a match at/before it), so $status is
+					// never RETIRED for a player reaching this point.
 					if ($p->is_journeyman_used && !$m->is_played)   {$bgcolor = COLOR_HTML_JOURNEY_USED;    $NORMSTAT = false;}
 					elseif ($p->is_journeyman)                      {$bgcolor = COLOR_HTML_JOURNEY;         $NORMSTAT = false;}
 					elseif ($status == MNG)                         {$bgcolor = COLOR_HTML_MNG;             $NORMSTAT = false;}
-					elseif ($status == RETIRED)                     {$bgcolor = COLOR_HTML_RETIRED;  $NORMSTAT = false;}
 					elseif ($p->mayHaveNewSkill())                  {$bgcolor = COLOR_HTML_NEWSKILL;        $NORMSTAT = false;}
 					else {$bgcolor = false;}
-					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired)) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || $status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired),$is_sevens, $p->numberOfAchSkill(), $p->value, $hatOptions);
+					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : ''),$bgcolor, $mdat, $DIS || ($status == MNG),$is_sevens, $p->numberOfAchSkill(), $p->value, $hatOptions);
 				}
 				echo "</table>\n";
 				echo "<br>\n";
@@ -920,7 +908,6 @@ class Match_HTMLOUT extends Match
 									if (1) {
 										?>
 										<td style="background-color: <?php echo COLOR_HTML_MNG;     ?>;"><font color='black'><b>&nbsp;MNG&nbsp;</b></font></td>
-										<td style="background-color: <?php echo COLOR_HTML_RETIRED;     ?>;"><font color='black'><b>&nbsp;RET&nbsp;</b></font></td>
 										<td style="background-color: <?php echo COLOR_HTML_JOURNEY; ?>;"><font color='black'><b>&nbsp;Journeyman&nbsp;</b></font></td>
 										<td style="background-color: <?php echo COLOR_HTML_JOURNEY_USED; ?>;"><font color='black'><b>&nbsp;Used&nbsp;journeyman&nbsp;</b></font></td>
 										<td style="background-color: <?php echo COLOR_HTML_NEWSKILL;?>;"><font color='black'><b>&nbsp;New&nbsp;skill&nbsp;available&nbsp;</b></font></td>

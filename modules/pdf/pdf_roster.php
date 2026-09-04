@@ -269,7 +269,6 @@ $sum_avail_players=0;
 $sum_players=0;
 $sum_cp=0;
 $sum_td=0;;
-$sum_def=0;
 $sum_int=0;
 $sum_cas=0;
 $sum_mvp=0;
@@ -459,10 +458,9 @@ $pdf->print_box($currentx+=140, $currenty, 30, $h, COLOR_ROSTER_NORMAL, DEFLINEC
 
 $pdf->SetX($currentx=MARGINX+6+538);
 $pdf->print_box($currentx, $currenty, 50, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'R', ($team->format == 'SV') ? 'Totals (excl TV for MNG players):' : 'Totals (excl TV for MNG or RET players):');
-$pdf->print_box($currentx+=54, $currenty, 19, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_cp);
+$pdf->print_box($currentx+=75, $currenty, 19, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_cp);
 $pdf->print_box($currentx+=19, $currenty, 19, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_td);
-$pdf->print_box($currentx+=19, $currenty, 20, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_def);
-$pdf->print_box($currentx+=20, $currenty, 20, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_int);
+$pdf->print_box($currentx+=19, $currenty, 20, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_int);
 $pdf->print_box($currentx+=20, $currenty, 20, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_cas);
 $pdf->print_box($currentx+=20, $currenty, 21, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_mvp);
 $pdf->print_box($currentx+=21, $currenty, 21, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_misc);

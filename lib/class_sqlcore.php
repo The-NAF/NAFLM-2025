@@ -345,6 +345,11 @@ class SQLCore
 			 *  General
 			 */
 			// Returns status of player in match and latest/current status on mid = -1 or unplayed mid.
+			// RETIRED is only returned for a specific mid when that match is unplayed or was played
+			// after the player's retirement date; a match played at/before retirement falls through to
+			// the normal match-relative lookup below, so re-saving a historical match report for a
+			// since-retired player doesn't clobber that match's real stats/injury (mirrors the date
+			// check already used on the display side in Match_HTMLOUT::report()).
 			'CREATE FUNCTION getPlayerStatus(pid '.$CT_cols[T_OBJ_PLAYER].', mid '.$CT_cols[T_NODE_MATCH].')
 				RETURNS '.$core_tables['players']['status'].'
 				NOT DETERMINISTIC
@@ -352,9 +357,13 @@ class SQLCore
 			BEGIN
 				DECLARE status '.$core_tables['players']['status'].' DEFAULT NULL;
 				
-				IF EXISTS(SELECT player_id FROM players WHERE player_id = pid AND date_retired is not null) THEN
+				IF EXISTS(SELECT player_id FROM players WHERE player_id = pid AND date_retired is not null)
+					AND (mid = -1 OR NOT EXISTS(
+						SELECT match_id FROM matches WHERE match_id = mid AND date_played IS NOT NULL
+						AND date_played <= (SELECT date_retired FROM players WHERE player_id = pid)
+					)) THEN
 					RETURN '.RETIRED.';
-				ELSE 
+				ELSE
 					IF !EXISTS(SELECT f_match_id FROM match_data WHERE f_player_id = pid LIMIT 1) THEN
 					RETURN '.NONE.';
 					END IF;

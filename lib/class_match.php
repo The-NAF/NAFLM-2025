@@ -561,8 +561,12 @@ class Match
             // Player died in a earlier match.
             if ($p->getStatus($m->match_id) == DEAD)
                 return false;
+            // Player has since retired and this match was played after that retirement -
+            // they weren't on the team for this match, so don't touch their match_data.
+            if ($p->is_retired && $m->date_played > $p->date_retired)
+                return false;
         } else { // New match?
-			if ($p->is_dead || $p->is_sold)
+			if ($p->is_dead || $p->is_sold || $p->is_retired)
                 return false;
         }
         return true;

@@ -16,7 +16,7 @@ if (isset($_POST['setup']) || (isset($argv[1]) ? $argv[1] == 'setup' : false)) {
 &mdash; Once at the main page login using the coach account 'root' with password 'root'<br>
 &mdash; From there you may enter the <i>administration</i> section and add new users (coaches) including changing the root password.<br>
 <b>Need help? Encountering errors?</b><br>
-&mdash; If you are encountering errors please visit <a href='https://github.com/The-NAF/NAFLM-2020/issues'>github.com/The-NAF/NAFLM-2020/issues</a> and create a bug report.<br>
+&mdash; If you are encountering errors please visit <a href='https://github.com/The-NAF/NAFLM-2025/issues'>github.com/The-NAF/NAFLM-2025/issues</a> and create a bug report.<br>
 EOL;
         echo "<br><br>";
         HTMLOUT::dnt();
@@ -26,7 +26,7 @@ EOL;
         echo <<<EOL
 <br><br>
 <b>Need help? Encountering errors?</b><br>
-&mdash; If you are encountering errors please visit <a href='https://github.com/The-NAF/NAFLM-2020/issues'>github.com/The-NAF/NAFLM-2020/issues</a> and create a bug report.<br>
+&mdash; If you are encountering errors please visit <a href='https://github.com/The-NAF/NAFLM-2025/issues'>github.com/The-NAF/NAFLM-2025/issues</a> and create a bug report.<br>
 EOL;
     }
 } else {
@@ -35,7 +35,7 @@ EOL;
 	if(mysql_query("DESCRIBE coaches")) {
 		echo <<<EOL
 It seems NAFLM is already installed.<br>You can safely delete the file <i>install.php</i> and go to the main page.
-<br><br>If you need help please visit <a href='https://github.com/The-NAF/NAFLM-2020/issues'>github.com/The-NAF/NAFLM-2020/issues</a> and create a bug report.<br>
+<br><br>If you need help please visit <a href='https://github.com/The-NAF/NAFLM-2025/issues'>github.com/The-NAF/NAFLM-2025/issues</a> and create a bug report.<br>
 EOL;
 	} else {
 		?>

@@ -70,25 +70,10 @@ if($action == "update") {
             $_POST["hat_$pid"]      = NONE;
             $_POST["agn_$pid"]      = NONE;
         }
-		elseif ($player->getStatus($match->match_id) == RETIRED) {
-            $_POST["mvp_$pid"]      = 0;
-            $_POST["cp_$pid"]       = 0;
-            $_POST["td_$pid"]       = 0;
-            $_POST["intcpt_$pid"]   = 0;
-            $_POST["bh_$pid"]       = 0;
-            $_POST["si_$pid"]       = 0;
-            $_POST["ki_$pid"]       = 0;
-            $_POST["misc_$pid"]     = 0;
-            $_POST["ir1_d1_$pid"]   = 0;
-            $_POST["ir1_d2_$pid"]   = 0;
-            $_POST["ir2_d1_$pid"]   = 0;
-            $_POST["ir2_d2_$pid"]   = 0;
-            $_POST["ir3_d1_$pid"]   = 0;
-            $_POST["ir3_d2_$pid"]   = 0;
-            $_POST["inj_$pid"]      = MNG;
-            $_POST["hat_$pid"]      = NONE;
-            $_POST["agn_$pid"]      = NONE;
-        }
+        // NOTE: no elseif for RETIRED here - Match::player_validation() already excludes a
+        // retired player from this loop entirely for any match played after their retirement
+        // (and getPlayerStatus() no longer reports RETIRED for a match at/before it), so a
+        // player reaching this point is never RETIRED for the purposes of this match.
         $match->entry($player->player_id, array(
             'mvp'     => $_POST["mvp_$pid"],
             'cp'      => $_POST["cp_$pid"],

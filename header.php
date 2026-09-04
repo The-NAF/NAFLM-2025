@@ -29,8 +29,8 @@ $credits = array(	'Pierluigi Masia',
 					'Goiz Ruiz de Gopegui',
 					'Ryan Williams',
 					'Ian Williams');
-define('NAFLM_VERSION', '2025.6.2');
-define('NAFLM_BUILD_DATE', '3rd September 2026');
+define('NAFLM_VERSION', '2025.6.3');
+define('NAFLM_BUILD_DATE', '4th September 2026');
 define('CONTENT_VERSION', 'Blood Bowl 2025 - Third Season');
 define('CONTENT_DETAIL', 'Blood Bowl 2025 and up to and including Spike! #22');
 define('CONTENT_DATE', 'September 2026');
