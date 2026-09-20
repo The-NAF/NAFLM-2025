@@ -66,4 +66,48 @@
 <about><![CDATA[Une description d&eacute;taill&eacute;e de l'exploit du joueur. Si le joueur a re&ccedil;u une comp&eacute;tence suppl&eacute;mentaire, cela sera inscrit ici.]]></about>
 
 </fr-FR>
+
+<de-DE>
+
+<name>Ruhmeshalle</name>
+
+<player>Spieler</player>
+<sort_hint>Hinweis: Klicken Sie auf das Dropdown-Menü und drücken Sie einen beliebigen Buchstaben auf der Tastatur, um zum ersten Teamnamen zu springen, der mit diesem Buchstaben beginnt.</sort_hint>
+<submit>Absenden</submit>
+<new>Neuer Eintrag</new>
+<edit>Bearbeiten</edit>
+<del>Löschen</del>
+<from>von</from>
+<posted>Veröffentlicht</posted>
+
+<g_title>Titel</g_title>
+<g_about>Allgemeine Beschreibung</g_about>
+
+<desc><![CDATA[Willkommen in der Ruhmeshalle.<br>Hier können Liga-Verantwortliche Spielern mit bemerkenswerten Erfolgen öffentliche Anerkennung verschaffen.]]></desc>
+<title><![CDATA[Eine kurze Beschreibung dessen, was der Spieler erreicht hat, zum Beispiel in welchem Bereich der Erfolg erzielt wurde.]]></title>
+<about><![CDATA[Über den Erfolg des Spielers im Detail. Falls der Spieler eine Bonus-(Extra-)Fertigkeit erhalten hat, könnte man auch darüber schreiben.]]></about>
+
+</de-DE>
+
+<it-IT>
+
+<name>Salone della fama</name>
+
+<player>Giocatore</player>
+<sort_hint>Suggerimento: fare clic sul menu a tendina e premere una lettera qualsiasi sulla tastiera per scorrere fino al primo nome di squadra che inizia con quella lettera.</sort_hint>
+<submit>Invia</submit>
+<new>Nuova voce</new>
+<edit>Modifica</edit>
+<del>Elimina</del>
+<from>da</from>
+<posted>Pubblicato</posted>
+
+<g_title>Titolo</g_title>
+<g_about>Descrizione generale</g_about>
+
+<desc><![CDATA[Benvenuti nel salone della fama.<br>Qui i commissari di lega possono dare visibilità ai giocatori che hanno raggiunto risultati degni di nota.]]></desc>
+<title><![CDATA[Una breve descrizione di ciò che il giocatore ha ottenuto, ad esempio in quale ambito è stato raggiunto il risultato.]]></title>
+<about><![CDATA[Il risultato del giocatore in dettaglio. Se il giocatore ha ricevuto un'abilità bonus (extra), si potrebbe anche scrivere di questo.]]></about>
+
+</it-IT>
 </translations>

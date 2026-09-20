@@ -269,7 +269,7 @@ public static function scheduleInterConference($tour_id, $gamesPerCoach) {
 			if ($gamesPlayed < $gamesPerCoach) {
 				$team = new Team($teamId);
 				echo "<div class='boxWide'>";
-				HTMLOUT::helpBox("$team->name ($team->f_cname) has not played enough games $gamesPlayed. This is probably because the draw does not look ahead. You may need to reassign a few games by hand to fix");
+				HTMLOUT::helpBox(htmlspecialchars($team->name)." (".htmlspecialchars($team->f_cname).") has not played enough games $gamesPlayed. This is probably because the draw does not look ahead. You may need to reassign a few games by hand to fix");
 				echo "</div>";
 			}
 		}
@@ -387,10 +387,14 @@ public static function handleActions() {
     global $lng, $coach;
 
     if (isset($_POST['action']) && is_object($coach) && $coach->isNodeCommish(T_NODE_TOURNAMENT, $_POST['tour_id'])) {
-		$tour_id = $_POST['tour_id'];
+        // SECURITY: tour_id/conf_id/team_id all end up spliced raw into SQL further down (in
+        // addTeamToConference()/removeTeamFromConference()/removeConference()/addConference()/
+        // scheduleMatches() etc.) despite this whole action switch already being gated on
+        // isNodeCommish() above - they're always meant to be numeric IDs, so cast them once here.
+		$tour_id = (int) $_POST['tour_id'];
         $conf_name = isset($_POST['conf_name']) ? stripslashes($_POST['conf_name']) : 0 ;
-        $conf_id = isset($_POST['conf_id']) ? $_POST['conf_id'] : 0 ;
-        $team_id = isset($_POST['team_id']) ? $_POST['team_id'] : 0 ;
+        $conf_id = isset($_POST['conf_id']) ? (int) $_POST['conf_id'] : 0 ;
+        $team_id = isset($_POST['team_id']) ? (int) $_POST['team_id'] : 0 ;
         $rounds = isset($_POST['rounds']) ? $_POST['rounds'] : 1 ;
 
         switch ($_POST['action'])
@@ -460,7 +464,9 @@ public static function conferenceAdmin() {
 
     $tour_id = 0;
     if (isset($_POST['tour_id'])) {
-    	$tour_id = $_POST['tour_id'];
+        // SECURITY: $tour_id flows into new Tour($tour_id) and several raw SQL queries below -
+        // it's always meant to be a numeric tournament ID.
+    	$tour_id = (int) $_POST['tour_id'];
     }
 
     $firstTour = self::tournamentSelector($tour_id);
@@ -484,9 +490,11 @@ public static function conferenceAdmin() {
 	$schedMatchHelp = $lng->getTrn('schedMatchHelp', 'Conference');
 	$schedInterTitle = $lng->getTrn('schedInter', 'Conference');
 	$schedInterHelp = $lng->getTrn('schedInterHelp', 'Conference');
+	// SECURITY: heredoc below interpolates raw - escape before use.
+	$tour_name_html = htmlspecialchars($tour->name);
 echo<<< EOQ
 	<div class='boxWide'>
-		<h3 class='boxTitle4'>$tour->name</h3>
+		<h3 class='boxTitle4'>$tour_name_html</h3>
 		<br />
 		<form name="add_conf" method="POST" action="handler.php?type=conference">
 			<input name='action' type='hidden' value='add_conf' />
@@ -567,19 +575,22 @@ EOQ;
 	$idx = 0;
 	foreach($confs as $conf) {
 		$conf->loadTeams();
+		// SECURITY: heredocs below interpolate raw - escape before use.
+		$conf_name_html = htmlspecialchars($conf->name);
 		if ($idx % 2 == 0) echo "<tr valign='top'>";
 echo<<< EOQ
 		<td>
 		<div class='boxCommon' style='margin-top: 0px; width=325px'>
-			<h4 class='boxTitleConf'>$conf->name <a onclick="return removeConf($conf->conf_id);"><img src="images/remove.png" height="16" width="16" title="remove $conf->name" alt="remove $conf->name"/></a></h4>
+			<h4 class='boxTitleConf'>$conf_name_html <a onclick="return removeConf($conf->conf_id);"><img src="images/remove.png" height="16" width="16" title="remove $conf_name_html" alt="remove $conf_name_html"/></a></h4>
 			<div style='white-space:nowrap; margin: 0px; padding: 5px; padding-top: 0px; line-height:175%; border 0px;'>
 EOQ;
 		self::findTeam($tour->tour_id, $conf->conf_id);
 		foreach($conf->teams as $team) {
-			$link = "<a href='". urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$team->team_id,false,false)."'>$team->name</a>";
+			$team_name_html = htmlspecialchars($team->name);
+			$link = "<a href='". urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$team->team_id,false,false)."'>$team_name_html</a>";
 
 echo<<< EOQ
-				<br />$link <a onclick="return removeTeam($conf->conf_id,$team->team_id);"><img src="images/remove.png" height="12" width="12" title="remove $team->name from $conf->name" alt="remove $team->name from $conf->name"/></a>
+				<br />$link <a onclick="return removeTeam($conf->conf_id,$team->team_id);"><img src="images/remove.png" height="12" width="12" title="remove $team_name_html from $conf_name_html" alt="remove $team_name_html from $conf_name_html"/></a>
 EOQ;
 		}
 echo<<< EOQ

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<translations>
 <en-GB>
 
 <name>Conferences Administration</name>
@@ -33,3 +34,145 @@
 <addedConf>Conference added</addedConf>
 
 </en-GB>
+
+<es-ES>
+
+<name>Administración de Conferencias</name>
+<tours>Selecciona un Torneo</tours>
+<menu-conf>Admin. Conferencias</menu-conf>
+<not-admin>Lo sentimos, esta función solo está disponible para administradores de división o globales</not-admin>
+
+<addConf>Añadir Conferencia</addConf>
+<schedMatch>Programar Partidos de Conferencia</schedMatch>
+<schedMatchHelp>Añade un número de rondas de todos contra todos para cada equipo de una conferencia, de modo que si se seleccionan 2, cada equipo jugaría contra todos los demás equipos de la conferencia dos veces. Esto tendrá en cuenta los partidos ya jugados o programados.</schedMatchHelp>
+<schedMatchDone>Partidos programados. Cada equipo jugará contra todos los demás equipos de la conferencia</schedMatchDone>
+<schedMatchDone2>veces, incluyendo los partidos ya programados o jugados.</schedMatchDone2>
+
+<schedInter>Programar Partidos Inter-Conferencia</schedInter>
+<schedInterHelp>Cada equipo tendrá programado un número de partidos igual al número seleccionado, esto tendrá en cuenta los partidos ya jugados o programados. Los partidos solo se programarán entre equipos de diferentes conferencias, por lo que los partidos intra-conferencia deben programarse primero.</schedInterHelp>
+<schedInterDone>Partidos programados. Cada equipo jugará </schedInterDone>
+<schedInterDone2>veces, incluyendo los partidos ya programados o jugados.</schedInterDone2>
+
+
+<findTeam>Añadir Equipo</findTeam>
+
+<failedAddTeam>Error al añadir el equipo</failedAddTeam>
+<addedTeam>Equipo añadido</addedTeam>
+
+<failedRemoveTeam>Error al eliminar el equipo</failedRemoveTeam>
+<removedTeam>Equipo eliminado</removedTeam>
+
+<failedRemoveConf>Error al eliminar la conferencia</failedRemoveConf>
+<removedConf>Conferencia eliminada</removedConf>
+
+<failedAddConf>Error al añadir la conferencia</failedAddConf>
+<addedConf>Conferencia añadida</addedConf>
+
+</es-ES>
+
+<fr-FR>
+
+<name>Administration des Conférences</name>
+<tours>Sélectionner un Tournoi</tours>
+<menu-conf>Admin. Conférences</menu-conf>
+<not-admin>Désolé, cette fonctionnalité est uniquement disponible pour les administrateurs de division ou globaux</not-admin>
+
+<addConf>Ajouter une Conférence</addConf>
+<schedMatch>Programmer les Matchs de Conférence</schedMatch>
+<schedMatchHelp>Ajoute un certain nombre de journées de championnat toutes rondes pour chaque équipe d'une conférence, donc si 2 sont sélectionnées, chaque équipe affrontera toutes les autres équipes de la conférence deux fois. Ceci prendra en compte les matchs déjà joués ou programmés.</schedMatchHelp>
+<schedMatchDone>Matchs programmés. Chaque équipe affrontera toutes les autres équipes de la conférence</schedMatchDone>
+<schedMatchDone2>fois, y compris les matchs déjà programmés ou joués.</schedMatchDone2>
+
+<schedInter>Programmer les Matchs Inter-Conférences</schedInter>
+<schedInterHelp>Chaque équipe aura un nombre de matchs programmés égal au nombre sélectionné, ceci prendra en compte les matchs déjà joués ou programmés. Les matchs ne seront programmés qu'entre des équipes de conférences différentes, les matchs intra-conférence doivent donc être programmés en premier.</schedInterHelp>
+<schedInterDone>Matchs programmés. Chaque équipe jouera </schedInterDone>
+<schedInterDone2>fois, y compris les matchs déjà programmés ou joués.</schedInterDone2>
+
+
+<findTeam>Ajouter une Équipe</findTeam>
+
+<failedAddTeam>Erreur lors de l'ajout de l'équipe</failedAddTeam>
+<addedTeam>Équipe ajoutée</addedTeam>
+
+<failedRemoveTeam>Erreur lors de la suppression de l'équipe</failedRemoveTeam>
+<removedTeam>Équipe supprimée</removedTeam>
+
+<failedRemoveConf>Erreur lors de la suppression de la conférence</failedRemoveConf>
+<removedConf>Conférence supprimée</removedConf>
+
+<failedAddConf>Erreur lors de l'ajout de la conférence</failedAddConf>
+<addedConf>Conférence ajoutée</addedConf>
+
+</fr-FR>
+
+<de-DE>
+
+<name>Konferenzverwaltung</name>
+<tours>Turnier auswählen</tours>
+<menu-conf>Konferenz-Admin</menu-conf>
+<not-admin>Entschuldigung, diese Funktion ist nur für Divisions- oder globale Administratoren verfügbar</not-admin>
+
+<addConf>Konferenz hinzufügen</addConf>
+<schedMatch>Konferenzspiele planen</schedMatch>
+<schedMatchHelp>Fügt eine Anzahl von Jeder-gegen-Jeden-Runden für jedes Team in einer Konferenz hinzu. Wenn also 2 ausgewählt werden, würde jedes Team zweimal gegen jedes andere Team der Konferenz spielen. Bereits gespielte oder geplante Spiele werden dabei berücksichtigt.</schedMatchHelp>
+<schedMatchDone>Spiele geplant. Jedes Team wird gegen jedes andere Team der Konferenz spielen</schedMatchDone>
+<schedMatchDone2>Mal, einschließlich bereits geplanter oder gespielter Spiele.</schedMatchDone2>
+
+<schedInter>Konferenzübergreifende Spiele planen</schedInter>
+<schedInterHelp>Für jedes Team wird eine Anzahl von Spielen entsprechend der gewählten Zahl geplant, wobei bereits gespielte oder geplante Spiele berücksichtigt werden. Spiele werden nur zwischen Teams unterschiedlicher Konferenzen geplant, daher sollten konferenzinterne Spiele zuerst geplant werden.</schedInterHelp>
+<schedInterDone>Spiele geplant. Jedes Team wird </schedInterDone>
+<schedInterDone2>Mal spielen, einschließlich bereits geplanter oder gespielter Spiele.</schedInterDone2>
+
+
+<findTeam>Team hinzufügen</findTeam>
+
+<failedAddTeam>Fehler beim Hinzufügen des Teams</failedAddTeam>
+<addedTeam>Team hinzugefügt</addedTeam>
+
+<failedRemoveTeam>Fehler beim Entfernen des Teams</failedRemoveTeam>
+<removedTeam>Team entfernt</removedTeam>
+
+<failedRemoveConf>Fehler beim Entfernen der Konferenz</failedRemoveConf>
+<removedConf>Konferenz entfernt</removedConf>
+
+<failedAddConf>Fehler beim Hinzufügen der Konferenz</failedAddConf>
+<addedConf>Konferenz hinzugefügt</addedConf>
+
+</de-DE>
+
+<it-IT>
+
+<name>Amministrazione Conferenze</name>
+<tours>Seleziona un Torneo</tours>
+<menu-conf>Admin Conferenze</menu-conf>
+<not-admin>Siamo spiacenti, questa funzione è disponibile solo per gli amministratori di divisione o globali</not-admin>
+
+<addConf>Aggiungi Conferenza</addConf>
+<schedMatch>Pianifica Partite di Conferenza</schedMatch>
+<schedMatchHelp>Aggiunge un numero di turni all'italiana per ogni squadra di una conferenza, quindi se ne vengono selezionati 2, ogni squadra affronterà tutte le altre squadre della conferenza due volte. Questo terrà conto delle partite già giocate o programmate.</schedMatchHelp>
+<schedMatchDone>Partite pianificate. Ogni squadra affronterà tutte le altre squadre della conferenza</schedMatchDone>
+<schedMatchDone2>volte, incluse le partite già programmate o giocate.</schedMatchDone2>
+
+<schedInter>Pianifica Partite Inter-Conferenza</schedInter>
+<schedInterHelp>Ogni squadra avrà in programma un numero di partite pari al numero selezionato; questo terrà conto delle partite già giocate o programmate. Le partite saranno programmate solo tra squadre di conferenze diverse, quindi le partite intra-conferenza dovrebbero essere programmate per prime.</schedInterHelp>
+<schedInterDone>Partite pianificate. Ogni squadra giocherà </schedInterDone>
+<schedInterDone2>volte, incluse le partite già programmate o giocate.</schedInterDone2>
+
+
+<findTeam>Aggiungi Squadra</findTeam>
+
+<failedAddTeam>Errore nell'aggiungere la squadra</failedAddTeam>
+<addedTeam>Squadra aggiunta</addedTeam>
+
+<failedRemoveTeam>Errore nella rimozione della squadra</failedRemoveTeam>
+<removedTeam>Squadra rimossa</removedTeam>
+
+<failedRemoveConf>Errore nella rimozione della conferenza</failedRemoveConf>
+<removedConf>Conferenza rimossa</removedConf>
+
+<failedAddConf>Errore nell'aggiungere la conferenza</failedAddConf>
+<addedConf>Conferenza aggiunta</addedConf>
+
+</it-IT>
+
+</translations>

@@ -50,7 +50,7 @@
 
 <record>Record</record>
 <desc>Quelles sont les matchs les plus m&amp;eacute;morables pour le nombre de touchdowns, les sorties, etc. ?</desc>
-<filled>More than X matches have the same record or no record exists at all.</filled>
+<filled>Plus de X matchs partagent le m&amp;ecirc;me record ou aucun record n'existe encore.</filled>
 
 <!-- Most of... -->
 <td>Le plus touchdowns</td>
@@ -61,8 +61,52 @@
 <svic>La plus large diff&amp;eacute;rence de touchdowns</svic>
 <inc>Le plus gros gains d'&amp;eacute;quipe</inc>
 <gate>La plus grosse affluence</gate>
-<mfans>Most RL fans/spectators</mfans>
+<mfans>Le plus de supporters/spectateurs r&amp;eacute;els</mfans>
 <tvdiff>Le plus large &amp;eacute;cart de valeur dans laquelle le favori a perdu</tvdiff>
 
 </fr-FR>
+
+<de-DE>
+
+<name>Denkw&#252;rdige Spiele</name>
+
+<record>Rekord</record>
+<desc>Welche Spiele sind in Bezug auf die meisten Touchdowns, T&#246;tungen und &#228;hnliches erinnerungsw&#252;rdig?</desc>
+<filled>Mehr als X Spiele teilen sich denselben Rekord, oder es existiert noch kein Rekord.</filled>
+
+<!-- Most of... -->
+<td>Die meisten Touchdowns</td>
+<cp>Die meisten abgeschlossenen P&#228;sse</cp>
+<intcpt>Die meisten Abfangaktionen</intcpt>
+<ki>Die meisten T&#246;tungen</ki>
+<cas>Die meisten Verletzungen</cas>
+<svic>Gr&#246;&#223;ter Punkteunterschied</svic>
+<inc>Gr&#246;&#223;tes Team-Einkommen</inc>
+<gate>Gr&#246;&#223;te Zuschauerzahl</gate>
+<mfans>Die meisten realen Fans/Zuschauer</mfans>
+<tvdiff>Gr&#246;&#223;ter Teamwert-Unterschied, bei dem der Au&#223;enseiter gewonnen hat</tvdiff>
+
+</de-DE>
+
+<it-IT>
+
+<name>Partite memorabili</name>
+
+<record>Record</record>
+<desc>Quali partite meritano di essere ricordate in termini di pi&#249; TD, uccisioni e cos&#236; via?</desc>
+<filled>Pi&#249; di X partite condividono lo stesso record, oppure non esiste ancora alcun record.</filled>
+
+<!-- Most of... -->
+<td>Pi&#249; touchdown</td>
+<cp>Pi&#249; passaggi completati</cp>
+<intcpt>Pi&#249; intercetti</intcpt>
+<ki>Pi&#249; uccisioni</ki>
+<cas>Pi&#249; infortuni</cas>
+<svic>Maggiore differenza di punteggio</svic>
+<inc>Maggiore reddito di squadra</inc>
+<gate>Maggiore affluenza</gate>
+<mfans>Pi&#249; tifosi/spettatori reali</mfans>
+<tvdiff>Maggiore differenza di valore squadra in cui l'outsider ha vinto</tvdiff>
+
+</it-IT>
 </translations>

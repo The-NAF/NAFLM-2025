@@ -4,6 +4,7 @@ ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 
 require_once('../settings.php');
+require_once('roll_auth_check.php');
 
 header('Content-Type: application/json');
 
@@ -557,19 +558,31 @@ class BloodBowlSkillRoller {
 // Main execution
 try {
     // Get and validate input
-    $playerId = isset($_POST['player_id']) ? $_POST['player_id'] : null;
+    $playerId = isset($_POST['player_id']) ? (int) $_POST['player_id'] : null; # Security: was never cast - spliced raw into SQL throughout this file (both quoted and unquoted) - SQLi.
     $skillType = isset($_POST['skill_type']) ? $_POST['skill_type'] : null;
     $skillCat = isset($_POST['skill_cat']) ? $_POST['skill_cat'] : null;
-    
+
     if (!$playerId || !$skillType || !$skillCat) {
         throw new Exception('Missing required parameters');
     }
-    
+
     // Validate skill category format (single uppercase letter)
     if (!preg_match('/^[ADGMPS]$/', $skillCat)) {
         throw new Exception('Invalid skill category format');
     }
-    
+
+    // Security: this endpoint bypasses header.php entirely, so it never got a login/ownership or
+    // CSRF check - any anonymous visitor could pre-seed/pollute a coach's pending skill roll.
+    $authConn = mysqli_connect($db_host, $db_user, $db_passwd, $db_name);
+    if (!$authConn) {
+        throw new Exception('Database connection failed');
+    }
+    $authOk = verifyRollRequest($authConn, $playerId);
+    mysqli_close($authConn);
+    if (!$authOk) {
+        exit;
+    }
+
     $roller = new BloodBowlSkillRoller($db_host, $db_user, $db_passwd, $db_name);
     // If a pending roll already exists for this player, return it unchanged
     $existing = $roller->getPendingRoll($playerId);

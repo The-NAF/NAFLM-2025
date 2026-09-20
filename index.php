@@ -26,20 +26,10 @@ if ($_VISSTATE['POST_IN'] = isset($_POST['login'])) {
     }
 }
 
-// Mobile?
-$isMobile = isset($_GET['mobile']) ? ($_GET['mobile'] == '1') : false;
-
 // Logout?
 if ($_VISSTATE['POST_OUT'] = isset($_GET['logout'])) {
     $_GET['section'] = 'main'; # Redirect logged out users to the main page.
     Coach::logout();
-}
-
-Mobile::setIsMobile($isMobile);
-
-if ($isMobile && !Coach::isLoggedIn()) {
-    // Redirect logged out mobile users to login
-    $_GET['section'] = 'login';
 }
 
 if ($_VISSTATE['COOKIE'] || $_VISSTATE['POST_IN'] || $_VISSTATE['POST_OUT']) {
@@ -47,45 +37,29 @@ if ($_VISSTATE['COOKIE'] || $_VISSTATE['POST_IN'] || $_VISSTATE['POST_OUT']) {
 }
 
 // Generate page
-if(Mobile::isMobile()) {
-	HTMLOUT::mobile_frame_begin(); # Make page frame, banner and menu.
-	MTS('Header loaded, login auth, html frame generated');
-	
-	// Check if a menu-link was picked, and execute section code from sections.php accordingly.
-	switch ($_GET['section'])
-	{
-		case 'login':       sec_login();                            break;
-		case 'matches':     Match_HTMLOUT::userSched();             break;
-		case 'management':	$teamId = Mobile_HTMLOUT::getSelectedTeamId();
-							Team_HTMLOUT::teamManagementBox($teamId);
-							break;
-		default:            Mobile_HTMLOUT::sec_mobile_main();
-	}
-} else {
-	HTMLOUT::frame_begin(); # Make page frame, banner and menu.
-	MTS('Header loaded, login auth, html frame generated');
-	
-	// Check if a menu-link was picked, and execute section code from sections.php accordingly.
-	switch ($_GET['section'])
-	{
-        case 'login':           	sec_login();            	break;
-        case 'admin':           	sec_admin();            	break;
-        case 'teamlist':        	sec_teamlist();         	break;
-        case 'coachlist':       	sec_coachlist();        	break;
-        case 'rules':           	sec_rules();            	break;
-        case 'about':           	sec_about();            	break;
-        case 'matches':         	sec_matcheshandler();   	break; // Tournaments, matches, match reports, recent matches, upcoming matches etc.
-        case 'objhandler':      	sec_objhandler();       	break; // Object profiles, object standings.
-        case 'requestleague':   	sec_requestleague();    	break;   
-        case 'stars':   			sec_stars();    			break; // List of all Star Players
-        case 'inducements':   		sec_inducements();    		break; // List of all Inducements
-        case 'ptn':   				sec_ptn();    				break; // Prayers to Nuffle
-        case 'desperatemeasures': 	sec_desperate_measures();	break; // Desperate Measures (Sevens)
-        case 'skills':   			sec_skills();    			break; // List of all skills and traits
-        case 'sequence':   			sec_sequence();    			break; // List of Pre and Post match sequence
-        case 'cheatsheet':   		sec_cheatsheet();    		break; // List of useful match tables
-        default:             		sec_main();
-	}
+HTMLOUT::frame_begin(); # Make page frame, banner and menu.
+MTS('Header loaded, login auth, html frame generated');
+
+// Check if a menu-link was picked, and execute section code from sections.php accordingly.
+switch ($_GET['section'])
+{
+    case 'login':           	sec_login();            	break;
+    case 'admin':           	sec_admin();            	break;
+    case 'teamlist':        	sec_teamlist();         	break;
+    case 'coachlist':       	sec_coachlist();        	break;
+    case 'rules':           	sec_rules();            	break;
+    case 'about':           	sec_about();            	break;
+    case 'matches':         	sec_matcheshandler();   	break; // Tournaments, matches, match reports, recent matches, upcoming matches etc.
+    case 'objhandler':      	sec_objhandler();       	break; // Object profiles, object standings.
+    case 'requestleague':   	sec_requestleague();    	break;
+    case 'stars':   			sec_stars();    			break; // List of all Star Players
+    case 'inducements':   		sec_inducements();    		break; // List of all Inducements
+    case 'ptn':   				sec_ptn();    				break; // Prayers to Nuffle
+    case 'desperatemeasures': 	sec_desperate_measures();	break; // Desperate Measures (Sevens)
+    case 'skills':   			sec_skills();    			break; // List of all skills and traits
+    case 'sequence':   			sec_sequence();    			break; // List of Pre and Post match sequence
+    case 'cheatsheet':   		sec_cheatsheet();    		break; // List of useful match tables
+    default:             		sec_main();
 }
 
 HTMLOUT::frame_end(); // Spit out all the end-tags.

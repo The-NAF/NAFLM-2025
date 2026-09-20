@@ -45,4 +45,73 @@
 <about><![CDATA[Los logros del equipo en detalle. ¿Se llevó algún premio? ¿Cúando ocurrió y cómo?]]></about>
 
 </es-ES>
+
+<fr-FR>
+
+<name>Équipes célèbres</name>
+
+<team>Équipe</team>
+<sort_hint>Astuce : cliquer dans la liste déroulante et appuyer sur une touche du clavier fait défiler la liste jusqu'au premier nom d'équipe commençant par cette lettre.</sort_hint>
+<submit>Valider</submit>
+<new>Nouvelle entrée</new>
+<edit>Éditer</edit>
+<del>Supprimer</del>
+<from>de</from>
+<posted>Posté</posted>
+<isfamous>Est célèbre</isfamous>
+
+<g_title>Titre</g_title>
+<g_about>Description générale</g_about>
+
+<desc><![CDATA[Bienvenue dans la liste des équipes célèbres.<br>Ici les commissaires de ligue peuvent mettre en avant des équipes devenues célèbres pour une raison ou une autre.]]></desc>
+<title><![CDATA[Une brève description de ce que l'équipe a accompli, pourquoi elle est célèbre, etc..]]></title>
+<about><![CDATA[Les exploits de l'équipe en détail. Y avait-il des récompenses en jeu ? Quand cela s'est-il produit et comment ?]]></about>
+
+</fr-FR>
+
+<de-DE>
+
+<name>Berühmte Teams</name>
+
+<team>Team</team>
+<sort_hint>Hinweis: Klicken Sie auf das Dropdown-Menü und drücken Sie einen beliebigen Buchstaben auf der Tastatur, um zum ersten Teamnamen zu springen, der mit diesem Buchstaben beginnt.</sort_hint>
+<submit>Absenden</submit>
+<new>Neuer Eintrag</new>
+<edit>Bearbeiten</edit>
+<del>Löschen</del>
+<from>von</from>
+<posted>Veröffentlicht</posted>
+<isfamous>Ist berühmt</isfamous>
+
+<g_title>Titel</g_title>
+<g_about>Allgemeine Beschreibung</g_about>
+
+<desc><![CDATA[Willkommen bei den berühmten Teams.<br>Hier können Liga-Verantwortliche Teams hervorheben, die aus irgendeinem Grund berühmt geworden sind.]]></desc>
+<title><![CDATA[Eine kurze Beschreibung dessen, was das Team erreicht hat, warum es berühmt ist usw..]]></title>
+<about><![CDATA[Über die Erfolge des Teams im Detail. Gab es dabei Preise? Wann geschah dies und wie?]]></about>
+
+</de-DE>
+
+<it-IT>
+
+<name>Squadre famose</name>
+
+<team>Squadra</team>
+<sort_hint>Suggerimento: fare clic sul menu a tendina e premere una lettera qualsiasi sulla tastiera per scorrere fino al primo nome di squadra che inizia con quella lettera.</sort_hint>
+<submit>Invia</submit>
+<new>Nuova voce</new>
+<edit>Modifica</edit>
+<del>Elimina</del>
+<from>da</from>
+<posted>Pubblicato</posted>
+<isfamous>È famosa</isfamous>
+
+<g_title>Titolo</g_title>
+<g_about>Descrizione generale</g_about>
+
+<desc><![CDATA[Benvenuti nell'elenco delle squadre famose.<br>Qui i commissari di lega possono mettere in evidenza le squadre diventate famose per qualsiasi motivo.]]></desc>
+<title><![CDATA[Una breve descrizione di ciò che la squadra ha ottenuto, perché è famosa, ecc..]]></title>
+<about><![CDATA[I risultati della squadra in dettaglio. C'erano premi in palio? Quando è successo e come?]]></about>
+
+</it-IT>
 </translations>

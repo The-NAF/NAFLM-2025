@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
+<translations>
+
 <en-GB>
 
 <name>League Preferences Administration</name>
@@ -130,3 +133,393 @@ Entering 0 points for all three will hide the Additonal League points calculator
 <discord_perms_admins>Admins only</discord_perms_admins>
 
 </en-GB>
+
+<es-ES>
+
+<name>Administración de Preferencias de Liga</name>
+<menu-lge>Preferencias de Liga</menu-lge>
+<help>Usando las preferencias de liga, los administradores de liga y globales pueden cambiar algunos de los ajustes de una liga sin modificar los archivos PHP.</help>
+<lname>Liga</lname>
+<prime_title>&lt;b&gt;Torneo Principal&lt;/b&gt;</prime_title>
+<prime_help>El torneo principal se utiliza para la clasificación de liga de la página principal</prime_help>
+<second_title>&lt;b&gt;Torneo Secundario&lt;/b&gt;</second_title>
+<second_help>El torneo secundario se utiliza para las estadísticas de rendimiento de jugadores en la página principal</second_help>
+<league_name_title>&lt;b&gt;Nombre de la Liga&lt;/b&gt;</league_name_title>
+<league_name_help>Nombre de tu liga</league_name_help>
+<forum_url_title>&lt;b&gt;URL del Foro&lt;/b&gt;</forum_url_title>
+<forum_url_help>El enlace a usar en el botón de Foro del menú principal. Déjalo en blanco para no tener foro.</forum_url_help>
+<welcome_title>&lt;b&gt;Mensaje de Bienvenida&lt;/b&gt;</welcome_title>
+<welcome_help>Mensaje que aparecerá en la parte superior de la página de inicio. Puede contener HTML.</welcome_help>
+<rules_title>&lt;b&gt;Reglas de la Liga&lt;/b&gt;</rules_title>
+<rules_help>Las reglas a mostrar en el menú de Reglas. Puede contener HTML.</rules_help>
+<submit_text>Guardar</submit_text>
+<submit_title>Actualizar las preferencias de esta liga</submit_title>
+<failedSave>No se han podido guardar las preferencias</failedSave>
+<failedValidate>¡Vaya! El módulo de administración de liga ha fallado la comprobación ptid!=stid. ¡Por favor, avisa a tu administrador!</failedValidate>
+<failedSave>Lo sentimos, no tienes permiso para actualizar esta liga</failedSave>
+<saved>Actualizado</saved>
+<css_title>&lt;b&gt;CSS de la Liga&lt;/b&gt;&lt;br/&gt; &lt;i&gt;(ten cuidado si no sabes CSS)&lt;/i&gt;&lt;br/&gt;Puede que necesites borrar la caché tras editar.</css_title>
+<css_help>Puedes personalizar el aspecto de tu Liga, ¡pero necesitas saber CSS!</css_help>
+<core_theme_title>&lt;b&gt;Tema Base&lt;/b&gt;</core_theme_title>
+<core_theme_help>Estos son temas prediseñados que puedes usar, o a partir de los cuales construir usando el CSS de Liga de abajo.</core_theme_help>
+<tv_title>&lt;b&gt;Tesorería Inicial&lt;/b&gt;</tv_title>
+<tv_help>Normalmente se establece en 1000000, pero puedes elegir otros valores.</tv_help>
+<tv_sevens_title>&lt;b&gt;Tesorería Inicial de Sevens&lt;/b&gt;</tv_sevens_title>
+<tv_sevens_help>Normalmente se establece en 600000, pero puedes elegir otros valores.</tv_sevens_help>
+<min_tv_title>&lt;br/&gt;&lt;b&gt;Valor de Equipo Mínimo&lt;/b&gt;</min_tv_title>
+<min_tv_help>Establece un Valor de Equipo (VE) mínimo que todos los equipos deben mantener. Esto evita que los equipos (especialmente los equipos stunty) mantengan su VE artificialmente bajo para obtener incentivos de oponentes con mayor VE. Pon 0 para no tener mínimo. Los equipos por debajo de este valor tendrán restringidas ciertas acciones, como despedir jugadores.</min_tv_help>
+<language_title>&lt;b&gt;Idioma&lt;/b&gt;</language_title>
+<language_help>El idioma por defecto de tu liga.</language_help>
+<teams_legend_title>&lt;b&gt;Equipos de Leyenda/Plantillas Opcionales&lt;/b&gt;&lt;br/&gt; Desactiva plantillas antiguas de la página de creación de equipos.&lt;br/&gt;&lt;i&gt;(no afecta a los equipos ya creados)&lt;/i&gt;</teams_legend_title>
+<teams_legend_help>Marca la casilla de un equipo para desactivar que dicho equipo esté disponible en la página de creación de equipos: Casilla marcada = Desactivado.</teams_legend_help>
+<teams_legend_helf>Alto Elfo (Equipos de Leyenda) Desactivado</teams_legend_helf>
+<teams_legend_slann>Slann (Plantilla NAF opcional) Desactivado</teams_legend_slann>
+<dungeonbowl_title>&lt;br/&gt;&lt;b&gt;Plantillas de Equipo de Dungeon Bowl&lt;/b&gt;&lt;br/&gt; Desactiva las plantillas de equipo de Dungeon Bowl de la página de creación de equipos.&lt;br/&gt;&lt;i&gt;(no afecta a los equipos ya creados)&lt;/i&gt;</dungeonbowl_title>
+<dungeonbowl_help>Marca la casilla para desactivar que los equipos de Dungeon Bowl estén disponibles en la página de creación de equipos: Casilla marcada = Desactivado.</dungeonbowl_help>
+<dungeonbowl>Equipos de Dungeon Bowl</dungeonbowl>
+<disable_match_autolock_title>&lt;br/&gt;&lt;b&gt;Desactivar Bloqueo Automático de Partidos Antiguos&lt;/b&gt;&lt;br/&gt; Activa o desactiva si guardar un informe de partido bloquea automáticamente los informes de partidos anteriores de ese equipo.&lt;/i&gt;</disable_match_autolock_title>
+<disable_match_autolock_help>Por defecto, al guardar un informe de partido, cualquier informe de partido anterior se bloqueará automáticamente; marcar esta casilla desactiva esta función: Casilla marcada = Desactivado.</disable_match_autolock_help>
+<disable_match_autolock>Desactivar Bloqueo Automático de Partidos Antiguos</disable_match_autolock>
+<sevens_title>&lt;br/&gt;&lt;b&gt;Plantillas de Equipo de Sevens&lt;/b&gt;&lt;br/&gt; Desactiva las plantillas de equipo de Sevens de la página de creación de equipos.&lt;br/&gt;&lt;i&gt;(no afecta a los equipos ya creados)&lt;/i&gt;</sevens_title>
+<sevens_help>Marca la casilla para desactivar que los equipos de Sevens estén disponibles en la página de creación de equipos: Casilla marcada = Desactivado.</sevens_help>
+<sevens>Equipos de Sevens</sevens>
+<fireunder11_title>&lt;br/&gt;&lt;b&gt;Despedir por Debajo de 11 Jugadores&lt;/b&gt;&lt;br/&gt; Permite despedir jugadores hasta dejar el equipo por debajo de 11.&lt;/i&gt;</fireunder11_title>
+<fireunder11_help>Marca la casilla para permitir que los entrenadores puedan despedir jugadores que dejarían al equipo por debajo de 11 jugadores (normalmente esto no debería permitirse): Casilla marcada = Permitido.</fireunder11_help>
+<fireunder11>Despido por Debajo de 11 Jugadores Permitido</fireunder11>
+<enforce_hire_fire_order_title>&lt;br/&gt;&lt;b&gt;Forzar Orden de Contratación-Despido&lt;/b&gt;&lt;br/&gt; Activa o desactiva si se debe forzar el orden de contratación-despido tras el partido.&lt;/i&gt;</enforce_hire_fire_order_title>
+<enforce_hire_fire_order_help>Marca la casilla para forzar el orden de contratación-despido tras el partido (los jugadores deben ser contratados primero, antes de poder despedir a ninguno): Casilla marcada = Activado.</enforce_hire_fire_order_help>
+<enforce_hire_fire_order>Forzar Orden de Contratación-Despido</enforce_hire_fire_order>
+<randomskillrolls_title>&lt;br/&gt;&lt;b&gt;Generador Automático de Habilidades Aleatorias&lt;/b&gt;&lt;br/&gt; Desactiva la opción de Habilidad Aleatoria Automática del Panel de Gestión de Equipo.&lt;br/&gt;&lt;i&gt;(no desactives esto a menos que actives la Entrada Manual de Habilidad Aleatoria de abajo)&lt;/i&gt;</randomskillrolls_title>
+<randomskillrolls_help>Marca la casilla para desactivar que las Habilidades Aleatorias Automáticas estén disponibles en el Panel de Gestión de Equipo, en cuyo caso solo se permitirá la Entrada Manual de Habilidad Aleatoria: Casilla marcada = Desactivado.</randomskillrolls_help>
+<randomskillrolls>Habilidades Aleatorias Automáticas Desactivadas</randomskillrolls>
+<randomstatrolls_title>&lt;br/&gt;&lt;b&gt;Generador Automático de Característica Aleatoria&lt;/b&gt;&lt;br/&gt; Desactiva la opción de Característica Aleatoria Automática del Panel de Gestión de Equipo.&lt;br/&gt;&lt;i&gt;(no desactives esto a menos que actives la Entrada Manual de Habilidad Aleatoria de abajo)&lt;/i&gt;</randomstatrolls_title>
+<randomstatrolls_help>Marca la casilla para desactivar que los Incrementos Automáticos de Característica Aleatoria estén disponibles en el Panel de Gestión de Equipo, en cuyo caso solo se permitirá la Entrada Manual de Característica Aleatoria: Casilla marcada = Desactivado.</randomstatrolls_help>
+<randomstatrolls>Característica Aleatoria Automática Desactivada</randomstatrolls>
+<randomskillmanualentry_title>&lt;br/&gt;&lt;b&gt;Entrada Manual de Habilidad Aleatoria&lt;/b&gt;&lt;br/&gt; Desactiva la Entrada Manual de Habilidad Aleatoria de la página de Plantilla/Equipo.&lt;br/&gt;&lt;i&gt;(no desactives esto a menos que actives las Tiradas Automáticas de Habilidad Aleatoria de arriba)&lt;/i&gt;</randomskillmanualentry_title>
+<randomskillmanualentry_help>Marca la casilla para desactivar que la Entrada Manual de Habilidad Aleatoria esté disponible en la página de Plantilla/Equipo, en cuyo caso solo se permitirá la generación Automática de Habilidad Aleatoria: Casilla marcada = Desactivado.</randomskillmanualentry_help>
+<randomskillmanualentry>Entrada Manual de Habilidad Aleatoria Desactivada</randomskillmanualentry>
+<bonuspoints_title>&lt;br/&gt;&lt;b&gt;Puntos de Liga Adicionales&lt;/b&gt;&lt;br/&gt; Define qué puntos de bonificación usar. Se añadirán automáticamente según estas reglas.&lt;br/&gt;&lt;i&gt;(debe usarse junto con un Sistema de Clasificación en el Gestor de Torneos que incluya [bonus])&lt;/i&gt;</bonuspoints_title>
+<bonuspoints_help>Define cuántos puntos de bonificación se otorgan por Victorias Importantes, Palizas Importantes y Porterías a Cero.
+Si introduces 0 puntos en los tres campos, se ocultará la calculadora de Puntos de Liga Adicionales en el Informe de Partido.</bonuspoints_help>
+<major_win_tds>TDs para Victoria Importante = ¿Cuántos TDs se necesitan para una Victoria Importante? Indica aquí el número de TDs, normalmente 3.</major_win_tds>
+<major_win_pts>Puntos por Victoria Importante = Puntos de bonificación obtenidos por una Victoria Importante, normalmente 1. Introduce 0 para ocultarlo en el informe de partido.</major_win_pts>
+<clean_sheet_pts>Puntos por Portería a Cero = Puntos de bonificación por no encajar TDs (portería a cero), normalmente 1. Introduce 0 para ocultarlo en el informe de partido.</clean_sheet_pts>
+<major_beat_cas>Bajas para Paliza Importante = ¿Cuántas BAJ se necesitan para una Paliza Importante? Indica aquí el número de BAJ, normalmente 3.</major_beat_cas>
+<major_beat_pts>Puntos por Paliza Importante = Puntos de bonificación obtenidos por una Paliza Importante, normalmente 1. Introduce 0 para ocultarlo en el informe de partido.</major_beat_pts>
+<base_inducements_title>&lt;br/&gt;&lt;b&gt;Solo Incentivos Base&lt;/b&gt;&lt;br/&gt; Desactiva los incentivos que no están en el reglamento principal.&lt;/i&gt;</base_inducements_title>
+<base_inducements_help>Marca la casilla para desactivar la disponibilidad de incentivos de fuentes distintas a las reglas principales: Casilla marcada = Desactivado.</base_inducements_help>
+<base_inducements>Solo Incentivos Base</base_inducements>
+<prayer_cost_title>&lt;br/&gt;&lt;b&gt;Anulación de Coste de Plegarias a Nuffle&lt;/b&gt;&lt;br/&gt; Modifica el coste del incentivo Plegarias a Nuffle.&lt;/i&gt;</prayer_cost_title>
+<prayer_cost_help>Establece un coste personalizado para el incentivo Plegarias a Nuffle en esta liga. Pon 0 para usar el coste estándar de los datos del juego (normalmente 10.000). Esto te permite equilibrar el coste si te parece demasiado barato o caro para tu liga.</prayer_cost_help>
+<prayer_cost_note>(0 = usar coste estándar)</prayer_cost_note>
+<megastars_title>&lt;br/&gt;&lt;b&gt;Mega-Estrellas&lt;/b&gt;&lt;br/&gt; Desactiva las Mega-Estrellas de los incentivos.&lt;br/&gt;&lt;i&gt;(consulta las últimas FAQ para ver qué Jugadores Estrella se clasifican como Mega-Estrellas)&lt;/i&gt;</megastars_title>
+<megastars_help>Marca la casilla para desactivar que las Mega-Estrellas estén disponibles como incentivos: Casilla marcada = Desactivado.</megastars_help>
+<megastars>Mega-Estrellas Desactivadas</megastars>
+<megastar_tax_title>&lt;br/&gt;&lt;b&gt;Impuesto de Mega-Estrella&lt;/b&gt;&lt;br/&gt;Establece un coste adicional (tarifa fija en oro) a añadir a todos los costes de contratación de Mega-Estrellas.</megastar_tax_title>
+<megastar_tax_help>Establece un coste adicional (tarifa fija en oro) a añadir a todos los costes de contratación de Mega-Estrellas. Esto se añade al coste estándar de los jugadores Mega-Estrella. Pon 0 para no aplicar impuesto adicional. Ejemplo: Poner esto a 50000 añadiría 50k de oro al coste de cada Mega-Estrella.</megastar_tax_help>
+<megastar_tax_note>(tarifa fija añadida al coste de Mega-Estrellas)</megastar_tax_note>
+<banned_stars_title>&lt;br/&gt;&lt;b&gt;Jugadores Estrella Prohibidos&lt;/b&gt;&lt;br/&gt;Selecciona qué Jugadores Estrella no estarán disponibles para contratar en esta liga.&lt;br/&gt;Esto te permite prohibir estrellas específicas que sean demasiado poderosas o no encajen con el estilo de juego de tu liga, sean o no Mega-Estrellas.</banned_stars_title>
+<banned_stars_help>Selecciona qué Jugadores Estrella no estarán disponibles para contratar en esta liga. Esto te permite prohibir estrellas específicas que sean demasiado poderosas o no encajen con el estilo de juego de tu liga, sean o no Mega-Estrellas.</banned_stars_help>
+<banned_stars_note>Mantén pulsado Ctrl (Windows) o Cmd (Mac) para seleccionar varias estrellas</banned_stars_note>
+<discord_url_title>&lt;br/&gt;&lt;b&gt;URL de Webhook de Discord&lt;/b&gt;&lt;br/&gt; URL de webhook de Discord para publicar resultados de partidos.&lt;/i&gt;</discord_url_title>
+<discord_url_help>Introduce aquí la URL de un webhook de canal de Discord para activar la publicación de resultados de partidos en Discord; déjalo en blanco para desactivar esta opción.</discord_url_help>
+<discord_url_note>(déjalo en blanco para desactivar la publicación en Discord)</discord_url_note>
+<discord_perms_title>&lt;br/&gt;&lt;b&gt;Permiso de Publicación en Discord&lt;/b&gt;&lt;br/&gt; Quién puede activar una publicación en Discord desde el informe de partido.&lt;/i&gt;</discord_perms_title>
+<discord_perms_help>Si la publicación de resultados en Discord está activada arriba, esto determinará quién puede enviar los resultados de los partidos.</discord_perms_help>
+<discord_perms_coaches>Administradores y entrenadores implicados</discord_perms_coaches>
+<discord_perms_admins>Solo administradores</discord_perms_admins>
+
+</es-ES>
+
+<fr-FR>
+
+<name>Administration des Préférences de Ligue</name>
+<menu-lge>Préférences de Ligue</menu-lge>
+<help>Grâce aux préférences de ligue, les administrateurs de ligue et globaux peuvent modifier certains paramètres d'une ligue sans modifier les fichiers PHP.</help>
+<lname>Ligue</lname>
+<prime_title>&lt;b&gt;Tournoi Principal&lt;/b&gt;</prime_title>
+<prime_help>Le tournoi principal est utilisé pour le classement de ligue sur la page d'accueil</prime_help>
+<second_title>&lt;b&gt;Tournoi Secondaire&lt;/b&gt;</second_title>
+<second_help>Le tournoi secondaire est utilisé pour les statistiques de performance des joueurs sur la page d'accueil</second_help>
+<league_name_title>&lt;b&gt;Nom de la Ligue&lt;/b&gt;</league_name_title>
+<league_name_help>Le nom de votre ligue</league_name_help>
+<forum_url_title>&lt;b&gt;URL du Forum&lt;/b&gt;</forum_url_title>
+<forum_url_help>Le lien à utiliser pour le bouton Forum du menu principal. Laissez vide pour ne pas avoir de forum.</forum_url_help>
+<welcome_title>&lt;b&gt;Message de Bienvenue&lt;/b&gt;</welcome_title>
+<welcome_help>Message affiché en haut de la page d'accueil. Peut contenir du HTML.</welcome_help>
+<rules_title>&lt;b&gt;Règles de la Ligue&lt;/b&gt;</rules_title>
+<rules_help>Les règles à afficher dans le menu Règles. Peut contenir du HTML.</rules_help>
+<submit_text>Enregistrer</submit_text>
+<submit_title>Mettre à jour les préférences de cette ligue</submit_title>
+<failedSave>Impossible d'enregistrer les préférences</failedSave>
+<failedValidate>Oh non ! Le module d'administration de ligue a échoué la vérification ptid!=stid. Merci d'alerter votre administrateur !</failedValidate>
+<failedSave>Désolé, vous n'avez pas la permission de mettre à jour cette ligue</failedSave>
+<saved>Mis à jour</saved>
+<css_title>&lt;b&gt;CSS de la Ligue&lt;/b&gt;&lt;br/&gt; &lt;i&gt;(soyez prudent si vous ne connaissez pas le CSS)&lt;/i&gt;&lt;br/&gt;Vous devrez peut-être vider le cache après modification.</css_title>
+<css_help>Vous pouvez personnaliser le thème de votre Ligue, mais vous devez connaître le CSS !</css_help>
+<core_theme_title>&lt;b&gt;Thème de Base&lt;/b&gt;</core_theme_title>
+<core_theme_help>Voici des thèmes préconstruits que vous pouvez utiliser, ou à partir desquels partir en utilisant le CSS de Ligue ci-dessous.</core_theme_help>
+<tv_title>&lt;b&gt;Trésorerie Initiale&lt;/b&gt;</tv_title>
+<tv_help>Généralement fixé à 1000000, mais vous pouvez choisir d'autres valeurs.</tv_help>
+<tv_sevens_title>&lt;b&gt;Trésorerie Initiale Sevens&lt;/b&gt;</tv_sevens_title>
+<tv_sevens_help>Généralement fixé à 600000, mais vous pouvez choisir d'autres valeurs.</tv_sevens_help>
+<min_tv_title>&lt;br/&gt;&lt;b&gt;Valeur d'Équipe Minimale&lt;/b&gt;</min_tv_title>
+<min_tv_help>Définissez une Valeur d'Équipe (VE) minimale que toutes les équipes doivent maintenir. Cela empêche les équipes (en particulier les équipes stunty) de maintenir artificiellement leur VE basse pour récolter des primes auprès d'adversaires avec une VE plus élevée. Fixez à 0 pour aucun minimum. Les équipes en dessous de cette valeur se verront restreindre certaines actions comme le licenciement de joueurs.</min_tv_help>
+<language_title>&lt;b&gt;Langue&lt;/b&gt;</language_title>
+<language_help>La langue par défaut de votre ligue.</language_help>
+<teams_legend_title>&lt;b&gt;Équipes de Légende/Effectifs Optionnels&lt;/b&gt;&lt;br/&gt; Désactiver les anciens effectifs de la page de création d'équipe.&lt;br/&gt;&lt;i&gt;(n'affecte pas les équipes déjà créées)&lt;/i&gt;</teams_legend_title>
+<teams_legend_help>Cochez la case d'une équipe pour la désactiver de la page de création d'équipe : Case cochée = Désactivée.</teams_legend_help>
+<teams_legend_helf>Haut Elfe (Équipes de Légende) Désactivé</teams_legend_helf>
+<teams_legend_slann>Slann (Effectif NAF optionnel) Désactivé</teams_legend_slann>
+<dungeonbowl_title>&lt;br/&gt;&lt;b&gt;Effectifs d'Équipe Dungeon Bowl&lt;/b&gt;&lt;br/&gt; Désactiver les effectifs d'équipe Dungeon Bowl de la page de création d'équipe.&lt;br/&gt;&lt;i&gt;(n'affecte pas les équipes déjà créées)&lt;/i&gt;</dungeonbowl_title>
+<dungeonbowl_help>Cochez la case pour désactiver la disponibilité des équipes Dungeon Bowl sur la page de création d'équipe : Case cochée = Désactivée.</dungeonbowl_help>
+<dungeonbowl>Équipes Dungeon Bowl</dungeonbowl>
+<disable_match_autolock_title>&lt;br/&gt;&lt;b&gt;Désactiver le Verrouillage Automatique des Anciens Matchs&lt;/b&gt;&lt;br/&gt; Active ou désactive le verrouillage automatique des rapports de match précédents lors de l'enregistrement d'un rapport de match.&lt;/i&gt;</disable_match_autolock_title>
+<disable_match_autolock_help>Par défaut, lors de l'enregistrement d'un rapport de match, tout rapport de match précédent sera automatiquement verrouillé ; cocher cette case désactive cette fonctionnalité : Case cochée = Désactivée.</disable_match_autolock_help>
+<disable_match_autolock>Désactiver le Verrouillage Automatique des Anciens Matchs</disable_match_autolock>
+<sevens_title>&lt;br/&gt;&lt;b&gt;Effectifs d'Équipe Sevens&lt;/b&gt;&lt;br/&gt; Désactiver les effectifs d'équipe Sevens de la page de création d'équipe.&lt;br/&gt;&lt;i&gt;(n'affecte pas les équipes déjà créées)&lt;/i&gt;</sevens_title>
+<sevens_help>Cochez la case pour désactiver la disponibilité des équipes Sevens sur la page de création d'équipe : Case cochée = Désactivée.</sevens_help>
+<sevens>Équipes Sevens</sevens>
+<fireunder11_title>&lt;br/&gt;&lt;b&gt;Licencier en Dessous de 11 Joueurs&lt;/b&gt;&lt;br/&gt; Autoriser le licenciement de joueurs en dessous de 11 dans une équipe.&lt;/i&gt;</fireunder11_title>
+<fireunder11_help>Cochez la case pour permettre aux coachs de licencier des joueurs qui feraient passer l'équipe sous les 11 joueurs (normalement non autorisé) : Case cochée = Autorisé.</fireunder11_help>
+<fireunder11>Licenciement en Dessous de 11 Joueurs Autorisé</fireunder11>
+<enforce_hire_fire_order_title>&lt;br/&gt;&lt;b&gt;Imposer l'Ordre Embauche-Licenciement&lt;/b&gt;&lt;br/&gt; Active ou désactive l'application de l'ordre embauche-licenciement après match.&lt;/i&gt;</enforce_hire_fire_order_title>
+<enforce_hire_fire_order_help>Cochez la case pour imposer l'ordre embauche-licenciement après match (les joueurs doivent d'abord être embauchés avant que l'on puisse en licencier) : Case cochée = Activée.</enforce_hire_fire_order_help>
+<enforce_hire_fire_order>Imposer l'Ordre Embauche-Licenciement</enforce_hire_fire_order>
+<randomskillrolls_title>&lt;br/&gt;&lt;b&gt;Générateur Automatique de Compétences Aléatoires&lt;/b&gt;&lt;br/&gt; Désactive l'option de Compétence Aléatoire Automatique du Panneau de Gestion d'Équipe.&lt;br/&gt;&lt;i&gt;(ne désactivez pas ceci sauf si vous activez la Saisie Manuelle de Compétence Aléatoire ci-dessous)&lt;/i&gt;</randomskillrolls_title>
+<randomskillrolls_help>Cochez la case pour désactiver la disponibilité des Compétences Aléatoires Automatiques dans le Panneau de Gestion d'Équipe, auquel cas seule la Saisie Manuelle de Compétence Aléatoire sera autorisée : Case cochée = Désactivée.</randomskillrolls_help>
+<randomskillrolls>Compétences Aléatoires Automatiques Désactivées</randomskillrolls>
+<randomstatrolls_title>&lt;br/&gt;&lt;b&gt;Générateur Automatique de Caractéristique Aléatoire&lt;/b&gt;&lt;br/&gt; Désactive l'option de Caractéristique Aléatoire Automatique du Panneau de Gestion d'Équipe.&lt;br/&gt;&lt;i&gt;(ne désactivez pas ceci sauf si vous activez la Saisie Manuelle de Compétence Aléatoire ci-dessous)&lt;/i&gt;</randomstatrolls_title>
+<randomstatrolls_help>Cochez la case pour désactiver la disponibilité des Augmentations Automatiques de Caractéristique Aléatoire dans le Panneau de Gestion d'Équipe, auquel cas seule la Saisie Manuelle de Caractéristique Aléatoire sera autorisée : Case cochée = Désactivée.</randomstatrolls_help>
+<randomstatrolls>Caractéristique Aléatoire Automatique Désactivée</randomstatrolls>
+<randomskillmanualentry_title>&lt;br/&gt;&lt;b&gt;Saisie Manuelle de Compétence Aléatoire&lt;/b&gt;&lt;br/&gt; Désactive la Saisie Manuelle de Compétence Aléatoire depuis la page Effectif/Équipe.&lt;br/&gt;&lt;i&gt;(ne désactivez pas ceci sauf si vous activez les Tirages Automatiques de Compétence Aléatoire ci-dessus)&lt;/i&gt;</randomskillmanualentry_title>
+<randomskillmanualentry_help>Cochez la case pour désactiver la disponibilité de la Saisie Manuelle de Compétence Aléatoire sur la page Effectif/Équipe, auquel cas seule la génération Automatique de Compétence Aléatoire sera autorisée : Case cochée = Désactivée.</randomskillmanualentry_help>
+<randomskillmanualentry>Saisie Manuelle de Compétence Aléatoire Désactivée</randomskillmanualentry>
+<bonuspoints_title>&lt;br/&gt;&lt;b&gt;Points de Ligue Supplémentaires&lt;/b&gt;&lt;br/&gt; Définissez quels points bonus utiliser. Ils seront ajoutés automatiquement selon ces règles.&lt;br/&gt;&lt;i&gt;(doit être utilisé avec un Système de Classement du Gestionnaire de Tournoi incluant [bonus])&lt;/i&gt;</bonuspoints_title>
+<bonuspoints_help>Définissez combien de points bonus attribuer pour les Victoires Majeures, les Raclées Majeures et les Clean Sheets.
+Saisir 0 point pour les trois masquera le calculateur de Points de Ligue Supplémentaires sur le Rapport de Match.</bonuspoints_help>
+<major_win_tds>TD pour Victoire Majeure = Une Victoire Majeure correspond à combien de TD marqués ? Indiquez ici le nombre de TD, généralement 3.</major_win_tds>
+<major_win_pts>Points de Victoire Majeure = Points bonus obtenus pour une Victoire Majeure, généralement 1. Saisissez 0 pour masquer sur le rapport de match.</major_win_pts>
+<clean_sheet_pts>Points de Clean Sheet = Points bonus pour ne pas avoir encaissé de TD (clean sheet), généralement 1. Saisissez 0 pour masquer sur le rapport de match.</clean_sheet_pts>
+<major_beat_cas>Sorties pour Raclée Majeure = Une Raclée Majeure correspond à combien de sorties infligées ? Indiquez ici le nombre de sorties, généralement 3.</major_beat_cas>
+<major_beat_pts>Points de Raclée Majeure = Points bonus obtenus pour une Raclée Majeure, généralement 1. Saisissez 0 pour masquer sur le rapport de match.</major_beat_pts>
+<base_inducements_title>&lt;br/&gt;&lt;b&gt;Primes de Base Uniquement&lt;/b&gt;&lt;br/&gt; Désactive les primes ne figurant pas dans le livre de règles principal.&lt;/i&gt;</base_inducements_title>
+<base_inducements_help>Cochez la case pour désactiver la disponibilité des primes provenant de sources autres que les règles principales : Case cochée = Désactivée.</base_inducements_help>
+<base_inducements>Primes de Base Uniquement</base_inducements>
+<prayer_cost_title>&lt;br/&gt;&lt;b&gt;Coût Personnalisé des Prières à Nuffle&lt;/b&gt;&lt;br/&gt; Modifie le coût de la prime Prières à Nuffle.&lt;/i&gt;</prayer_cost_title>
+<prayer_cost_help>Définissez un coût personnalisé pour la prime Prières à Nuffle dans cette ligue. Mettez 0 pour utiliser le coût standard des données du jeu (généralement 10 000). Cela vous permet d'équilibrer le coût si vous le trouvez trop bon marché ou trop cher pour votre ligue.</prayer_cost_help>
+<prayer_cost_note>(0 = utiliser le coût standard)</prayer_cost_note>
+<megastars_title>&lt;br/&gt;&lt;b&gt;Méga-Stars&lt;/b&gt;&lt;br/&gt; Désactive les Méga-Stars des primes.&lt;br/&gt;&lt;i&gt;(voir la dernière FAQ pour la liste des Joueurs Vedettes classés Méga-Stars)&lt;/i&gt;</megastars_title>
+<megastars_help>Cochez la case pour désactiver la disponibilité des Méga-Stars parmi les primes : Case cochée = Désactivée.</megastars_help>
+<megastars>Méga-Stars Désactivées</megastars>
+<megastar_tax_title>&lt;br/&gt;&lt;b&gt;Taxe Méga-Star&lt;/b&gt;&lt;br/&gt;Définissez un coût supplémentaire (frais fixes en or) à ajouter à tous les coûts d'embauche de Méga-Stars.</megastar_tax_title>
+<megastar_tax_help>Définissez un coût supplémentaire (frais fixes en or) à ajouter à tous les coûts d'embauche de Méga-Stars. Ceci s'ajoute au coût standard des joueurs Méga-Star. Mettez 0 pour aucune taxe supplémentaire. Exemple : régler ceci sur 50000 ajouterait 50k d'or au coût de chaque Méga-Star.</megastar_tax_help>
+<megastar_tax_note>(frais fixes ajoutés au coût des Méga-Stars)</megastar_tax_note>
+<banned_stars_title>&lt;br/&gt;&lt;b&gt;Joueurs Vedettes Interdits&lt;/b&gt;&lt;br/&gt;Sélectionnez quels Joueurs Vedettes ne devraient pas être disponibles à l'embauche dans cette ligue.&lt;br/&gt;Cela vous permet d'interdire des stars spécifiques trop puissantes ou ne correspondant pas au style de jeu de votre ligue, qu'elles soient Méga-Stars ou non.</banned_stars_title>
+<banned_stars_help>Sélectionnez quels Joueurs Vedettes ne devraient pas être disponibles à l'embauche dans cette ligue. Cela vous permet d'interdire des stars spécifiques trop puissantes ou ne correspondant pas au style de jeu de votre ligue, qu'elles soient Méga-Stars ou non.</banned_stars_help>
+<banned_stars_note>Maintenez Ctrl (Windows) ou Cmd (Mac) pour sélectionner plusieurs stars</banned_stars_note>
+<discord_url_title>&lt;br/&gt;&lt;b&gt;URL Webhook Discord&lt;/b&gt;&lt;br/&gt; URL du webhook Discord pour publier les résultats de match.&lt;/i&gt;</discord_url_title>
+<discord_url_help>Saisissez ici l'URL d'un webhook de salon Discord pour activer la publication des résultats de match sur Discord ; laissez vide pour désactiver cette option.</discord_url_help>
+<discord_url_note>(laissez vide pour désactiver la publication Discord)</discord_url_note>
+<discord_perms_title>&lt;br/&gt;&lt;b&gt;Permission de Publication Discord&lt;/b&gt;&lt;br/&gt; Qui peut déclencher une publication Discord depuis le rapport de match.&lt;/i&gt;</discord_perms_title>
+<discord_perms_help>Si la publication des résultats sur Discord est activée ci-dessus, ceci déterminera qui peut soumettre les résultats de match.</discord_perms_help>
+<discord_perms_coaches>Administrateurs et coachs impliqués</discord_perms_coaches>
+<discord_perms_admins>Administrateurs uniquement</discord_perms_admins>
+
+</fr-FR>
+
+<de-DE>
+
+<name>Verwaltung der Liga-Einstellungen</name>
+<menu-lge>Liga-Einstellungen</menu-lge>
+<help>Mit den Liga-Einstellungen können Liga- und globale Administratoren einige Einstellungen einer Liga ändern, ohne die PHP-Dateien zu bearbeiten.</help>
+<lname>Liga</lname>
+<prime_title>&lt;b&gt;Primärturnier&lt;/b&gt;</prime_title>
+<prime_help>Das Primärturnier wird für die Ligatabelle auf der Startseite verwendet</prime_help>
+<second_title>&lt;b&gt;Sekundärturnier&lt;/b&gt;</second_title>
+<second_help>Das Sekundärturnier wird für die Spieler-Leistungsstatistiken auf der Startseite verwendet</second_help>
+<league_name_title>&lt;b&gt;Liganame&lt;/b&gt;</league_name_title>
+<league_name_help>Name Ihrer Liga</league_name_help>
+<forum_url_title>&lt;b&gt;Forum-URL&lt;/b&gt;</forum_url_title>
+<forum_url_help>Der Link für die Forum-Schaltfläche im Hauptmenü. Leer lassen, um kein Forum zu haben.</forum_url_help>
+<welcome_title>&lt;b&gt;Willkommensnachricht&lt;/b&gt;</welcome_title>
+<welcome_help>Nachricht, die oben auf der Startseite erscheint. Kann HTML enthalten.</welcome_help>
+<rules_title>&lt;b&gt;Liga-Regeln&lt;/b&gt;</rules_title>
+<rules_help>Die Regeln, die im Regeln-Menü angezeigt werden. Kann HTML enthalten.</rules_help>
+<submit_text>Speichern</submit_text>
+<submit_title>Einstellungen dieser Liga aktualisieren</submit_title>
+<failedSave>Einstellungen konnten nicht gespeichert werden</failedSave>
+<failedValidate>Oh nein! Das Liga-Verwaltungsmodul hat die ptid!=stid-Prüfung nicht bestanden. Bitte benachrichtigen Sie Ihren Administrator!</failedValidate>
+<failedSave>Entschuldigung, Sie haben keine Berechtigung, diese Liga zu aktualisieren</failedSave>
+<saved>Aktualisiert</saved>
+<css_title>&lt;b&gt;Liga-CSS&lt;/b&gt;&lt;br/&gt; &lt;i&gt;(Vorsicht, wenn Sie kein CSS können)&lt;/i&gt;&lt;br/&gt;Nach dem Bearbeiten müssen Sie eventuell den Cache leeren.</css_title>
+<css_help>Sie können Ihre Liga gestalten, müssen aber CSS beherrschen!</css_help>
+<core_theme_title>&lt;b&gt;Basis-Theme&lt;/b&gt;</core_theme_title>
+<core_theme_help>Dies sind vorgefertigte Themes, die Sie verwenden oder mit dem untenstehenden Liga-CSS als Grundlage weiter anpassen können.</core_theme_help>
+<tv_title>&lt;b&gt;Anfangs-Vereinskasse&lt;/b&gt;</tv_title>
+<tv_help>Wird normalerweise auf 1000000 gesetzt, Sie können aber auch andere Werte wählen.</tv_help>
+<tv_sevens_title>&lt;b&gt;Sevens Anfangs-Vereinskasse&lt;/b&gt;</tv_sevens_title>
+<tv_sevens_help>Wird normalerweise auf 600000 gesetzt, Sie können aber auch andere Werte wählen.</tv_sevens_help>
+<min_tv_title>&lt;br/&gt;&lt;b&gt;Mindest-Teamwert&lt;/b&gt;</min_tv_title>
+<min_tv_help>Legen Sie einen minimalen Teamwert (TW) fest, den alle Teams einhalten müssen. Dies verhindert, dass Teams (besonders Stunty-Teams) ihren TW künstlich niedrig halten, um Verstärkungen von Gegnern mit höherem TW zu erhalten. Auf 0 setzen für kein Minimum. Teams unterhalb dieses Werts werden bei bestimmten Aktionen wie dem Entlassen von Spielern eingeschränkt.</min_tv_help>
+<language_title>&lt;b&gt;Sprache&lt;/b&gt;</language_title>
+<language_help>Die Standardsprache Ihrer Liga.</language_help>
+<teams_legend_title>&lt;b&gt;Legendäre Teams/Optionale Kader&lt;/b&gt;&lt;br/&gt; Alte Kader auf der Team-Erstellungsseite deaktivieren.&lt;br/&gt;&lt;i&gt;(betrifft nicht bereits erstellte Teams)&lt;/i&gt;</teams_legend_title>
+<teams_legend_help>Kreuzen Sie ein Team-Kästchen an, um dieses Team auf der Team-Erstellungsseite zu deaktivieren: Angekreuzt = Deaktiviert.</teams_legend_help>
+<teams_legend_helf>Hoch-Elfen (Legendäre Teams) Deaktiviert</teams_legend_helf>
+<teams_legend_slann>Slann (Optionaler NAF-Kader) Deaktiviert</teams_legend_slann>
+<dungeonbowl_title>&lt;br/&gt;&lt;b&gt;Dungeon-Bowl-Team-Kader&lt;/b&gt;&lt;br/&gt; Dungeon-Bowl-Team-Kader auf der Team-Erstellungsseite deaktivieren.&lt;br/&gt;&lt;i&gt;(betrifft nicht bereits erstellte Teams)&lt;/i&gt;</dungeonbowl_title>
+<dungeonbowl_help>Kreuzen Sie das Kästchen an, um Dungeon-Bowl-Teams auf der Team-Erstellungsseite zu deaktivieren: Angekreuzt = Deaktiviert.</dungeonbowl_help>
+<dungeonbowl>Dungeon-Bowl-Teams</dungeonbowl>
+<disable_match_autolock_title>&lt;br/&gt;&lt;b&gt;Automatisches Sperren alter Spiele deaktivieren&lt;/b&gt;&lt;br/&gt; Legt fest, ob das Speichern eines Spielberichts automatisch die früheren Spielberichte dieses Teams sperrt.&lt;/i&gt;</disable_match_autolock_title>
+<disable_match_autolock_help>Standardmäßig wird beim Speichern eines Spielberichts jeder vorherige Spielbericht automatisch gesperrt; das Ankreuzen dieses Kästchens deaktiviert diese Funktion: Angekreuzt = Deaktiviert.</disable_match_autolock_help>
+<disable_match_autolock>Automatisches Sperren alter Spiele deaktivieren</disable_match_autolock>
+<sevens_title>&lt;br/&gt;&lt;b&gt;Sevens-Team-Kader&lt;/b&gt;&lt;br/&gt; Sevens-Team-Kader auf der Team-Erstellungsseite deaktivieren.&lt;br/&gt;&lt;i&gt;(betrifft nicht bereits erstellte Teams)&lt;/i&gt;</sevens_title>
+<sevens_help>Kreuzen Sie das Kästchen an, um Sevens-Teams auf der Team-Erstellungsseite zu deaktivieren: Angekreuzt = Deaktiviert.</sevens_help>
+<sevens>Sevens-Teams</sevens>
+<fireunder11_title>&lt;br/&gt;&lt;b&gt;Entlassung unter 11 Spieler&lt;/b&gt;&lt;br/&gt; Erlaubt das Entlassen von Spielern, bis das Team unter 11 Spieler fällt.&lt;/i&gt;</fireunder11_title>
+<fireunder11_help>Kreuzen Sie das Kästchen an, um Trainern zu erlauben, Spieler zu entlassen, wodurch das Team unter 11 Spieler fallen würde (normalerweise nicht erlaubt): Angekreuzt = Erlaubt.</fireunder11_help>
+<fireunder11>Entlassung unter 11 Spieler Erlaubt</fireunder11>
+<enforce_hire_fire_order_title>&lt;br/&gt;&lt;b&gt;Einstellen-Entlassen-Reihenfolge Erzwingen&lt;/b&gt;&lt;br/&gt; Legt fest, ob die Einstellen-Entlassen-Reihenfolge nach dem Spiel erzwungen wird.&lt;/i&gt;</enforce_hire_fire_order_title>
+<enforce_hire_fire_order_help>Kreuzen Sie das Kästchen an, um die Einstellen-Entlassen-Reihenfolge nach dem Spiel zu erzwingen (Spieler müssen zuerst eingestellt werden, bevor welche entlassen werden können): Angekreuzt = Aktiviert.</enforce_hire_fire_order_help>
+<enforce_hire_fire_order>Einstellen-Entlassen-Reihenfolge Erzwingen</enforce_hire_fire_order>
+<randomskillrolls_title>&lt;br/&gt;&lt;b&gt;Automatischer Zufalls-Fertigkeiten-Generator&lt;/b&gt;&lt;br/&gt; Deaktiviert die Option für automatische Zufalls-Fertigkeiten im Team-Verwaltungsfeld.&lt;br/&gt;&lt;i&gt;(deaktivieren Sie dies nicht, außer Sie aktivieren unten die manuelle Eingabe von Zufalls-Fertigkeiten)&lt;/i&gt;</randomskillrolls_title>
+<randomskillrolls_help>Kreuzen Sie das Kästchen an, um automatische Zufalls-Fertigkeiten im Team-Verwaltungsfeld zu deaktivieren; in diesem Fall ist nur die manuelle Eingabe von Zufalls-Fertigkeiten erlaubt: Angekreuzt = Deaktiviert.</randomskillrolls_help>
+<randomskillrolls>Automatische Zufalls-Fertigkeiten Deaktiviert</randomskillrolls>
+<randomstatrolls_title>&lt;br/&gt;&lt;b&gt;Automatischer Zufalls-Attribut-Generator&lt;/b&gt;&lt;br/&gt; Deaktiviert die Option für automatische Zufalls-Attribute im Team-Verwaltungsfeld.&lt;br/&gt;&lt;i&gt;(deaktivieren Sie dies nicht, außer Sie aktivieren unten die manuelle Eingabe von Zufalls-Fertigkeiten)&lt;/i&gt;</randomstatrolls_title>
+<randomstatrolls_help>Kreuzen Sie das Kästchen an, um automatische Zufalls-Attributerhöhungen im Team-Verwaltungsfeld zu deaktivieren; in diesem Fall ist nur die manuelle Eingabe von Zufalls-Attributen erlaubt: Angekreuzt = Deaktiviert.</randomstatrolls_help>
+<randomstatrolls>Automatische Zufalls-Attribute Deaktiviert</randomstatrolls>
+<randomskillmanualentry_title>&lt;br/&gt;&lt;b&gt;Manuelle Eingabe von Zufalls-Fertigkeiten&lt;/b&gt;&lt;br/&gt; Deaktiviert die manuelle Eingabe von Zufalls-Fertigkeiten auf der Kader-/Team-Seite.&lt;br/&gt;&lt;i&gt;(deaktivieren Sie dies nicht, außer Sie aktivieren oben die automatischen Zufalls-Fertigkeiten-Würfe)&lt;/i&gt;</randomskillmanualentry_title>
+<randomskillmanualentry_help>Kreuzen Sie das Kästchen an, um die manuelle Eingabe von Zufalls-Fertigkeiten auf der Kader-/Team-Seite zu deaktivieren; in diesem Fall ist nur die automatische Zufalls-Fertigkeiten-Generierung erlaubt: Angekreuzt = Deaktiviert.</randomskillmanualentry_help>
+<randomskillmanualentry>Manuelle Eingabe von Zufalls-Fertigkeiten Deaktiviert</randomskillmanualentry>
+<bonuspoints_title>&lt;br/&gt;&lt;b&gt;Zusätzliche Liga-Punkte&lt;/b&gt;&lt;br/&gt; Legen Sie fest, welche Bonuspunkte verwendet werden. Sie werden automatisch nach diesen Regeln hinzugefügt.&lt;br/&gt;&lt;i&gt;(muss zusammen mit einem Ranking-System im Turniermanager verwendet werden, das [bonus] enthält)&lt;/i&gt;</bonuspoints_title>
+<bonuspoints_help>Legen Sie fest, wie viele Bonuspunkte für Deutliche Siege, Deutliche Niederlagen des Gegners und Zu-Null-Spiele vergeben werden.
+Wird für alle drei 0 Punkte eingegeben, wird der Rechner für Zusätzliche Liga-Punkte im Spielbericht ausgeblendet.</bonuspoints_help>
+<major_win_tds>TDs für Deutlichen Sieg = Wie viele TDs zählen als Deutlicher Sieg? Geben Sie hier die Anzahl der TDs an, üblicherweise 3.</major_win_tds>
+<major_win_pts>Punkte für Deutlichen Sieg = Bonuspunkte für einen Deutlichen Sieg, üblicherweise 1. Geben Sie 0 ein, um dies im Spielbericht auszublenden.</major_win_pts>
+<clean_sheet_pts>Punkte für Zu-Null-Spiel = Bonuspunkte dafür, keine TDs zuzulassen (zu Null), üblicherweise 1. Geben Sie 0 ein, um dies im Spielbericht auszublenden.</clean_sheet_pts>
+<major_beat_cas>Verletzungen für Deutliche Niederlage = Wie viele Verletzungen zählen als Deutliche Niederlage des Gegners? Geben Sie hier die Anzahl an, üblicherweise 3.</major_beat_cas>
+<major_beat_pts>Punkte für Deutliche Niederlage = Bonuspunkte für eine Deutliche Niederlage des Gegners, üblicherweise 1. Geben Sie 0 ein, um dies im Spielbericht auszublenden.</major_beat_pts>
+<base_inducements_title>&lt;br/&gt;&lt;b&gt;Nur Basis-Verstärkungen&lt;/b&gt;&lt;br/&gt; Deaktiviert Verstärkungen, die nicht im Hauptregelwerk stehen.&lt;/i&gt;</base_inducements_title>
+<base_inducements_help>Kreuzen Sie das Kästchen an, um Verstärkungen aus anderen Quellen als den Hauptregeln zu deaktivieren: Angekreuzt = Deaktiviert.</base_inducements_help>
+<base_inducements>Nur Basis-Verstärkungen</base_inducements>
+<prayer_cost_title>&lt;br/&gt;&lt;b&gt;Kostenüberschreibung für Gebete an Nuffle&lt;/b&gt;&lt;br/&gt; Ändert die Kosten der Verstärkung Gebete an Nuffle.&lt;/i&gt;</prayer_cost_title>
+<prayer_cost_help>Legen Sie einen benutzerdefinierten Preis für die Verstärkung Gebete an Nuffle in dieser Liga fest. Auf 0 setzen, um den Standardpreis aus den Spieldaten zu verwenden (üblicherweise 10.000). So können Sie die Kosten anpassen, falls sie Ihnen für Ihre Liga zu günstig oder zu teuer erscheinen.</prayer_cost_help>
+<prayer_cost_note>(0 = Standardpreis verwenden)</prayer_cost_note>
+<megastars_title>&lt;br/&gt;&lt;b&gt;Mega-Stars&lt;/b&gt;&lt;br/&gt; Deaktiviert Mega-Stars als Verstärkungen.&lt;br/&gt;&lt;i&gt;(siehe aktuelle FAQ für die Liste der Star-Spieler, die als Mega-Stars gelten)&lt;/i&gt;</megastars_title>
+<megastars_help>Kreuzen Sie das Kästchen an, um Mega-Stars als Verstärkungen zu deaktivieren: Angekreuzt = Deaktiviert.</megastars_help>
+<megastars>Mega-Stars Deaktiviert</megastars>
+<megastar_tax_title>&lt;br/&gt;&lt;b&gt;Mega-Star-Steuer&lt;/b&gt;&lt;br/&gt;Legen Sie zusätzliche Kosten (Pauschalgebühr in Gold) fest, die zu allen Mega-Star-Anwerbekosten hinzugefügt werden.</megastar_tax_title>
+<megastar_tax_help>Legen Sie zusätzliche Kosten (Pauschalgebühr in Gold) fest, die zu allen Mega-Star-Anwerbekosten hinzugefügt werden. Dies wird zusätzlich zum Standardpreis für Mega-Star-Spieler hinzugefügt. Auf 0 setzen für keine zusätzliche Steuer. Beispiel: Wird dies auf 50000 gesetzt, würden 50k Gold zu den Kosten jedes Mega-Stars hinzugefügt.</megastar_tax_help>
+<megastar_tax_note>(Pauschalgebühr, die zu den Mega-Star-Kosten hinzugefügt wird)</megastar_tax_note>
+<banned_stars_title>&lt;br/&gt;&lt;b&gt;Verbotene Star-Spieler&lt;/b&gt;&lt;br/&gt;Wählen Sie, welche Star-Spieler in dieser Liga nicht anwerbbar sein sollen.&lt;br/&gt;So können Sie bestimmte Stars verbieten, die zu stark sind oder nicht zum Spielstil Ihrer Liga passen, unabhängig davon, ob sie Mega-Stars sind oder nicht.</banned_stars_title>
+<banned_stars_help>Wählen Sie, welche Star-Spieler in dieser Liga nicht anwerbbar sein sollen. So können Sie bestimmte Stars verbieten, die zu stark sind oder nicht zum Spielstil Ihrer Liga passen, unabhängig davon, ob sie Mega-Stars sind oder nicht.</banned_stars_help>
+<banned_stars_note>Halten Sie Strg (Windows) oder Cmd (Mac) gedrückt, um mehrere Stars auszuwählen</banned_stars_note>
+<discord_url_title>&lt;br/&gt;&lt;b&gt;Discord-Webhook-URL&lt;/b&gt;&lt;br/&gt; Discord-Webhook-URL zum Posten von Spielergebnissen.&lt;/i&gt;</discord_url_title>
+<discord_url_help>Geben Sie hier eine URL für einen Discord-Kanal-Webhook ein, um das Posten von Spielergebnissen auf Discord zu aktivieren; leer lassen, um diese Option zu deaktivieren.</discord_url_help>
+<discord_url_note>(leer lassen, um das Posten auf Discord zu deaktivieren)</discord_url_note>
+<discord_perms_title>&lt;br/&gt;&lt;b&gt;Discord-Post-Berechtigung&lt;/b&gt;&lt;br/&gt; Wer kann einen Discord-Post aus dem Spielbericht auslösen.&lt;/i&gt;</discord_perms_title>
+<discord_perms_help>Wenn das Posten von Ergebnissen auf Discord oben aktiviert ist, bestimmt dies, wer Spielergebnisse einreichen kann.</discord_perms_help>
+<discord_perms_coaches>Administratoren und beteiligte Trainer</discord_perms_coaches>
+<discord_perms_admins>Nur Administratoren</discord_perms_admins>
+
+</de-DE>
+
+<it-IT>
+
+<name>Amministrazione Preferenze di Lega</name>
+<menu-lge>Preferenze di Lega</menu-lge>
+<help>Utilizzando le preferenze di lega, gli amministratori di lega e globali possono modificare alcune impostazioni di una lega senza modificare i file PHP.</help>
+<lname>Lega</lname>
+<prime_title>&lt;b&gt;Torneo Primario&lt;/b&gt;</prime_title>
+<prime_help>Il torneo primario viene utilizzato per la classifica di lega nella pagina principale</prime_help>
+<second_title>&lt;b&gt;Torneo Secondario&lt;/b&gt;</second_title>
+<second_help>Il torneo secondario viene utilizzato per le statistiche di rendimento dei giocatori nella pagina principale</second_help>
+<league_name_title>&lt;b&gt;Nome della Lega&lt;/b&gt;</league_name_title>
+<league_name_help>Nome della tua lega</league_name_help>
+<forum_url_title>&lt;b&gt;URL del Forum&lt;/b&gt;</forum_url_title>
+<forum_url_help>Il link da usare per il pulsante Forum nel menu principale. Lascia vuoto per non avere un forum.</forum_url_help>
+<welcome_title>&lt;b&gt;Messaggio di Benvenuto&lt;/b&gt;</welcome_title>
+<welcome_help>Messaggio da mostrare in cima alla pagina iniziale. Può contenere HTML.</welcome_help>
+<rules_title>&lt;b&gt;Regole della Lega&lt;/b&gt;</rules_title>
+<rules_help>Le regole da mostrare nel menu Regole. Può contenere HTML.</rules_help>
+<submit_text>Salva</submit_text>
+<submit_title>Aggiorna le preferenze di questa lega</submit_title>
+<failedSave>Impossibile salvare le preferenze</failedSave>
+<failedValidate>Oh no! Il modulo di amministrazione della lega non ha superato il controllo ptid!=stid. Avvisa il tuo amministratore!</failedValidate>
+<failedSave>Siamo spiacenti, non hai i permessi per aggiornare questa lega</failedSave>
+<saved>Aggiornato</saved>
+<css_title>&lt;b&gt;CSS della Lega&lt;/b&gt;&lt;br/&gt; &lt;i&gt;(fai attenzione se non conosci il CSS)&lt;/i&gt;&lt;br/&gt;Potrebbe essere necessario svuotare la cache dopo la modifica.</css_title>
+<css_help>Puoi personalizzare il tema della tua Lega, ma devi conoscere il CSS!</css_help>
+<core_theme_title>&lt;b&gt;Tema Base&lt;/b&gt;</core_theme_title>
+<core_theme_help>Questi sono temi predefiniti che puoi usare, oppure da cui partire personalizzando con il CSS di Lega qui sotto.</core_theme_help>
+<tv_title>&lt;b&gt;Tesoreria Iniziale&lt;/b&gt;</tv_title>
+<tv_help>Solitamente impostato a 1000000, ma puoi scegliere altri valori.</tv_help>
+<tv_sevens_title>&lt;b&gt;Tesoreria Iniziale Sevens&lt;/b&gt;</tv_sevens_title>
+<tv_sevens_help>Solitamente impostato a 600000, ma puoi scegliere altri valori.</tv_sevens_help>
+<min_tv_title>&lt;br/&gt;&lt;b&gt;Valore Squadra Minimo&lt;/b&gt;</min_tv_title>
+<min_tv_help>Imposta un Valore Squadra (VS) minimo che tutte le squadre devono mantenere. Questo impedisce alle squadre (specialmente le squadre stunty) di mantenere artificialmente basso il proprio VS per ottenere incentivi da avversari con VS più alto. Imposta 0 per nessun minimo. Le squadre al di sotto di questo valore avranno alcune azioni limitate, come il licenziamento dei giocatori.</min_tv_help>
+<language_title>&lt;b&gt;Lingua&lt;/b&gt;</language_title>
+<language_help>La lingua predefinita della tua lega.</language_help>
+<teams_legend_title>&lt;b&gt;Squadre Leggendarie/Rose Opzionali&lt;/b&gt;&lt;br/&gt; Disabilita le vecchie rose dalla pagina di creazione squadra.&lt;br/&gt;&lt;i&gt;(non interferisce con le squadre già create)&lt;/i&gt;</teams_legend_title>
+<teams_legend_help>Spunta la casella di una squadra per disabilitarla dalla pagina di creazione squadra: Casella spuntata = Disabilitata.</teams_legend_help>
+<teams_legend_helf>Alto Elfo (Squadre Leggendarie) Disabilitato</teams_legend_helf>
+<teams_legend_slann>Slann (Rosa NAF opzionale) Disabilitato</teams_legend_slann>
+<dungeonbowl_title>&lt;br/&gt;&lt;b&gt;Rose Squadra Dungeon Bowl&lt;/b&gt;&lt;br/&gt; Disabilita le rose delle squadre Dungeon Bowl dalla pagina di creazione squadra.&lt;br/&gt;&lt;i&gt;(non interferisce con le squadre già create)&lt;/i&gt;</dungeonbowl_title>
+<dungeonbowl_help>Spunta la casella per disabilitare le squadre Dungeon Bowl dalla pagina di creazione squadra: Casella spuntata = Disabilitata.</dungeonbowl_help>
+<dungeonbowl>Squadre Dungeon Bowl</dungeonbowl>
+<disable_match_autolock_title>&lt;br/&gt;&lt;b&gt;Disabilita Blocco Automatico Partite Vecchie&lt;/b&gt;&lt;br/&gt; Attiva o disattiva se il salvataggio di un referto partita blocca automaticamente i referti precedenti di quella squadra.&lt;/i&gt;</disable_match_autolock_title>
+<disable_match_autolock_help>Per impostazione predefinita, al salvataggio di un referto partita, ogni referto precedente verrà bloccato automaticamente; spuntando questa casella si disabilita questa funzione: Casella spuntata = Disabilitata.</disable_match_autolock_help>
+<disable_match_autolock>Disabilita Blocco Automatico Partite Vecchie</disable_match_autolock>
+<sevens_title>&lt;br/&gt;&lt;b&gt;Rose Squadra Sevens&lt;/b&gt;&lt;br/&gt; Disabilita le rose delle squadre Sevens dalla pagina di creazione squadra.&lt;br/&gt;&lt;i&gt;(non interferisce con le squadre già create)&lt;/i&gt;</sevens_title>
+<sevens_help>Spunta la casella per disabilitare le squadre Sevens dalla pagina di creazione squadra: Casella spuntata = Disabilitata.</sevens_help>
+<sevens>Squadre Sevens</sevens>
+<fireunder11_title>&lt;br/&gt;&lt;b&gt;Licenziamento Sotto gli 11 Giocatori&lt;/b&gt;&lt;br/&gt; Consenti il licenziamento di giocatori fino a portare la squadra sotto gli 11.&lt;/i&gt;</fireunder11_title>
+<fireunder11_help>Spunta la casella per consentire agli allenatori di licenziare giocatori portando la squadra sotto gli 11 giocatori (normalmente non consentito): Casella spuntata = Consentito.</fireunder11_help>
+<fireunder11>Licenziamento Sotto gli 11 Giocatori Consentito</fireunder11>
+<enforce_hire_fire_order_title>&lt;br/&gt;&lt;b&gt;Imponi Ordine Assunzione-Licenziamento&lt;/b&gt;&lt;br/&gt; Attiva o disattiva l'imposizione dell'ordine assunzione-licenziamento post partita.&lt;/i&gt;</enforce_hire_fire_order_title>
+<enforce_hire_fire_order_help>Spunta la casella per imporre l'ordine assunzione-licenziamento post partita (i giocatori devono prima essere assunti, prima che qualcuno possa essere licenziato): Casella spuntata = Attivato.</enforce_hire_fire_order_help>
+<enforce_hire_fire_order>Imponi Ordine Assunzione-Licenziamento</enforce_hire_fire_order>
+<randomskillrolls_title>&lt;br/&gt;&lt;b&gt;Generatore Automatico di Abilità Casuali&lt;/b&gt;&lt;br/&gt; Disabilita l'opzione Abilità Casuale Automatica dal Pannello di Gestione Squadra.&lt;br/&gt;&lt;i&gt;(non disabilitare questa opzione a meno che tu non attivi l'Inserimento Manuale di Abilità Casuale qui sotto)&lt;/i&gt;</randomskillrolls_title>
+<randomskillrolls_help>Spunta la casella per disabilitare le Abilità Casuali Automatiche dal Pannello di Gestione Squadra, nel qual caso sarà consentito solo l'Inserimento Manuale di Abilità Casuale: Casella spuntata = Disabilitata.</randomskillrolls_help>
+<randomskillrolls>Abilità Casuali Automatiche Disabilitate</randomskillrolls>
+<randomstatrolls_title>&lt;br/&gt;&lt;b&gt;Generatore Automatico di Caratteristica Casuale&lt;/b&gt;&lt;br/&gt; Disabilita l'opzione Caratteristica Casuale Automatica dal Pannello di Gestione Squadra.&lt;br/&gt;&lt;i&gt;(non disabilitare questa opzione a meno che tu non attivi l'Inserimento Manuale di Abilità Casuale qui sopra)&lt;/i&gt;</randomstatrolls_title>
+<randomstatrolls_help>Spunta la casella per disabilitare gli Aumenti Automatici di Caratteristica Casuale dal Pannello di Gestione Squadra, nel qual caso sarà consentito solo l'Inserimento Manuale di Caratteristica Casuale: Casella spuntata = Disabilitata.</randomstatrolls_help>
+<randomstatrolls>Caratteristica Casuale Automatica Disabilitata</randomstatrolls>
+<randomskillmanualentry_title>&lt;br/&gt;&lt;b&gt;Inserimento Manuale di Abilità Casuale&lt;/b&gt;&lt;br/&gt; Disabilita l'Inserimento Manuale di Abilità Casuale dalla pagina Rosa/Squadra.&lt;br/&gt;&lt;i&gt;(non disabilitare questa opzione a meno che tu non attivi sopra i Tiri Automatici di Abilità Casuale)&lt;/i&gt;</randomskillmanualentry_title>
+<randomskillmanualentry_help>Spunta la casella per disabilitare l'Inserimento Manuale di Abilità Casuale dalla pagina Rosa/Squadra, nel qual caso sarà consentita solo la generazione Automatica di Abilità Casuale: Casella spuntata = Disabilitata.</randomskillmanualentry_help>
+<randomskillmanualentry>Inserimento Manuale di Abilità Casuale Disabilitato</randomskillmanualentry>
+<bonuspoints_title>&lt;br/&gt;&lt;b&gt;Punti Lega Aggiuntivi&lt;/b&gt;&lt;br/&gt; Definisci quali punti bonus utilizzare. Verranno aggiunti automaticamente secondo queste regole.&lt;br/&gt;&lt;i&gt;(deve essere usato insieme a un Sistema di Classifica nel Gestore Tornei che includa [bonus])&lt;/i&gt;</bonuspoints_title>
+<bonuspoints_help>Definisci quanti punti bonus assegnare per Vittorie Nette, Sconfitte Nette inflitte e Clean Sheet.
+Inserendo 0 punti per tutti e tre, il calcolatore dei Punti Lega Aggiuntivi verrà nascosto nel Referto Partita.</bonuspoints_help>
+<major_win_tds>TD per Vittoria Netta = Quanti TD segnati contano come Vittoria Netta? Indica qui il numero di TD, solitamente 3.</major_win_tds>
+<major_win_pts>Punti per Vittoria Netta = Punti bonus ottenuti per una Vittoria Netta, solitamente 1. Inserisci 0 per nasconderlo nel referto partita.</major_win_pts>
+<clean_sheet_pts>Punti per Clean Sheet = Punti bonus per non aver subito TD (clean sheet), solitamente 1. Inserisci 0 per nasconderlo nel referto partita.</clean_sheet_pts>
+<major_beat_cas>Infortuni per Sconfitta Netta = Quanti INF inflitti contano come Sconfitta Netta dell'avversario? Indica qui il numero di INF, solitamente 3.</major_beat_cas>
+<major_beat_pts>Punti per Sconfitta Netta = Punti bonus ottenuti per una Sconfitta Netta inflitta, solitamente 1. Inserisci 0 per nasconderlo nel referto partita.</major_beat_pts>
+<base_inducements_title>&lt;br/&gt;&lt;b&gt;Solo Incentivi Base&lt;/b&gt;&lt;br/&gt; Disabilita gli incentivi non presenti nel regolamento principale.&lt;/i&gt;</base_inducements_title>
+<base_inducements_help>Spunta la casella per disabilitare la disponibilità di incentivi da fonti diverse dalle regole principali: Casella spuntata = Disabilitata.</base_inducements_help>
+<base_inducements>Solo Incentivi Base</base_inducements>
+<prayer_cost_title>&lt;br/&gt;&lt;b&gt;Sovrascrittura Costo Preghiere a Nuffle&lt;/b&gt;&lt;br/&gt; Modifica il costo dell'incentivo Preghiere a Nuffle.&lt;/i&gt;</prayer_cost_title>
+<prayer_cost_help>Imposta un costo personalizzato per l'incentivo Preghiere a Nuffle in questa lega. Imposta 0 per usare il costo standard dai dati di gioco (solitamente 10.000). Questo ti permette di bilanciare il costo se lo trovi troppo economico o troppo caro per la tua lega.</prayer_cost_help>
+<prayer_cost_note>(0 = usa il costo standard)</prayer_cost_note>
+<megastars_title>&lt;br/&gt;&lt;b&gt;Mega-Star&lt;/b&gt;&lt;br/&gt; Disabilita le Mega-Star dagli incentivi.&lt;br/&gt;&lt;i&gt;(consulta le ultime FAQ per l'elenco dei Giocatori Star classificati come Mega-Star)&lt;/i&gt;</megastars_title>
+<megastars_help>Spunta la casella per disabilitare la disponibilità delle Mega-Star come incentivi: Casella spuntata = Disabilitata.</megastars_help>
+<megastars>Mega-Star Disabilitate</megastars>
+<megastar_tax_title>&lt;br/&gt;&lt;b&gt;Tassa Mega-Star&lt;/b&gt;&lt;br/&gt;Imposta un costo aggiuntivo (tariffa fissa in oro) da aggiungere a tutti i costi di ingaggio delle Mega-Star.</megastar_tax_title>
+<megastar_tax_help>Imposta un costo aggiuntivo (tariffa fissa in oro) da aggiungere a tutti i costi di ingaggio delle Mega-Star. Questo si aggiunge al costo standard dei giocatori Mega-Star. Imposta 0 per nessuna tassa aggiuntiva. Esempio: impostando questo a 50000 verrebbero aggiunti 50k di oro al costo di ogni Mega-Star.</megastar_tax_help>
+<megastar_tax_note>(tariffa fissa aggiunta al costo delle Mega-Star)</megastar_tax_note>
+<banned_stars_title>&lt;br/&gt;&lt;b&gt;Giocatori Star Vietati&lt;/b&gt;&lt;br/&gt;Seleziona quali Giocatori Star non dovrebbero essere disponibili per l'ingaggio in questa lega.&lt;br/&gt;Questo ti permette di vietare star specifiche troppo potenti o che non si adattano allo stile di gioco della tua lega, siano esse Mega-Star o meno.</banned_stars_title>
+<banned_stars_help>Seleziona quali Giocatori Star non dovrebbero essere disponibili per l'ingaggio in questa lega. Questo ti permette di vietare star specifiche troppo potenti o che non si adattano allo stile di gioco della tua lega, siano esse Mega-Star o meno.</banned_stars_help>
+<banned_stars_note>Tieni premuto Ctrl (Windows) o Cmd (Mac) per selezionare più star</banned_stars_note>
+<discord_url_title>&lt;br/&gt;&lt;b&gt;URL Webhook Discord&lt;/b&gt;&lt;br/&gt; URL del webhook Discord per pubblicare i risultati delle partite.&lt;/i&gt;</discord_url_title>
+<discord_url_help>Inserisci qui l'URL di un webhook di un canale Discord per abilitare la pubblicazione dei risultati delle partite su Discord; lascia vuoto per disabilitare questa opzione.</discord_url_help>
+<discord_url_note>(lascia vuoto per disabilitare la pubblicazione su Discord)</discord_url_note>
+<discord_perms_title>&lt;br/&gt;&lt;b&gt;Permesso di Pubblicazione Discord&lt;/b&gt;&lt;br/&gt; Chi può attivare una pubblicazione su Discord dal referto partita.&lt;/i&gt;</discord_perms_title>
+<discord_perms_help>Se la pubblicazione dei risultati su Discord è attivata sopra, questo determinerà chi può inviare i risultati delle partite.</discord_perms_help>
+<discord_perms_coaches>Amministratori e allenatori coinvolti</discord_perms_coaches>
+<discord_perms_admins>Solo amministratori</discord_perms_admins>
+
+</it-IT>
+
+</translations>

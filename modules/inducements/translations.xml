@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<en-GB>
 
-<!--STAR PLAYER SPECIAL RULES AND DESCRIPTIONS-->
+<translations>
+
+<en-GB>
 <beerbarrelbash>Beer Barrel Bash</beerbarrelbash>
 <beerbarrelbashdesc>Once per Drive, at the start of his activation, Thorsson may select an opposition player within three squares and roll a D6. On a 3+, the selected player is immediately Knocked Down. On a 2, nothing happens. On a 1, Thorsson Falls Over. After using this special rule, Thorsson's activation immediately ends.</beerbarrelbashdesc>
 <blastit>Blast It!</blastit>
@@ -134,6 +135,546 @@
 <illcarryyou2desc>Grak &amp; Crumbleberry must be hired as a pair. Additionally, whilst Crumbleberry is being carried by Grak, Grak gains the Break Tackle and Dodge Skills.</illcarryyou2desc>
 <woodlandfury>Woodland Fury</woodlandfury>
 <woodlandfurydesc>Once per game, when Willow performs a Block Action that would result in her being Knocked Down, she can choose to re-roll a single Block Dice.</woodlandfurydesc>
-
-
 </en-GB>
+
+<es-ES>
+<beerbarrelbash>Golpe de Barril de Cerveza</beerbarrelbash>
+<beerbarrelbashdesc>Una vez por Jugada, al comienzo de su activación, Thorsson puede seleccionar a un jugador rival a 3 casillas o menos y tirar un D6. Con un 3+, el jugador seleccionado queda Derribado inmediatamente. Con un 2, no ocurre nada. Con un 1, Thorsson Cae. Tras usar esta regla especial, la activación de Thorsson termina inmediatamente.</beerbarrelbashdesc>
+<blastit>¡Maldición!</blastit>
+<blastitdesc>Siempre que Barik realice un Pase a lo Loco, puede repetir cualquier resultado de dispersión para determinar dónde cae el balón, y cualquier compañero de equipo que intente atraparlo aplica un modificador de +1 a la tirada.</blastitdesc>
+<blindrage>Furia Ciega</blindrage>
+<blindragedesc>Akhorne puede elegir repetir el D6 al tirar por la Habilidad Agallas.</blindragedesc>
+<brutalblock>Bloqueo Brutal</brutalblock>
+<brutalblockdesc>Una vez por partida, cuando Frank N Stein hace una Tirada de Lesión contra un rival como resultado de una Acción de Bloqueo, puede elegir añadir un modificador adicional de +1 a la Tirada de Lesión. Este modificador puede aplicarse después de hacer la tirada.</brutalblockdesc>
+<slashingnails>Garras Cortantes</slashingnails>
+<slashingnailsdesc>Una vez por parte, cuando Roxanna declara una Acción de Blitz, obtiene la Habilidad Garras hasta el final de su activación.</slashingnailsdesc>
+<consummatepro>Profesional Consumado</consummatepro>
+<consummateprodesc>Una vez por partida, Griff puede aplicar un modificador de +1 a una Prueba de Agilidad que haya realizado. Este modificador puede aplicarse después de hacer la tirada.</consummateprodesc>
+<crushingblow>Golpe Aplastante</crushingblow>
+<crushingblowdesc>Una vez por partida, cuando un jugador rival queda Derribado como resultado de una Acción de Bloqueo realizada por Zug, puedes aplicar un modificador adicional de +1 a la Tirada de Armadura. Este modificador puede aplicarse después de hacer la tirada.</crushingblowdesc>
+<excuseme>Disculpa, ¿Eres un Zoat?</excuseme>
+<excusemedesc>Una vez por partida, cuando Zolcath es activado, puede seleccionar a un jugador rival a 3 casillas o menos. El jugador seleccionado queda Distraído inmediatamente.</excusemedesc>
+<frenziedrush>Arremetida Frenética</frenziedrush>
+<frenziedrushdesc>Una vez por parte, cuando Glart declara una Acción de Blitz, puede obtener la Habilidad Furia hasta el final de su activación. Glart no puede usar la Habilidad Apartar durante un Turno en el que use esta regla especial.</frenziedrushdesc>
+<furyotbg>Furia del Dios de la Sangre</furyotbg>
+<furyotbgdesc>Una vez por partida, si Scyla saca un 1 en su tirada de Furia Descontrolada tras declarar una Acción de Bloqueo, en lugar de aplicar los efectos habituales de Furia Descontrolada, Scyla puede realizar dos Acciones de Bloqueo. La primera Acción de Bloqueo debe resolverse por completo, incluyendo el uso de la Habilidad Furia, antes de realizar la segunda.</furyotbgdesc>
+<ghostlyflames>Llamas Fantasmales</ghostlyflames>
+<ghostlyflamesdesc>Una vez por parte, cuando Bryce realiza la Acción Especial de Ataque con Motosierra como parte de una Acción de Blitz, puede añadir +4 a la Tirada de Armadura contra un rival en lugar de +3.</ghostlyflamesdesc>
+<goredbythebull>Cornada del Toro</goredbythebull>
+<goredbythebulldesc>Una vez por partida, cuando Grashnak realiza una Acción de Bloqueo como parte de una Acción de Blitz, puede tirar un Dado de Bloqueo adicional contra el jugador rival, independientemente de su FU, hasta un máximo de tres Dados de Bloqueo. Si Grashnak realiza una segunda Acción de Bloqueo debido a la Habilidad Furia, esta segunda Acción de Bloqueo también se beneficiará de esta regla.</goredbythebulldesc>
+<illbeback>¡Volveré!</illbeback>
+<illbebackdesc>La primera vez en una partida que Kreek fuera a ser Expulsado según el Rasgo Arma Secreta, no es Expulsado y puede continuar formando parte de la partida. El entrenador de Kreek no puede Protestar la Decisión cuando Kreek use esta regla especial.</illbebackdesc>
+<incorporeal>Incorpóreo</incorporeal>
+<incorporealdesc>Una vez por partida, cuando Gretchen es activada puede usar esta regla especial. Hasta el final de su activación, Gretchen no tiene que hacer tiradas de Esquiva para abandonar una casilla dentro de la Zona de Placaje de un jugador rival.</incorporealdesc>
+<indomitable>Indomable</indomitable>
+<indomitabledesc>Una vez por partida, cuando Karla logra usar con éxito su Habilidad Agallas, puede aumentar su característica de FU al doble de la del objetivo de la Acción de Bloqueo.</indomitabledesc>
+<kaboom>¡Kabum!</kaboom>
+<kaboomdesc>Una vez por partida, si un jugador rival atrapa una bomba lanzada por Bomber, puedes elegir que esta explote en lugar de que el jugador rival intente lanzarla de nuevo inmediatamente.</kaboomdesc>
+<lordofchaos>Señor del Caos</lordofchaos>
+<lordofchaosdesc>Una vez por partida, cuando Lord Borak realiza una Acción de Bloqueo, puede repetir un único Dado de Bloqueo.</lordofchaosdesc>
+<maximumcarnage>Carnicería Máxima</maximumcarnage>
+<maximumcarnagedesc>Una vez por partida, después de que Max realice una Acción Especial de Ataque con Motosierra, puede realizar inmediatamente otra Acción Especial de Ataque con Motosierra dirigida a un jugador rival diferente.</maximumcarnagedesc>
+<mesmerisingdance>Danza Hipnotizante</mesmerisingdance>
+<mesmerisingdancedesc>Una vez por parte, Eldril puede repetir el dado al realizar una Acción Especial de Mirada Hipnótica.</mesmerisingdancedesc>
+<oldpro>Viejo Profesional</oldpro>
+<oldprodesc>Una vez por partida, Helmut puede usar su Habilidad Profesional para repetir un único dado lanzado como parte de una Tirada de Armadura.</oldprodesc>
+<pumpupthecrowd>Animar al Público</pumpupthecrowd>
+<pumpupthecrowddesc>Una vez por partida, cuando Skrorg hace que un jugador rival sea retirado por Baja como resultado de una Acción de Bloqueo, el entrenador de Skrorg obtiene una Repetición de Equipo hasta el final de la Jugada actual. Si esta Repetición de Equipo no se ha usado al final de la Jugada, se pierde.</pumpupthecrowddesc>
+<raidingparty>Partida de Asalto</raidingparty>
+<raidingpartydesc>Una vez por Jugada, cuando Ivar comienza su activación, puede seleccionar a un compañero de equipo Libre a 5 casillas o menos. El jugador seleccionado puede moverse inmediatamente 1 casilla, aunque debe terminar ese movimiento Marcando a un jugador rival.</raidingpartydesc>
+<ram>Ariete</ram>
+<ramdesc>Una vez por partida, cuando un jugador rival queda Derribado como resultado de una Acción de Bloqueo realizada por Rumbelow, puedes aplicar un modificador adicional de +1 a la Tirada de Armadura o de Lesión. Este modificador puede aplicarse después de hacer la tirada.</ramdesc>
+<reliable>Fiable</reliable>
+<reliabledesc>Si Deeproot hace un Lanzamiento Fallido al realizar una Acción de Lanzar Compañero de Equipo, el jugador lanzado Rebotará con normalidad pero aterrizará automáticamente a salvo.</reliabledesc>
+<savagemauling>Destrozo Salvaje</savagemauling>
+<savagemaulingdesc>Una vez por partida, cuando Wilhelm hace una Tirada de Lesión contra un jugador rival, puede elegir repetir el resultado.</savagemaulingdesc>
+<shottonothing>Tiro Desesperado</shottonothing>
+<shottonothingdesc>Una vez por partida, cuando Gloriel es activada puede usar esta regla especial. Si lo hace, Gloriel obtiene la Habilidad Pase a lo Loco hasta el final de su activación.</shottonothingdesc>
+<slayer>Matador</slayer>
+<slayerdesc>Una vez por partida, cuando un Grandullón rival queda Derribado como resultado de una Acción de Bloqueo realizada por Grim, puedes aplicar un modificador adicional de +1 a la Tirada de Armadura o de Lesión. Este modificador puede aplicarse después de hacer la tirada.</slayerdesc>
+<sneakiestotl>El Más Furtivo de Todos</sneakiestotl>
+<sneakiestotldesc>Si tu equipo incluye al Gobbo Negro, puedes declarar dos Acciones de Falta por Turno en lugar de la habitual una. Sin embargo, una de estas Acciones de Falta debe ser declarada por el propio Gobbo Negro.</sneakiestotldesc>
+<strongpassinggame>Buen Brazo de Pase</strongpassinggame>
+<strongpassinggamedesc>Una vez por partida, cuando Skrull realiza una Acción de Pase, puede modificar el resultado de la Prueba de Habilidad de Pase con el valor de su característica de FU, hasta un máximo de 6.</strongpassinggamedesc>
+<theballista>La Ballesta</theballista>
+<theballistadesc>Una vez por partida, cuando Morg realiza una Acción de Lanzar Compañero de Equipo, puede repetir la Prueba de Habilidad de Pase.</theballistadesc>
+<treacherous>Traicionero</treacherous>
+<treacherousdesc>Una vez por partida, si Hakflem está adyacente a un compañero de equipo que está en posesión del balón cuando es activado, Hakflem puede elegir hacerse con la posesión del balón. Si lo hace, el compañero de equipo quedará Derribado inmediatamente. Esto no provocará una Pérdida de Turno aunque el compañero de equipo sufra una baja.</treacherousdesc>
+<workingintandem>Dos por Uno</workingintandem>
+<workingintandemdesc>Los Gemelos Swift deben contratarse como pareja. Además, si Lucien realiza una Acción de Bloqueo contra un jugador rival que también está siendo Marcado por Valen, Lucien puede repetir un único Dado de Bloqueo.</workingintandemdesc>
+<workingintandem2desc>Los Gemelos Swift deben contratarse como pareja. Además, si Valen realiza una Acción de Pase dirigida a una casilla que contiene a Lucien, Valen no sufre ningún modificador a la Prueba de Habilidad de Pase por el alcance de la Acción de Pase.</workingintandem2desc>
+<whirlingdervish>Derviche Giratorio</whirlingdervish>
+<whirlingdervishdesc>Una vez por activación, Fungus puede repetir el D6 al determinar en qué dirección se mueve.</whirlingdervishdesc>
+<wisdomotwd>Sabiduría del Enano Blanco</wisdomotwd>
+<wisdomotwddesc>Una vez por partida, cuando Grombrindal es activado puede seleccionar a un compañero de equipo a 2 casillas o menos. El compañero de equipo seleccionado obtiene una de las siguientes Habilidades hasta el final del turno: Abrirse Paso, Agallas, Golpe Mortífero, Pies Firmes.</wisdomotwddesc>
+<lookintomyeyes>Mírame a los Ojos</lookintomyeyes>
+<lookintomyeyesdesc>Una vez por partida, si Boa comienza su activación Marcando a un jugador rival en posesión del balón, puede tirar un D6. Con un 1, no ocurre nada. Con un 2+, el jugador rival pierde la posesión del balón, Boa obtiene inmediatamente la posesión del balón y la activación de Boa termina inmediatamente.</lookintomyeyesdesc>
+<balefulhex>Hechizo Maligno</balefulhex>
+<balefulhexdesc>Una vez por partida, al comienzo de la activación de Estelle, puede seleccionar a un jugador rival a 5 casillas o menos y tirar un D6. Con un 2+, el jugador seleccionado queda Distraído y no puede ser activado durante el siguiente Turno de su equipo.</balefulhexdesc>
+<primalsavagery>Salvajismo Primigenio</primalsavagery>
+<primalsavagerydesc>Una vez por partida, cuando Glotl falla una tirada de Salvajismo Animal, puede arremeter contra un jugador rival en lugar de un compañero de equipo.</primalsavagerydesc>
+<watchout>¡Cuidado!</watchout>
+<watchoutdesc>La primera vez en cada Jugada que Withergrasp es objetivo de una Acción de Bloqueo realizada por un jugador rival, cuenta como si tuviera la Habilidad Esquivar.</watchoutdesc>
+<yoink>¡Zas!</yoink>
+<yoinkdesc>Una vez por partida, cuando Scrappa intenta Interceptar en una Acción de Pase, puede tirar un D6. Con un 2+, Scrappa no necesita tirar para Interceptar; en su lugar, Intercepta automáticamente la Acción de Pase y obtiene el control del balón.</yoinkdesc>
+<kickemwtd>¡Remátalos Mientras Están Caídos!</kickemwtd>
+<kickemwtddesc>Una vez por partida, Nobbla puede usar la Acción Especial de Ataque con Motosierra contra un jugador rival Boca Abajo o Aturdido. Esto no cuenta como una Acción de Falta, por lo que Nobbla no puede ser Expulsado al usar esta regla especial.</kickemwtddesc>
+<thinkingmanstroll>El Troll Pensante</thinkingmanstroll>
+<thinkingmanstrolldesc>Una vez por parte, Ripper puede repetir un único dado que haya sido lanzado como tirada individual, como parte de una tirada de varios dados, o como parte de una reserva de dados, aunque este no puede ser un dado lanzado como parte de una Tirada de Armadura, de Lesión o de Baja.</thinkingmanstrolldesc>
+<putridregurgitation>Regurgitación Pútrida</putridregurgitation>
+<putridregurgitationdesc>Una vez por parte, Bilerot puede usar la Acción Especial de Vómito Proyectil. Esto puede usarse incluso si Bilerot ya ha realizado una Acción de Bloqueo este turno.</putridregurgitationdesc>
+<allyoucaneat>Todo lo que Puedas Comer</allyoucaneat>
+<allyoucaneatdesc>Una vez por partida, Cindy puede realizar dos Acciones Especiales de Lanzar Bomba en lugar de una, aunque debe decidirlo antes de realizar la primera Acción. Si lo hace, inmediatamente después de realizar la segunda Acción Especial de Lanzar Bomba tira un D6. Con un 1-3, Cindy es Expulsada inmediatamente.</allyoucaneatdesc>
+<asneakypair>Un Par Furtivo</asneakypair>
+<asneakypairdesc>Dribl y Drull deben contratarse como pareja. Además, siempre que Dribl o Drull realicen una Acción de Falta o una Acción Especial de Puñal contra un jugador rival Marcado por ambos, pueden aplicar un modificador de +1 a la tirada.</asneakypairdesc>
+<halflingluck>Suerte Halfling</halflingluck>
+<halflingluckdesc>Una vez por partida, Puggy puede repetir un único dado que haya sido lanzado como tirada individual, como parte de una tirada de varios dados, o como parte de una reserva de dados, aunque este no puede ser un dado lanzado como parte de una Tirada de Armadura, de Lesión o de Baja.</halflingluckdesc>
+<tastymorsel>Bocado Delicioso</tastymorsel>
+<tastymorseldesc>Una vez por partida, cuando Karina falla una tirada de Sed de Sangre, puede elegir morder a un jugador rival con una FU de 3 o menos como si fuera un compañero de equipo Esclavo. Karina no puede morder a Jugadores Estrella con esta regla especial.</tastymorseldesc>
+<dwarfenscourge>Azote de los Enanos</dwarfenscourge>
+<dwarfenscourgedesc>Una vez por partida, cuando un jugador rival queda Derribado como resultado de una Acción de Bloqueo realizada por Ivan, puedes aplicar un modificador adicional de +1 a la Tirada de Armadura o de Lesión. Si es contra un jugador Enano, este modificador puede ser en su lugar de +2.</dwarfenscourgedesc>
+<staroftheshow>La Estrella del Espectáculo</staroftheshow>
+<staroftheshowdesc>Una vez por partida, cuando el Conde Luthor anota un ensayo, su entrenador puede obtener una Repetición de Equipo. Si esta Repetición no se ha usado al final de la siguiente Jugada, se pierde.</staroftheshowdesc>
+<masterassassin>Maestro Asesino</masterassassin>
+<masterassassindesc>Una vez por partida, cuando Skitter realiza una Acción Especial de Puñal, puede elegir repetir la Tirada de Armadura.</masterassassindesc>
+<boundingleap>Salto Prodigioso</boundingleap>
+<boundingleapdesc>Una vez por partida, después de declarar que va a Saltar pero antes de lanzar ningún dado, Rowana puede elegir usar esta regla especial. Si lo hace, Rowana no sufre modificadores negativos en la Prueba de Agilidad para Saltar y puede elegir repetir el resultado.</boundingleapdesc>
+<catchoftheday>La Pesca del Día</catchoftheday>
+<catchofthedaydesc>Una vez por parte, si Rodney está En Pie y comienza su activación a 3 casillas o menos de un balón que está en el suelo, puede tirar un D6. Con un 1-2, no ocurre nada. Con un 3+, Rodney obtiene inmediatamente la posesión del balón.</catchofthedaydesc>
+<blastin>Machacar lo Arregla Todo</blastin>
+<blastindesc>Una vez por parte, al comienzo de su activación, Zzharg puede seleccionar a un jugador rival En Pie a 3 casillas o menos y tirar un D6. Con un 3+, el jugador seleccionado es golpeado. Con un 2, el entrenador rival elige a un jugador (de cualquier equipo, salvo Zzharg) a 3 casillas o menos del jugador seleccionado originalmente para que sea golpeado en su lugar. Con un 1, Zzharg es golpeado en su lugar. Haz una Tirada de Armadura para el jugador que resulte golpeado. La activación de Zzharg termina entonces inmediatamente.</blastindesc>
+<unstoppablemomentum>Ímpetu Imparable</unstoppablemomentum>
+<unstoppablemomentumdesc>Siempre que H'Thark realiza una Acción de Bloqueo como parte de una Acción de Blitz, puede repetir un único Dado de Bloqueo.</unstoppablemomentumdesc>
+<toxinconnoisseur>Conocedor de Venenos</toxinconnoisseur>
+<toxinconnoisseurdesc>Una vez por partida, cuando Rashnak rompe con éxito la armadura de un jugador rival como resultado de una Acción Especial de Puñal, puedes aplicar un modificador adicional de +1 a la Tirada de Lesión. Este modificador puede aplicarse después de hacer la tirada.</toxinconnoisseurdesc>
+<swiftasthebreeze>Veloz como la Brisa</swiftasthebreeze>
+<swiftasthebreezedesc>Una vez por partida, Jordell puede elegir superar una única prueba de Esquiva, Salto o Esfuerzo con un 2+, independientemente de cualquier modificador.</swiftasthebreezedesc>
+<theflashingblade>La Espada Fulgurante</theflashingblade>
+<theflashingbladedesc>Una vez por partida, al comienzo de su activación, Jeremiah puede declarar una Acción Especial de Puñal contra un jugador rival al que esté Marcando. Después de realizar la Acción Especial de Puñal, Jeremiah puede realizar una Acción de Movimiento antes de que termine su activación.</theflashingbladedesc>
+<viciousvines>Enredaderas Viciosas</viciousvines>
+<viciousvinesdesc>Una vez por parte, cuando Maple declara una Acción de Bloqueo, puede hacerlo contra un jugador rival que esté a 2 casillas de distancia, siguiendo todas las reglas normales para realizar una Acción de Bloqueo, aunque no puede Avanzar.</viciousvinesdesc>
+<furiousoutburst>Estallido Furioso</furiousoutburst>
+<furiousoutburstdesc>Una vez por parte, siempre que esté En Pie al comienzo de su activación, Swiftvine puede colocarse adyacente a un jugador rival En Pie a 3 casillas o menos de ella y realizar inmediatamente una Acción Especial de Puñal contra él. Después puede colocarse en una casilla desocupada a 3 casillas o menos de su nueva posición. Su activación termina entonces inmediatamente. Esto cuenta como la Acción de Blitz del equipo para el turno.</furiousoutburstdesc>
+<savageblow>Golpe Salvaje</savageblow>
+<savageblowdesc>Una vez por partida, cuando Anqi realiza una Acción de Bloqueo contra un jugador rival, puede elegir repetir cualquier número de los Dados de Bloqueo.</savageblowdesc>
+<quickbite>Mordisco Rápido</quickbite>
+<quickbitedesc>Una vez por partida, si Guffle está Marcando a un jugador rival que atrapa el balón, puede hacer inmediatamente una Tirada de Armadura contra ese jugador. Si la Armadura del objetivo se rompe, Guffle obtiene inmediatamente la posesión del balón. No se provoca ninguna Pérdida de Turno al usar esta regla especial.</quickbitedesc>
+<blackink>Tinta Negra</blackink>
+<blackinkdesc>Una vez por partida, al comienzo de cualquiera de sus activaciones, Kiroth puede seleccionar a un jugador rival al que esté Marcando. El jugador seleccionado queda Distraído hasta que sea activado de nuevo.</blackinkdesc>
+<dwarvengrit>Tesón Enano</dwarvengrit>
+<dwarvengritdesc>Una vez por partida, cuando se rompe la armadura de Josef como resultado de una Tirada de Armadura, puedes elegir repetir la Tirada de Armadura.</dwarvengritdesc>
+<krumpsmash>Machaca y Aplasta</krumpsmash>
+<krumpsmashdesc>Una vez por partida, cuando un jugador rival queda Derribado como resultado de una Acción de Bloqueo realizada por Varag, puede repetir la Tirada de Armadura.</krumpsmashdesc>
+<illcarryyou>Yo Te Llevo</illcarryyou>
+<illcarryyoudesc>Grak y Crumbleberry deben contratarse como pareja. Además, una vez por parte, si Grak comienza su activación adyacente a Crumbleberry, puede recogerlo: retira temporalmente a Crumbleberry del terreno de juego. Al final de la activación de Grak, coloca a Crumbleberry en una casilla desocupada adyacente a Grak.</illcarryyoudesc>
+<illcarryyou2desc>Grak y Crumbleberry deben contratarse como pareja. Además, mientras Crumbleberry es llevado por Grak, Grak obtiene las Habilidades Abrirse Paso y Esquivar.</illcarryyou2desc>
+<woodlandfury>Furia del Bosque</woodlandfury>
+<woodlandfurydesc>Una vez por partida, cuando Willow realiza una Acción de Bloqueo que resultaría en que quedara Derribada, puede elegir repetir un único Dado de Bloqueo.</woodlandfurydesc>
+</es-ES>
+
+<fr-FR>
+<beerbarrelbash>Coup du Tonneau de Bière</beerbarrelbash>
+<beerbarrelbashdesc>Une fois par Manche, au début de son activation, Thorsson peut sélectionner un joueur adverse à trois cases ou moins et lancer un D6. Sur un 3+, le joueur sélectionné est immédiatement Mis à Terre. Sur un 2, il ne se passe rien. Sur un 1, Thorsson Tombe. Après avoir utilisé cette règle spéciale, l'activation de Thorsson prend fin immédiatement.</beerbarrelbashdesc>
+<blastit>Fichtre !</blastit>
+<blastitdesc>Chaque fois que Barik effectue une Main de Dieu, il peut relancer tout résultat de dispersion déterminant où atterrit le ballon, et tout coéquipier tentant de réceptionner le ballon applique un modificateur de +1 au jet.</blastitdesc>
+<blindrage>Rage Aveugle</blindrage>
+<blindragedesc>Akhorne peut choisir de relancer le D6 lorsqu'il effectue un jet pour la Compétence Intrépidité.</blindragedesc>
+<brutalblock>Blocage Brutal</brutalblock>
+<brutalblockdesc>Une fois par match, lorsque Frank N Stein effectue un Jet de Blessure contre un adversaire à la suite d'une Action de Blocage, il peut choisir d'ajouter un modificateur supplémentaire de +1 au Jet de Blessure. Ce modificateur peut être appliqué après que le jet a été effectué.</brutalblockdesc>
+<slashingnails>Griffes Tranchantes</slashingnails>
+<slashingnailsdesc>Une fois par mi-temps, lorsque Roxanna déclare une Action de Blitz, elle obtient la Compétence Griffes jusqu'à la fin de son activation.</slashingnailsdesc>
+<consummatepro>Professionnel Accompli</consummatepro>
+<consummateprodesc>Une fois par match, Griff peut appliquer un modificateur de +1 à un Test d'Agilité qu'il a effectué. Ce modificateur peut être appliqué après que le jet a été effectué.</consummateprodesc>
+<crushingblow>Coup Écrasant</crushingblow>
+<crushingblowdesc>Une fois par match, lorsqu'un joueur adverse est Mis à Terre à la suite d'une Action de Blocage effectuée par Zug, vous pouvez appliquer un modificateur supplémentaire de +1 au Jet d'Armure. Ce modificateur peut être appliqué après que le jet a été effectué.</crushingblowdesc>
+<excuseme>Excusez-moi, Êtes-vous un Zoat ?</excuseme>
+<excusemedesc>Une fois par match, lorsque Zolcath est activé, il peut sélectionner un joueur adverse à 3 cases ou moins. Le joueur sélectionné devient immédiatement Distrait.</excusemedesc>
+<frenziedrush>Ruée Frénétique</frenziedrush>
+<frenziedrushdesc>Une fois par mi-temps, lorsque Glart déclare une Action de Blitz, il peut obtenir la Compétence Frénésie jusqu'à la fin de son activation. Glart ne peut pas utiliser la Compétence Projection pendant un Tour où il utilise cette règle spéciale.</frenziedrushdesc>
+<furyotbg>Furie du Dieu du Sang</furyotbg>
+<furyotbgdesc>Une fois par match, si Scyla obtient un 1 à son jet de Fureur Débridée après avoir déclaré une Action de Blocage, alors, au lieu d'appliquer les effets habituels de la Fureur Débridée, Scyla peut effectuer deux Actions de Blocage à la place. La première Action de Blocage doit être entièrement résolue, y compris l'utilisation de la Compétence Frénésie, avant que la seconde ne soit effectuée.</furyotbgdesc>
+<ghostlyflames>Flammes Spectrales</ghostlyflames>
+<ghostlyflamesdesc>Une fois par mi-temps, lorsque Bryce effectue l'Action Spéciale Attaque à la Tronçonneuse dans le cadre d'une Action de Blitz, il peut ajouter +4 au Jet d'Armure contre un adversaire au lieu de +3.</ghostlyflamesdesc>
+<goredbythebull>Encorné par le Taureau</goredbythebull>
+<goredbythebulldesc>Une fois par match, lorsque Grashnak effectue une Action de Blocage dans le cadre d'une Action de Blitz, il peut lancer un Dé de Blocage supplémentaire contre le joueur adverse, quelle que soit sa Force, jusqu'à un maximum de trois Dés de Blocage. Si Grashnak effectue une seconde Action de Blocage grâce à la Compétence Frénésie, cette seconde Action de Blocage bénéficie également de cette règle.</goredbythebulldesc>
+<illbeback>Je Reviendrai !</illbeback>
+<illbebackdesc>La première fois dans un match que Kreek devrait être Expulsé conformément au Trait Arme Secrète, il n'est pas Expulsé et peut à la place continuer à participer au match. Le coach de Kreek ne peut pas Contester la Décision lorsque Kreek utilise cette règle spéciale.</illbebackdesc>
+<incorporeal>Incorporel</incorporeal>
+<incorporealdesc>Une fois par match, lorsque Gretchen est activée, elle peut utiliser cette règle spéciale. Jusqu'à la fin de son activation, Gretchen n'a pas besoin d'effectuer de jet d'Esquive pour quitter une case dans la Zone de Plaquage d'un joueur adverse.</incorporealdesc>
+<indomitable>Indomptable</indomitable>
+<indomitabledesc>Une fois par match, lorsque Karla réussit son jet pour utiliser sa Compétence Intrépidité, elle peut augmenter sa Caractéristique de Force jusqu'au double de celle de la cible de l'Action de Blocage.</indomitabledesc>
+<kaboom>Kaboum !</kaboom>
+<kaboomdesc>Une fois par match, si un joueur adverse attrape une bombe lancée par Bomber, vous pouvez choisir de la faire exploser plutôt que de laisser le joueur adverse tenter immédiatement de la relancer.</kaboomdesc>
+<lordofchaos>Seigneur du Chaos</lordofchaos>
+<lordofchaosdesc>Une fois par match, lorsque Lord Borak effectue une Action de Blocage, il peut relancer un unique Dé de Blocage.</lordofchaosdesc>
+<maximumcarnage>Carnage Maximal</maximumcarnage>
+<maximumcarnagedesc>Une fois par match, après que Max a effectué une Action Spéciale Attaque à la Tronçonneuse, il peut immédiatement en effectuer une autre ciblant un joueur adverse différent.</maximumcarnagedesc>
+<mesmerisingdance>Danse Envoûtante</mesmerisingdance>
+<mesmerisingdancedesc>Une fois par mi-temps, Eldril peut relancer le dé lorsqu'il effectue une Action Spéciale Regard Hypnotique.</mesmerisingdancedesc>
+<oldpro>Vieux Pro</oldpro>
+<oldprodesc>Une fois par match, Helmut peut utiliser sa Compétence Pro pour relancer un unique dé lancé dans le cadre d'un Jet d'Armure.</oldprodesc>
+<pumpupthecrowd>Chauffer la Foule</pumpupthecrowd>
+<pumpupthecrowddesc>Une fois par match, lorsque Skrorg fait retirer un joueur adverse à la suite d'une Perte causée par une Action de Blocage, le coach contrôlant Skrorg obtient une Relance d'Équipe jusqu'à la fin de la Manche en cours. Si cette Relance d'Équipe n'a pas été utilisée à la fin de la Manche, elle est perdue.</pumpupthecrowddesc>
+<raidingparty>Groupe de Raid</raidingparty>
+<raidingpartydesc>Une fois par Manche, lorsqu'Ivar commence son activation, il peut sélectionner un coéquipier Libre à 5 cases ou moins. Le joueur sélectionné peut immédiatement se déplacer d'1 case, mais doit terminer ce déplacement en Marquant un joueur adverse.</raidingpartydesc>
+<ram>Bélier</ram>
+<ramdesc>Une fois par match, lorsqu'un joueur adverse est Mis à Terre à la suite d'une Action de Blocage effectuée par Rumbelow, vous pouvez appliquer un modificateur supplémentaire de +1 soit au Jet d'Armure, soit au Jet de Blessure. Ce modificateur peut être appliqué après que le jet a été effectué.</ramdesc>
+<reliable>Fiable</reliable>
+<reliabledesc>Si Deeproot effectue un Lancer Raté lors d'une Action de Lancer de Coéquipier, le joueur lancé Rebondit normalement mais atterrit automatiquement sans encombre.</reliabledesc>
+<savagemauling>Déchiquetage Sauvage</savagemauling>
+<savagemaulingdesc>Une fois par match, lorsque Wilhelm effectue un Jet de Blessure contre un joueur adverse, il peut choisir de relancer le résultat.</savagemaulingdesc>
+<shottonothing>Coup de Poker</shottonothing>
+<shottonothingdesc>Une fois par match, lorsque Gloriel est activée, elle peut utiliser cette règle spéciale. Si elle le fait, Gloriel obtient la Compétence Main de Dieu jusqu'à la fin de son activation.</shottonothingdesc>
+<slayer>Tueur</slayer>
+<slayerdesc>Une fois par match, lorsqu'une Grande Brute adverse est Mise à Terre à la suite d'une Action de Blocage effectuée par Grim, vous pouvez appliquer un modificateur supplémentaire de +1 soit au Jet d'Armure, soit au Jet de Blessure. Ce modificateur peut être appliqué après que le jet a été effectué.</slayerdesc>
+<sneakiestotl>Le Plus Sournois de Tous</sneakiestotl>
+<sneakiestotldesc>Si votre équipe inclut le Gobbo Noir, vous pouvez déclarer deux Actions de Faute par Tour, au lieu d'une seule habituellement. Cependant, l'une de ces Actions de Faute doit être déclarée par le Gobbo Noir lui-même.</sneakiestotldesc>
+<strongpassinggame>Bras Puissant</strongpassinggame>
+<strongpassinggamedesc>Une fois par match, lorsque Skrull effectue une Action de Passe, il peut modifier le résultat du Test d'Habileté de Passe de la valeur de sa Caractéristique de Force, jusqu'à un maximum de 6.</strongpassinggamedesc>
+<theballista>La Baliste</theballista>
+<theballistadesc>Une fois par match, lorsque Morg effectue une Action de Lancer de Coéquipier, il peut relancer le Test d'Habileté de Passe.</theballistadesc>
+<treacherous>Traître</treacherous>
+<treacherousdesc>Une fois par match, si Hakflem est adjacent à un coéquipier en possession du ballon lorsqu'il est activé, Hakflem peut choisir de prendre possession du ballon. S'il le fait, le coéquipier est immédiatement Mis à Terre. Cela ne provoque pas de Turnover, même si le coéquipier subit une Perte.</treacherousdesc>
+<workingintandem>Deux pour Un</workingintandem>
+<workingintandemdesc>Les Jumeaux Swift doivent être engagés en paire. De plus, si Lucien effectue une Action de Blocage contre un joueur adverse également Marqué par Valen, Lucien peut relancer un unique Dé de Blocage.</workingintandemdesc>
+<workingintandem2desc>Les Jumeaux Swift doivent être engagés en paire. De plus, si Valen effectue une Action de Passe ciblant une case contenant Lucien, Valen ne subit aucun modificateur au Test d'Habileté de Passe lié à la portée de l'Action de Passe.</workingintandem2desc>
+<whirlingdervish>Derviche Tourneur</whirlingdervish>
+<whirlingdervishdesc>Une fois par activation, Fungus peut relancer le D6 lorsqu'il détermine la direction dans laquelle il se déplace.</whirlingdervishdesc>
+<wisdomotwd>Sagesse du Nain Blanc</wisdomotwd>
+<wisdomotwddesc>Une fois par match, lorsque Grombrindal est activé, il peut sélectionner un coéquipier se trouvant à 2 cases ou moins. Le coéquipier sélectionné obtient l'une des Compétences suivantes jusqu'à la fin du Tour : Esquive en Force, Intrépidité, Châtaigne, Équilibre.</wisdomotwddesc>
+<lookintomyeyes>Regarde-moi dans les Yeux</lookintomyeyes>
+<lookintomyeyesdesc>Une fois par match, si Boa commence son activation en Marquant un joueur adverse en possession du ballon, il peut lancer un D6. Sur un 1, il ne se passe rien. Sur un 2+, le joueur adverse perd la possession du ballon, Boa en prend immédiatement possession et son activation prend fin immédiatement.</lookintomyeyesdesc>
+<balefulhex>Sortilège Maléfique</balefulhex>
+<balefulhexdesc>Une fois par match, au début de l'activation d'Estelle, elle peut sélectionner un joueur adverse à 5 cases ou moins et lancer un D6. Sur un 2+, le joueur sélectionné devient Distrait et ne peut pas être activé pendant le prochain Tour de son équipe.</balefulhexdesc>
+<primalsavagery>Sauvagerie Primale</primalsavagery>
+<primalsavagerydesc>Une fois par match, lorsque Glotl échoue à un jet de Sauvagerie Animale, il peut se déchaîner sur un joueur adverse plutôt que sur un coéquipier.</primalsavagerydesc>
+<watchout>Attention !</watchout>
+<watchoutdesc>La première fois à chaque Manche que Withergrasp est la cible d'une Action de Blocage effectuée par un joueur adverse, il est considéré comme possédant la Compétence Esquive.</watchoutdesc>
+<yoink>Hop là !</yoink>
+<yoinkdesc>Une fois par match, lorsque Scrappa tente d'Intercepter une Action de Passe, il peut lancer un D6. Sur un 2+, Scrappa n'a pas besoin de lancer de dé pour Intercepter ; il Intercepte automatiquement l'Action de Passe et prend le contrôle du ballon.</yoinkdesc>
+<kickemwtd>Achevez-les à Terre !</kickemwtd>
+<kickemwtddesc>Une fois par match, Nobbla peut utiliser l'Action Spéciale Attaque à la Tronçonneuse contre un joueur adverse à Terre ou Sonné. Cela ne compte pas comme une Action de Faute, et Nobbla ne peut donc pas être Expulsé lorsqu'il utilise cette règle spéciale.</kickemwtddesc>
+<thinkingmanstroll>Le Troll qui Réfléchit</thinkingmanstroll>
+<thinkingmanstrolldesc>Une fois par mi-temps, Ripper peut relancer un unique dé lancé seul, dans le cadre d'un lancer de plusieurs dés, ou d'une réserve de dés, mais il ne peut pas s'agir d'un dé lancé dans le cadre d'un Jet d'Armure, d'un Jet de Blessure ou d'un Jet de Perte.</thinkingmanstrolldesc>
+<putridregurgitation>Régurgitation Putride</putridregurgitation>
+<putridregurgitationdesc>Une fois par mi-temps, Bilerot peut utiliser l'Action Spéciale Gerbe de Vomi. Elle peut être utilisée même si Bilerot a déjà effectué une Action de Blocage ce Tour.</putridregurgitationdesc>
+<allyoucaneat>À Volonté</allyoucaneat>
+<allyoucaneatdesc>Une fois par match, Cindy peut effectuer deux Actions Spéciales Lancer de Bombe au lieu d'une seule, mais elle doit s'y engager avant d'effectuer la première Action. Si elle le fait, immédiatement après avoir effectué la seconde Action Spéciale Lancer de Bombe, lancez un D6. Sur un 1-3, Cindy est immédiatement Expulsée.</allyoucaneatdesc>
+<asneakypair>Une Paire de Sournois</asneakypair>
+<asneakypairdesc>Dribl et Drull doivent être engagés en paire. De plus, chaque fois que Dribl ou Drull effectue une Action de Faute ou une Action Spéciale Poignard contre un joueur adverse Marqué à la fois par Dribl et Drull, ils peuvent appliquer un modificateur de +1 au jet.</asneakypairdesc>
+<halflingluck>Chance de Halfling</halflingluck>
+<halflingluckdesc>Une fois par match, Puggy peut relancer un unique dé lancé seul, dans le cadre d'un lancer de plusieurs dés, ou d'une réserve de dés, mais il ne peut pas s'agir d'un dé lancé dans le cadre d'un Jet d'Armure, d'un Jet de Blessure ou d'un Jet de Perte.</halflingluckdesc>
+<tastymorsel>Bouchée Savoureuse</tastymorsel>
+<tastymorseldesc>Une fois par match, lorsque Karina échoue à un jet de Soif de Sang, elle peut choisir de mordre un joueur adverse ayant une Force de 3 ou moins, comme s'il s'agissait d'un coéquipier Esclave. Karina ne peut pas mordre de Star Players avec cette règle spéciale.</tastymorseldesc>
+<dwarfenscourge>Fléau des Nains</dwarfenscourge>
+<dwarfenscourgedesc>Une fois par match, lorsqu'un joueur adverse est Mis à Terre à la suite d'une Action de Blocage effectuée par Ivan, vous pouvez appliquer un modificateur supplémentaire de +1 au Jet d'Armure ou au Jet de Blessure. S'il s'agit d'un joueur Nain, ce modificateur peut être de +2 à la place.</dwarfenscourgedesc>
+<staroftheshow>Vedette du Spectacle</staroftheshow>
+<staroftheshowdesc>Une fois par match, lorsque le Comte Luthor marque un touchdown, le coach qui le contrôle peut obtenir une Relance d'Équipe. Si cette relance n'a pas été utilisée à la fin de la Manche suivante, elle est perdue.</staroftheshowdesc>
+<masterassassin>Maître Assassin</masterassassin>
+<masterassassindesc>Une fois par match, lorsque Skitter effectue une Action Spéciale Poignard, il peut choisir de relancer le Jet d'Armure.</masterassassindesc>
+<boundingleap>Bond Fulgurant</boundingleap>
+<boundingleapdesc>Une fois par match, après avoir déclaré qu'elle va Sauter mais avant de lancer le moindre dé, Rowana peut choisir d'utiliser cette règle spéciale. Si elle le fait, Rowana ne subit aucun modificateur négatif au Test d'Agilité pour Sauter et peut choisir de relancer le résultat.</boundingleapdesc>
+<catchoftheday>Prise du Jour</catchoftheday>
+<catchofthedaydesc>Une fois par mi-temps, si Rodney est Debout et commence son activation à 3 cases ou moins d'un ballon au sol, il peut lancer un D6. Sur un 1-2, il ne se passe rien. Sur un 3+, Rodney prend immédiatement possession du ballon.</catchofthedaydesc>
+<blastin>Le Boum Résout Tout</blastin>
+<blastindesc>Une fois par mi-temps, au début de son activation, Zzharg peut sélectionner un joueur adverse Debout à 3 cases ou moins et lancer un D6. Sur un 3+, le joueur sélectionné est touché. Sur un 2, le coach adverse sélectionne un joueur (de l'une ou l'autre équipe, mais pas Zzharg) à 3 cases ou moins du joueur initialement sélectionné pour être touché à la place. Sur un 1, c'est Zzharg qui est touché à la place. Effectuez un Jet d'Armure pour le joueur touché. L'activation de Zzharg prend alors fin immédiatement.</blastindesc>
+<unstoppablemomentum>Élan Irrésistible</unstoppablemomentum>
+<unstoppablemomentumdesc>Chaque fois que H'Thark effectue une Action de Blocage dans le cadre d'une Action de Blitz, il peut relancer un unique Dé de Blocage.</unstoppablemomentumdesc>
+<toxinconnoisseur>Connaisseur de Poisons</toxinconnoisseur>
+<toxinconnoisseurdesc>Une fois par match, lorsque Rashnak brise avec succès l'armure d'un joueur adverse à la suite d'une Action Spéciale Poignard, vous pouvez appliquer un modificateur supplémentaire de +1 au Jet de Blessure. Ce modificateur peut être appliqué après que le jet a été effectué.</toxinconnoisseurdesc>
+<swiftasthebreeze>Rapide comme la Brise</swiftasthebreeze>
+<swiftasthebreezedesc>Une fois par match, Jordell peut choisir de réussir un unique test d'Esquive, de Saut ou de Ruée sur un 2+, quels que soient les modificateurs.</swiftasthebreezedesc>
+<theflashingblade>La Lame Étincelante</theflashingblade>
+<theflashingbladedesc>Une fois par match, au début de son activation, Jeremiah peut déclarer une Action Spéciale Poignard contre un joueur adverse qu'il Marque. Après avoir effectué l'Action Spéciale Poignard, Jeremiah peut ensuite effectuer une Action de Déplacement avant que son activation ne prenne fin.</theflashingbladedesc>
+<viciousvines>Vignes Vicieuses</viciousvines>
+<viciousvinesdesc>Une fois par mi-temps, lorsque Maple déclare une Action de Blocage, il peut la déclarer contre un joueur adverse se trouvant à 2 cases, en suivant toutes les règles normales pour effectuer une Action de Blocage, mais il ne peut pas Suivre.</viciousvinesdesc>
+<furiousoutburst>Accès de Furie</furiousoutburst>
+<furiousoutburstdesc>Une fois par mi-temps, tant qu'elle est Debout au début de son activation, Swiftvine peut se placer adjacente à un joueur adverse Debout se trouvant à 3 cases ou moins d'elle et effectuer immédiatement une Action Spéciale Poignard contre lui. Elle peut ensuite se placer dans une case inoccupée à 3 cases ou moins de sa nouvelle position. Son activation prend alors fin immédiatement. Ceci compte comme l'Action de Blitz de l'équipe pour le Tour.</furiousoutburstdesc>
+<savageblow>Coup Sauvage</savageblow>
+<savageblowdesc>Une fois par match, lorsqu'Anqi effectue une Action de Blocage contre un joueur adverse, il peut choisir de relancer n'importe quel nombre de Dés de Blocage.</savageblowdesc>
+<quickbite>Morsure Rapide</quickbite>
+<quickbitedesc>Une fois par match, si Guffle Marque un joueur adverse qui réceptionne le ballon, il peut immédiatement effectuer un Jet d'Armure contre ce joueur. Si l'Armure de la cible est brisée, Guffle prend immédiatement possession du ballon. Aucun Turnover n'est provoqué par l'utilisation de cette règle spéciale.</quickbitedesc>
+<blackink>Encre Noire</blackink>
+<blackinkdesc>Une fois par match, au début de l'une de ses activations, Kiroth peut sélectionner un joueur adverse qu'il Marque. Le joueur sélectionné devient Distrait jusqu'à sa prochaine activation.</blackinkdesc>
+<dwarvengrit>Cran Nain</dwarvengrit>
+<dwarvengritdesc>Une fois par match, lorsque l'armure de Josef est brisée à la suite d'un Jet d'Armure, vous pouvez choisir de faire relancer le Jet d'Armure.</dwarvengritdesc>
+<krumpsmash>Krump et Écrase</krumpsmash>
+<krumpsmashdesc>Une fois par match, lorsqu'un joueur adverse est Mis à Terre à la suite d'une Action de Blocage effectuée par Varag, il peut relancer le Jet d'Armure.</krumpsmashdesc>
+<illcarryyou>Je te Porte</illcarryyou>
+<illcarryyoudesc>Grak et Crumbleberry doivent être engagés en paire. De plus, une fois par mi-temps, si Grak commence son activation adjacent à Crumbleberry, il peut le porter : retirez temporairement Crumbleberry du terrain. À la fin de l'activation de Grak, placez Crumbleberry dans une case inoccupée adjacente à Grak.</illcarryyoudesc>
+<illcarryyou2desc>Grak et Crumbleberry doivent être engagés en paire. De plus, tant que Crumbleberry est porté par Grak, Grak obtient les Compétences Esquive en Force et Esquive.</illcarryyou2desc>
+<woodlandfury>Furie Sylvestre</woodlandfury>
+<woodlandfurydesc>Une fois par match, lorsque Willow effectue une Action de Blocage qui entraînerait sa Mise à Terre, elle peut choisir de relancer un unique Dé de Blocage.</woodlandfurydesc>
+</fr-FR>
+
+<de-DE>
+<beerbarrelbash>Bierfass-Schlacht</beerbarrelbash>
+<beerbarrelbashdesc>Einmal pro Spielabschnitt kann Thorsson zu Beginn seiner Aktivierung einen gegnerischen Spieler innerhalb von drei Feldern wählen und einen W6 würfeln. Bei einer 3+ wird der gewählte Spieler sofort niedergeschlagen. Bei einer 2 passiert nichts. Bei einer 1 fällt Thorsson hin. Nach der Nutzung dieser Sonderregel endet Thorssons Aktivierung sofort.</beerbarrelbashdesc>
+<blastit>Sprengen wir's!</blastit>
+<blastitdesc>Immer wenn Barik einen Verzweiflungspass durchführt, kann er jedes Streuungsergebnis zur Bestimmung der Landeposition des Balls wiederholen, und jeder Mitspieler, der versucht, den Ball zu fangen, wendet einen Modifikator von +1 auf den Wurf an.</blastitdesc>
+<blindrage>Blinde Wut</blindrage>
+<blindragedesc>Akhorne kann sich entscheiden, den W6 zu wiederholen, wenn er für die Fähigkeit Kühnheit würfelt.</blindragedesc>
+<brutalblock>Brutaler Block</brutalblock>
+<brutalblockdesc>Einmal pro Spiel kann Frank N Stein, wenn er infolge einer Blockaktion einen Verletzungswurf gegen einen Gegner macht, einen zusätzlichen Modifikator von +1 auf den Verletzungswurf anwenden. Dieser Modifikator kann nach dem Wurf angewendet werden.</brutalblockdesc>
+<slashingnails>Reißende Krallen</slashingnails>
+<slashingnailsdesc>Einmal pro Halbzeit erhält Roxanna, wenn sie eine Blitzaktion ansagt, die Fähigkeit Klauen bis zum Ende ihrer Aktivierung.</slashingnailsdesc>
+<consummatepro>Vollendeter Profi</consummatepro>
+<consummateprodesc>Einmal pro Spiel kann Griff einen Modifikator von +1 auf einen von ihm gemachten Geschicklichkeitstest anwenden. Dieser Modifikator kann nach dem Wurf angewendet werden.</consummateprodesc>
+<crushingblow>Zermalmender Schlag</crushingblow>
+<crushingblowdesc>Einmal pro Spiel, wenn ein gegnerischer Spieler infolge einer von Zug durchgeführten Blockaktion niedergeschlagen wird, darfst du einen zusätzlichen Modifikator von +1 auf den Rüstungswurf anwenden. Dieser Modifikator kann nach dem Wurf angewendet werden.</crushingblowdesc>
+<excuseme>Entschuldigung, bist du ein Zoat?</excuseme>
+<excusemedesc>Einmal pro Spiel kann Zolcath, wenn er aktiviert wird, einen gegnerischen Spieler innerhalb von 3 Feldern wählen. Der gewählte Spieler wird sofort abgelenkt.</excusemedesc>
+<frenziedrush>Rasender Ansturm</frenziedrush>
+<frenziedrushdesc>Einmal pro Halbzeit kann Glart, wenn er eine Blitzaktion ansagt, die Fähigkeit Raserei bis zum Ende seiner Aktivierung erhalten. Glart darf die Fähigkeit Packen in einem Zug, in dem er diese Sonderregel nutzt, nicht einsetzen.</frenziedrushdesc>
+<furyotbg>Zorn des Blutgottes</furyotbg>
+<furyotbgdesc>Einmal pro Spiel, wenn Scyla nach der Ansage einer Blockaktion bei seinem Wurf für Ungezügelte Wut eine 1 würfelt, kann Scyla anstelle der üblichen Auswirkungen von Ungezügelter Wut stattdessen zwei Blockaktionen durchführen. Die erste Blockaktion muss vollständig abgehandelt werden, einschließlich der Nutzung der Fähigkeit Raserei, bevor die zweite durchgeführt wird.</furyotbgdesc>
+<ghostlyflames>Geisterflammen</ghostlyflames>
+<ghostlyflamesdesc>Einmal pro Halbzeit kann Bryce, wenn er die Kettensägenangriff-Spezialaktion als Teil einer Blitzaktion durchführt, +4 statt +3 auf den Rüstungswurf gegen einen Gegner addieren.</ghostlyflamesdesc>
+<goredbythebull>Vom Stier aufgespießt</goredbythebull>
+<goredbythebulldesc>Einmal pro Spiel kann Grashnak, wenn er eine Blockaktion als Teil einer Blitzaktion durchführt, einen zusätzlichen Blockwürfel gegen den gegnerischen Spieler würfeln, unabhängig von dessen ST, bis zu einem Maximum von drei Blockwürfeln. Führt Grashnak infolge der Fähigkeit Raserei eine zweite Blockaktion durch, profitiert auch diese zweite Blockaktion von dieser Regel.</goredbythebulldesc>
+<illbeback>Ich komme wieder!</illbeback>
+<illbebackdesc>Das erste Mal in einem Spiel, wenn Kreek gemäß der Eigenschaft Geheimwaffe vom Feld gestellt würde, wird er nicht vom Feld gestellt und kann stattdessen weiter am Spiel teilnehmen. Kreeks Coach darf keinen Einspruch einlegen, wenn Kreek diese Sonderregel nutzt.</illbebackdesc>
+<incorporeal>Körperlos</incorporeal>
+<incorporealdesc>Einmal pro Spiel kann Gretchen, wenn sie aktiviert wird, diese Sonderregel nutzen. Bis zum Ende ihrer Aktivierung muss Gretchen keine Ausweich-Würfe machen, um eine Feldposition innerhalb der Kontrollzone eines gegnerischen Spielers zu verlassen.</incorporealdesc>
+<indomitable>Unbezwingbar</indomitable>
+<indomitabledesc>Einmal pro Spiel kann Karla, wenn sie erfolgreich für die Nutzung ihrer Fähigkeit Kühnheit würfelt, ihren ST-Wert auf das Doppelte des Ziels der Blockaktion erhöhen.</indomitabledesc>
+<kaboom>Kawumm!</kaboom>
+<kaboomdesc>Einmal pro Spiel kannst du, wenn ein gegnerischer Spieler eine von Bomber geworfene Bombe fängt, entscheiden, dass sie explodiert, anstatt dass der gegnerische Spieler sie sofort erneut zu werfen versucht.</kaboomdesc>
+<lordofchaos>Herr des Chaos</lordofchaos>
+<lordofchaosdesc>Einmal pro Spiel kann Lord Borak, wenn er eine Blockaktion durchführt, einen einzelnen Blockwürfel wiederholen.</lordofchaosdesc>
+<maximumcarnage>Maximales Gemetzel</maximumcarnage>
+<maximumcarnagedesc>Einmal pro Spiel kann Max, nachdem er eine Kettensägenangriff-Spezialaktion durchgeführt hat, sofort eine weitere Kettensägenangriff-Spezialaktion durchführen, die einen anderen gegnerischen Spieler zum Ziel hat.</maximumcarnagedesc>
+<mesmerisingdance>Betörender Tanz</mesmerisingdance>
+<mesmerisingdancedesc>Einmal pro Halbzeit kann Eldril den Würfel wiederholen, wenn er eine Hypnotischer-Blick-Spezialaktion durchführt.</mesmerisingdancedesc>
+<oldpro>Alter Profi</oldpro>
+<oldprodesc>Einmal pro Spiel kann Helmut seine Fähigkeit Profi einsetzen, um einen einzelnen Würfel zu wiederholen, der als Teil eines Rüstungswurfs geworfen wurde.</oldprodesc>
+<pumpupthecrowd>Das Publikum anheizen</pumpupthecrowd>
+<pumpupthecrowddesc>Einmal pro Spiel, wenn Skrorg infolge einer Blockaktion einen Spielerausfall bei einem gegnerischen Spieler verursacht, erhält Skrorgs kontrollierender Coach eine Team-Wiederholung bis zum Ende des laufenden Spielabschnitts. Wurde diese Team-Wiederholung bis zum Ende des Spielabschnitts nicht eingesetzt, geht sie verloren.</pumpupthecrowddesc>
+<raidingparty>Überfalltrupp</raidingparty>
+<raidingpartydesc>Einmal pro Spielabschnitt kann Ivar, wenn er seine Aktivierung beginnt, einen offenen Mitspieler innerhalb von 5 Feldern wählen. Der gewählte Spieler darf sich sofort 1 Feld bewegen, muss diese Bewegung jedoch damit beenden, einen gegnerischen Spieler zu decken.</raidingpartydesc>
+<ram>Rammbock</ram>
+<ramdesc>Einmal pro Spiel, wenn ein gegnerischer Spieler infolge einer von Rumbelow durchgeführten Blockaktion niedergeschlagen wird, darfst du einen zusätzlichen Modifikator von +1 entweder auf den Rüstungswurf oder den Verletzungswurf anwenden. Dieser Modifikator kann nach dem Wurf angewendet werden.</ramdesc>
+<reliable>Verlässlich</reliable>
+<reliabledesc>Wenn Deeproot bei der Durchführung einer Mitspieler-Wurfaktion einen missglückten Wurf macht, prallt der geworfene Spieler normal ab, landet jedoch automatisch sicher.</reliabledesc>
+<savagemauling>Wilde Verstümmelung</savagemauling>
+<savagemaulingdesc>Einmal pro Spiel kann Wilhelm, wenn er einen Verletzungswurf gegen einen gegnerischen Spieler macht, das Ergebnis wiederholen.</savagemaulingdesc>
+<shottonothing>Verzweifelter Versuch</shottonothing>
+<shottonothingdesc>Einmal pro Spiel kann Gloriel, wenn sie aktiviert wird, diese Sonderregel nutzen. Tut sie dies, erhält Gloriel die Fähigkeit Verzweiflungspass bis zum Ende ihrer Aktivierung.</shottonothingdesc>
+<slayer>Schlächter</slayer>
+<slayerdesc>Einmal pro Spiel, wenn ein gegnerischer Großer Brocken infolge einer von Grim durchgeführten Blockaktion niedergeschlagen wird, darfst du einen zusätzlichen Modifikator von +1 entweder auf den Rüstungswurf oder den Verletzungswurf anwenden. Dieser Modifikator kann nach dem Wurf angewendet werden.</slayerdesc>
+<sneakiestotl>Hinterhältigster von allen</sneakiestotl>
+<sneakiestotldesc>Wenn deine Mannschaft den Schwarzen Gobbo enthält, darfst du pro Zug zwei Foulaktionen ansagen statt der üblichen einen. Eine dieser Foulaktionen muss jedoch vom Schwarzen Gobbo selbst angesagt werden.</sneakiestotldesc>
+<strongpassinggame>Starkes Passspiel</strongpassinggame>
+<strongpassinggamedesc>Einmal pro Spiel kann Skrull, wenn er eine Passaktion durchführt, das Ergebnis des Passtests um den Wert seines ST-Werts modifizieren, bis zu einem Maximum von 6.</strongpassinggamedesc>
+<theballista>Die Balliste</theballista>
+<theballistadesc>Einmal pro Spiel kann Morg, wenn er eine Mitspieler-Wurfaktion durchführt, den Passtest wiederholen.</theballistadesc>
+<treacherous>Verräterisch</treacherous>
+<treacherousdesc>Einmal pro Spiel kann Hakflem, wenn er bei seiner Aktivierung an einen ballbesitzenden Mitspieler angrenzt, sich entscheiden, den Ballbesitz zu übernehmen. Tut er dies, wird der Mitspieler sofort niedergeschlagen. Dies verursacht keinen Turnover, selbst wenn der Mitspieler einen Spielerausfall erleidet.</treacherousdesc>
+<workingintandem>Zwei für Eins</workingintandem>
+<workingintandemdesc>Die Swift-Zwillinge müssen als Paar angeheuert werden. Zusätzlich kann Lucien, wenn er eine Blockaktion gegen einen gegnerischen Spieler durchführt, der auch von Valen gedeckt wird, einen einzelnen Blockwürfel wiederholen.</workingintandemdesc>
+<workingintandem2desc>Die Swift-Zwillinge müssen als Paar angeheuert werden. Zusätzlich erleidet Valen, wenn er eine Passaktion durchführt, die eine Feldposition mit Lucien zum Ziel hat, keine Modifikatoren auf den Passtest für die Reichweite der Passaktion.</workingintandem2desc>
+<whirlingdervish>Wirbelnder Derwisch</whirlingdervish>
+<whirlingdervishdesc>Einmal pro Aktivierung kann Fungus den W6 wiederholen, wenn die Richtung bestimmt wird, in die er sich bewegt.</whirlingdervishdesc>
+<wisdomotwd>Weisheit des Weißen Zwergs</wisdomotwd>
+<wisdomotwddesc>Einmal pro Spiel kann Grombrindal, wenn er aktiviert wird, einen Mitspieler innerhalb von 2 Feldern wählen. Der gewählte Mitspieler erhält bis zum Ende des Zuges eine der folgenden Fähigkeiten: Tacklingdurchbruch, Kühnheit, Wuchtschlag, Trittsicherheit.</wisdomotwddesc>
+<lookintomyeyes>Schau mir in die Augen</lookintomyeyes>
+<lookintomyeyesdesc>Einmal pro Spiel kann Boa, wenn er seine Aktivierung beginnt, während er einen ballbesitzenden gegnerischen Spieler deckt, einen W6 würfeln. Bei einer 1 passiert nichts. Bei einer 2+ verliert der gegnerische Spieler den Ballbesitz, Boa übernimmt sofort den Ballbesitz, und Boas Aktivierung endet sofort.</lookintomyeyesdesc>
+<balefulhex>Unheilvoller Fluch</balefulhex>
+<balefulhexdesc>Einmal pro Spiel kann Estelle zu Beginn ihrer Aktivierung einen gegnerischen Spieler innerhalb von 5 Feldern wählen und einen W6 würfeln. Bei einer 2+ wird der gewählte Spieler abgelenkt und kann während des nächsten Zuges seiner Mannschaft nicht aktiviert werden.</balefulhexdesc>
+<primalsavagery>Urtümliche Wildheit</primalsavagery>
+<primalsavagerydesc>Einmal pro Spiel kann Glotl, wenn er einen Wurf für Tierische Wildheit misslingt, nach einem gegnerischen Spieler statt einem Mitspieler schlagen.</primalsavagerydesc>
+<watchout>Vorsicht!</watchout>
+<watchoutdesc>Das erste Mal in jedem Spielabschnitt, wenn Withergrasp das Ziel einer von einem gegnerischen Spieler durchgeführten Blockaktion ist, gilt er als im Besitz der Fähigkeit Ausweichen.</watchoutdesc>
+<yoink>Schnapp!</yoink>
+<yoinkdesc>Einmal pro Spiel kann Scrappa, wenn er versucht, eine Passaktion abzufangen, einen W6 würfeln. Bei einer 2+ muss Scrappa nicht auf Abfangen würfeln; stattdessen fängt er die Passaktion automatisch ab und erhält die Kontrolle über den Ball.</yoinkdesc>
+<kickemwtd>Tritt sie, wenn sie am Boden liegen!</kickemwtd>
+<kickemwtddesc>Einmal pro Spiel kann Nobbla die Kettensägenangriff-Spezialaktion gegen einen am Boden liegenden oder betäubten gegnerischen Spieler einsetzen. Dies zählt nicht als Foulaktion, weshalb Nobbla bei der Nutzung dieser Sonderregel nicht vom Feld gestellt werden kann.</kickemwtddesc>
+<thinkingmanstroll>Der denkende Troll</thinkingmanstroll>
+<thinkingmanstrolldesc>Einmal pro Halbzeit kann Ripper einen einzelnen Würfel wiederholen, der entweder als einzelner Würfelwurf, als Teil eines Mehrfachwurfs oder aus einem Würfelpool geworfen wurde; dies kann jedoch kein Würfel sein, der als Teil eines Rüstungswurfs, Verletzungswurfs oder Ausfallwurfs geworfen wurde.</thinkingmanstrolldesc>
+<putridregurgitation>Fauliges Erbrechen</putridregurgitation>
+<putridregurgitationdesc>Einmal pro Halbzeit kann Bilerot die Kotzstrahl-Spezialaktion einsetzen. Dies kann auch genutzt werden, wenn Bilerot in diesem Zug bereits eine Blockaktion durchgeführt hat.</putridregurgitationdesc>
+<allyoucaneat>All-you-can-eat</allyoucaneat>
+<allyoucaneatdesc>Einmal pro Spiel kann Cindy zwei Bombenwurf-Spezialaktionen statt einer durchführen, muss sich jedoch vor der ersten Aktion dazu entschließen. Tut sie dies, würfle unmittelbar nach der zweiten Bombenwurf-Spezialaktion einen W6. Bei einer 1-3 wird Cindy sofort vom Feld gestellt.</allyoucaneatdesc>
+<asneakypair>Ein hinterhältiges Paar</asneakypair>
+<asneakypairdesc>Dribl &amp; Drull müssen als Paar angeheuert werden. Zusätzlich können Dribl oder Drull, wenn sie eine Foulaktion oder eine Messerstich-Spezialaktion gegen einen gegnerischen Spieler durchführen, der von beiden gedeckt wird, einen Modifikator von +1 auf den Wurf anwenden.</asneakypairdesc>
+<halflingluck>Halbling-Glück</halflingluck>
+<halflingluckdesc>Einmal pro Spiel kann Puggy einen einzelnen Würfel wiederholen, der entweder als einzelner Würfelwurf, als Teil eines Mehrfachwurfs oder aus einem Würfelpool geworfen wurde; dies kann jedoch kein Würfel sein, der als Teil eines Rüstungswurfs, Verletzungswurfs oder Ausfallwurfs geworfen wurde.</halflingluckdesc>
+<tastymorsel>Leckerbissen</tastymorsel>
+<tastymorseldesc>Einmal pro Spiel kann Karina, wenn sie einen Wurf für Blutrausch misslingt, einen gegnerischen Spieler mit einem ST von 3 oder niedriger beißen, als wäre er ein Leibeigenen-Linespieler-Mitspieler. Karina darf mit dieser Sonderregel keine Star Player beißen.</tastymorseldesc>
+<dwarfenscourge>Geißel der Zwerge</dwarfenscourge>
+<dwarfenscourgedesc>Einmal pro Spiel, wenn ein gegnerischer Spieler infolge einer von Ivan durchgeführten Blockaktion niedergeschlagen wird, darfst du einen zusätzlichen Modifikator von +1 auf den Rüstungswurf oder Verletzungswurf anwenden. Handelt es sich dabei um einen Zwerg-Spieler, kann dies stattdessen ein Modifikator von +2 sein.</dwarfenscourgedesc>
+<staroftheshow>Star der Show</staroftheshow>
+<staroftheshowdesc>Einmal pro Spiel, wenn Graf Luthor einen Touchdown erzielt, erhält sein kontrollierender Coach eine Team-Wiederholung. Wurde diese Wiederholung bis zum Ende des nächsten Spielabschnitts nicht eingesetzt, geht sie verloren.</staroftheshowdesc>
+<masterassassin>Meisterassassine</masterassassin>
+<masterassassindesc>Einmal pro Spiel kann Skitter, wenn er eine Messerstich-Spezialaktion durchführt, den Rüstungswurf wiederholen.</masterassassindesc>
+<boundingleap>Gewaltiger Sprung</boundingleap>
+<boundingleapdesc>Einmal pro Spiel kann Rowana, nachdem sie angesagt hat, dass sie springen wird, aber bevor Würfel geworfen werden, diese Sonderregel nutzen. Tut sie dies, erleidet Rowana keine negativen Modifikatoren auf den Geschicklichkeitstest zum Springen und kann das Ergebnis wiederholen.</boundingleapdesc>
+<catchoftheday>Fang des Tages</catchoftheday>
+<catchofthedaydesc>Einmal pro Halbzeit kann Rodney, wenn er steht und seine Aktivierung innerhalb von 3 Feldern eines am Boden liegenden Balls beginnt, einen W6 würfeln. Bei einer 1-2 passiert nichts. Bei einer 3+ übernimmt Rodney sofort den Ballbesitz.</catchofthedaydesc>
+<blastin>Sprengen löst alles</blastin>
+<blastindesc>Einmal pro Halbzeit kann Zzharg zu Beginn seiner Aktivierung einen stehenden gegnerischen Spieler innerhalb von 3 Feldern wählen und einen W6 würfeln. Bei einer 3+ wird der gewählte Spieler getroffen. Bei einer 2 wählt der gegnerische Coach stattdessen einen Spieler (von beiden Mannschaften, aber nicht Zzharg) innerhalb von 3 Feldern des ursprünglich gewählten Spielers, der getroffen wird. Bei einer 1 wird stattdessen Zzharg getroffen. Mache einen Rüstungswurf für den getroffenen Spieler. Zzhargs Aktivierung endet dann sofort.</blastindesc>
+<unstoppablemomentum>Unaufhaltsamer Schwung</unstoppablemomentum>
+<unstoppablemomentumdesc>Immer wenn H'Thark eine Blockaktion als Teil einer Blitzaktion durchführt, kann er einen einzelnen Blockwürfel wiederholen.</unstoppablemomentumdesc>
+<toxinconnoisseur>Giftkenner</toxinconnoisseur>
+<toxinconnoisseurdesc>Einmal pro Spiel, wenn Rashnak infolge einer Messerstich-Spezialaktion erfolgreich die Rüstung eines gegnerischen Spielers bricht, darfst du einen zusätzlichen Modifikator von +1 auf den Verletzungswurf anwenden. Dieser Modifikator kann nach dem Wurf angewendet werden.</toxinconnoisseurdesc>
+<swiftasthebreeze>Flink wie die Brise</swiftasthebreeze>
+<swiftasthebreezedesc>Einmal pro Spiel kann Jordell einen einzelnen Ausweich-, Sprung- oder Spurt-Test bei einer 2+ automatisch bestehen, unabhängig von etwaigen Modifikatoren.</swiftasthebreezedesc>
+<theflashingblade>Die blitzende Klinge</theflashingblade>
+<theflashingbladedesc>Einmal pro Spiel kann Jeremiah zu Beginn seiner Aktivierung eine Messerstich-Spezialaktion gegen einen gegnerischen Spieler ansagen, den er deckt. Nach der Durchführung der Messerstich-Spezialaktion kann Jeremiah anschließend eine Bewegungsaktion durchführen, bevor seine Aktivierung endet.</theflashingbladedesc>
+<viciousvines>Bösartige Ranken</viciousvines>
+<viciousvinesdesc>Einmal pro Halbzeit kann Maple, wenn er eine Blockaktion ansagt, diese gegen einen gegnerischen Spieler durchführen, der 2 Felder entfernt ist, wobei alle normalen Regeln für die Durchführung einer Blockaktion gelten, er jedoch nicht nachrücken darf.</viciousvinesdesc>
+<furiousoutburst>Wütender Ausbruch</furiousoutburst>
+<furiousoutburstdesc>Einmal pro Halbzeit kann sich Swiftvine, sofern sie zu Beginn ihrer Aktivierung steht, angrenzend an einen stehenden gegnerischen Spieler innerhalb von 3 Feldern platzieren und sofort eine Messerstich-Spezialaktion gegen ihn durchführen. Anschließend kann sie sich auf eine unbesetzte Feldposition innerhalb von 3 Feldern ihrer neuen Position stellen. Ihre Aktivierung endet dann sofort. Dies zählt als Blitzaktion der Mannschaft für den Zug.</furiousoutburstdesc>
+<savageblow>Wilder Schlag</savageblow>
+<savageblowdesc>Einmal pro Spiel kann Anqi, wenn er eine Blockaktion gegen einen gegnerischen Spieler durchführt, eine beliebige Anzahl der Blockwürfel wiederholen.</savageblowdesc>
+<quickbite>Schneller Biss</quickbite>
+<quickbitedesc>Einmal pro Spiel kann Guffle, wenn er einen gegnerischen Spieler deckt, der den Ball fängt, sofort einen Rüstungswurf gegen diesen Spieler machen. Wird die Rüstung des Ziels gebrochen, übernimmt Guffle sofort den Ballbesitz. Durch die Nutzung dieser Sonderregel wird kein Turnover verursacht.</quickbitedesc>
+<blackink>Schwarze Tinte</blackink>
+<blackinkdesc>Einmal pro Spiel kann Kiroth zu Beginn einer seiner Aktivierungen einen gegnerischen Spieler wählen, den er deckt. Der gewählte Spieler wird bis zu seiner nächsten Aktivierung abgelenkt.</blackinkdesc>
+<dwarvengrit>Zwergischer Biss</dwarvengrit>
+<dwarvengritdesc>Einmal pro Spiel, wenn Josefs Rüstung infolge eines Rüstungswurfs gebrochen wird, kannst du den Rüstungswurf wiederholen lassen.</dwarvengritdesc>
+<krumpsmash>Krump und Smash</krumpsmash>
+<krumpsmashdesc>Einmal pro Spiel, wenn ein gegnerischer Spieler infolge einer von Varag durchgeführten Blockaktion niedergeschlagen wird, kann er den Rüstungswurf wiederholen.</krumpsmashdesc>
+<illcarryyou>Ich trag dich</illcarryyou>
+<illcarryyoudesc>Grak &amp; Crumbleberry müssen als Paar angeheuert werden. Zusätzlich kann Grak, wenn er seine Aktivierung angrenzend an Crumbleberry beginnt, einmal pro Halbzeit Crumbleberry aufnehmen: Entferne Crumbleberry vorübergehend vom Spielfeld. Am Ende von Graks Aktivierung platziere Crumbleberry auf einer unbesetzten Feldposition angrenzend an Grak.</illcarryyoudesc>
+<illcarryyou2desc>Grak &amp; Crumbleberry müssen als Paar angeheuert werden. Zusätzlich erhält Grak, solange Crumbleberry von ihm getragen wird, die Fähigkeiten Tacklingdurchbruch und Ausweichen.</illcarryyou2desc>
+<woodlandfury>Waldeswut</woodlandfury>
+<woodlandfurydesc>Einmal pro Spiel kann Willow, wenn eine von ihr durchgeführte Blockaktion dazu führen würde, dass sie niedergeschlagen wird, einen einzelnen Blockwürfel wiederholen.</woodlandfurydesc>
+</de-DE>
+
+<it-IT>
+<beerbarrelbash>Botte di Birra</beerbarrelbash>
+<beerbarrelbashdesc>Una volta per Drive, all'inizio della propria attivazione, Thorsson può selezionare un giocatore avversario entro tre caselle e tirare un D6. Con un 3+, il giocatore selezionato viene immediatamente steso a terra. Con un 2, non succede nulla. Con un 1, Thorsson cade a terra. Dopo aver usato questa regola speciale, l'attivazione di Thorsson termina immediatamente.</beerbarrelbashdesc>
+<blastit>Accidenti!</blastit>
+<blastitdesc>Ogni volta che Barik esegue un Passaggio della Disperazione, può ripetere qualsiasi tiro di deviazione per determinare dove atterra la palla, e qualsiasi compagno che tenta di afferrare la palla applica un modificatore di +1 al tiro.</blastitdesc>
+<blindrage>Rabbia Cieca</blindrage>
+<blindragedesc>Akhorne può scegliere di ripetere il D6 quando tira per la Skill Intrepido.</blindragedesc>
+<brutalblock>Blocco Brutale</brutalblock>
+<brutalblockdesc>Una volta per partita, quando Frank N Stein effettua un Tiro per l'Infortunio contro un avversario a seguito di un'Azione di Blocco, può scegliere di aggiungere un ulteriore modificatore di +1 al Tiro per l'Infortunio. Questo modificatore può essere applicato dopo che il tiro è stato effettuato.</brutalblockdesc>
+<slashingnails>Unghie Taglienti</slashingnails>
+<slashingnailsdesc>Una volta per tempo, quando Roxanna dichiara un'Azione di Blitz, ottiene la Skill Artigli fino alla fine della propria attivazione.</slashingnailsdesc>
+<consummatepro>Professionista Consumato</consummatepro>
+<consummateprodesc>Una volta per partita, Griff può applicare un modificatore di +1 a un Test di Agilità che ha effettuato. Questo modificatore può essere applicato dopo che il tiro è stato effettuato.</consummateprodesc>
+<crushingblow>Colpo Schiacciante</crushingblow>
+<crushingblowdesc>Una volta per partita, quando un giocatore avversario viene steso a terra a seguito di un'Azione di Blocco eseguita da Zug, puoi applicare un ulteriore modificatore di +1 al Tiro per l'Armatura. Questo modificatore può essere applicato dopo che il tiro è stato effettuato.</crushingblowdesc>
+<excuseme>Scusa, Sei uno Zoat?</excuseme>
+<excusemedesc>Una volta per partita, quando Zolcath viene attivato può selezionare un giocatore avversario entro 3 caselle. Il giocatore selezionato diventa immediatamente Distratto.</excusemedesc>
+<frenziedrush>Assalto Frenetico</frenziedrush>
+<frenziedrushdesc>Una volta per tempo, quando Glart dichiara un'Azione di Blitz può ottenere la Skill Frenesia fino alla fine della propria attivazione. Glart non può usare la Skill Afferra durante un Turno in cui usa questa regola speciale.</frenziedrushdesc>
+<furyotbg>Furia del Dio del Sangue</furyotbg>
+<furyotbgdesc>Una volta per partita, se Scyla tira un 1 per il proprio tiro di Furia Incontrollata dopo aver dichiarato un'Azione di Blocco, allora, invece di applicare i normali effetti della Furia Incontrollata, Scyla può eseguire due Azioni di Blocco. La prima Azione di Blocco deve essere risolta completamente, incluso l'uso della Skill Frenesia, prima che venga eseguita la seconda.</furyotbgdesc>
+<ghostlyflames>Fiamme Spettrali</ghostlyflames>
+<ghostlyflamesdesc>Una volta per tempo, quando Bryce esegue l'Azione Speciale Attacco con la Motosega come parte di un'Azione di Blitz, può aggiungere +4 al Tiro per l'Armatura contro un avversario invece di +3.</ghostlyflamesdesc>
+<goredbythebull>Incornato dal Toro</goredbythebull>
+<goredbythebulldesc>Una volta per partita, quando Grashnak esegue un'Azione di Blocco come parte di un'Azione di Blitz, può tirare un Dado di Blocco aggiuntivo contro il giocatore avversario, indipendentemente dalla sua Caratteristica di Forza, fino a un massimo di tre Dadi di Blocco. Se Grashnak esegue una seconda Azione di Blocco grazie alla Skill Frenesia, anche la seconda Azione di Blocco beneficerà di questa regola.</goredbythebulldesc>
+<illbeback>Ritornerò!</illbeback>
+<illbebackdesc>La prima volta in una partita in cui Kreek verrebbe espulso a causa del Tratto Arma Segreta, non viene espulso e può invece continuare a prendere parte alla partita. L'Allenatore di Kreek non può Contestare la Decisione quando Kreek usa questa regola speciale.</illbebackdesc>
+<incorporeal>Incorporeo</incorporeal>
+<incorporealdesc>Una volta per partita, quando Gretchen viene attivata può usare questa regola speciale. Fino alla fine della propria attivazione, Gretchen non deve effettuare tiri di Schivata per lasciare una casella nella Zona di Controllo di un giocatore avversario.</incorporealdesc>
+<indomitable>Indomabile</indomitable>
+<indomitabledesc>Una volta per partita, quando Karla supera con successo il tiro per usare la propria Skill Intrepido, può aumentare la propria Caratteristica di Forza fino al doppio di quella del bersaglio dell'Azione di Blocco.</indomitabledesc>
+<kaboom>Kaboom!</kaboom>
+<kaboomdesc>Una volta per partita, se un giocatore avversario cattura una bomba lanciata da Bomber, puoi scegliere di farla esplodere invece di far tentare immediatamente al giocatore avversario di lanciarla di nuovo.</kaboomdesc>
+<lordofchaos>Signore del Caos</lordofchaos>
+<lordofchaosdesc>Una volta per partita, quando Lord Borak esegue un'Azione di Blocco può ripetere un singolo Dado di Blocco.</lordofchaosdesc>
+<maximumcarnage>Carneficina Totale</maximumcarnage>
+<maximumcarnagedesc>Una volta per partita, dopo che Max esegue un'Azione Speciale Attacco con la Motosega, può immediatamente eseguire un'altra Azione Speciale Attacco con la Motosega che bersaglia un diverso giocatore avversario.</maximumcarnagedesc>
+<mesmerisingdance>Danza Ipnotica</mesmerisingdance>
+<mesmerisingdancedesc>Una volta per tempo, Eldril può ripetere il dado quando esegue un'Azione Speciale Sguardo Ipnotico.</mesmerisingdancedesc>
+<oldpro>Vecchio Professionista</oldpro>
+<oldprodesc>Una volta per partita, Helmut può usare la propria Skill Professionista per ripetere un singolo dado tirato come parte di un Tiro per l'Armatura.</oldprodesc>
+<pumpupthecrowd>Scalda il Pubblico</pumpupthecrowd>
+<pumpupthecrowddesc>Una volta per partita, quando Skrorg causa la rimozione di un giocatore avversario per Vittima a seguito di un'Azione di Blocco, l'Allenatore che controlla Skrorg ottiene un Reroll di Squadra fino alla fine del Drive in corso. Se questo Reroll di Squadra non viene usato entro la fine del Drive, viene perso.</pumpupthecrowddesc>
+<raidingparty>Squadra d'Assalto</raidingparty>
+<raidingpartydesc>Una volta per Drive, quando Ivar inizia la propria attivazione, può selezionare un compagno libero entro 5 caselle. Il giocatore selezionato può immediatamente muoversi di 1 casella, ma deve terminare questo movimento marcando un giocatore avversario.</raidingpartydesc>
+<ram>Ariete</ram>
+<ramdesc>Una volta per partita, quando un giocatore avversario viene steso a terra a seguito di un'Azione di Blocco eseguita da Rumbelow, puoi applicare un ulteriore modificatore di +1 al Tiro per l'Armatura o al Tiro per l'Infortunio. Questo modificatore può essere applicato dopo che il tiro è stato effettuato.</ramdesc>
+<reliable>Affidabile</reliable>
+<reliabledesc>Se Deeproot esegue un Lancio Fallito quando esegue un'Azione di Lancio del Compagno, il giocatore che veniva lanciato Rimbalzerà normalmente ma atterrerà automaticamente in sicurezza.</reliabledesc>
+<savagemauling>Massacro Selvaggio</savagemauling>
+<savagemaulingdesc>Una volta per partita, quando Wilhelm effettua un Tiro per l'Infortunio contro un giocatore avversario, può scegliere di ripetere il risultato.</savagemaulingdesc>
+<shottonothing>Tiro alla Cieca</shottonothing>
+<shottonothingdesc>Una volta per partita, quando Gloriel viene attivata può usare questa regola speciale. Se lo fa, Gloriel ottiene la Skill Passaggio della Disperazione fino alla fine della propria attivazione.</shottonothingdesc>
+<slayer>Sterminatore</slayer>
+<slayerdesc>Una volta per partita, quando un Grosso Bruto avversario viene steso a terra a seguito di un'Azione di Blocco eseguita da Grim, puoi applicare un ulteriore modificatore di +1 al Tiro per l'Armatura o al Tiro per l'Infortunio. Questo modificatore può essere applicato dopo che il tiro è stato effettuato.</slayerdesc>
+<sneakiestotl>Il Più Furbo di Tutti</sneakiestotl>
+<sneakiestotldesc>Se la tua squadra include il Gobbo Nero, allora puoi dichiarare due Azioni di Fallo per Turno, invece della solita una. Tuttavia una di queste Azioni di Fallo deve essere dichiarata dal Gobbo Nero stesso.</sneakiestotldesc>
+<strongpassinggame>Gioco di Passaggio Forte</strongpassinggame>
+<strongpassinggamedesc>Una volta per partita, quando Skrull esegue un'Azione di Passaggio può modificare il risultato del Test di Passaggio in base al valore della propria Caratteristica di Forza, fino a un massimo di 6.</strongpassinggamedesc>
+<theballista>La Balestra</theballista>
+<theballistadesc>Una volta per partita, quando Morg esegue un'Azione di Lancio del Compagno, può ripetere il Test di Passaggio.</theballistadesc>
+<treacherous>Traditore</treacherous>
+<treacherousdesc>Una volta per partita, se Hakflem è adiacente a un compagno in possesso della palla quando viene attivato, allora Hakflem può scegliere di ottenere il possesso della palla. Se lo fa, il compagno verrà immediatamente steso a terra. Questo non causerà un Turnover anche se il compagno subisce una Vittima.</treacherousdesc>
+<workingintandem>Due per Uno</workingintandem>
+<workingintandemdesc>I Gemelli Swift devono essere ingaggiati in coppia. Inoltre, se Lucien esegue un'Azione di Blocco contro un giocatore avversario che è marcato anche da Valen, Lucien può ripetere un singolo Dado di Blocco.</workingintandemdesc>
+<workingintandem2desc>I Gemelli Swift devono essere ingaggiati in coppia. Inoltre, se Valen esegue un'Azione di Passaggio che bersaglia una casella contenente Lucien, allora Valen non subisce alcun modificatore al Test di Passaggio per la distanza dell'Azione di Passaggio.</workingintandem2desc>
+<whirlingdervish>Derviscio Rotante</whirlingdervish>
+<whirlingdervishdesc>Una volta per attivazione, Fungus può ripetere il D6 quando si determina in quale direzione si muove.</whirlingdervishdesc>
+<wisdomotwd>Saggezza del Nano Bianco</wisdomotwd>
+<wisdomotwddesc>Una volta per partita, quando Grombrindal viene attivato può selezionare un compagno entro 2 caselle. Il compagno selezionato ottiene una delle seguenti Skill fino alla fine del Turno: Rottura Placcaggio, Intrepido, Colpo Poderoso, Piedi Sicuri.</wisdomotwddesc>
+<lookintomyeyes>Guarda nei Miei Occhi</lookintomyeyes>
+<lookintomyeyesdesc>Una volta per partita, se Boa inizia la propria attivazione marcando un giocatore avversario in possesso della palla, può tirare un D6. Con un 1, non succede nulla. Con un 2+, il giocatore avversario perde il possesso della palla, Boa ottiene immediatamente il possesso della palla e l'attivazione di Boa termina immediatamente.</lookintomyeyesdesc>
+<balefulhex>Maleficio Funesto</balefulhex>
+<balefulhexdesc>Una volta per partita, all'inizio dell'attivazione di Estelle, può selezionare un giocatore avversario entro 5 caselle e tirare un D6. Con un 2+, il giocatore selezionato diventa Distratto e non può essere attivato durante il prossimo Turno della propria squadra.</balefulhexdesc>
+<primalsavagery>Ferocia Primordiale</primalsavagery>
+<primalsavagerydesc>Una volta per partita, quando Glotl fallisce un tiro di Ferocia Animale, può scagliarsi contro un giocatore avversario invece che contro un compagno.</primalsavagerydesc>
+<watchout>Attenzione!</watchout>
+<watchoutdesc>La prima volta in ogni Drive in cui Withergrasp è bersaglio di un'Azione di Blocco eseguita da un giocatore avversario, viene considerato come se possedesse la Skill Schivata.</watchoutdesc>
+<yoink>Yoink!</yoink>
+<yoinkdesc>Una volta per partita, quando Scrappa tenta di intercettare un'Azione di Passaggio può tirare un D6. Con un 2+, Scrappa non deve tirare per intercettare; intercetterà invece automaticamente l'Azione di Passaggio e otterrà il controllo della palla.</yoinkdesc>
+<kickemwtd>Prendili Mentre Sono a Terra!</kickemwtd>
+<kickemwtddesc>Una volta per partita, Nobbla può usare l'Azione Speciale Attacco con la Motosega contro un giocatore avversario a terra o Stordito. Questo non conta come un'Azione di Fallo, quindi Nobbla non può essere espulso quando usa questa regola speciale.</kickemwtddesc>
+<thinkingmanstroll>Il Troll Pensatore</thinkingmanstroll>
+<thinkingmanstrolldesc>Una volta per tempo, Ripper può ripetere un singolo dado tirato come tiro singolo, come parte di un tiro con più dadi, o come parte di un pool di dadi, purché non sia un dado tirato come parte di un Tiro per l'Armatura, un Tiro per l'Infortunio o un Tiro Vittima.</thinkingmanstrolldesc>
+<putridregurgitation>Rigurgito Putrido</putridregurgitation>
+<putridregurgitationdesc>Una volta per tempo, Bilerot può usare l'Azione Speciale Vomito a Getto. Questa può essere usata anche se Bilerot ha già eseguito un'Azione di Blocco in questo Turno.</putridregurgitationdesc>
+<allyoucaneat>Tutto Quello che Puoi Mangiare</allyoucaneat>
+<allyoucaneatdesc>Una volta per partita, Cindy può eseguire due Azioni Speciali di Lancio della Bomba invece di una, ma deve deciderlo prima di eseguire la prima Azione. Se lo fa, subito dopo aver eseguito la seconda Azione Speciale di Lancio della Bomba tira un D6. Con un 1-3, Cindy viene immediatamente espulsa.</allyoucaneatdesc>
+<asneakypair>Una Coppia Furba</asneakypair>
+<asneakypairdesc>Dribl &amp; Drull devono essere ingaggiati in coppia. Inoltre, ogni volta che Dribl o Drull eseguono un'Azione di Fallo o un'Azione Speciale Pugnalata contro un giocatore avversario marcato sia da Dribl sia da Drull, possono applicare un modificatore di +1 al tiro.</asneakypairdesc>
+<halflingluck>Fortuna Halfling</halflingluck>
+<halflingluckdesc>Una volta per partita, Puggy può ripetere un singolo dado tirato come tiro singolo, come parte di un tiro con più dadi, o come parte di un pool di dadi, purché non sia un dado tirato come parte di un Tiro per l'Armatura, un Tiro per l'Infortunio o un Tiro Vittima.</halflingluckdesc>
+<tastymorsel>Boccone Gustoso</tastymorsel>
+<tastymorseldesc>Una volta per partita, quando Karina fallisce un tiro di Sete di Sangue, può scegliere di mordere un giocatore avversario con una Caratteristica di Forza pari o inferiore a 3 come se fosse un compagno Schiavo Linea. Karina non può mordere Star Player con questa regola speciale.</tastymorseldesc>
+<dwarfenscourge>Flagello dei Nani</dwarfenscourge>
+<dwarfenscourgedesc>Una volta per partita, quando un giocatore avversario viene steso a terra a seguito di un'Azione di Blocco eseguita da Ivan, puoi applicare un ulteriore modificatore di +1 al Tiro per l'Armatura o al Tiro per l'Infortunio. Se il bersaglio è un giocatore Nano, questo può invece essere un modificatore di +2.</dwarfenscourgedesc>
+<staroftheshow>La Star dello Spettacolo</staroftheshow>
+<staroftheshowdesc>Una volta per partita, quando il Conte Luthor segna una Meta, l'Allenatore che lo controlla può ottenere un Reroll di Squadra. Se questo Reroll non viene usato entro la fine del Drive successivo, viene perso.</staroftheshowdesc>
+<masterassassin>Assassino Maestro</masterassassin>
+<masterassassindesc>Una volta per partita, quando Skitter esegue un'Azione Speciale Pugnalata, può scegliere di ripetere il Tiro per l'Armatura.</masterassassindesc>
+<boundingleap>Balzo Prodigioso</boundingleap>
+<boundingleapdesc>Una volta per partita, dopo aver dichiarato che balzerà ma prima di tirare qualsiasi dado, Rowana può scegliere di usare questa regola speciale. Se lo fa, Rowana non subisce alcun modificatore negativo per il Test di Agilità per Balzare e può scegliere di ripetere il risultato.</boundingleapdesc>
+<catchoftheday>Pesca del Giorno</catchoftheday>
+<catchofthedaydesc>Una volta per tempo, se Rodney è in piedi e inizia la propria attivazione entro 3 caselle da una palla che si trova a terra, può tirare un D6. Con un 1-2, non succede nulla. Con un 3+, Rodney ottiene immediatamente il possesso della palla.</catchofthedaydesc>
+<blastin>Esplosioni per Tutto</blastin>
+<blastindesc>Una volta per tempo, all'inizio della propria attivazione, Zzharg può selezionare un giocatore avversario in piedi entro 3 caselle e tirare un D6. Con un 3+, il giocatore selezionato viene colpito. Con un 2, l'Allenatore avversario seleziona un giocatore (di entrambe le squadre, ma non Zzharg) entro 3 caselle dal giocatore originariamente selezionato che viene colpito al suo posto. Con un 1, viene colpito Zzharg stesso. Effettua un Tiro per l'Armatura per il giocatore colpito. L'attivazione di Zzharg termina quindi immediatamente.</blastindesc>
+<unstoppablemomentum>Slancio Inarrestabile</unstoppablemomentum>
+<unstoppablemomentumdesc>Ogni volta che H'Thark esegue un'Azione di Blocco come parte di un'Azione di Blitz, può ripetere un singolo Dado di Blocco.</unstoppablemomentumdesc>
+<toxinconnoisseur>Intenditore di Veleni</toxinconnoisseur>
+<toxinconnoisseurdesc>Una volta per partita, quando Rashnak rompe con successo l'armatura di un giocatore avversario a seguito di un'Azione Speciale Pugnalata, puoi applicare un ulteriore modificatore di +1 al Tiro per l'Infortunio. Questo modificatore può essere applicato dopo che il tiro è stato effettuato.</toxinconnoisseurdesc>
+<swiftasthebreeze>Veloce come il Vento</swiftasthebreeze>
+<swiftasthebreezedesc>Una volta per partita, Jordell può scegliere di superare un singolo test di Schivata, Balzo o Corsa con un 2+, indipendentemente da qualsiasi modificatore.</swiftasthebreezedesc>
+<theflashingblade>La Lama Lampeggiante</theflashingblade>
+<theflashingbladedesc>Una volta per partita, all'inizio della propria attivazione, Jeremiah può dichiarare un'Azione Speciale Pugnalata contro un giocatore avversario che sta marcando. Dopo aver eseguito l'Azione Speciale Pugnalata, Jeremiah può quindi eseguire un'Azione di Movimento prima che la sua attivazione termini.</theflashingbladedesc>
+<viciousvines>Viticci Viziosi</viciousvines>
+<viciousvinesdesc>Una volta per tempo, quando Maple dichiara un'Azione di Blocco, può farlo contro un giocatore avversario che si trova a 2 caselle di distanza, seguendo tutte le normali regole per eseguire un'Azione di Blocco, sebbene non possa avanzare.</viciousvinesdesc>
+<furiousoutburst>Scoppio Furioso</furiousoutburst>
+<furiousoutburstdesc>Una volta per tempo, purché sia in piedi all'inizio della propria attivazione, Swiftvine può posizionarsi adiacente a un giocatore avversario in piedi entro 3 caselle da lei ed eseguire immediatamente un'Azione Speciale Pugnalata contro di lui. Può quindi posizionarsi in una casella libera entro 3 caselle dalla propria nuova posizione. La sua attivazione termina quindi immediatamente. Questo conta come l'Azione di Blitz della squadra per il Turno.</furiousoutburstdesc>
+<savageblow>Colpo Selvaggio</savageblow>
+<savageblowdesc>Una volta per partita, quando Anqi esegue un'Azione di Blocco contro un giocatore avversario, può scegliere di ripetere un numero qualsiasi dei Dadi di Blocco.</savageblowdesc>
+<quickbite>Morso Rapido</quickbite>
+<quickbitedesc>Una volta per partita, se Guffle sta marcando un giocatore avversario che cattura la palla, può immediatamente effettuare un Tiro per l'Armatura contro quel giocatore. Se l'Armatura del bersaglio si rompe, Guffle ottiene immediatamente il possesso della palla. Nessun Turnover viene causato dall'uso di questa regola speciale.</quickbitedesc>
+<blackink>Inchiostro Nero</blackink>
+<blackinkdesc>Una volta per partita, all'inizio di una qualsiasi delle proprie attivazioni, Kiroth può selezionare un giocatore avversario che sta marcando. Il giocatore selezionato diventa Distratto finché non viene attivato di nuovo.</blackinkdesc>
+<dwarvengrit>Grinta Nanica</dwarvengrit>
+<dwarvengritdesc>Una volta per partita, quando l'armatura di Josef si rompe a seguito di un Tiro per l'Armatura, puoi scegliere di far ripetere il Tiro per l'Armatura.</dwarvengritdesc>
+<krumpsmash>Sfracella e Spacca</krumpsmash>
+<krumpsmashdesc>Una volta per partita, quando un giocatore avversario viene steso a terra a seguito di un'Azione di Blocco eseguita da Varag, può ripetere il Tiro per l'Armatura.</krumpsmashdesc>
+<illcarryyou>Ti Porto Io</illcarryyou>
+<illcarryyoudesc>Grak &amp; Crumbleberry devono essere ingaggiati in coppia. Inoltre, una volta per tempo, se Grak inizia la propria attivazione adiacente a Crumbleberry può raccoglierlo: rimuovi temporaneamente Crumbleberry dal campo. Alla fine dell'attivazione di Grak, posiziona Crumbleberry in una casella libera adiacente a Grak.</illcarryyoudesc>
+<illcarryyou2desc>Grak &amp; Crumbleberry devono essere ingaggiati in coppia. Inoltre, mentre Crumbleberry viene trasportato da Grak, Grak ottiene le Skill Rottura Placcaggio e Schivata.</illcarryyou2desc>
+<woodlandfury>Furia Silvana</woodlandfury>
+<woodlandfurydesc>Una volta per partita, quando Willow esegue un'Azione di Blocco che la porterebbe a essere stesa a terra, può scegliere di ripetere un singolo Dado di Blocco.</woodlandfurydesc>
+</it-IT>
+
+</translations>

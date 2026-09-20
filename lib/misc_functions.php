@@ -20,6 +20,14 @@ function objsort(&$obj_array, $fields) {
     $parens = 0;                # Number of parentheses added to end of anonymous function.
     for ($i = 0; $i <= $idxs; $i++) {
         $field = substr($fields[$i], 1, strlen($fields[$i]));
+        # Security: $field ends up concatenated straight into an eval'd/create_function'd
+        # comparator body below. Only allow a safe PHP property-name shape through - anything
+        # else (an attacker-controlled sort key, eg. from a GET/POST-driven table sort) is
+        # otherwise a live PHP code injection vector.
+        if (!preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $field)) {
+            trigger_error("objsort(): rejected unsafe sort field \"$field\"", E_USER_WARNING);
+            return false;
+        }
         $sort_type = substr($fields[$i], 0, 1);
         $parens += ($i == $idxs ? 1 : 2);
         $func .= "\$a->$field " . ($sort_type == '+' ? '>' : '<') . " \$b->$field 
@@ -67,7 +75,7 @@ function setupGlobalVars($type, $opts = array()) {
                 $id = $_lid;
             }
             // Defaults
-            else if (is_object($coach) && isset($coach->settings['home_lid'])) {
+            else if (is_object($coach) && !empty($coach->settings['home_lid']) && array_key_exists($coach->settings['home_lid'], $leagues)) {
                 $id = $coach->settings['home_lid'];
             } else {
                 $id = isset($settings['default_visitor_league']) ? $settings['default_visitor_league'] : '';
@@ -271,7 +279,19 @@ function matchresult_icon($result) {
 }
 
 function fmtprint($str) {
-    return preg_replace("/(\r\n|\n\r|\n|\r)/", '<br>', $str);
+    # Security: HTML-encode before turning newlines into <br> - $str is free-text user input
+    # (bios, news posts, etc.) in every caller, and was previously echoed unescaped, allowing
+    # stored XSS. This is the single shared choke point for that output path.
+    return preg_replace("/(\r\n|\n\r|\n|\r)/", '<br>', htmlspecialchars($str, ENT_QUOTES));
+}
+
+# Security: safely embeds a user-supplied value inside a SQL LIKE pattern. Escapes MySQL's own
+# LIKE wildcard characters (% and _) with a backslash first (so user-typed % or _ is matched
+# literally, not as a wildcard), then applies mysql_real_escape_string() so the backslashes we
+# just added - and any quote/backslash already in the input - are safe for the surrounding SQL
+# string literal. Callers still need to wrap the result in '...' with their own % wildcards.
+function sql_like_escape($str) {
+    return mysql_real_escape_string(str_replace(array('\\', '%', '_'), array('\\\\', '\\%', '\\_'), $str));
 }
 
 # URL compile constants

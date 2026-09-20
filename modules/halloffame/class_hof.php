@@ -136,6 +136,10 @@ public static function getHOF($node, $id, $N = false)
 
 public static function create($player_id, $title, $about)
 {
+    // SECURITY: $player_id (ultimately $_POST['player_id'], the player picked in the dropdown
+    // above) used to be spliced raw into the INSERT below - it's always meant to be a numeric
+    // player ID, so cast it once here, at the single place this query is built.
+    $player_id = (int) $player_id;
     return (mysql_query("
             INSERT INTO hof 
             (pid, title, about, date) 
@@ -228,7 +232,11 @@ public static function makeList() {
         switch ($_GET['action'])
         {
             case 'edit':
-                $e = new self($_GET['hof_id']);
+                // SECURITY: $_GET['hof_id'] used to be spliced straight into the constructor's raw
+                // SQL ("SELECT * FROM hof WHERE hof_id = $hof_id") with no validation on this
+                // POST-submit branch - the sibling GET-triggered edit-FORM branch below already
+                // checks is_numeric() first. It's always meant to be a numeric row ID.
+                $e = new self((int) $_GET['hof_id']);
                 status($e->edit($_POST['title'], $_POST['about']));
                 break;
             
@@ -275,7 +283,9 @@ public static function makeList() {
             case 'new':
                 echo "<a href='handler.php?type=hof'><-- ".$lng->getTrn('common/back')."</a><br><br>";
                 $_DISABLED = !isset($_POST['lid']) ? 'DISABLED' : '';
-                $node_id = isset($_POST['lid']) ? $_POST['lid'] : null;
+                // SECURITY: $node_id is spliced raw into the "WHERE ... f_lid = $node_id" query
+                // just below - it's always meant to be a numeric league ID.
+                $node_id = isset($_POST['lid']) ? (int) $_POST['lid'] : null;
                 ?>
                 <form name="STS" method="POST" enctype="multipart/form-data">
                 <b><?php echo $lng->getTrn('common/league');?></b><br>
@@ -297,16 +307,16 @@ public static function makeList() {
                 <select name="player_id" id="players" <?php echo $_DISABLED;?>>
                     <?php
                     while ($row = mysql_fetch_assoc($result)) {
-                        echo "<option value='$row[player_id]' ".(($player_id == $row['player_id']) ? 'SELECTED' : '').">$row[f_tname]: $row[name] </option>\n";
+                        echo "<option value='$row[player_id]' ".(($player_id == $row['player_id']) ? 'SELECTED' : '').">".htmlspecialchars($row['f_tname']).": ".htmlspecialchars($row['name'])." </option>\n";
                     }
                     ?>
                 </select>
                 <br><br>
                 <b><?php echo $lng->getTrn('g_title', __CLASS__).'</b>&nbsp;&mdash;&nbsp;'.$lng->getTrn('title', __CLASS__);?><br>
-                <input type="text" name="title" size="60" maxlength="100" value="<?php echo $title;?>" <?php echo $_DISABLED;?>>
+                <input type="text" name="title" size="60" maxlength="100" value="<?php echo htmlspecialchars($title);?>" <?php echo $_DISABLED;?>>
                 <br><br>
                 <b><?php echo $lng->getTrn('g_about', __CLASS__).'</b>&nbsp;&mdash;&nbsp;'.$lng->getTrn('about', __CLASS__);?><br>
-                <textarea name="about" rows="15" cols="100" <?php echo $_DISABLED;?>><?php echo $about;?></textarea>
+                <textarea name="about" rows="15" cols="100" <?php echo $_DISABLED;?>><?php echo htmlspecialchars($about);?></textarea>
                 <br><br>
                 <input type="submit" value="<?php echo $lng->getTrn('submit', __CLASS__);?>" name="Submit" <?php echo $_DISABLED;?>>
                 </form>
@@ -341,13 +351,13 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
         ?>
         <td style='width:50%;' valign='top'>
         <div class="boxWide" style="width: 80%; margin: 20px auto 20px auto;">
-            <div class="boxTitle<?php echo T_HTMLBOX_INFO;?>"><?php echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_PLAYER,$e->pid,false,false)."'>$e->name</a> ".$lng->getTrn('from', __CLASS__)." <a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$e->f_tid,false,false)."'>$e->f_tname</a>: $e->title";?></div>
+            <div class="boxTitle<?php echo T_HTMLBOX_INFO;?>"><?php echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_PLAYER,$e->pid,false,false)."'>".htmlspecialchars($e->name)."</a> ".$lng->getTrn('from', __CLASS__)." <a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$e->f_tid,false,false)."'>".htmlspecialchars($e->f_tname)."</a>: ".htmlspecialchars($e->title);?></div>
             <div class="boxBody">
                 <div class='tableResponsive'>
                 <table class="common">
                     <tr>
                         <td align="left" valign="top">
-                            <?php echo $e->about;?>
+                            <?php echo htmlspecialchars($e->about);?>
                         </td>
                         <td align="right" style='width:25%;'>
                             <img border='0px' height='75' width='75' alt='player picture' src="<?php $img = new ImageSubSys(T_OBJ_PLAYER, $e->pid); echo $img->getPath();?>">

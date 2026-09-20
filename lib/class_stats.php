@@ -57,6 +57,39 @@ class Stats
 		$cols_norm  = array_keys($core_tables[$tbl_name_norm]);
 		$cols_mv    = array_filter(array_keys($core_tables[$tbl_name_mv]),    create_function('$c', 'return !preg_match(\'/^f_/\', $c);'));
 		$cols_mv_es = array_filter(array_keys($core_tables[$tbl_name_mv_es]), create_function('$c', 'return !preg_match(\'/^f_/\', $c);'));
+		// Robustness: $core_tables describes the schema the CODE expects, which can be newer than
+		// what's actually in the database if this file was deployed before "Update DB" was clicked
+		// (or before it's clicked at all, on a fresh deploy). Intersect against the live schema so a
+		// column that doesn't exist yet is just left out of the SELECT, instead of the whole query
+		// failing - which previously broke every coach/team/player stats lookup sitewide (including
+		// the one behind the admin menu's visibility check) the moment new code shipped ahead of a
+		// schema update, regardless of which table/object was actually being queried.
+		$liveCols = get_live_columns($tbl_name_norm);
+		if ($liveCols !== null) { $cols_norm = array_values(array_intersect($cols_norm, $liveCols)); }
+		$liveCols = get_live_columns($tbl_name_mv);
+		if ($liveCols !== null) { $cols_mv = array_values(array_intersect($cols_mv, $liveCols)); }
+		$liveCols = get_live_columns($tbl_name_mv_es);
+		if ($liveCols !== null) { $cols_mv_es = array_values(array_intersect($cols_mv_es, $liveCols)); }
+		// Security: the columns this query can actually select - used below to whitelist both
+		// sortRule and HAVING, which are GET/POST-driven (Stats page column-sort/filter UI) and
+		// were previously spliced raw into ORDER BY/HAVING - a live, unauthenticated SQL (and, via
+		// objsort() in misc_functions.php, PHP code) injection path.
+		$validStatsCols = array_merge(
+			$cols_norm,
+			array_map(create_function('$c', 'return "rg_".$c;'), $cols_mv),
+			array_map(create_function('$c', 'return "mv_".$c;'), array_merge($cols_mv, $cols_mv_es))
+		);
+		// HAVING: only "<whitelisted column> <comparison operator> <numeric literal>" or
+		// "<whitelisted column> IS TRUE/FALSE" is allowed (the two shapes every real caller
+		// actually needs - see HTMLOUT::sort_table()'s $filter_having) - no other identifiers,
+		// keywords, or punctuation can reach the query, so a UNION/subquery/stacked-query payload
+		// has no way to fit even if it uses only "safe" characters (letters/digits/spaces are
+		// legitimately needed for column names, so a plain character-class filter alone is not
+		// sufficient here).
+		$HAVING = array_values(array_filter($HAVING, function($h) use ($validStatsCols) {
+			return (bool) preg_match('/^([A-Za-z_][A-Za-z0-9_]*)\s*(?:(?:=|!=|<>|<=|>=|<|>)\s*-?[0-9]+(?:\.[0-9]+)?|IS\s+(?:TRUE|FALSE))$/i', trim($h), $m)
+				&& in_array($m[1], $validStatsCols, true);
+		}));
 		###
 		$objFields_val0 = array_merge(
 			array_key_exists($obj, $objFields_init) ? $objFields_init[$obj] : array(),
@@ -86,6 +119,14 @@ class Stats
 		);
 	  
 		if (!empty($sortRule)) {
+			// Security: sortRule (Stats page column-sort UI) was spliced raw into ORDER BY below -
+			// unauthenticated SQL injection. Whitelist each entry against $validStatsCols (built above).
+			foreach ($sortRule as $i => $str) {
+				if (!in_array(substr($str, 1), $validStatsCols, true)) {
+					unset($sortRule[$i]);
+				}
+			}
+			$sortRule = array_values($sortRule);
 			for ($i = 0; $i < count($sortRule); $i++) {
 				$str = $sortRule[$i];
 				$sortRule[$i] = substr($str, 1, strlen($str)) .' '. (($str[0] == '+') ? 'ASC' : 'DESC');

@@ -476,6 +476,22 @@ class Match
                 $input[$field] = 0;
             }
         }
+        // Security: inj/agn/hat were the only $T_PMD fields never validated here, yet they still
+        // flow straight into a positional, unquoted INSERT below - a crafted value allowed
+        // reading another coach's password hash a byte at a time via a UNION subquery. Whitelist
+        // them against the same $T_INJS/$T_HATS lookup arrays already used to display these
+        // values, same pattern as the $T_PMD_ACH check just above.
+        global $T_INJS, $T_HATS, $T_PMD_INJ, $T_PMD_HAT;
+        foreach ($T_PMD_INJ as $field) {
+            if (!array_key_exists($input[$field], $T_INJS)) {
+                $input[$field] = NONE;
+            }
+        }
+        foreach ($T_PMD_HAT as $field) {
+            if (!array_key_exists($input[$field], $T_HATS)) {
+                $input[$field] = 99;
+            }
+        }
         /* 
             Post/pre match fixes
             Before we write player's match data, we need to check if player's status was...
@@ -512,7 +528,7 @@ class Match
             $status &= mysql_query("DELETE FROM match_data WHERE f_player_id = $pid AND f_match_id = $mid");
         }
         $query = 'INSERT INTO match_data ('.implode(',', $EXPECTED).') VALUES (0'.implode(',', array_values($input)).')';
-        $result = mysql_query($query) or status(false, 'Failed to save player entry with PID = '.$pid.'<br><br>'.mysql_error().'<br><br>'.$query);
+        $result = mysql_query($query) or status(false, 'Failed to save player entry with PID = '.$pid.'.'); # Security: was leaking raw mysql_error()+the query text - an info-disclosure oracle.
         return $result && 
             // Extra stats, if sent.
             (!empty($ES) ? self::ESentry(array(

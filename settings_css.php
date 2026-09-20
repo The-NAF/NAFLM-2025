@@ -3,6 +3,9 @@
 $settings['core_theme_names'] = array(
     '0' => 'OBBLM Default',
     '1' => 'NAFLM',
+    '2' => 'Modern Dark',
+    '3' => 'Modern Light',
+    '4' => 'Modern Classic',
     '10' => 'bluewhite',
     '11' => 'greenwhite',
     '12' => 'iframe',

@@ -40,4 +40,30 @@
 
 <playersof>Joueurs de </playersof>
 </fr-FR>
+
+<de-DE>
+<name>Galerie</name>
+
+<note>Bitte wähle eine der folgenden Optionen.</note>
+<none>Nichts ausgewählt</none>
+
+<players>Spieler des Teams</players>
+<stads>Stadien der Teams</stads>
+<coaches>Trainer</coaches>
+
+<playersof>Spieler von</playersof>
+</de-DE>
+
+<it-IT>
+<name>Galleria</name>
+
+<note>Seleziona una delle opzioni seguenti.</note>
+<none>Nessuna selezione</none>
+
+<players>Giocatori della squadra</players>
+<stads>Stadi delle squadre</stads>
+<coaches>Allenatori</coaches>
+
+<playersof>Giocatori di</playersof>
+</it-IT>
 </translations>

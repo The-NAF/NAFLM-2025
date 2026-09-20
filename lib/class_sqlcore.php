@@ -1521,23 +1521,40 @@ class SQLCore
                 $status = false;
                 continue;
             }
-            $existingCols = array();
+            $existingCols = array(); // Field => live column Type (eg. 'varchar(32)')
             while ($row = mysql_fetch_assoc($descResult)) {
-                $existingCols[] = $row['Field'];
+                $existingCols[$row['Field']] = $row['Type'];
             }
             $added = array();
+            $widened = array();
             foreach ($def as $colName => $colDef) {
-                if (!in_array($colName, $existingCols)) {
+                if (!array_key_exists($colName, $existingCols)) {
                     $ok = mysql_query(
                         "ALTER TABLE `$tblName` ADD COLUMN `$colName` $colDef"
                     );
                     $status &= $ok;
                     $added[] = $colName . ($ok ? '' : ' (FAILED)');
+                    continue;
+                }
+                // Security/upgrade support: widen-only VARCHAR size mismatches (eg. coaches.passwd
+                // growing from 32 to 255 chars to hold a password_hash() bcrypt hash instead of a
+                // raw MD5 digest). Never narrows an existing column - that could truncate live data.
+                if (
+                    preg_match('/^VARCHAR\((\d+)\)/i', $colDef, $wantMatch) &&
+                    preg_match('/^varchar\((\d+)\)/i', $existingCols[$colName], $haveMatch) &&
+                    (int) $wantMatch[1] > (int) $haveMatch[1]
+                ) {
+                    $ok = mysql_query(
+                        "ALTER TABLE `$tblName` MODIFY COLUMN `$colName` $colDef"
+                    );
+                    $status &= $ok;
+                    $widened[] = $colName . ' -> VARCHAR('.$wantMatch[1].')' . ($ok ? '' : ' (FAILED)');
                 }
             }
-            $msg = empty($added)
-                ? 'OK'
-                : 'Added column(s): ' . implode(', ', $added);
+            $msgParts = array();
+            if (!empty($added))   {$msgParts[] = 'Added column(s): ' . implode(', ', $added);}
+            if (!empty($widened)) {$msgParts[] = 'Widened column(s): ' . implode(', ', $widened);}
+            $msg = empty($msgParts) ? 'OK' : implode('; ', $msgParts);
             $results[] = array(
                 'table' => $tblName,
                 'ok'    => $status,

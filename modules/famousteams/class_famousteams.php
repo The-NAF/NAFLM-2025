@@ -133,6 +133,10 @@ public static function getFT($node, $id, $N = false)
 
 public static function create($tid, $title, $about)
 {
+    // SECURITY: $tid (ultimately $_POST['tid'], the team picked in the dropdown above) used to
+    // be spliced raw into the INSERT below - it's always meant to be a numeric team ID, so cast
+    // it once here, at the single place this query is built.
+    $tid = (int) $tid;
     return (mysql_query("
             INSERT INTO famousteams 
             (tid, title, about, date) 
@@ -223,7 +227,11 @@ public static function makeList() {
         switch ($_GET['action'])
         {
             case 'edit':
-                $e = new self($_GET['ft_id']);
+                // SECURITY: $_GET['ft_id'] used to be spliced straight into the constructor's raw
+                // SQL ("SELECT * FROM famousteams WHERE ft_id = $ft_id") with no validation on this
+                // POST-submit branch - the sibling GET-triggered edit-FORM branch below already
+                // checks is_numeric() first. It's always meant to be a numeric row ID.
+                $e = new self((int) $_GET['ft_id']);
                 status($e->edit($_POST['title'], $_POST['about']));
                 break;
             
@@ -270,7 +278,9 @@ public static function makeList() {
             case 'new':
                 echo "<a href='handler.php?type=famousteams'><-- ".$lng->getTrn('common/back')."</a><br><br>";
                 $_DISABLED = !isset($_POST['lid']) ? 'DISABLED' : '';
-                $node_id = isset($_POST['lid']) ? $_POST['lid'] : null;
+                // SECURITY: $node_id is spliced raw into "SELECT team_id, name FROM teams WHERE
+                // f_lid = $node_id" just below - it's always meant to be a numeric league ID.
+                $node_id = isset($_POST['lid']) ? (int) $_POST['lid'] : null;
                 ?>
                 <form name="STS" method="POST" enctype="multipart/form-data">
                 <b><?php echo $lng->getTrn('common/league');?></b><br>
@@ -339,8 +349,8 @@ public static function printList($node, $node_id, $ALLOW_EDIT)
         <div class="boxWide" style="width: 80%; margin: 20px auto 20px auto;">
             <div class="boxTitle<?php echo T_HTMLBOX_INFO;?>">
                 <?php 
-                echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$e->tid,false,false)."'>$e->name</a>";
-                echo " (<a href='".urlcompile(T_URL_PROFILE,T_OBJ_COACH,$e->f_cid,false,false)."'>$e->f_cname</a>)";
+                echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$e->tid,false,false)."'>".htmlspecialchars($e->name)."</a>";
+                echo " (<a href='".urlcompile(T_URL_PROFILE,T_OBJ_COACH,$e->f_cid,false,false)."'>".htmlspecialchars($e->f_cname)."</a>)";
                 echo ": ".$e->title;
                 ?>
             </div>

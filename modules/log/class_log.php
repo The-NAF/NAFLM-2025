@@ -96,7 +96,7 @@ public static function logViewPage()
     $result = mysql_query($query);
     $logs = array();
     while ($l = mysql_fetch_object($result)) {
-        echo "<tr><td>".textdate($l->date)."</td><td>$l->msg</td></tr>\n";
+        echo "<tr><td>".textdate($l->date)."</td><td>".htmlspecialchars($l->msg)."</td></tr>\n";
     }
     echo "</table>\n";
     echo "</div>\n";

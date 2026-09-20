@@ -355,8 +355,8 @@ class HTMLOUT
 			case STATS_PLAYER:
 				$tblTitle = $lng->getTrn('menu/statistics_menu/player_stn');
 				$fields_before = array(
-					'name'    => array('desc' => $lng->getTrn('common/player'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_PLAYER,false,false,false), 'field' => 'obj_id', 'value' => 'player_id')),
-					'f_tname' => array('desc' => $lng->getTrn('common/team'),   'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_team_id')),
+					'name'    => array('desc' => $lng->getTrn('common/player'), 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_PLAYER,false,false,false), 'field' => 'obj_id', 'value' => 'player_id')),
+					'f_tname' => array('desc' => $lng->getTrn('common/team'),   'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_team_id')),
 				);
 				$PAGELENGTH = $settings['standings']['length_players'];
 				list($objs, $PAGES) = Stats::getRaw(T_OBJ_PLAYER, $filter_node+$filter_having+$filter_race+$filter_format, array($PAGE, $PAGELENGTH), $sortRule, $set_avg);
@@ -364,7 +364,7 @@ class HTMLOUT
 			case STATS_TEAM:
 				$tblTitle = $lng->getTrn('menu/statistics_menu/team_stn');
 				$fields_before = array(
-					'name' => array('desc' => $lng->getTrn('common/name'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
+					'name' => array('desc' => $lng->getTrn('common/name'), 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
 				);
 				// Show teams standings list only for teams owned by... ?
 				switch ($W_TEAMS_FROM ? $opts['teams_from'] : false)
@@ -374,7 +374,7 @@ class HTMLOUT
 						list($objs, $PAGES) = Stats::getRaw(T_OBJ_TEAM, $filter_node+$filter_having+$filter_race+$filter_format+array(T_OBJ_COACH => (int) $opts['teams_from_id']), false, $sortRule, $set_avg);
 						break;
 					case T_OBJ_RACE:
-						$fields_before['f_cname'] = array('desc' => $lng->getTrn('common/coach'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id'));
+						$fields_before['f_cname'] = array('desc' => $lng->getTrn('common/coach'), 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id'));
 						$PAGELENGTH = $settings['standings']['length_teams'];
 						list($objs, $PAGES) = Stats::getRaw(T_OBJ_TEAM, $filter_node+$filter_having+array(T_OBJ_RACE => (int) $opts['teams_from_id']), array($PAGE, $PAGELENGTH), $sortRule, $set_avg);
 						break;
@@ -410,7 +410,7 @@ class HTMLOUT
 			case STATS_COACH:
 				$tblTitle = $lng->getTrn('menu/statistics_menu/coach_stn');
 				$fields_before = array(
-					'name' => array('desc' => $lng->getTrn('common/coach'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'coach_id')),
+					'name' => array('desc' => $lng->getTrn('common/coach'), 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'coach_id')),
 				);
 				$PAGELENGTH = $settings['standings']['length_coaches'];
 				list($objs, $PAGES) = Stats::getRaw(T_OBJ_COACH, $filter_node+$filter_having, array($PAGE, $PAGELENGTH), $sortRule, $set_avg);
@@ -901,8 +901,8 @@ class HTMLOUT
 			<link type="text/css" href="css/mobile-menu.css" rel="stylesheet">
 			<link rel="alternate" type="application/rss+xml" title="RSS Feed"href="rss.xml">
 			<script type="text/javascript" src="lib/misc_functions.js?v=<?php echo filemtime(dirname(__FILE__).'/misc_functions.js'); ?>"></script>
-			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" integrity="sha384-cQEZEagVXvxPpIzLzXzmQmKEf7awh3wIOawxi1PbDNoiidnNGFmhsbCgJaMP6f9F" crossorigin="anonymous"></script>
+			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" integrity="sha384-TRmDLt6CvOQBqWp02sWDp/VVYxlkm9lvqzMt7OwAoSHqmGtELVfE/pfkH3zcea8j" crossorigin="anonymous"></script>
 			<script type="text/javascript" src="js/lib/underscore-1.8.3.min.js"></script>
 			<script type="text/javascript" src="js/lib/knockout-3.3.0.min.js"></script>
 			<script type="text/javascript" src="lib/jquery.autocomplete-min.js"></script>
@@ -937,44 +937,8 @@ class HTMLOUT
 		<?php
 	}
 	
-	public static function mobile_frame_begin($menu = true) {
-		global $settings;
-		Module::runTriggers(T_TRIGGER_BEFORE_PAGE_RENDER);
-		?>
-		<!-- Following HTML from ./lib/class_htmlout.php mobile_frame_begin -->
-		<!DOCTYPE HTML>
-		<html>
-		<head>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-			<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-			<title><?php echo $settings['site_name']; ?></title>
-			<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css">
-			<link type="text/css" href="css/stylesheet_default.css" rel="stylesheet">
-			<link type="text/css" href="css/stylesheet<?php echo $settings['stylesheet']; ?>.css" rel="stylesheet">
-			<link type="text/css" href="css/league_override_<?php echo self::getSelectedNodeLidOrDefault(); ?>.css" rel="stylesheet">
-			<link type="text/css" href="css/mobile-menu.css" rel="stylesheet">
-			<script type="text/javascript" src="lib/misc_functions.js?v=<?php echo filemtime(dirname(__FILE__).'/misc_functions.js'); ?>"></script>
-			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-			<script type="text/javascript" src="js/lib/underscore-1.8.3.min.js"></script>
-			<script type="text/javascript" src="js/lib/knockout-3.3.0.min.js"></script>
-			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-			<script type="text/javascript" src="lib/jquery.autocomplete-min.js"></script>
-			<script type="text/javascript" src="js/app/Model/Match.js"></script>
-			<script type="text/javascript" src="js/app/ViewModel/Mobile/MobileViewModel.js"></script>
-			<script type="text/javascript" src="js/app/ViewModel/Mobile/TeamViewModel.js"></script>
-			<script type="text/javascript" src="js/app/ViewModel/Mobile/PlayerViewModel.js"></script>
-			<script type="text/javascript" src="js/app/ViewModel/Mobile/PlayerDialogViewModel.js"></script>
-			<script type="text/javascript" src="js/app/ViewModel/Mobile/MatchDialogViewModel.js"></script>
-			<script type="text/javascript" src="js/app/ViewModel/Mobile/SelectedPlayerViewModel.js"></script>
-			<script type="text/javascript" src="js/app/ViewModel/Common/RegistrationViewModel.js"></script>
-		</head>
-		<body>
-			<div class="everything">
-				<div class="section"> <!-- This container holds the section specific content -->
-		<?php
-	}
-	
 	public static function frame_end() {
+		self::injectCsrfToken();
 		?>
 		<!-- Following HTML from ./lib/class_htmlout.php frame_end -->
 					<!-- Pseudo container to force parent container to have the correct height for (potential) floating children -->
@@ -985,6 +949,32 @@ class HTMLOUT
 		</html>
 		<?php
 		return true;
+	}
+
+	// Security: exposes this session's CSRF token to JS and auto-stamps it onto every real
+	// <form method=post> already on the page - covers ~91 forms across ~30 files from this single
+	// location, with zero per-file editing. A raw fetch()/$.ajax() POST that isn't a real <form>
+	// submission still needs the token added by hand at its own call site (see
+	// class_team_htmlout.php, admin/admin_schedule.php and the relevant js/app/*.js files).
+	private static function injectCsrfToken() {
+		?>
+		<script type="text/javascript">
+		window.NAFLM_CSRF_TOKEN = <?php echo json_encode(NAFLM_CSRF_TOKEN); ?>;
+		(function() {
+			var forms = document.getElementsByTagName('form');
+			for (var i = 0; i < forms.length; i++) {
+				var f = forms[i];
+				if (f.method && f.method.toLowerCase() === 'post' && !f.querySelector('input[name="csrf_token"]')) {
+					var inp = document.createElement('input');
+					inp.type = 'hidden';
+					inp.name = 'csrf_token';
+					inp.value = window.NAFLM_CSRF_TOKEN;
+					f.appendChild(inp);
+				}
+			}
+		})();
+		</script>
+		<?php
 	}
 
 	private static function make_menu()
@@ -1004,10 +994,10 @@ class HTMLOUT
 				<?php 
 				if(Settings::getValueOrDefault('show-regional-menu', false)) { 
 					foreach(League::getLeaguesByLocation() as $locationName => $leagues) {
-						echo '<li><a href="#">' . $locationName . ' ></a><ul>';
+						echo '<li><a href="#">' . htmlspecialchars($locationName) . ' ></a><ul>';
 
 						foreach($leagues as $league) {
-							echo '<li><a href="index.php?SLS_lid=' . $league->lid . '">' . $league->name . '</a></li>';	
+							echo '<li><a href="index.php?SLS_lid=' . $league->lid . '">' . htmlspecialchars($league->name) . '</a></li>';
 						}
 	
 						echo '</ul></li>';
@@ -1321,6 +1311,8 @@ class HTMLOUT
 							$cpy = (string) $cpy;
 						if (is_numeric($cpy) && !ctype_digit(($cpy[0] == '-') ? substr($cpy,1) : $cpy))
 							$cpy = sprintf("%1.2f", $cpy);
+						if (array_key_exists('escape', $a) && $a['escape'])
+							$cpy = htmlspecialchars($cpy);
 						if (array_key_exists('suffix', $a) && $a['suffix'])
 							$cpy .= $a['suffix'];
 						if (array_key_exists('color', $a) && $a['color'])

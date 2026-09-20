@@ -45,4 +45,73 @@
 <table-points>Pts</table-points>
 
 </es-ES>
+
+<fr-FR>
+
+<name>Classements de ligue</name>
+<help>Veuillez sélectionner le tournoi pour lequel afficher le classement</help>
+<no-conf>Aucune conférence assignée</no-conf>
+<menu-label>Classements de ligue</menu-label>
+<tours>Sélectionner un tournoi</tours>
+
+<table-pos>#</table-pos>
+<table-coach>Coach</table-coach>
+<table-name>Équipe</table-name>
+<table-race>Race</table-race>
+<table-tv>VE</table-tv>
+<table-played>J</table-played>
+<table-won>V</table-won>
+<table-draw>N</table-draw>
+<table-loss>D</table-loss>
+<table-td>TD</table-td>
+<table-cas>Sor</table-cas>
+<table-points>Pts</table-points>
+
+</fr-FR>
+
+<de-DE>
+
+<name>Ligatabellen</name>
+<help>Bitte wählen Sie das Turnier aus, für das die Ligatabelle angezeigt werden soll</help>
+<no-conf>Keine Konferenz zugewiesen</no-conf>
+<menu-label>Ligatabellen</menu-label>
+<tours>Turnier auswählen</tours>
+
+<table-pos>#</table-pos>
+<table-coach>Trainer</table-coach>
+<table-name>Team</table-name>
+<table-race>Rasse</table-race>
+<table-tv>TW</table-tv>
+<table-played>Sp</table-played>
+<table-won>S</table-won>
+<table-draw>U</table-draw>
+<table-loss>N</table-loss>
+<table-td>TD</table-td>
+<table-cas>Ausf</table-cas>
+<table-points>Pkt</table-points>
+
+</de-DE>
+
+<it-IT>
+
+<name>Classifiche di lega</name>
+<help>Seleziona il torneo per cui visualizzare la classifica</help>
+<no-conf>Nessuna conferenza assegnata</no-conf>
+<menu-label>Classifiche</menu-label>
+<tours>Seleziona un torneo</tours>
+
+<table-pos>#</table-pos>
+<table-coach>Allenatore</table-coach>
+<table-name>Squadra</table-name>
+<table-race>Razza</table-race>
+<table-tv>VS</table-tv>
+<table-played>G</table-played>
+<table-won>V</table-won>
+<table-draw>P</table-draw>
+<table-loss>S</table-loss>
+<table-td>TD</table-td>
+<table-cas>Fer</table-cas>
+<table-points>Pt</table-points>
+
+</it-IT>
 </translations>

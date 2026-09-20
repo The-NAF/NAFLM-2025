@@ -41,4 +41,67 @@
 <about><![CDATA[Sobre la muerte del jugador. ¿Logros? ¿Por qué será recordado?]]></about>
 
 </es-ES>
+
+<fr-FR>
+
+<name>Cimetière</name>
+
+<player>Joueur</player>
+<submit>Valider</submit>
+<edit>Éditer</edit>
+<del>Supprimer</del>
+<posted>Posté</posted>
+<died>Décédé</died>
+<after>après</after>
+<days>jours</days>
+
+<g_title>Titre</g_title>
+<g_about>À propos</g_about>
+
+<title><![CDATA[Titre de la notice nécrologique. Peut être laissé vide.]]></title>
+<about><![CDATA[À propos de la mort du joueur. Exploits ? Pourquoi restera-t-il dans les mémoires ?]]></about>
+
+</fr-FR>
+
+<de-DE>
+
+<name>Friedhof</name>
+
+<player>Spieler</player>
+<submit>Absenden</submit>
+<edit>Bearbeiten</edit>
+<del>Löschen</del>
+<posted>Veröffentlicht</posted>
+<died>Gestorben</died>
+<after>nach</after>
+<days>Tagen</days>
+
+<g_title>Titel</g_title>
+<g_about>Über</g_about>
+
+<title><![CDATA[Titel des Nachrufs. Kann leer bleiben.]]></title>
+<about><![CDATA[Über den Tod des Spielers. Erfolge? Woran wird er erinnert?]]></about>
+
+</de-DE>
+
+<it-IT>
+
+<name>Cimitero</name>
+
+<player>Giocatore</player>
+<submit>Invia</submit>
+<edit>Modifica</edit>
+<del>Elimina</del>
+<posted>Pubblicato</posted>
+<died>Morto</died>
+<after>dopo</after>
+<days>giorni</days>
+
+<g_title>Titolo</g_title>
+<g_about>Informazioni</g_about>
+
+<title><![CDATA[Titolo del necrologio. Può essere lasciato vuoto.]]></title>
+<about><![CDATA[Sulla morte del giocatore. Imprese? Per cosa verrà ricordato?]]></about>
+
+</it-IT>
 </translations>

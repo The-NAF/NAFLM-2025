@@ -7,7 +7,7 @@ if (isset($_POST['button'])) {
         Input validation.
     */
     // Teams
-    $team_ids = explode(',', $_POST['teams']);
+    $team_ids = array_map('intval', explode(',', $_POST['teams'])); # Security: was spliced raw into SQL below (WHERE t.team_id = $tid) - SQLi.
     $teamsCount = count($team_ids);
     // Shortcut booleans:
     $mkNewFFA       = ($_POST['type'] == 'FFA_TOUR');
@@ -20,8 +20,9 @@ if (isset($_POST['button'])) {
         then have to abort because (for example) the last pair of teams are an illegal paring.
     */
     $teams_OK['l'] = $teams_OK['d'] = true;
-    $lid = ($GOT_DID = ($_POST['type'] == 'RR_TOUR' || $mkNewFFA)) ? get_parent_id(T_NODE_DIVISION, $_POST['did'], T_NODE_LEAGUE) : get_parent_id(T_NODE_TOURNAMENT, $_POST['existTour'], T_NODE_LEAGUE);
-    $did = ($GOT_DID) ? $_POST['did'] : get_parent_id(T_NODE_TOURNAMENT, $_POST['existTour'], T_NODE_DIVISION);
+    # Security: did/existTour were spliced raw into SQL below (both directly, and via get_parent_id()) - SQLi. Cast at the point read, matching the (int) $_POST['existTour']/$_POST['rs'] style already used further down in this file.
+    $lid = ($GOT_DID = ($_POST['type'] == 'RR_TOUR' || $mkNewFFA)) ? get_parent_id(T_NODE_DIVISION, (int) $_POST['did'], T_NODE_LEAGUE) : get_parent_id(T_NODE_TOURNAMENT, (int) $_POST['existTour'], T_NODE_LEAGUE);
+    $did = ($GOT_DID) ? (int) $_POST['did'] : get_parent_id(T_NODE_TOURNAMENT, (int) $_POST['existTour'], T_NODE_DIVISION);
     $TIE_TEAMS = get_alt_col('leagues', 'lid', $lid, 'tie_teams');
     foreach ($team_ids as $tid) {
         $query = "SELECT (t.f_did = $did) AS 'in_did', (t.f_lid = $lid) AS 'in_lid' FROM teams AS t WHERE t.team_id = $tid";
@@ -96,7 +97,7 @@ if (isset($_POST['button'])) {
                 case 'FFA_TOUR': $TOUR_TYPE = TT_FFA; break;
                 case 'RR_TOUR': $TOUR_TYPE = TT_RROBIN; break;
             }
-            status(Tour::create(array('did' => $_POST['did'], 'name' => $_POST['name'], 'type' => $TOUR_TYPE, 'rs' => (int) $_POST['rs'], 'teams' => $team_ids, 'rounds' => $_POST['rounds'], 'allow_sched' => 0)));
+            status(Tour::create(array('did' => (int) $_POST['did'], 'name' => $_POST['name'], 'type' => $TOUR_TYPE, 'rs' => (int) $_POST['rs'], 'teams' => $team_ids, 'rounds' => $_POST['rounds'], 'allow_sched' => 0)));
         }
     }
 }
@@ -147,7 +148,7 @@ title($lng->getTrn('menu/admin_menu/schedule'));
            type: "POST",
            async: true,
            url: "handler.php?type=verifyteam",
-           data: {tname:  name},
+           data: {tname:  name, csrf_token: window.NAFLM_CSRF_TOKEN}, // Security: handler.php now requires this (see header.php).
            success: function(tid){
                 tid = tid.replace(new RegExp("(\n|\r)", "g" ),'');
                 TID = tid;

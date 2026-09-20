@@ -53,6 +53,7 @@ class SGraph implements ModuleInterface
     public static function main($argv)
     {
         list($type, $id, $cmp_id) = $argv;
+        $id = (int) $id; # Security: unauthenticated route (handler.php?type=graph, no login check) - was spliced raw into object lookups/SQL below.
 
         // General.
         $o           = null;
@@ -60,9 +61,9 @@ class SGraph implements ModuleInterface
         $count_horiz = SG_CNT_HORIZ; // Number og graphs to place in each horizontal multi graph "row".
         $graphs      = array();
 
-        if     ($type == SG_T_TEAM)   {$o = new Team($_GET['id']);  $where = "f_team_id   = $o->team_id";}
-        elseif ($type == SG_T_COACH)  {$o = new Coach($_GET['id']); $where = "f_coach_id  = $o->coach_id";}
-        elseif ($type == SG_T_PLAYER) {$o = new Player($_GET['id']);$where = "f_player_id = $o->player_id";}
+        if     ($type == SG_T_TEAM)   {$o = new Team($id);  $where = "f_team_id   = $o->team_id";}
+        elseif ($type == SG_T_COACH)  {$o = new Coach($id); $where = "f_coach_id  = $o->coach_id";}
+        elseif ($type == SG_T_PLAYER) {$o = new Player($id);$where = "f_player_id = $o->player_id";}
 
         if ($type != SG_T_LEAGUE && !is_object($o))
             return false;

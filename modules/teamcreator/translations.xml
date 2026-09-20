@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<translations>
 <en-GB>
 
 <name>Team Creator</name>
@@ -44,3 +45,189 @@
 <subtotal>Subtotal</subtotal>
 
 </en-GB>
+
+<es-ES>
+
+<name>Creador de Equipos</name>
+<menu-tc>Creador de Equipos</menu-tc>
+<notallowed>Lo sentimos, no tienes permisos para crear un equipo</notallowed>
+
+<created>Equipo creado. Redirigiendo, espera por favor.</created>
+<tooExpensive>Tu equipo cuesta más que los fondos disponibles</tooExpensive>
+<tooFewPlayers>Debes tener al menos 11 jugadores</tooFewPlayers>
+<tooFewPlayerssevens>Debes tener al menos 7 jugadores</tooFewPlayerssevens>
+<tooManyInsignificant>Tienes demasiados jugadores Insignificantes (Linieros Snotling). No puede haber más jugadores Insignificantes que jugadores no Insignificantes</tooManyInsignificant>
+<tooManyBigGuys>Demasiados jugadores grandes</tooManyBigGuys>
+<tooManyBlitzers>Demasiados jugadores de tipo: Blitzer</tooManyBlitzers>
+<tooManyRunners>Demasiados jugadores de tipo: Corredor</tooManyRunners>
+<tooManyCatchers>Demasiados jugadores de tipo: Receptor</tooManyCatchers>
+<tooManyThrowers>Demasiados jugadores de tipo: Lanzador</tooManyThrowers>
+<tooManyBlockers>Demasiados jugadores de tipo: Bloqueador</tooManyBlockers>
+<tooManySpecial>Demasiados jugadores de tipo: Especial</tooManySpecial>
+<tooManyPos>Demasiados jugadores posicionales para un equipo de Sevens (el límite es 4)</tooManyPos>
+<tooManyPlayers>Demasiados jugadores, un equipo puede tener 16 jugadores como máximo</tooManyPlayers>
+<tooManySevensPlayers>Demasiados jugadores, un equipo de Sevens puede tener 11 jugadores como máximo</tooManySevensPlayers>
+<belowMinimumTV>El valor de equipo está por debajo del mínimo establecido por la liga</belowMinimumTV>
+<tooManyRR>Demasiadas repeticiones</tooManyRR>
+<tooManyFF>Demasiados aficionados</tooManyFF>
+<tooManyAc>Demasiados entrenadores asistentes</tooManyAc>
+<tooManyCl>Demasiadas animadoras</tooManyCl>
+<noInduce>No puedes crear equipos con incentivos</noInduce>
+<noTeamName>Debes introducir un nombre de equipo</noTeamName>
+
+<race>Raza</race>
+<raceDefaultOption>-selecciona-</raceDefaultOption>
+<teamName>Nombre del Equipo</teamName>
+<noRaceSelected>Ninguna raza seleccionada</noRaceSelected>
+<createBtn>Crear</createBtn>
+<inducementsCheck>Incentivos</inducementsCheck>
+<sevensCheck>Sevens</sevensCheck>
+<playerCount># Jugadores</playerCount>
+<total>Total (k)</total>
+<normal>Primaria</normal>
+<double>Secundaria</double>
+<quantity>Cant.</quantity>
+<dollar>Coste (k)</dollar>
+<subtotal>Subtotal</subtotal>
+
+</es-ES>
+
+<fr-FR>
+
+<name>Créateur d'Équipe</name>
+<menu-tc>Créateur d'Équipe</menu-tc>
+<notallowed>Désolé, vous n'avez pas la permission de créer une équipe</notallowed>
+
+<created>Équipe créée. Redirection en cours, veuillez patienter.</created>
+<tooExpensive>Votre équipe coûte plus que les fonds disponibles</tooExpensive>
+<tooFewPlayers>Vous devez avoir au moins 11 joueurs</tooFewPlayers>
+<tooFewPlayerssevens>Vous devez avoir au moins 7 joueurs</tooFewPlayerssevens>
+<tooManyInsignificant>Vous avez trop de joueurs Insignifiants (Linemen Snotlings). Il ne peut pas y avoir plus de joueurs Insignifiants que de joueurs non-Insignifiants</tooManyInsignificant>
+<tooManyBigGuys>Trop de gros bestiaux</tooManyBigGuys>
+<tooManyBlitzers>Trop de joueurs de type : Blitzeur</tooManyBlitzers>
+<tooManyRunners>Trop de joueurs de type : Coureur</tooManyRunners>
+<tooManyCatchers>Trop de joueurs de type : Réceptionneur</tooManyCatchers>
+<tooManyThrowers>Trop de joueurs de type : Lanceur</tooManyThrowers>
+<tooManyBlockers>Trop de joueurs de type : Bloqueur</tooManyBlockers>
+<tooManySpecial>Trop de joueurs de type : Spécial</tooManySpecial>
+<tooManyPos>Trop de joueurs positionnels pour une équipe Sevens (la limite est de 4)</tooManyPos>
+<tooManyPlayers>Trop de joueurs, une équipe peut avoir 16 joueurs maximum</tooManyPlayers>
+<tooManySevensPlayers>Trop de joueurs, une équipe Sevens peut avoir 11 joueurs maximum</tooManySevensPlayers>
+<belowMinimumTV>La valeur d'équipe est inférieure au minimum fixé par la ligue</belowMinimumTV>
+<tooManyRR>Trop de relances</tooManyRR>
+<tooManyFF>Trop de supporters</tooManyFF>
+<tooManyAc>Trop d'entraîneurs assistants</tooManyAc>
+<tooManyCl>Trop de pom-pom girls</tooManyCl>
+<noInduce>Vous ne pouvez pas créer d'équipes avec des primes</noInduce>
+<noTeamName>Vous devez saisir un nom d'équipe</noTeamName>
+
+<race>Race</race>
+<raceDefaultOption>-sélectionner-</raceDefaultOption>
+<teamName>Nom de l'Équipe</teamName>
+<noRaceSelected>Aucune race sélectionnée</noRaceSelected>
+<createBtn>Créer</createBtn>
+<inducementsCheck>Primes</inducementsCheck>
+<sevensCheck>Sevens</sevensCheck>
+<playerCount># Joueurs</playerCount>
+<total>Total (k)</total>
+<normal>Primaire</normal>
+<double>Secondaire</double>
+<quantity>Qté</quantity>
+<dollar>Coût (k)</dollar>
+<subtotal>Sous-total</subtotal>
+
+</fr-FR>
+
+<de-DE>
+
+<name>Team-Ersteller</name>
+<menu-tc>Team-Ersteller</menu-tc>
+<notallowed>Entschuldigung, Sie haben keine Berechtigung, ein Team zu erstellen</notallowed>
+
+<created>Team erstellt. Weiterleitung, bitte warten.</created>
+<tooExpensive>Ihr Team kostet mehr als die verfügbaren Mittel</tooExpensive>
+<tooFewPlayers>Sie müssen mindestens 11 Spieler haben</tooFewPlayers>
+<tooFewPlayerssevens>Sie müssen mindestens 7 Spieler haben</tooFewPlayerssevens>
+<tooManyInsignificant>Sie haben zu viele Unbedeutende Spieler (Snotling-Linespieler). Es dürfen nicht mehr Unbedeutende als Nicht-Unbedeutende Spieler vorhanden sein</tooManyInsignificant>
+<tooManyBigGuys>Zu viele Große Brocken</tooManyBigGuys>
+<tooManyBlitzers>Zu viele Spieler vom Typ: Blitzer</tooManyBlitzers>
+<tooManyRunners>Zu viele Spieler vom Typ: Läufer</tooManyRunners>
+<tooManyCatchers>Zu viele Spieler vom Typ: Fänger</tooManyCatchers>
+<tooManyThrowers>Zu viele Spieler vom Typ: Werfer</tooManyThrowers>
+<tooManyBlockers>Zu viele Spieler vom Typ: Blocker</tooManyBlockers>
+<tooManySpecial>Zu viele Spieler vom Typ: Spezial</tooManySpecial>
+<tooManyPos>Zu viele Positionsspieler für ein Sevens-Team (das Limit liegt bei 4)</tooManyPos>
+<tooManyPlayers>Zu viele Spieler, ein Team kann maximal 16 Spieler haben</tooManyPlayers>
+<tooManySevensPlayers>Zu viele Spieler, ein Sevens-Team kann maximal 11 Spieler haben</tooManySevensPlayers>
+<belowMinimumTV>Der Teamwert liegt unter dem von der Liga festgelegten Minimum</belowMinimumTV>
+<tooManyRR>Zu viele Wiederholungswürfe</tooManyRR>
+<tooManyFF>Zu viele Fans</tooManyFF>
+<tooManyAc>Zu viele Co-Trainer</tooManyAc>
+<tooManyCl>Zu viele Cheerleader</tooManyCl>
+<noInduce>Sie können keine Teams mit Verstärkungen erstellen</noInduce>
+<noTeamName>Sie müssen einen Teamnamen eingeben</noTeamName>
+
+<race>Rasse</race>
+<raceDefaultOption>-auswählen-</raceDefaultOption>
+<teamName>Teamname</teamName>
+<noRaceSelected>Keine Rasse ausgewählt</noRaceSelected>
+<createBtn>Erstellen</createBtn>
+<inducementsCheck>Verstärkungen</inducementsCheck>
+<sevensCheck>Sevens</sevensCheck>
+<playerCount># Spieler</playerCount>
+<total>Gesamt (k)</total>
+<normal>Primär</normal>
+<double>Sekundär</double>
+<quantity>Anz.</quantity>
+<dollar>Kosten (k)</dollar>
+<subtotal>Zwischensumme</subtotal>
+
+</de-DE>
+
+<it-IT>
+
+<name>Creatore di Squadre</name>
+<menu-tc>Creatore di Squadre</menu-tc>
+<notallowed>Siamo spiacenti, non hai i permessi per creare una squadra</notallowed>
+
+<created>Squadra creata. Reindirizzamento in corso, attendere prego.</created>
+<tooExpensive>La tua squadra costa più dei fondi disponibili</tooExpensive>
+<tooFewPlayers>Devi avere almeno 11 giocatori</tooFewPlayers>
+<tooFewPlayerssevens>Devi avere almeno 7 giocatori</tooFewPlayerssevens>
+<tooManyInsignificant>Hai troppi giocatori Insignificanti (Linemen Snotling). Non ci possono essere più giocatori Insignificanti che giocatori non Insignificanti</tooManyInsignificant>
+<tooManyBigGuys>Troppi giocatori grossi</tooManyBigGuys>
+<tooManyBlitzers>Troppi giocatori di tipo: Blitzer</tooManyBlitzers>
+<tooManyRunners>Troppi giocatori di tipo: Corridore</tooManyRunners>
+<tooManyCatchers>Troppi giocatori di tipo: Ricevitore</tooManyCatchers>
+<tooManyThrowers>Troppi giocatori di tipo: Lanciatore</tooManyThrowers>
+<tooManyBlockers>Troppi giocatori di tipo: Bloccatore</tooManyBlockers>
+<tooManySpecial>Troppi giocatori di tipo: Speciale</tooManySpecial>
+<tooManyPos>Troppi giocatori posizionali per una squadra Sevens (il limite è 4)</tooManyPos>
+<tooManyPlayers>Troppi giocatori, una squadra può avere al massimo 16 giocatori</tooManyPlayers>
+<tooManySevensPlayers>Troppi giocatori, una squadra Sevens può avere al massimo 11 giocatori</tooManySevensPlayers>
+<belowMinimumTV>Il valore squadra è inferiore al minimo stabilito dalla lega</belowMinimumTV>
+<tooManyRR>Troppe ripetizioni</tooManyRR>
+<tooManyFF>Troppi tifosi</tooManyFF>
+<tooManyAc>Troppi assistenti allenatore</tooManyAc>
+<tooManyCl>Troppe cheerleader</tooManyCl>
+<noInduce>Non puoi creare squadre con incentivi</noInduce>
+<noTeamName>Devi inserire un nome per la squadra</noTeamName>
+
+<race>Razza</race>
+<raceDefaultOption>-seleziona-</raceDefaultOption>
+<teamName>Nome Squadra</teamName>
+<noRaceSelected>Nessuna razza selezionata</noRaceSelected>
+<createBtn>Crea</createBtn>
+<inducementsCheck>Incentivi</inducementsCheck>
+<sevensCheck>Sevens</sevensCheck>
+<playerCount># Giocatori</playerCount>
+<total>Totale (k)</total>
+<normal>Primaria</normal>
+<double>Secondaria</double>
+<quantity>Qtà</quantity>
+<dollar>Costo (k)</dollar>
+<subtotal>Subtotale</subtotal>
+
+</it-IT>
+
+</translations>

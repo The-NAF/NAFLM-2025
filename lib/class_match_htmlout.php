@@ -669,10 +669,10 @@ class Match_HTMLOUT extends Match
 		/****************
 		 * Generate form
 		 ****************/
-		$teamUrl1 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->team1_id,false,false) . "\">" . $m->team1_name . "</a>";
-		$teamUrl2 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->team2_id,false,false) . "\">" . $m->team2_name . "</a>";
-		$coachUrl1 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_COACH,$team1->owned_by_coach_id,false,false) . "\">" . $team1->f_cname . "</a>";
-		$coachUrl2 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_COACH,$team2->owned_by_coach_id,false,false) . "\">" . $team2->f_cname . "</a>";
+		$teamUrl1 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->team1_id,false,false) . "\">" . htmlspecialchars($m->team1_name) . "</a>";
+		$teamUrl2 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->team2_id,false,false) . "\">" . htmlspecialchars($m->team2_name) . "</a>";
+		$coachUrl1 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_COACH,$team1->owned_by_coach_id,false,false) . "\">" . htmlspecialchars($team1->f_cname) . "</a>";
+		$coachUrl2 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_COACH,$team2->owned_by_coach_id,false,false) . "\">" . htmlspecialchars($team2->f_cname) . "</a>";
 		$raceUrl1 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_RACE,$team1->f_race_id,false,false) . "\">" .$lng->getTrn('race/'.strtolower(str_replace(' ','', $team1->f_rname))) . "</a>";
 		$raceUrl2 = "<a href=\"" . urlcompile(T_URL_PROFILE,T_OBJ_RACE,$team2->f_race_id,false,false) . "\">" .$lng->getTrn('race/'.strtolower(str_replace(' ','', $team2->f_rname))). "</a>";
 
@@ -756,7 +756,7 @@ class Match_HTMLOUT extends Match
 						<?php
 						$stad = ($m->stadium) ? $m->stadium : $m->team1_id;
 						foreach (array($team1, $team2) as $_t) {
-							echo "<option value='$_t->team_id'".(($stad == $_t->team_id) ? 'SELECTED' : '').">$_t->name</option>\n";
+							echo "<option value='$_t->team_id'".(($stad == $_t->team_id) ? 'SELECTED' : '').">".htmlspecialchars($_t->name)."</option>\n";
 						}
 						?>
 					</select>
@@ -844,7 +844,7 @@ class Match_HTMLOUT extends Match
 				<table class='common' data-team='<?php echo $id;?>'>
 				<tr><td class='seperator' colspan='<?php echo $CPP;?>'></td></tr>
 				<tr class='commonhead'><td colspan='<?php echo $CPP;?>'>
-					<b><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$t->team_id,false,false);?>"><?php echo $t->name;?></a> <?php echo $lng->getTrn('matches/report/report');?></b>
+					<b><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$t->team_id,false,false);?>"><?php echo htmlspecialchars($t->name);?></a> <?php echo $lng->getTrn('matches/report/report');?></b>
 				</td></tr>
 				<tr><td class='seperator' colspan='<?php echo $CPP;?>'></td></tr>
 				<?php
@@ -894,7 +894,7 @@ class Match_HTMLOUT extends Match
 					elseif ($status == MNG)                         {$bgcolor = COLOR_HTML_MNG;             $NORMSTAT = false;}
 					elseif ($p->mayHaveNewSkill())                  {$bgcolor = COLOR_HTML_NEWSKILL;        $NORMSTAT = false;}
 					else {$bgcolor = false;}
-					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : ''),$bgcolor, $mdat, $DIS || ($status == MNG),$is_sevens, $p->numberOfAchSkill(), $p->value, $hatOptions);
+					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.htmlspecialchars($p->name).'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : ''),$bgcolor, $mdat, $DIS || ($status == MNG),$is_sevens, $p->numberOfAchSkill(), $p->value, $hatOptions);
 				}
 				echo "</table>\n";
 				echo "<br>\n";
@@ -1024,7 +1024,7 @@ class Match_HTMLOUT extends Match
 			<table class='common'>
 				<tr><td class='seperator' colspan='13'></td></tr>
 				<tr class='commonhead'><td colspan='13'><b><?php echo $lng->getTrn('matches/report/summary');?></b></td></tr>
-				<tr><td colspan='13'><textarea name='summary' rows='10' cols='100' <?php echo $DIS . ">" . $m->getText(); ?></textarea></td></tr>
+				<tr><td colspan='13'><textarea name='summary' rows='10' cols='100' <?php echo $DIS . ">" . htmlspecialchars($m->getText(), ENT_QUOTES); /* Security: was echoed raw - a </textarea><script> payload in a match summary fired for anyone who viewed the match. */ ?></textarea></td></tr>
 			</table>
 			</div>
 			<br>
@@ -1185,7 +1185,14 @@ class Match_HTMLOUT extends Match
 			echo "<td><select name='${f}_$FS' $DIS$injOnchange>";
 			$DISABLE = true;
 			foreach ($opts as $status => $name) {
-				if ($status == 'RETIRE')
+				// BUGFIX: was comparing against the string 'RETIRE' (a typo for the RETIRED
+				// constant, which is 0). In PHP 5.6 this "worked" only by accident, because a
+				// non-numeric string compared to an int is coerced to 0 first, so 0 == 'RETIRE'
+				// happened to be true. PHP 8 removed that coercion, so this would silently stop
+				// skipping the RETIRED option (letting a match report mark a player's injury
+				// result as "RETIRED", which should never be selectable here). Comparing to the
+				// actual constant works correctly on both.
+				if ($status == RETIRED)
 					continue;
 				echo "<option value='$status' ".((isset($mdat[$f]) && $mdat[$f] == $status) ? 'SELECTED' : '').">$name</option>";
 				$DISABLE = false;
@@ -1381,8 +1388,13 @@ class Match_HTMLOUT extends Match
 			$own_team = (int) $_POST['own_team'];
 			$errmsg = '';
 			// Logged in coach has access to the tour?
-			if (!in_array($trid, array_keys($tours))) { 
-				$errmsg = 'You do not have access to the tournament '.$tours[$trid]['tname'];
+			if (!in_array($trid, array_keys($tours))) {
+				// BUGFIX: $trid is (by definition, since we're in this branch) NOT a key of
+				// $tours, so $tours[$trid] was always undefined here - the error message could
+				// never actually show the tournament name (just an undefined-index warning and a
+				// blank). Look the name up directly instead, the same way the team name is looked
+				// up two lines below.
+				$errmsg = 'You do not have access to the tournament '.get_alt_col('tours', 'tour_id', $trid, 'name');
 			}
 			// Is the team is really owned by the logged in coach?
 			if ($coach->coach_id != get_alt_col('teams', 'team_id', $own_team, 'owned_by_coach_id')) {
@@ -1396,10 +1408,7 @@ class Match_HTMLOUT extends Match
 					'round'     => $round,
 					'f_tour_id' => $trid,
 				));
-				$backFromMatchLink = 
-					Mobile::isMobile() 
-						? "index.php?mobile=1"
-						: "index.php?section=matches&amp;type=report&amp;mid=$mid";
+				$backFromMatchLink = "index.php?section=matches&amp;type=report&amp;mid=$mid";
 				status(!$exitStatus, 
 					$exitStatus 
 						? Match::$T_CREATE_ERROR_MSGS[$exitStatus] 
@@ -1448,12 +1457,12 @@ class Match_HTMLOUT extends Match
 					?>
 					<select name='own_team' id='own_team' <?php echo $_DISABLED;?>>
 						<?php
-						echo "<optgroup class='leagues' label='$lname'>\n";
+						echo "<optgroup class='leagues' label='".htmlspecialchars($lname)."'>\n";
 						if ($dname) {
-							echo "<optgroup class='divisions' label='&nbsp;&nbsp;$dname'>\n";
+							echo "<optgroup class='divisions' label='&nbsp;&nbsp;".htmlspecialchars($dname)."'>\n";
 						}
 						foreach ($teams as $t) {
-							echo "<option style='background-color: white; margin-left: -1em;' value='$t->team_id'>&nbsp;&nbsp;&nbsp;$t->name</option>\n";
+							echo "<option style='background-color: white; margin-left: -1em;' value='$t->team_id'>&nbsp;&nbsp;&nbsp;".htmlspecialchars($t->name)."</option>\n";
 						}
 						?>
 					</select>
@@ -1473,10 +1482,6 @@ class Match_HTMLOUT extends Match
 					</script>
 					<br><br><br>
 					<input type="submit" name="creategame" value="<?php echo $lng->getTrn('menu/matches_menu/usersched');?>" <?php if (empty($teams) || $_DISABLED) echo 'DISABLED';?>>
-					
-					<?php if(Mobile::isMobile()) {
-						echo '<a href="' . getFormAction('') . '">' . $lng->getTrn('common/back') . '</a>';
-					} ?>
 				</form>
 			</div>
 		</div>

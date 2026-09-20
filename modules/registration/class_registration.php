@@ -162,7 +162,7 @@ class Registration implements ModuleInterface
     public function chk_email() {
 
         #'/^([.0-9a-z_-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,4})$/i' : 
-        #'/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,4})$/i' 
+        #'/^([*+!.&#$ï¿½\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,4})$/i' 
 
         $status = true;
         $domain = '';
@@ -219,7 +219,7 @@ class Registration implements ModuleInterface
         if ( !$results )
         {
             $status = false;
-            $this->error = mysql_error();
+            $this->error = 'Registration update failed. Please contact a league admin.'; # Security: was leaking raw mysql_error() to the visitor.
         }
                             
         return $status;

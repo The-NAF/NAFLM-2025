@@ -3,6 +3,7 @@ error_reporting(E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 require_once('../settings.php');
+require_once('roll_auth_check.php');
 header('Content-Type: application/json');
 // D8 table identical to the JS version in class_team_htmlout.php
 $D8_TABLE = array(
@@ -26,6 +27,12 @@ try {
         throw new Exception('Database connection failed');
     }
     mysqli_set_charset($conn, 'utf8');
+    // Security: this endpoint bypasses header.php entirely, so it never got a login/ownership or
+    // CSRF check - any anonymous visitor could pre-seed/pollute a coach's pending stat roll.
+    if (!verifyRollRequest($conn, $playerId)) {
+        mysqli_close($conn);
+        exit;
+    }
     // Check for existing pending roll — return it if found
     $check = mysqli_query($conn,
         "SELECT roll_id, roll_data FROM pending_rolls "

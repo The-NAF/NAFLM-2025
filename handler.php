@@ -103,16 +103,17 @@ switch ($_GET['type'])
 	/* Name autocompletion - AJAX */
 	case 'confcomplete':
 		$objs = array();
+		$q = sql_like_escape($_GET['query']); # Security: was spliced raw into the LIKE clauses below - unauthenticated SQLi.
 		switch ($_GET['obj']) {
 			case T_OBJ_COACH:
-				$query = "SELECT coach_id AS 'id', name FROM coaches WHERE name LIKE '$_GET[query]%' ORDER BY name ASC";
+				$query = "SELECT coach_id AS 'id', name FROM coaches WHERE name LIKE '$q%' ORDER BY name ASC";
 				$result = mysql_query($query);
 				while($row = mysql_fetch_assoc($result)) {
 					$objs[$row['id']] = $row['name'];
 				}
 				break;
 			case T_OBJ_TEAM:
-				$query = "SELECT team_id AS 'id', name FROM teams WHERE name LIKE '%$_GET[query]%' ORDER BY name ASC";
+				$query = "SELECT team_id AS 'id', name FROM teams WHERE name LIKE '%$q%' ORDER BY name ASC";
 				$result = mysql_query($query);
 				while($row = mysql_fetch_assoc($result)) {
 					$objs[$row['id']] = $row['name'];
@@ -155,9 +156,10 @@ switch ($_GET['type'])
 	/* Name autocompletion - AJAX */
 	case 'autocomplete':
 		$objs = array();
+		$q = sql_like_escape($_GET['query']); # Security: was spliced raw into the LIKE clauses below - unauthenticated SQLi.
 		switch ($_GET['obj']) {
 			case T_OBJ_COACH:
-				$query = "SELECT coach_id AS 'id', name FROM coaches WHERE name LIKE '$_GET[query]%' ORDER BY name ASC";
+				$query = "SELECT coach_id AS 'id', name FROM coaches WHERE name LIKE '$q%' ORDER BY name ASC";
 				$result = mysql_query($query);
 				while($row = mysql_fetch_assoc($result)) {
 					$objs[$row['id']] = $row['name'];
@@ -168,7 +170,7 @@ switch ($_GET['type'])
 				$did = ($lid && get_alt_col('leagues', 'lid', $lid, 'tie_teams') == 1) ? get_parent_id(T_NODE_TOURNAMENT, (int) $_GET['trid'], T_NODE_DIVISION) : false;
 				$FROM_lid = ($lid) ? "f_lid = $lid AND" : '';
 				$FROM_did = ($did) ? "f_did = $did AND" : '';
-				$query = "SELECT team_id AS 'id', name, rdy FROM teams WHERE $FROM_lid $FROM_did name LIKE '%$_GET[query]%' ORDER BY name ASC";
+				$query = "SELECT team_id AS 'id', name, rdy FROM teams WHERE $FROM_lid $FROM_did name LIKE '%$q%' ORDER BY name ASC";
 				$result = mysql_query($query);
 				while($row = mysql_fetch_assoc($result)) {
 					$objs[$row['id']] = $row['name'];

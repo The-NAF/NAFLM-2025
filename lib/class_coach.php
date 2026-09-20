@@ -269,8 +269,12 @@ class Coach
     }
 
     public function setPasswd($passwd) {
-        $query = "UPDATE coaches SET passwd = '".md5($passwd)."' WHERE coach_id = $this->coach_id";
-        return (mysql_query($query) && ($this->passwd = md5($passwd)));
+        # Security: was a raw MD5 hex digest, directly comparable (and, via the old remember-me
+        # cookie, directly exposed) - now a proper salted bcrypt hash. See _hashPasswd() for the
+        # write-time guard against the live "passwd" column still being too narrow for one.
+        $hash = self::_hashPasswd($passwd);
+        $query = "UPDATE coaches SET passwd = '".mysql_real_escape_string($hash)."' WHERE coach_id = $this->coach_id";
+        return (mysql_query($query) && ($this->passwd = $hash));
     }
 
     public function setName($name) {
@@ -455,14 +459,33 @@ class Coach
     }
     
     public static function cookieLogin() {
-        return (
-            !isset($_SESSION['logged_in']) && 
-            isset($_COOKIE[LOGIN_COOKIE_COACHID]) && 
-            isset($_COOKIE[LOGIN_COOKIE_PASSWD]) && 
-            !get_alt_col('coaches', 'coach_id', $_COOKIE[LOGIN_COOKIE_COACHID], 'retired') && # Is not retired?
-            self::checkPasswd($_COOKIE[LOGIN_COOKIE_COACHID], $_COOKIE[LOGIN_COOKIE_PASSWD], false) &&
-            self::_setSession($_COOKIE[LOGIN_COOKIE_COACHID])
-        );
+        # Security: previously stored the coach's raw password MD5 hash directly in the "remember
+        # me" cookie and logged in on a plain equality check against that same hash - forging two
+        # cookies from a hash dumped via any other bug (eg. the SQLi this same patch closes) logged
+        # in as that coach with zero knowledge of the real password. Now the cookie carries a random
+        # per-login token; only its SHA-256 hash is stored server-side (coaches.remember_token_hash),
+        # so a leaked hash can't be turned back into a working cookie, and logout/re-login revokes it.
+        if (
+            isset($_SESSION['logged_in']) ||
+            !isset($_COOKIE[LOGIN_COOKIE_COACHID]) ||
+            !isset($_COOKIE[LOGIN_COOKIE_PASSWD]) ||
+            !is_numeric($_COOKIE[LOGIN_COOKIE_COACHID])
+        ) {
+            return false;
+        }
+        $cid = (int) $_COOKIE[LOGIN_COOKIE_COACHID];
+        if (get_alt_col('coaches', 'coach_id', $cid, 'retired')) {
+            return false;
+        }
+        $storedHash = get_alt_col('coaches', 'coach_id', $cid, 'remember_token_hash');
+        $expires    = get_alt_col('coaches', 'coach_id', $cid, 'remember_token_expires');
+        if (empty($storedHash) || empty($expires) || strtotime($expires) < time()) {
+            return false;
+        }
+        if (!hash_equals($storedHash, hash('sha256', $_COOKIE[LOGIN_COOKIE_PASSWD]))) {
+            return false;
+        }
+        return self::_setSession($cid);
     }
     
     public static function logout() {
@@ -478,7 +501,70 @@ class Coach
     }
     
     public static function checkPasswd($cid, $passwd, $MD5 = true) {
-        return (get_alt_col('coaches', 'coach_id', $cid, 'passwd') == ($MD5 ? md5($passwd) : $passwd));
+        # Security: was a raw string-equality check against an MD5 hex digest (and, via
+        # cookieLogin()'s $MD5=false call - now removed, see cookieLogin() - directly comparable
+        # to a value taken straight from a forgeable cookie). $passwd is always the coach's real
+        # plaintext password now ($MD5 is kept only for call-site compatibility). Stored hashes may
+        # still be a legacy 32-char MD5 digest; those verify here too and are opportunistically
+        # upgraded to bcrypt on a successful login, with no forced reset.
+        $stored = get_alt_col('coaches', 'coach_id', $cid, 'passwd');
+        if (empty($stored)) {
+            return false;
+        }
+        if (strlen($stored) === 32 && ctype_xdigit($stored)) {
+            $ok = hash_equals($stored, md5($passwd));
+            // Only upgrade to bcrypt once the column is actually wide enough to hold one (see
+            // _passwdColumnWide()) - otherwise leave the legacy MD5 digest as-is; it's already the
+            // right format for the column as it stands, and this runs again (successfully) the
+            // next time this coach logs in after "Update DB" has widened it.
+            if ($ok && self::_passwdColumnWide()) {
+                $cid = (int) $cid;
+                $newHash = password_hash($passwd, PASSWORD_DEFAULT);
+                mysql_query("UPDATE coaches SET passwd = '".mysql_real_escape_string($newHash)."' WHERE coach_id = $cid");
+            }
+            return $ok;
+        }
+        return password_verify($passwd, $stored);
+    }
+
+    # Security: bcrypt hashes (PASSWORD_DEFAULT, currently always BCRYPT on PHP 5.6-8.4) are 60
+    # characters - wider than the original "passwd" column (VARCHAR(32), sized for a legacy MD5
+    # digest). Writing one before "Update DB" has actually widened the live column could silently
+    # truncate or corrupt it (exact behaviour depends on the database's sql_mode), permanently
+    # locking that account out. Cached per-request so every write path pays for at most one
+    # DESCRIBE, not one per call.
+    protected static function _passwdColumnWide() {
+        static $wide = null;
+        if ($wide === null) {
+            $wide = false;
+            $result = mysql_query("SHOW COLUMNS FROM coaches LIKE 'passwd'");
+            if ($result && ($row = mysql_fetch_assoc($result)) && preg_match('/^varchar\((\d+)\)/i', $row['Type'], $m)) {
+                $wide = ((int) $m[1]) >= 60;
+            }
+        }
+        return $wide;
+    }
+
+    # Security: every code path that WRITES a password hash (setPasswd(), checkPasswd()'s
+    # opportunistic legacy-upgrade above, and create() below) goes through this single choke point,
+    # so the column-width guard can't be missed on any of them. Falls back to the same legacy MD5
+    # format the column already supports when it isn't wide enough yet for bcrypt - functionally
+    # identical to how this codebase worked before this patch, and self-healing: checkPasswd()'s
+    # upgrade path above picks it up the moment the column is actually widened and this coach next
+    # logs in.
+    protected static function _hashPasswd($passwd) {
+        return self::_passwdColumnWide() ? password_hash($passwd, PASSWORD_DEFAULT) : md5($passwd);
+    }
+
+    # Security: CSPRNG token generator for the remember-me redesign (see cookieLogin()/_setCookie()).
+    # random_bytes() is PHP7+ only and this codebase targets PHP 5.6, hence openssl_random_pseudo_bytes().
+    protected static function _genToken() {
+        if (function_exists('openssl_random_pseudo_bytes')) {
+            return bin2hex(openssl_random_pseudo_bytes(32));
+        }
+        // Practically unreachable (openssl ships with virtually every PHP build) - last-resort
+        // fallback so this never hard-fails outright.
+        return hash('sha256', uniqid(mt_rand(), true).mt_rand().microtime(true));
     }
     
     protected static function _setSession($cid) {
@@ -495,13 +581,26 @@ class Coach
     }
 
     protected static function _setCookie($cid) {
-        $expire=time()+60*60*24*30;
+        # Security: previously stored (and cookied) the coach's raw password hash directly - see
+        # cookieLogin(). Now generates a fresh random per-login token; only its SHA-256 hash is
+        # kept server-side, the raw token exists only in the cookie itself. A new login overwrites
+        # any other device's token (single-device remember-me, per design).
+        $cid = (int) $cid;
+        $token = self::_genToken();
+        $expire = time()+60*60*24*30;
+        mysql_query("UPDATE coaches SET remember_token_hash = '".hash('sha256', $token)."', remember_token_expires = '".date('Y-m-d H:i:s', $expire)."' WHERE coach_id = $cid");
         setcookie(LOGIN_COOKIE_COACHID, $cid, $expire);
-        setcookie(LOGIN_COOKIE_PASSWD, get_alt_col('coaches', 'coach_id', $cid, 'passwd'), $expire);
+        setcookie(LOGIN_COOKIE_PASSWD, $token, $expire); # Cookie name kept for compatibility - now carries the random token, never the password or its hash.
         return true;
-    }    
-   
+    }
+
     protected static function _delCookies() {
+        # Security: revoke the remember-me token server-side too, not just the cookie - otherwise
+        # a copy of the old cookie taken before logout would still work.
+        if (isset($_COOKIE[LOGIN_COOKIE_COACHID]) && is_numeric($_COOKIE[LOGIN_COOKIE_COACHID])) {
+            $cid = (int) $_COOKIE[LOGIN_COOKIE_COACHID];
+            mysql_query("UPDATE coaches SET remember_token_hash = NULL, remember_token_expires = NULL WHERE coach_id = $cid");
+        }
         setcookie(LOGIN_COOKIE_COACHID, '', time()-3600);
         setcookie(LOGIN_COOKIE_PASSWD, '', time()-3600);
         return true;
@@ -521,11 +620,11 @@ class Coach
             ) 
             return false;
 
-        $query = "INSERT INTO coaches (name, realname, passwd, mail, phone, ring, settings) 
+        $query = "INSERT INTO coaches (name, realname, passwd, mail, phone, ring, settings)
                     VALUES ('" . mysql_real_escape_string($input['name']) . "',
-                            '" . mysql_real_escape_string($input['realname']) . "', 
-                            '" . md5($input['passwd']) . "', 
-                            '" . mysql_real_escape_string($input['mail']) . "', 
+                            '" . mysql_real_escape_string($input['realname']) . "',
+                            '" . self::_hashPasswd($input['passwd']) . "', # Security: bcrypt once the column's wide enough (see _hashPasswd()); legacy MD5 format otherwise, not raw/unsalted as before.
+                            '" . mysql_real_escape_string($input['mail']) . "',
                             '" . mysql_real_escape_string($input['phone']) . "', 
                             " . $input['ring'].",
                             '".array_strpack_assoc('%k=%v', $input['settings'], ',')."')";

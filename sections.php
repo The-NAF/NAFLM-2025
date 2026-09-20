@@ -4,8 +4,7 @@
  *  Login
  *************************/
 function getFormAction($params) {
-    $mobilePrefix =(strpos($params, '?') !== FALSE) ? '&' : '?';    
-    return 'index.php' . $params . (Mobile::isMobile() ? ($mobilePrefix . 'mobile=1') : '');
+    return 'index.php' . $params;
 }
  
 function sec_login() {
@@ -81,13 +80,11 @@ function sec_login() {
             </form>
             <br><br>
             <?php
-            if(!Mobile::isMobile()) {
-                if (Module::isRegistered('Registration') && $settings['allow_registration']) {
-                    echo "<a href='handler.php?type=registration'><b>Register</b></a>";
-                }  
-                echo "<br><br>";
-                echo "<a href='$_URL_forgotpass'><b>".$lng->getTrn('login/forgotpass').'</b></a>';
+            if (Module::isRegistered('Registration') && $settings['allow_registration']) {
+                echo "<a href='handler.php?type=registration'><b>Register</b></a>";
             }
+            echo "<br><br>";
+            echo "<a href='$_URL_forgotpass'><b>".$lng->getTrn('login/forgotpass').'</b></a>';
             ?>
             </div>
         </div>
@@ -185,7 +182,9 @@ function sec_main() {
             $prevPinned = $e->pinned;
 
             echo "<div class='boxWide'>\n";
-                echo "<h3 class='boxTitle$e->cssidx'>$e->title</h3>\n";
+                // SECURITY: $e->title is commissioner-entered free text, echoed raw here to every
+                // visitor's homepage with no click needed - escape it.
+                echo "<h3 class='boxTitle$e->cssidx'>".htmlspecialchars($e->title)."</h3>\n";
                 echo "<div class='boxBody'>\n";
                     $fmtMsg = fmtprint($e->message); # Basic supported syntax: linebreaks.
                     echo "
@@ -203,11 +202,12 @@ function sec_main() {
                         switch ($e->type) 
                         {
                             case T_TEXT_MATCH_SUMMARY:
-                                echo "<td align='left' width='100%'>".$lng->getTrn('main/posted')." ".textdate($e->date)." " . ((isset($e->date_mod) && $e->date_mod != $e->date) ? "(".$lng->getTrn('main/lastedit')." ".textdate($e->date_mod).") " : '') .$lng->getTrn('main/by')." $e->author</td>\n";
+                                // SECURITY: $e->author is a coach name (free-form user input), escaped here too.
+                                echo "<td align='left' width='100%'>".$lng->getTrn('main/posted')." ".textdate($e->date)." " . ((isset($e->date_mod) && $e->date_mod != $e->date) ? "(".$lng->getTrn('main/lastedit')." ".textdate($e->date_mod).") " : '') .$lng->getTrn('main/by')." ".htmlspecialchars($e->author)."</td>\n";
                                 echo "<td align='right'><a href='index.php?section=matches&amp;type=report&amp;mid=$e->match_id'>".$lng->getTrn('common/view')."</a></td>\n";
                                 break;
                             case  T_TEXT_MSG:
-                                echo "<td align='left' width='100%'>".$lng->getTrn('main/posted')." ".textdate($e->date)." ".$lng->getTrn('main/by')." $e->author</td>\n";
+                                echo "<td align='left' width='100%'>".$lng->getTrn('main/posted')." ".textdate($e->date)." ".$lng->getTrn('main/by')." ".htmlspecialchars($e->author)."</td>\n";
                                 if (is_object($coach) && ($IS_GLOBAL_ADMIN || $coach->coach_id == $e->author_id)) { // Only admins may delete messages, or if it's a commissioner's own message.
                                     echo "<td align='right'><a href='javascript:void(0);' onClick=\"slideToggle('msgedit$e->msg_id');\">".$lng->getTrn('common/edit')."</a></td>\n";
                                     echo "<td align='right'>";
@@ -229,9 +229,11 @@ function sec_main() {
                     if ($e->type == T_TEXT_MSG) {
                         echo "<div style='display:none;' id='msgedit$e->msg_id'>\n";
                         echo "<hr><br>\n";
+                        // SECURITY: same textarea-breakout issue as the match report summary -
+                        // title/message used to be echoed raw here.
                         echo '<form method="POST">
-                            <textarea name="title" rows="1" cols="50">'.$e->title.'</textarea><br><br>
-                            <textarea name="txt" rows="15" cols="50">'.$e->message.'</textarea><br><br>
+                            <textarea name="title" rows="1" cols="50">'.htmlspecialchars($e->title).'</textarea><br><br>
+                            <textarea name="txt" rows="15" cols="50">'.htmlspecialchars($e->message).'</textarea><br><br>
                             <input type="hidden" name="type" value="msgedit">
                             <input type="hidden" name="msg_id" value="'.$e->msg_id.'">
                             <input type="submit" value="'.$lng->getTrn('common/submit').'">
@@ -546,7 +548,9 @@ function _infocus($teams) {
     $teamKey = array_rand($ids);
     $teamId = $ids[$teamKey];
     $team = new Team($teamId);
-    $teamLink =  "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$teamId,false,false)."'>$team->name</a>";
+    // SECURITY: this "In Focus" box picks a random team and shows it, unescaped, to every
+    // visitor's homepage with no click needed - team/coach/player names are free-form user input.
+    $teamLink =  "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$teamId,false,false)."'>".htmlspecialchars($team->name)."</a>";
 
     //Create $logo_html
     $img = new ImageSubSys(IMGTYPE_TEAMLOGO, $team->team_id);
@@ -558,7 +562,9 @@ function _infocus($teams) {
         if ($p->is_dead || $p->is_sold) {
             continue;
         }
-        $starPlayers[] = array('name' => preg_replace('/\s/', '&nbsp;', $p->name), 'spp' => $p->mv_spp - $p->extra_spp);
+        // Escape before the &nbsp; substitution, not after - otherwise the "&" in "&nbsp;" gets
+        // double-encoded into "&amp;nbsp;", which renders as the literal text "&nbsp;" in the name.
+        $starPlayers[] = array('name' => preg_replace('/\s/', '&nbsp;', htmlspecialchars($p->name)), 'spp' => $p->mv_spp - $p->extra_spp);
     }
 
     //Sort the array
@@ -624,7 +630,7 @@ function _infocus($teams) {
                 <div class="inFocus">
                     <div class='tableResponsive'>
                     <table>
-                        <tr><td class="leftContentTd"><?php echo $lng->getTrn('common/coach'); ?></td><td><?php echo $team->f_cname; ?></td></tr>
+                        <tr><td class="leftContentTd"><?php echo $lng->getTrn('common/coach'); ?></td><td><?php echo htmlspecialchars($team->f_cname); ?></td></tr>
                         <tr><td class="leftContentTd"><?php echo $lng->getTrn('common/race'); ?></td><td><?php echo $team->f_rname; ?></td></tr>
                         <tr><td class="leftContentTd"><?php echo 'TV'; ?></td><td><?php echo (string)($team->tv / 1000); ?>k</td></tr>
                     </table>

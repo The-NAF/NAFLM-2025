@@ -132,6 +132,7 @@ public static function showTables() {
     } else if (isset($_GET['tour_id'])) {
     	$tour_id = $_GET['tour_id'];
     }
+    $tour_id = (int) $tour_id; # Security: was spliced raw into SQL below (getUnplayedTeamsForTournament() etc) - SQLi via GET/POST.
 	$firstTour = 0;
     ?>
     <div class='boxWide'>
@@ -207,7 +208,7 @@ public static function showTables() {
 	// Now the clean output.
 ?>
 	<div class='boxWide'>
-		<h3 class='boxTitle<?php echo T_HTMLBOX_STATS;?>'><?php echo $tour->name;?></h3>
+		<h3 class='boxTitle<?php echo T_HTMLBOX_STATS;?>'><?php echo htmlspecialchars($tour->name);?></h3>
 <?php
 	if ($confs == 0 || empty($confs)) {
 		// no conferences at all, or not for this league - normal format
@@ -230,9 +231,11 @@ EOQ;
 		$allConfIds = array();
 		foreach($confs as $conf) {
 			$allConfIds = array_merge($allConfIds, $conf->teamIds);
+			// SECURITY: heredoc below interpolates raw - escape before use.
+			$conf_name_html = htmlspecialchars($conf->name);
 echo<<< EOQ
 		<div class='boxWide'>
-			<h4 class='boxTitleConf'>$conf->name</h4>
+			<h4 class='boxTitleConf'>$conf_name_html</h4>
 				<div class='tableResponsive'>
 				<table class="boxTable">
 EOQ;
@@ -352,8 +355,8 @@ public static function showUnplayedTeams($unplayedTeams, &$i, $allowedTeams = 0)
 public static function showTeam($t, & $i) {
 	echo "<tr>\n";
 	echo "<td>" . ++$i . "</td>";
-	echo "<td><a href='". urlcompile(T_URL_PROFILE,T_OBJ_COACH,$t->owned_by_coach_id,false,false) ."'>" .$t->f_cname ."</a></td>";
-	echo "<td><a href='". urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$t->team_id,false,false) ."'>" .$t->name ."</a></td>";
+	echo "<td><a href='". urlcompile(T_URL_PROFILE,T_OBJ_COACH,$t->owned_by_coach_id,false,false) ."'>" .htmlspecialchars($t->f_cname) ."</a></td>";
+	echo "<td><a href='". urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$t->team_id,false,false) ."'>" .htmlspecialchars($t->name) ."</a></td>";
 	echo "<td><a href='". urlcompile(T_URL_PROFILE,T_OBJ_RACE,$t->f_race_id,false,false) ."'>" .$t->f_rname ."</a></td>";
 	echo "<td>" . ($t->tv / 1000) . "k</td>";
 	echo "<td>0</td>";

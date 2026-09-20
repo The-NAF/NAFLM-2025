@@ -56,7 +56,7 @@
 <name>Primes</name>
 
 <player>Joueur</player>
-<sort_hint>Astuce : clicking on the dropdown and pressing any letter on the keyboard scrolls the dropdown down to the first team name beginning with that letter.</sort_hint>
+<sort_hint>Astuce : cliquer dans la liste déroulante et appuyer sur une touche du clavier fait défiler la liste jusqu'au premier nom d'équipe commençant par cette lettre.</sort_hint>
 <submit>Valider</submit>
 <new>Nouvelle prime</new>
 <posted>Post&amp;eacute;e</posted>
@@ -75,4 +75,52 @@
 <note>Note : Il appartient aux commissaires, une fois que le joueur a &amp;eacute;t&amp;eacute; tu&amp;eacute;, de donner la r&amp;eacute;compense appropri&amp;eacute;e.</note>
 
 </fr-FR>
+
+<de-DE>
+
+<name>Gesucht</name>
+
+<player>Spieler</player>
+<sort_hint>Hinweis: Klicken Sie auf das Dropdown-Menü und drücken Sie einen beliebigen Buchstaben auf der Tastatur, um zum ersten Teamnamen zu springen, der mit diesem Buchstaben beginnt.</sort_hint>
+<submit>Absenden</submit>
+<new>Neuer Eintrag</new>
+<posted>Veröffentlicht</posted>
+<edit>Bearbeiten</edit>
+<del>Löschen</del>
+
+<g_title>Kopfgeld</g_title>
+<g_about>Gesucht für</g_about>
+<killed>WURDE GETÖTET!</killed>
+<wanted>Gesucht</wanted>
+
+<desc><![CDATA[Willkommen an der Wand der gesuchten Spieler.<br>Hüten Sie sich vor diesen Spielern, auf jeden von ihnen ist ein Kopfgeld ausgesetzt!]]></desc>
+<title><![CDATA[Wie hoch ist das Kopfgeld für diesen Spieler? Das kann alles sein, von purem Gold bis zu einer kostenlosen Bonus-Fertigkeit für einen Spieler des tötenden Teams.]]></title>
+<about>Warum wird der Spieler gesucht?</about>
+
+<note>Bitte beachten: Sobald der Spieler getötet wurde, liegt es am Liga-Verantwortlichen (Admin), die entsprechende Belohnung zu vergeben.</note>
+</de-DE>
+
+<it-IT>
+
+<name>Ricercati</name>
+
+<player>Giocatore</player>
+<sort_hint>Suggerimento: fare clic sul menu a tendina e premere una lettera qualsiasi sulla tastiera per scorrere fino al primo nome di squadra che inizia con quella lettera.</sort_hint>
+<submit>Invia</submit>
+<new>Nuova voce</new>
+<posted>Pubblicato</posted>
+<edit>Modifica</edit>
+<del>Elimina</del>
+
+<g_title>Taglia</g_title>
+<g_about>Ricercato per</g_about>
+<killed>È STATO UCCISO!</killed>
+<wanted>Ricercato</wanted>
+
+<desc><![CDATA[Benvenuti nel muro dei giocatori ricercati.<br>Fate attenzione a questi giocatori, pende una taglia sulla testa di ognuno di loro!]]></desc>
+<title><![CDATA[Qual è la taglia per la testa di questo giocatore? Può essere qualsiasi cosa, dall'oro puro a un'abilità bonus gratuita per uno dei giocatori della squadra che lo uccide.]]></title>
+<about>Perché il giocatore è ricercato?</about>
+
+<note>Nota: una volta che il giocatore è stato ucciso, spetta al commissario di lega (admin) assegnare il premio appropriato.</note>
+</it-IT>
 </translations>

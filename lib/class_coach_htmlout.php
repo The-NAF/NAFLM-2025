@@ -68,7 +68,7 @@ class Coach_HTMLOUT extends Coach
 		}
 
 		$fields = array(
-			'cname'    => array('desc' => $lng->getTrn('common/name'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'coach_id')),
+			'cname'    => array('desc' => $lng->getTrn('common/name'), 'nosort' => true, 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'coach_id')),
 			'team_cnt' => array('desc' => $lng->getTrn('common/teams'), 'nosort' => true),
 			'retired'  => array('desc' => $lng->getTrn('common/retired'), 'nosort' => true),
 		);
@@ -94,7 +94,8 @@ class Coach_HTMLOUT extends Coach
 		global $lng, $coach;
 		$c = new self($cid);
 		$ALLOW_EDIT = (is_object($coach) && ($c->coach_id == $coach->coach_id || $coach->mayManageObj(T_OBJ_COACH, $c->coach_id))); # Coach (or admin) visting own profile?
-		title($c->name);
+		// SECURITY: coach names are free-form user input, never validated - escape before display.
+		title(htmlspecialchars($c->name));
 		echo "<hr>";
 		$c->_menu($ALLOW_EDIT);
 		switch (isset($_GET['subsec']) ? $_GET['subsec'] : 'teams')
@@ -276,15 +277,15 @@ class Coach_HTMLOUT extends Coach
 				</tr>
 				<tr>
 					<td>Name (login):</td>
-					<td><?php echo $this->name;?></td>
+					<td><?php echo htmlspecialchars($this->name);?></td>
 				</tr>
 				<tr>
 					<td>Full name:</td>
-					<td><?php echo empty($this->realname) ? '<i>'.$lng->getTrn('common/none').'</i>' : $this->realname;?></td>
+					<td><?php echo empty($this->realname) ? '<i>'.$lng->getTrn('common/none').'</i>' : htmlspecialchars($this->realname);?></td>
 				</tr>
 				<tr>
 					<td>Phone:</td>
-					<td><?php echo empty($this->phone) ? '<i>'.$lng->getTrn('common/none').'</i>' : $this->phone?></td>
+					<td><?php echo empty($this->phone) ? '<i>'.$lng->getTrn('common/none').'</i>' : htmlspecialchars($this->phone)?></td>
 				</tr>
 				<tr>
 					<td>Mail:</td>
@@ -312,7 +313,7 @@ class Coach_HTMLOUT extends Coach
 				<tr>
 					<form method="POST">
 					<td><?php echo $lng->getTrn('cc/chphone');?>:</td>
-					<td><?php echo $lng->getTrn('cc/old');?>:<input type='text' name='old_phone' readonly value="<?php echo $this->phone; ?>" size="20" maxlength="129"></td>
+					<td><?php echo $lng->getTrn('cc/old');?>:<input type='text' name='old_phone' readonly value="<?php echo htmlspecialchars($this->phone); ?>" size="20" maxlength="129"></td>
 					<td><?php echo $lng->getTrn('cc/new');?>:<input type='text' name='new_phone' size="20" maxlength="25"></td>
 					<td><input type="submit" name="button" value="<?php echo $lng->getTrn('cc/chphone');?>"></td>
 					<input type='hidden' name='type' value='chphone'>
@@ -321,7 +322,7 @@ class Coach_HTMLOUT extends Coach
 				<tr>
 					<form method="POST">
 					<td><?php echo $lng->getTrn('cc/chmail');?>:</td>
-					<td><?php echo $lng->getTrn('cc/old');?>:<input type='text' name='old_email' readonly value="<?php echo $this->mail; ?>" size="20" maxlength="129"></td>
+					<td><?php echo $lng->getTrn('cc/old');?>:<input type='text' name='old_email' readonly value="<?php echo htmlspecialchars($this->mail); ?>" size="20" maxlength="129"></td>
 					<td><?php echo $lng->getTrn('cc/new');?>:<input type='text' name='new_email' size="20" maxlength="129"></td>
 					<td><input type="submit" name="button" value="<?php echo $lng->getTrn('cc/chmail');?>"></td>
 					<input type='hidden' name='type' value='chmail'>
@@ -330,7 +331,7 @@ class Coach_HTMLOUT extends Coach
 				<tr>
 					<form method="POST">
 					<td><?php echo $lng->getTrn('cc/chlogin');?>:</td>
-					<td><?php echo $lng->getTrn('cc/old');?>:<input type='text' name='old_name' readonly value="<?php echo $this->name; ?>" size="20" maxlength="50"></td>
+					<td><?php echo $lng->getTrn('cc/old');?>:<input type='text' name='old_name' readonly value="<?php echo htmlspecialchars($this->name); ?>" size="20" maxlength="50"></td>
 					<td><?php echo $lng->getTrn('cc/new');?>:<input type='text' name='new_name' size="20" maxlength="50"></td>
 					<td><input type="submit" name="button" value="<?php echo $lng->getTrn('cc/chlogin');?>"></td>
 					<input type='hidden' name='type' value='chlogin'>
@@ -339,7 +340,7 @@ class Coach_HTMLOUT extends Coach
 				<tr>
 					<form method="POST">
 					<td><?php echo $lng->getTrn('cc/chname');?>:</td>
-					<td><?php echo $lng->getTrn('cc/old');?>:<input type='text' name='old_realname' readonly value="<?php echo $this->realname; ?>" size="20" maxlength="50"></td>
+					<td><?php echo $lng->getTrn('cc/old');?>:<input type='text' name='old_realname' readonly value="<?php echo htmlspecialchars($this->realname); ?>" size="20" maxlength="50"></td>
 					<td><?php echo $lng->getTrn('cc/new');?>:<input type='text' name='new_realname' size="20" maxlength="50"></td>
 					<td><input type="submit" name="button" value="<?php echo $lng->getTrn('cc/chname');?>"></td>
 					<input type='hidden' name='type' value='chname'>
@@ -408,7 +409,11 @@ class Coach_HTMLOUT extends Coach
 					if ($ALLOW_EDIT) {
 						?>
 						<form method='POST'>
-							<textarea name='coachtext' rows='15' cols='70'><?php echo $txt;?></textarea>
+							<textarea name='coachtext' rows='15' cols='70'><?php
+								// SECURITY: same textarea-breakout issue as the match report summary -
+								// $txt used to be echoed raw here.
+								echo htmlspecialchars($txt);
+							?></textarea>
 							<br><br>
 							<input type="hidden" name="type" value="coachtext">
 							<input type="submit" name='Save' value="<?php echo $lng->getTrn('common/save');?>">

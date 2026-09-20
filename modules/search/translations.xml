@@ -28,4 +28,22 @@
 
 </fr-FR>
 
+<de-DE>
+
+<name>Trainer oder Team suchen</name>
+
+<search_tname>Team suchen</search_tname>
+<search_cname>Trainer suchen</search_cname>
+
+</de-DE>
+
+<it-IT>
+
+<name>Cerca allenatore o squadra</name>
+
+<search_tname>Cerca squadra</search_tname>
+<search_cname>Cerca allenatore</search_cname>
+
+</it-IT>
+
 </translations>

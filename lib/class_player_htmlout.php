@@ -84,7 +84,8 @@ class Player_HTMLOUT extends Player
 	private function _head($team) {
 		global $lng;
 		$p = $this; // Copy. Used instead of $this for readability.
-		title($p->name);
+		// SECURITY: player names are free-form user input, never validated - escape before display.
+		title(htmlspecialchars($p->name));
 		$players = $team->getPlayers();
 		$i = $next = $prev = 0;
 		$keys = array_keys($players);
@@ -126,7 +127,7 @@ class Player_HTMLOUT extends Player
 					<table class="pbox">
 						<tr>
 							<td><b><?php echo $lng->getTrn('common/name');?></b></td>
-							<td><?php echo "$p->name (#$p->nr)"; ?></td>
+							<td><?php echo htmlspecialchars($p->name)." (#$p->nr)"; ?></td>
 						</tr>
 						<tr>
 							<td><b><?php echo $lng->getTrn('common/pos');?></b></td>
@@ -167,7 +168,7 @@ class Player_HTMLOUT extends Player
 						</tr>
 						<tr>
 							<td><b><?php echo $lng->getTrn('common/team');?></b></td>
-							<td><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$p->owned_by_team_id,false,false);?>"><?php echo $p->f_tname; ?></a></td>
+							<td><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$p->owned_by_team_id,false,false);?>"><?php echo htmlspecialchars($p->f_tname); ?></a></td>
 						</tr>
 						<tr>
 							<td><b><?php echo $lng->getTrn('common/bought');?></b></td>
@@ -329,7 +330,11 @@ class Player_HTMLOUT extends Player
 					if ($ALLOW_EDIT) {
 						?>
 						<form method="POST" enctype="multipart/form-data">
-							<textarea name='playertext' rows='8' cols='45'><?php echo $txt;?></textarea>
+							<textarea name='playertext' rows='8' cols='45'><?php
+								// SECURITY: same textarea-breakout issue as the match report summary -
+								// $txt used to be echoed raw here.
+								echo htmlspecialchars($txt);
+							?></textarea>
 							<br><br>
 							<input type="hidden" name="type" value="playertext">
 							<input type="submit" name='Save' value='<?php echo $lng->getTrn('common/save');?>'>

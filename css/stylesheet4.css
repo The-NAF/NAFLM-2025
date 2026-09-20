@@ -1,0 +1,619 @@
+/****************************************************************
+ * Modern Classic — a modern take on the original "OBBLM Default"
+ * look (stylesheet0.css + stylesheet_default.css): a light content
+ * panel framed by a dark blue-grey surround, with the original's
+ * signature multi-colour box headers (blue/bronze/emerald/orange/
+ * olive) refined rather than replaced.
+ *
+ * Loaded the same way as the other numbered theme files: selected
+ * per-league from League Preferences > "core_theme_id" (this file's
+ * id is "4"). Purely additive — no existing theme file is touched.
+ *
+ * Deliberately a different composition from Modern Dark
+ * (stylesheet2.css, all-dark, single teal accent) and Modern Light
+ * (stylesheet3.css, all-light, single teal accent, monochrome
+ * headers): this one keeps a colour-coded header per box type and a
+ * two-tone page/panel split, like the original.
+ ****************************************************************/
+
+/* Display font for the banner title (f1) only — must stay before any other rule. */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap');
+
+/*************************
+ * Palette (kept as comments for reference — values are inlined
+ * below for maximum browser compatibility with older embedded
+ * views, e.g. the popup/dialog window template).
+ *
+ *   --bg-page        #16222e -> #1c2c3c   dark blue-grey surround
+ *   --bg-panel       #f8fafc   main "everything" panel
+ *   --bg-card        #ffffff   box/card background
+ *   --border          #dde3ec  default hairline border
+ *   --text            #1c2733  primary text
+ *   --text-muted      #64748b  secondary text
+ *   --accent          #2f5aa8  deep blue — primary accent (menu/buttons)
+ *   --accent-hover    #3a6bc2
+ *   --info            #3574c4  (boxTitle1)
+ *   --coach           #b8863c  (boxTitle2)
+ *   --admin           #1f9d6f  (boxTitle3)
+ *   --stats           #d97b29  (boxTitle4)
+ *   --match           #6b9b37  (boxTitle5)
+ *************************/
+
+html {overflow-y: scroll;} /* Keep page alignment uniform. */
+
+body
+{
+    background: #16222e;
+    background: linear-gradient(180deg, #16222e 0%, #1c2c3c 220px, #1c2c3c 100%);
+    font: 13px/1.5 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1c2733;
+}
+
+a {color: #2f5aa8;}
+a:link, a:visited {text-decoration: none;}
+a:hover {color: #3a6bc2; text-decoration: underline;}
+
+h3 {margin:0} /* Reset browser default margin */
+
+/* Title for sections */
+h2
+{
+    clear: both;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: inherit;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    margin: 0 auto;
+    color: #1c2733;
+}
+
+/* Container for rows */
+div.row {width: inherit; clear: both; background-color: inherit;}
+
+/* MAIN container */
+div.everything {
+    width: 1280px;
+    max-width: 100%;
+    margin: auto;
+    background-color: #f8fafc;
+    border: 1px solid #dde3ec;
+    border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    overflow: hidden;
+}
+
+/*
+ *   The following three containers are the subsequent main containers within "div.everything".
+ */
+
+/* Banner */
+div.banner {
+    width: 100%;
+    height: 132px;
+    margin: 0;
+    background-color: #ffffff;
+    background-image: linear-gradient(120deg, #eef2f8 0%, #ffffff 60%, #eef2f8 100%);
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 100% 100%;
+    border-bottom: 3px solid #2f5aa8;
+    /* Text banner (f0/f1/f2, used when no advert module is active) is laid out with
+       flexbox instead of the legacy <br><br><br> spacing, so it centers cleanly
+       regardless of font size and can never spill into the menu below. */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 28px;
+    overflow: hidden;
+}
+/* f0 and the banner's own <br> tags were only ever spacers for the old logo-based
+   layout — flexbox centering replaces them, so they're hidden rather than removed
+   from the markup. */
+div.banner f0, div.banner br {display: none;}
+
+f1 {
+    display: block;
+    font-family: 'Oswald', -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1c2733;
+    font-weight: 600;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: 0.3px;
+    margin: 0;
+}
+f2 {
+    display: block;
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+    color: #64748b;
+    font-size: 14px;
+    margin: 6px 0 0 0;
+}
+
+/* Menu */
+div.menu {
+    width: 100%;
+    float: left;
+    background-color: #eef2f7;
+    border-bottom: 1px solid #dde3ec;
+}
+
+/* Section code container */
+div.section {
+    margin: 0;
+    padding-bottom: 40px;
+    background-color: inherit;
+}
+
+/*
+ *   Box (inner) stylings.
+ */
+div.boxCommon,div.boxWide,div.boxCoachPage,div.boxTeamPage,div.boxPlayerPageInfo {
+    margin: 18px;
+    background-color: #ffffff;
+    border: 1px solid #dde3ec;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(15,23,42,0.08);
+    overflow: hidden;
+}
+div.boxWide             {clear:both;}
+div.boxCommon           {float:left;}
+div.boxCoachPage        {float: left; width: 270px; margin: 15px; margin-bottom: 0px;}
+div.boxTeamPage         {float: left; width: 270px; margin: 15px; margin-bottom: 0px;}
+div.boxPlayerPageInfo   {float: left; width: 325px; margin-left: 30px;}
+
+/*
+ * Box headers keep the original's idea of one colour per box type —
+ * refined to a more harmonious, modern palette instead of the
+ * original's fully-saturated primary colours.
+ */
+.boxTitle1,.boxTitle2,.boxTitle3,.boxTitle4,.boxTitle5 {
+    color: #ffffff;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+.boxTitle1 {background-color: #3574c4;} /* Team/player/coach info & team news */
+.boxTitle2 {background-color: #b8863c;} /* Management/actions/more box for ordinary coaches */
+.boxTitle3 {background-color: #1f9d6f;} /* Management/actions/more box for ordinary admins */
+.boxTitle4 {background-color: #d97b29;} /* Statistics (standings, player leaders, ES) */
+.boxTitle5 {background-color: #6b9b37;} /* Match summaries & recent games */
+.boxBody   {border-top: none; background-color: #ffffff; color: #2c3947; padding: 12px;}
+table.boxTable {border-spacing: 5px; width: 100%;}
+
+.boxTitleConf {
+    background-color: #3574c4;
+    color: #ffffff;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    border-radius: 6px 6px 0 0;
+}
+
+/* Other types of boxes. */
+.helpBox {
+    color: #1e3a52;
+    border: 1px solid #cfe3f2;
+    border-left: 4px solid #3574c4;
+    background-color: #eef6fb;
+    border-radius: 6px;
+    padding: 12px 14px;
+    line-height: 1.5em;
+}
+
+.errorBox {
+    color: #7a1f1f;
+    border: 1px solid #f3c6c6;
+    border-left: 4px solid #d33d3d;
+    background-color: #fdecec;
+    border-radius: 6px;
+    padding: 12px 14px;
+    line-height: 1.5em;
+}
+
+/*
+ *   Tables, TRs and TDs
+ */
+
+/* Used almost everywhere */
+table.common  {border: none; width: 100%; background-color: inherit; border-collapse: collapse;}
+table.common > tbody > tr > td, table.common > tbody > tr > th {padding: 5px 6px; border: 1px solid rgba(0,0,0,0.18);}
+tr.commonhead {background-color: #eef2f7; color: #1c2733; font-weight: 600;}
+table.common > tbody > tr:not(.commonhead):hover {background-color: #f4f7fb;}
+table.common > tbody > tr:nth-child(even):not(.commonhead) {background-color: rgba(15,23,42,0.02);}
+
+/* Generic responsive wrapper used around some data tables. */
+.tableResponsive {width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;}
+
+/* For the tours list */
+table.tours {
+    border: none;
+    width: 100%;
+    background-color: inherit;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* tour lists: titel boxes */
+.leagues     {background-color: #3574c4; color: #ffffff;}
+.divisions   {background-color: #6b9b37; color: #ffffff;}
+.tours       {background-color: #eef2f7; color: #1c2733;}
+td.round     {background-color: #eef2f7; color: #1c2733;}
+td.match     {background-color: #ffffff; color: #2c3947;}
+td.seperator {height:15px;}
+
+/* tour lists: node containers */
+div.leaguesNCont     {margin-top:15px; margin-left:10px;}
+div.divisionsNCont   {margin-top:5px;  margin-left:25px;}
+div.toursNCont       {margin-top:0px;  margin-left:10px;}
+
+/*
+ *   Section specific
+ */
+
+/* Main page */
+div.main_head        {clear: both; padding-left: 20px; padding-top: 20px; padding-bottom: 5px; font-size: 19px; font-weight: 600; color: #1c2733; background-color: inherit;}
+div.main_foot         {clear: both; font-size: 11px; color: #64748b; padding: 30px; padding-top: 20px; background-color: inherit;}
+div.main_rightColumn  {float: right; width: 600px; background-color: inherit;}
+div.main_leftColumn   {float: left; width: 540px; background-color: inherit;}
+    div.main_leftColumn_head     {clear: both; text-align: right; padding-right: 20px; background-color: inherit;}
+        div.main_leftColumn_welcome  {clear: both; padding-left: 20px; padding-top: 3px; padding-bottom: 3px; background-color: inherit; text-align: left; color: #2c3947;}
+        div.main_leftColumn_left    {padding-left: 20px; padding-top: 10px; padding-bottom: 10px; background-color: inherit; text-align: left; float:left; color: #2c3947;}
+        div.main_leftColumn_right   {padding-left: 20px; padding-top: 3px;  padding-bottom: 3px;  background-color: inherit; text-align: right; float:right; color: #2c3947;}
+
+/*
+ *  Other
+ */
+
+input.number {
+    width: 4em;
+}
+
+/* Status bar */
+div.messageContainer    {width:100%; padding:10px 14px; color:#fff; font-weight:600; border-radius: 6px; margin-bottom: 10px;}
+div.lightgreen          {clear:both; background-color:#2f9e56; border:1px solid #298000;}
+div.green               {clear:both; background-color:#2f9e56; border:1px solid #298000;}
+div.red                 {clear:both; background-color:#d33d3d; border:1px solid #c00;}
+
+/* Game result icon*/
+.match_icon {background:transparent url(../images/result_icon.gif) no-repeat 0 0;width:12px;height:12px}
+.won        {background-position:-14px 0}
+.draw       {background-position:-28px 0}
+.lost       {background-position:-42px 0}
+
+.team-management-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c2733;
+}
+
+/* Simple alignment/text helpers seen across a few templates. */
+.cent, .cent2 {text-align: center;}
+.divider {border-top: 1px solid #dde3ec; margin: 10px 0;}
+.indtitle {font-weight: 600; color: #1c2733;}
+
+/* Section box / title pairing used by a few builder-style pages */
+.section-box {
+    background-color: #ffffff;
+    border: 1px solid #dde3ec;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+.section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #1c2733;
+    border-bottom: 1px solid #dde3ec;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+/* Summary strips (e.g. team builder counters) */
+.summary-box {
+    background-color: #eef2f7;
+    border: 1px solid #dde3ec;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+}
+.summary-item {
+    display: inline-block;
+    margin-right: 18px;
+    padding: 3px 0;
+    color: #2c3947;
+}
+
+/* Generic data tables used by the team/roster builders */
+table.builder-table, table.sideline-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+table.builder-table th, table.sideline-table th {
+    background-color: #eef2f7;
+    color: #1c2733;
+    font-weight: 600;
+    padding: 6px 8px;
+    text-align: left;
+    border-bottom: 1px solid #dde3ec;
+}
+table.builder-table td, table.sideline-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #eef1f6;
+    color: #2c3947;
+}
+table.builder-table tr:hover td, table.sideline-table tr:hover td {
+    background-color: #f4f7fb;
+}
+
+.schedulebutton, .player-button {
+    display: inline-block;
+    background-color: #eef2f7;
+    color: #1c2733;
+    border: 1px solid #dde3ec;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.schedulebutton:hover, .player-button:hover {
+    background-color: #2f5aa8;
+    border-color: #2f5aa8;
+    color: #fff;
+}
+
+.team-name {font-weight: 600; color: #1c2733;}
+
+form#RequestLeagueForm div.input-item label {
+    display: inline-block;
+    width: 170px;
+    text-align: right;
+    padding-right: 1em;
+    color: #2c3947;
+}
+
+form#RequestLeagueForm input[type="submit"] {
+    margin-left: 13.6em;
+}
+
+/*
+ *  Forms & buttons — generic controls used throughout the site.
+ */
+input, select, textarea {
+    background-color: #ffffff;
+    color: #1c2733;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font: 12px/1.3 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #2f5aa8;
+    box-shadow: 0 0 0 2px rgba(47,90,168,0.18);
+}
+input[type="submit"], input[type="button"], button {
+    background-color: #2f5aa8;
+    color: #fff;
+    border: 1px solid #2f5aa8;
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+input[type="submit"]:hover, input[type="button"]:hover, button:hover {
+    background-color: #3a6bc2;
+    border-color: #3a6bc2;
+}
+input[type="checkbox"], input[type="radio"] {
+    accent-color: #2f5aa8;
+}
+
+/*********************
+ CSS Menu
+ *********************/
+._css3m{display:none}
+
+ul.css3menu1,ul.css3menu1 ul, ul.rosterMenu {
+    margin:0;list-style:none;padding:0;background-color:#eef2f7;border-width:0;border-style:solid;border-color:#dde3ec;border-radius:0px;}
+ul.css3menu1 ul{
+    display:none;position:absolute;left:0;top:100%;box-shadow:0 10px 24px rgba(15,23,42,0.14);background-color:#ffffff;border-radius:0 0 8px 8px;border:1px solid #dde3ec;border-top:none;padding:6px 0;}
+ul.css3menu1 li:hover>*{
+    display:block;}
+ul.css3menu1 li, ul.rosterMenu li {
+    position:relative;display:block;white-space:nowrap;font-size:0;float:right;}
+ul.css3menu1 li:hover{
+    z-index:1;}
+ul.css3menu1 ul ul{
+    position:absolute;left:100%;top:0;}
+ul.css3menu1, ul.rosterMenu {
+    font-size:0;width:100%;z-index:999;position:relative;display:inline-block;zoom:1;padding:0 0%;margin:0 0%;
+    *display:inline;*padding-right:1.75%;}
+* html ul.css3menu1 li a{
+    display:inline-block;}
+ul.css3menu1>li , ul.rosterMenu > li{
+    margin:0;display:table-cell; table-layout:fixed; width:12.5%;}
+ul.css3menu1 li.toplast{
+    width:16%;}
+body:first-of-type ul.css3menu1{
+    display:inline-table;border-spacing:0px 0;}
+body:first-of-type ul.css3menu1>li, ul.rosterMenu> li{
+    display:table-cell;float:none;}
+ul.css3menu1 a:active, ul.css3menu1 a:focus{
+    outline-style:none;}
+ul.css3menu1 a, ul.rosterMenu a {
+    display:block;vertical-align:middle;text-align:center;text-decoration:none;font:600 12px -apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#3a4a5c;text-shadow:none;cursor:pointer;padding:11px 10px;background-color:transparent;background-image:none;border-width:0 0 0 1px;border-style:solid;border-color:#dde3ec;}
+ul.css3menu1 ul li{
+    float:none;margin:0;}
+ul.css3menu1 ul a{
+    text-align:left;padding:8px 14px;background-color:transparent;background-image:none;border-width:0;border-radius:0px;font:600 12px -apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#3a4a5c;text-decoration:none;}
+ul.css3menu1 li:hover>a,ul.css3menu1 li a.pressed{
+    background-color:#2f5aa8;border-color:#2f5aa8;color:#ffffff;text-shadow:none;background-image:none;}
+ul.css3menu1 span{
+    display:block;overflow:visible;background-position:right center;background-repeat:no-repeat;padding-right:0px;}
+ul.css3menu1 ul span{
+    background-image:url("../images/arrowsub.png");padding-right:12px;filter:brightness(0.6);}
+ul.css3menu1 > li.switch{
+    display:none;cursor:pointer;width:25px;height:20px;padding:4px 10px 4px 10px;}
+ul.css3menu1 > li.switch:before{
+    content:"";position:absolute;display:block;height:4px;width:25px;border-radius:4px;background:#3a4a5c;-moz-box-shadow:0 8px #3a4a5c, 0 16px #3a4a5c;-webkit-box-shadow:0 8px #3a4a5c, 0 16px #3a4a5c;box-shadow:0 8px #3a4a5c, 0 16px #3a4a5c;}
+ul.css3menu1 > li.switch:hover:before{
+    background:#2f5aa8;-moz-box-shadow:0 8px #2f5aa8, 0 16px #2f5aa8;-webkit-box-shadow:0 8px #2f5aa8, 0 16px #2f5aa8;box-shadow:0 8px #2f5aa8, 0 16px #2f5aa8;}
+.c3m-switch-input{
+    display:none;}
+ul.css3menu1 ul li:hover>a,ul.css3menu1 ul li > a.pressed{
+    background-color:#eef2f7;background-image:none;color:#2f5aa8;text-decoration:none;}
+ul.css3menu1 li.topfirst>a{
+    border-radius:0px 0 0 0px;}
+ul.css3menu1 li.toplast>a{
+    border-radius:0 0px 0px 0;}
+
+@-moz-document url-prefix(){body:first-of-type ul.css3menu1{display:inline-block} body:first-of-type ul.css3menu1>li{display:block;float:left !important;}}
+@media only screen and (max-width:399px),only screen and (max-device-width:399px){
+ul.css3menu1>li:nth-of-type(1){width:25%}ul.css3menu1>li:nth-of-type(2){width:25%}ul.css3menu1>li:nth-of-type(3){width:25%}ul.css3menu1>li:nth-of-type(4){width:25%}ul.css3menu1>li:nth-of-type(5){width:33%}ul.css3menu1>li:nth-of-type(6){width:33%}ul.css3menu1>li:nth-of-type(7){width:34%}body:first-of-type ul.css3menu1{display:inline-block} body:first-of-type ul.css3menu1>li{display:block;float:left !important;}}
+@media screen and (max-width: 768px) {
+    ul.css3menu1 > li {
+        position: initial;}
+    ul.css3menu1 ul .submenu,ul.css3menu1 li > ul {
+        left: 0; right:auto; top: 100%;}
+    ul.css3menu1 .submenu,ul.css3menu1 ul,ul.css3menu1 .column {
+        -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;padding-right: 0;width: 100% !important;}
+}
+@media screen and (max-width: 228px) {
+    ul.css3menu1 {
+        width: 100%;}
+    ul.css3menu1 > li {
+        display: none;      position: relative;     width: 100% !important;}
+    ul.css3menu1 > li.switch,.c3m-switch-input:checked + ul.css3menu1 > li + li {
+        display: block;}
+    ul.css3menu1 > li.switch > label {      position: absolute;cursor: pointer;top: 0;left: 0;right: 0;bottom: 0;}}
+
+/*********************
+ Autocomplete
+ *********************/
+.autocomplete-w1 { background:url(shadow.png) no-repeat bottom right; position:absolute; top:0px; left:0px; margin:8px 0 0 6px; _background:none; _margin:0; }
+.autocomplete { border:1px solid #dde3ec; background:#ffffff; cursor:default; text-align:left; max-height:350px; overflow:auto; margin:-6px 6px 6px -6px; border-radius: 6px; box-shadow: 0 10px 24px rgba(15,23,42,0.12); _height:350px; _margin:0; _overflow-x:hidden; }
+.autocomplete .selected { background:#eef2f7; }
+.autocomplete div { padding:6px 8px; white-space:nowrap; color: #2c3947; }
+.autocomplete strong { font-weight:700; color:#2f5aa8; }
+
+/*********************
+ jQuery UI overrides (tabs / dialogs used e.g. on the team page)
+ *********************/
+.ui-widget {
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1c2733;
+}
+.ui-widget-content {
+    background: #ffffff;
+    border: 1px solid #dde3ec;
+    color: #1c2733;
+}
+.ui-widget-header {
+    background: #eef2f7;
+    border: 1px solid #dde3ec;
+    color: #1c2733;
+}
+.ui-tabs {
+    background: transparent;
+    border: none;
+}
+.ui-tabs .ui-tabs-nav {
+    background: #eef2f7;
+    border: 1px solid #dde3ec;
+    border-radius: 8px 8px 0 0;
+    padding: 6px 6px 0;
+}
+.ui-tabs .ui-tabs-nav li {
+    background: transparent;
+    border: none;
+}
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    color: #64748b;
+    padding: 8px 14px;
+}
+.ui-tabs .ui-tabs-nav .ui-state-active {
+    background: #ffffff;
+    border-radius: 6px 6px 0 0;
+}
+.ui-tabs .ui-tabs-nav .ui-state-active .ui-tabs-anchor {
+    color: #1c2733;
+    border-bottom: 2px solid #2f5aa8;
+}
+.ui-tabs .ui-tabs-panel {
+    background: #ffffff;
+    border: 1px solid #dde3ec;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+}
+.ui-dialog {
+    background: #ffffff;
+    border: 1px solid #dde3ec;
+    border-radius: 8px;
+    box-shadow: 0 20px 50px rgba(15,23,42,0.25);
+}
+.ui-dialog .ui-dialog-titlebar {
+    background: #eef2f7;
+    border-radius: 8px 8px 0 0;
+    color: #1c2733;
+}
+.ui-dialog .ui-dialog-content {
+    background: #ffffff;
+    color: #1c2733;
+}
+.ui-state-default, .ui-widget-content .ui-state-default {
+    background: #eef2f7;
+    border: 1px solid #dde3ec;
+    color: #2c3947;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover {
+    background: #2f5aa8;
+    border: 1px solid #2f5aa8;
+    color: #fff;
+}
+.ui-state-active, .ui-widget-content .ui-state-active {
+    background: #2f5aa8;
+    border: 1px solid #2f5aa8;
+    color: #fff;
+}
+
+/* Scrollbar styling (WebKit/Chromium + Firefox) — purely cosmetic. */
+* {scrollbar-color: #c7d0dc #eef1f6;}
+::-webkit-scrollbar {width: 10px; height: 10px;}
+::-webkit-scrollbar-track {background: #eef1f6;}
+::-webkit-scrollbar-thumb {background-color: #c7d0dc; border-radius: 6px;}
+::-webkit-scrollbar-thumb:hover {background-color: #aab6c6;}
+
+/*********************
+ Mobile
+ *********************/
+@media only screen and (max-device-width: 600px){
+    .ui-widget-header {
+        background: #eef2f7;
+    }
+
+    div.everything {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    div.banner {
+        background-position: center center;
+        height: 100px;
+    }
+}

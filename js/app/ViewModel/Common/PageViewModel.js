@@ -11,16 +11,17 @@ var PageViewModel = function(leaguesJson) {
                 'type': 'rename_player',
                 'player': playerId,
                 'teamId': teamId,
-                'name': newName
+                'name': newName,
+                'csrf_token': window.NAFLM_CSRF_TOKEN // Security: team_webservice.php now requires this (see header.php).
             }
         });
-    }; 
-    
+    };
+
     self.updatePlayerNumber = function(newNumber, teamId, playerId) {
         newNumber = parseInt(newNumber, 10);
         if(isNaN(newNumber))
             return;
-        
+
         return $.ajax({
             type: 'POST',
             url: 'team_webservice.php',
@@ -28,7 +29,8 @@ var PageViewModel = function(leaguesJson) {
                 'type': 'renumber_player',
                 'player': playerId,
                 'teamId': teamId,
-                'number': newNumber
+                'number': newNumber,
+                'csrf_token': window.NAFLM_CSRF_TOKEN // Security: team_webservice.php now requires this (see header.php).
             }
         });
     };

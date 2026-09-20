@@ -64,7 +64,7 @@ private static function printList($team,$ALLOW_EDIT)
     
     if ($team) {
         $entries = self::entries($team->team_id);
-        title("<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$team->team_id,false,false)."'>".$team->name.'</a>&nbsp;'.$lng->getTrn('name', __CLASS__));
+        title("<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$team->team_id,false,false)."'>".htmlspecialchars($team->name).'</a>&nbsp;'.$lng->getTrn('name', __CLASS__));
     }
     else {
         $entries = self::entries(null);
@@ -84,9 +84,9 @@ private static function printList($team,$ALLOW_EDIT)
         <div class="boxWide" style="width: 80%; margin: 20px auto 20px auto;">
             <div class="boxTitle<?php echo T_HTMLBOX_INFO;?>">
                 <?php 
-                echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_PLAYER,$e->pid,false,false)."'>$e->name</a>";
+                echo "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_PLAYER,$e->pid,false,false)."'>".htmlspecialchars($e->name)."</a>";
                 if (!$team) { # Not a single teams cemetery, but all of the cemetery.
-                    echo " (<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$e->f_tid,false,false)."'>".$e->f_tname.'</a>)';
+                    echo " (<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$e->f_tid,false,false)."'>".htmlspecialchars($e->f_tname).'</a>)';
                 }
                 if (!empty($e->title)) {
                     echo ": $e->title";

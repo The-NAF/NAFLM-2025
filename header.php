@@ -14,6 +14,22 @@ error_reporting((E_ALL | E_STRICT) & ~E_DEPRECATED);
 session_start();
 
 /*********************
+ *   CSRF protection
+ *********************/
+// Security: there was previously zero CSRF protection anywhere in the codebase - every POST
+// endpoint (schedule changes, roster/match edits, admin actions, password changes, etc.) was
+// forgeable from any other site a logged-in coach happened to have open. One per-session random
+// token, generated once and checked below against every POST request that reaches here - which is
+// every real entry point in the app. Exposed to templates/JS as the NAFLM_CSRF_TOKEN constant;
+// HTMLOUT::frame_end() auto-stamps it onto every real <form method=post> (see class_htmlout.php).
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = function_exists('openssl_random_pseudo_bytes')
+        ? bin2hex(openssl_random_pseudo_bytes(32))
+        : hash('sha256', uniqid(mt_rand(), true).mt_rand().microtime(true));
+}
+define('NAFLM_CSRF_TOKEN', $_SESSION['csrf_token']);
+
+/*********************
  *   General
  *********************/
 define('OBBLM_VERSION', '1.1 SVN');
@@ -29,8 +45,8 @@ $credits = array(	'Pierluigi Masia',
 					'Goiz Ruiz de Gopegui',
 					'Ryan Williams',
 					'Ian Williams');
-define('NAFLM_VERSION', '2025.6.3');
-define('NAFLM_BUILD_DATE', '4th September 2026');
+define('NAFLM_VERSION', '2025.6.4');
+define('NAFLM_BUILD_DATE', '20th September 2026');
 define('CONTENT_VERSION', 'Blood Bowl 2025 - Third Season');
 define('CONTENT_DETAIL', 'Blood Bowl 2025 and up to and including Spike! #22');
 define('CONTENT_DATE', 'September 2026');
@@ -115,7 +131,6 @@ require_once('lib/class_settings.php');
 require_once('lib/mysql.php');
 require_once('lib/misc_functions.php');
 require_once('lib/class_email.php');
-require_once('lib/class_mobile.php');
 require_once('lib/class_sqltriggers.php');
 require_once('lib/class_match.php');
 require_once('lib/class_tournament.php');
@@ -149,7 +164,6 @@ require_once('lib/class_player_htmlout.php');
 require_once('lib/class_starmerc_htmlout.php');
 require_once('lib/class_race_htmlout.php');
 require_once('lib/class_match_htmlout.php');
-require_once('lib/class_mobile_htmlout.php');
 
 /********************
  *   Final setup
@@ -166,6 +180,17 @@ if (defined('T_NO_STARTUP')) {
     Coach::logout();
     require_once('modules/modsheader.php'); # Registration of modules.
 } else {
+    // Security: central CSRF check - covers every POST that reaches this branch, no exceptions
+    // (including match_webservice.php/team_webservice.php, per Val). An external tool posting to
+    // those webservices directly (eg. BOTOCS) will need to fetch and echo back this same session's
+    // csrf_token the same way a real form now does.
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $suppliedToken = isset($_POST['csrf_token']) ? $_POST['csrf_token'] : (isset($_SERVER['HTTP_X_CSRF_TOKEN']) ? $_SERVER['HTTP_X_CSRF_TOKEN'] : '');
+        if (!is_string($suppliedToken) || $suppliedToken === '' || !hash_equals($_SESSION['csrf_token'], $suppliedToken)) {
+            http_response_code(403);
+            die('Request blocked: missing or invalid security token. Please reload the page and try again.');
+        }
+    }
     $conn = mysql_up(defined('T_NO_TBL_CHK') ? !T_NO_TBL_CHK : true); # MySQL connect.
     setupGlobalVars(T_SETUP_GLOBAL_VARS__COMMON);
     

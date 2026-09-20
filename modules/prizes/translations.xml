@@ -53,4 +53,38 @@
 <about>D&amp;eacute;tails sur le troph&amp;eacute;e. L'&amp;eacute;quipe ou le coach r&amp;eacute;compens&amp;eacute;s a-t-il re&amp;ccedil;u un troph&amp;eacute;e r&amp;eacute;el ?</about>
 
 </fr-FR>
+
+<de-DE>
+
+<name>Preise</name>
+
+<team>Team</team>
+<tour>Turnier</tour>
+<submit>Absenden</submit>
+<new>Neuer Eintrag</new>
+
+<kind>Art des Preises</kind>
+<g_title>Titel</g_title>
+<g_about>Beschreibung</g_about>
+<desc><![CDATA[Willkommen im Preise-Bereich.<br>Hier finden Sie Teams, die bei Turnieren Preise f&uuml;r den 1., 2. und 3. Platz sowie f&uuml;r die t&ouml;dlichste oder fairste Spielweise gewonnen haben.]]></desc>
+<title><![CDATA[Kurze Einf&uuml;hrung zum Preis oder zum siegreichen Team.]]></title>
+<about>Details zum Preis. Hat das siegreiche Team/der Trainer im echten Leben etwas erhalten?</about>
+</de-DE>
+
+<it-IT>
+
+<name>Premi</name>
+
+<team>Squadra</team>
+<tour>Torneo</tour>
+<submit>Invia</submit>
+<new>Nuova voce</new>
+
+<kind>Tipo di premio</kind>
+<g_title>Titolo</g_title>
+<g_about>Descrizione</g_about>
+<desc><![CDATA[Benvenuti nella sezione dei premi.<br>Qui potete trovare le squadre che hanno vinto premi nei tornei per essersi classificate 1&deg;, 2&deg; e 3&deg;, oppure per essere state le pi&ugrave; letali o le pi&ugrave; corrette.]]></desc>
+<title><![CDATA[Breve introduzione al premio o alla squadra vincitrice.]]></title>
+<about>Dettagli sul premio. La squadra/l'allenatore vincitore ha ricevuto qualcosa nella vita reale?</about>
+</it-IT>
 </translations>

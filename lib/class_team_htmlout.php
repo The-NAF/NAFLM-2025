@@ -70,8 +70,8 @@ class Team_HTMLOUT extends Team
 		if ($rules['dungeon'] == 0 || $rules['sevens'] == 0) {
 			$fields = array(
 				'logo'    => array('desc' => 'Logo', 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id'), 'nosort' => true),
-				'tname'   => array('desc' => $lng->getTrn('common/name'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
-				'f_cname' => array('desc' => $lng->getTrn('common/coach'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id')),
+				'tname'   => array('desc' => $lng->getTrn('common/name'), 'nosort' => true, 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
+				'f_cname' => array('desc' => $lng->getTrn('common/coach'), 'nosort' => true, 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id')),
 				'format'  => array('desc' => $lng->getTrn('common/format'), 'nosort' => true),
 				'rdy'     => array('desc' => $lng->getTrn('common/ready'), 'nosort' => true),
 				'retired' => array('desc' => $lng->getTrn('common/retired'), 'nosort' => true),
@@ -81,8 +81,8 @@ class Team_HTMLOUT extends Team
 		} else {
 			$fields = array(
 				'logo'    => array('desc' => 'Logo', 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id'), 'nosort' => true),
-				'tname'   => array('desc' => $lng->getTrn('common/name'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
-				'f_cname' => array('desc' => $lng->getTrn('common/coach'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id')),
+				'tname'   => array('desc' => $lng->getTrn('common/name'), 'nosort' => true, 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
+				'f_cname' => array('desc' => $lng->getTrn('common/coach'), 'nosort' => true, 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id')),
 				'rdy'     => array('desc' => $lng->getTrn('common/ready'), 'nosort' => true),
 				'retired' => array('desc' => $lng->getTrn('common/retired'), 'nosort' => true),
 				'f_rname' => array('desc' => $lng->getTrn('common/race'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_RACE,false,false,false), 'field' => 'obj_id', 'value' => 'f_race_id')),
@@ -107,9 +107,9 @@ class Team_HTMLOUT extends Team
 		echo $lng->getTrn('common/notice_simul')."<br><br>\n";
 		list($teams, $sortRule) = HTMLOUT::standings(STATS_TEAM,$node,$node_id,array('url' => urlcompile(T_URL_STANDINGS,T_OBJ_TEAM,false,false,false), 'hidemenu' => false, 'return_objects' => true));
 		$fields = array(
-			'name'         => array('desc' => $lng->getTrn('common/team'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
+			'name'         => array('desc' => $lng->getTrn('common/team'), 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
 			'f_rname'      => array('desc' => $lng->getTrn('common/race'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_RACE,false,false,false), 'field' => 'obj_id', 'value' => 'f_race_id')),
-			'f_cname'      => array('desc' => $lng->getTrn('common/coach'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id')),
+			'f_cname'      => array('desc' => $lng->getTrn('common/coach'), 'escape' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id')),
 			'rg_ff'        => array('desc' => 'Dedicated Fans'),
 			'rerolls'      => array('desc' => 'RR'),
 			'ass_coaches'  => array('desc' => 'Ass. coaches'),
@@ -620,7 +620,13 @@ class Team_HTMLOUT extends Team
 			/*
 				Misc
 			*/
-			$p->name = preg_replace('/\s/', '&nbsp;', $p->name);
+			// SECURITY: sort_table()'s 'escape' flag can't be used for this field - $p->name has
+			// to become &nbsp;-substituted display markup right here (to stop long names wrapping
+			// mid-word in the narrow roster column), so it has to be escaped BEFORE that happens,
+			// not afterwards. Escaping afterwards (via 'escape' => true below) would double-encode
+			// the &nbsp; itself - turning the "&" into "&amp;" and printing the literal text
+			// "&nbsp;" in the middle of the name instead of a space.
+			$p->name = preg_replace('/\s/', '&nbsp;', htmlspecialchars($p->name));
 			$p->position = preg_replace('/\s/', '&nbsp;', $p->position);
 			$p->info = '<i class="icon-info"></i>';
 			$p->team_id = $team->team_id;
@@ -1070,13 +1076,15 @@ class Team_HTMLOUT extends Team
 		 * ------------------
 		 * Contains player information and menu(s) for skill choice.
 		 ******************************/
-		title($team->name . (($team->is_retired) ? ' <font color="red"> (Retired)</font>' : ''));
+		// SECURITY: team names are free-form user input, never validated - escape before display
+		// (the "(Retired)" suffix is our own trusted markup, left unescaped so the <font> tag works).
+		title(htmlspecialchars($team->name) . (($team->is_retired) ? ' <font color="red"> (Retired)</font>' : ''));
 		$allowEdit = (isset($coach) && $coach)
 			? $coach->isMyTeam($team->team_id) || $coach->mayManageObj(T_OBJ_TEAM, $team->team_id)
 			: false;
 		$fields = array(
 			'nr'        => array('desc' => '#', 'editable' => 'updatePlayerNumber', 'javaScriptArgs' => array('team_id', 'player_id'), 'editableClass' => 'number', 'allowEdit' => $allowEdit),
-			'name'      => array('desc' => $lng->getTrn('common/name'), 'editable' => 'updatePlayerName', 'javaScriptArgs' => array('team_id', 'player_id'), 'allowEdit' => $allowEdit),
+			'name'      => array('desc' => $lng->getTrn('common/name'), 'editable' => 'updatePlayerName', 'javaScriptArgs' => array('team_id', 'player_id'), 'allowEdit' => $allowEdit), // already escaped above, before the &nbsp; substitution
 			'info'      => array('desc' => '', 'nosort' => true, 'icon' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_PLAYER,false,false,false), 'field' => 'obj_id', 'value' => 'player_id')),
 			'position'  => array('desc' => $lng->getTrn('common/pos'), 'nosort' => true),
 			'keywords'  => array('desc' => $lng->getTrn('common/keywords'), 'nosort' => true),
@@ -1098,7 +1106,7 @@ class Team_HTMLOUT extends Team
 		);
 		echo "<a href=".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$this->team_id,false,false)."&amp;detailed=".(($DETAILED) ? 0 : 1).">".$lng->getTrn('profile/team/viewtoggle')."</a><br><br>\n";
 		HTMLOUT::sort_table(
-			$team->name.' roster',
+			htmlspecialchars($team->name).' roster',
 			urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$team->team_id,false,false).(($DETAILED) ? '&amp;detailed=1' : '&amp;detailed=0'),
 			$players,
 			$fields,
@@ -1297,7 +1305,7 @@ class Team_HTMLOUT extends Team
 		$fields = array(
 			'date_played'   => array('desc' => $lng->getTrn('common/dateplayed')),
 			'tour'          => array('desc' => $lng->getTrn('common/tournament')),
-			'opponent'      => array('desc' => $lng->getTrn('common/opponent')),
+			'opponent'      => array('desc' => $lng->getTrn('common/opponent'), 'escape' => true),
 			'skills' => array('desc' => $lng->getTrn('common/skills')),
 			'cp'     => array('desc' => 'Cp'),
 			'td'     => array('desc' => 'Td'),
@@ -1373,7 +1381,7 @@ class Team_HTMLOUT extends Team
 				<table width="100%">
 					<tr>
 						<td><?php echo $lng->getTrn('common/coach');?></td>
-						<td><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_COACH,$team->owned_by_coach_id,false,false);?>"><?php echo $team->f_cname; ?></a></td>
+						<td><a href="<?php echo urlcompile(T_URL_PROFILE,T_OBJ_COACH,$team->owned_by_coach_id,false,false);?>"><?php echo htmlspecialchars($team->f_cname); ?></a></td>
 					</tr>
 					<tr>
 						<td><?php echo $lng->getTrn('common/race');?></td>
@@ -1646,7 +1654,7 @@ class Team_HTMLOUT extends Team
 										if ($p->is_sold || $p->is_dead || $p->is_journeyman || $p->qty != 16)
 											continue;
 
-										echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+										echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 										$DISABLE = false;
 									}
 									?>
@@ -1667,7 +1675,7 @@ class Team_HTMLOUT extends Team
 									$DISABLE = true;
 									foreach ($players as $p) {
 										if ($p->is_sold) {
-												echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+												echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 												$DISABLE = false;
 										}
 									}
@@ -1762,7 +1770,7 @@ class Team_HTMLOUT extends Team
 									<?php
 									$DISABLE = true;
 									foreach ($coaches as $c) {
-										echo "<option value='$c->coach_id'>$c->cname</option>\n";
+										echo "<option value='$c->coach_id'>".htmlspecialchars($c->cname)."</option>\n";
 										$DISABLE = false;
 									}
 									?>
@@ -1784,7 +1792,7 @@ class Team_HTMLOUT extends Team
 									//objsort($players, array('+is_dead', '+name'));
 									foreach ($players as $p) {
 										if (!$p->is_sold) {
-											echo "<option value='$p->player_id'".(($p->is_dead) ? ' style="background-color:'.COLOR_HTML_DEAD.';"' : '').">$p->nr $p->name</option>";
+											echo "<option value='$p->player_id'".(($p->is_dead) ? ' style="background-color:'.COLOR_HTML_DEAD.';"' : '').">$p->nr ".htmlspecialchars($p->name)."</option>";
 											$DISABLE = false;
 										}
 									}
@@ -1812,7 +1820,7 @@ class Team_HTMLOUT extends Team
 									//objsort($players, array('+is_dead', '+name'));
 									foreach ($players as $p) {
 										if (!$p->is_sold) {
-											echo "<option value='$p->player_id'".(($p->is_dead) ? ' style="background-color:'.COLOR_HTML_DEAD.';"' : '').">$p->nr $p->name (current extra = ".($p->extra_val/1000)."k)</option>";
+											echo "<option value='$p->player_id'".(($p->is_dead) ? ' style="background-color:'.COLOR_HTML_DEAD.';"' : '').">$p->nr ".htmlspecialchars($p->name)." (current extra = ".($p->extra_val/1000)."k)</option>";
 											$DISABLE = false;
 										}
 									}
@@ -1840,7 +1848,7 @@ class Team_HTMLOUT extends Team
 									$DISABLE = true;
 									foreach ($players as $p) {
 										if (!$p->is_sold && !$p->is_dead) {
-											echo "<option value='$p->player_id'>$p->nr $p->name</option>";
+											echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>";
 											$DISABLE = false;
 										}
 									}
@@ -1953,7 +1961,7 @@ class Team_HTMLOUT extends Team
 								$DISABLE = true;
 								foreach ($players as $p) {
 									if (!$p->is_dead && !$p->is_sold) {
-										echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+										echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 										$DISABLE = false;
 									}
 								}
@@ -1981,7 +1989,7 @@ class Team_HTMLOUT extends Team
 									<?php
 									foreach ($players as $p) {
 										if (!$p->is_dead && !$p->is_sold) {
-											echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+											echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 										}
 									}
 									?>
@@ -2029,7 +2037,7 @@ class Team_HTMLOUT extends Team
 										if ($p->is_sold || $p->is_dead || $p->is_journeyman || $p->getCurrentNiggleCount() <= 0)
 											continue;
 
-										echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+										echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 										$DISABLE = false;
 									}
 									?>
@@ -2052,7 +2060,7 @@ class Team_HTMLOUT extends Team
 										if ($p->is_sold || $p->is_dead || $p->is_journeyman)
 											continue;
 
-										echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+										echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 										$DISABLE = false;
 									}
 									?>
@@ -2074,7 +2082,7 @@ class Team_HTMLOUT extends Team
 									foreach ($players as $p) {
 										if ($p->is_sold || $p->is_dead || $p->is_journeyman || $p->getStatus('-1') == 1)
 											continue;
-										echo "<option value='$p->player_id'>$p->nr $p->name"?>
+										echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)?>
 										<?php 
 										if ($p->getStatus('-1') == 2) {
 											echo " (MNG)</option>\n";
@@ -2103,7 +2111,7 @@ class Team_HTMLOUT extends Team
 										if ($p->is_sold || $p->is_dead || $p->is_journeyman || $p->inj_ma + $p->inj_st + $p->inj_ag + $p->inj_pa + $p->inj_av == 0)
 											continue;
 
-										echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+										echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 										$DISABLE = false;
 									}
 									?>
@@ -2291,7 +2299,7 @@ class Team_HTMLOUT extends Team
 		?>
 		<!-- Following HTML is from class_team_htmlout.php _teamManagementBox -->
 		<div class="boxTeamPage">
-		<div class="boxTitle<?php echo T_HTMLBOX_COACH;?>"><?php echo $lng->getTrn('profile/team/box_tm/title') . ' - ' . $team->name;?></div>
+		<div class="boxTitle<?php echo T_HTMLBOX_COACH;?>"><?php echo $lng->getTrn('profile/team/box_tm/title') . ' - ' . htmlspecialchars($team->name);?></div>
 		<div class="boxBody">
 			<?php
 			$base = 'profile/team';
@@ -2451,7 +2459,7 @@ class Team_HTMLOUT extends Team
 							if (!$isLineman) continue;
 						}
 
-						echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+						echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 						$DISABLE = false;
 					}
 					?>
@@ -2546,7 +2554,7 @@ class Team_HTMLOUT extends Team
 							continue;
 						}
 
-						echo "<option value='$p->player_id'>$p->nr $p->name | " . $price/1000 . " k</option>\n";
+						echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)." | " . $price/1000 . " k</option>\n";
 						$DISABLE = false;
 					}
 					?>
@@ -2637,11 +2645,11 @@ class Team_HTMLOUT extends Team
 							   . ($rules['player_refund']
 								   ? (($p->value/1000)*$rules['player_refund'])."k refund | "
 								   : "")
-							   . "$p->nr $p->name</option>\n";
+							   . "$p->nr ".htmlspecialchars($p->name)."</option>\n";
 							$DISABLE = false;
 						} else if (!empty($reason)) {
 							echo "<option value='$p->player_id' disabled "
-							   . "style='color:#999;'>$p->nr $p->name$reason</option>\n";
+							   . "style='color:#999;'>$p->nr ".htmlspecialchars($p->name)."$reason</option>\n";
 						}
 					}
 					?>
@@ -2663,7 +2671,7 @@ class Team_HTMLOUT extends Team
 					$DISABLE = true;
 					foreach ($players as $p) {
 						if ($p->is_unbuyable() && !$p->is_sold) {
-								echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+								echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 								$DISABLE = false;
 						}
 					}
@@ -2690,7 +2698,7 @@ class Team_HTMLOUT extends Team
 						elseif ($p->is_sold)
 							$color = COLOR_HTML_SOLD;
 
-						echo "<option value='$p->player_id' ".(isset($color) ? "style='background-color: $color;'" : '').">$p->nr $p->name</option>\n";
+						echo "<option value='$p->player_id' ".(isset($color) ? "style='background-color: $color;'" : '').">$p->nr ".htmlspecialchars($p->name)."</option>\n";
 						$DISABLE = false;
 					}
 					?>
@@ -2719,7 +2727,7 @@ class Team_HTMLOUT extends Team
 						elseif ($p->is_sold)
 							$color = COLOR_HTML_SOLD;
 
-						echo "<option value='$p->player_id' ".(isset($color) ? "style='background-color: $color;'" : '').">$p->nr $p->name</option>\n";
+						echo "<option value='$p->player_id' ".(isset($color) ? "style='background-color: $color;'" : '').">$p->nr ".htmlspecialchars($p->name)."</option>\n";
 						$DISABLE = false;
 					}
 					?>
@@ -2770,7 +2778,7 @@ class Team_HTMLOUT extends Team
 								break;
 							}
 						}						
-						echo "<option value='$p->player_id' data-primary='$primarySkills'>$p->nr $p->name ($p->mv_spp SPP)</option>\n";
+						echo "<option value='$p->player_id' data-primary='$primarySkills'>$p->nr ".htmlspecialchars($p->name)." ($p->mv_spp SPP)</option>\n";
 						$hasEligiblePlayers = true;
 					}
 				}
@@ -2969,7 +2977,7 @@ class Team_HTMLOUT extends Team
 						headers: {
 							'Content-Type': 'application/x-www-form-urlencoded',
 						},
-						body: 'player_id=' + playerId + '&skill_type=' + skillType + '&skill_cat=' + skillCat
+						body: 'player_id=' + playerId + '&skill_type=' + skillType + '&skill_cat=' + skillCat + '&csrf_token=' + encodeURIComponent(window.NAFLM_CSRF_TOKEN) // Security: this endpoint now requires a login/ownership + CSRF check (see lib/roll_auth_check.php).
 					})
 					.then(response => response.text())
 					.then(text => {
@@ -3124,7 +3132,7 @@ class Team_HTMLOUT extends Team
 							. "data-secondary='" . self::_getSecondaryCategories($p, $team, $DEA) . "' "
 							. "data-normbyCat='" . htmlspecialchars(json_encode($normByCat), ENT_QUOTES) . "' "
 							. "data-doubbycat='" . htmlspecialchars(json_encode($doubByCat), ENT_QUOTES) . "'"
-							. ">$p->nr $p->name ($p->mv_spp SPP)</option>\n";
+							. ">$p->nr ".htmlspecialchars($p->name)." ($p->mv_spp SPP)</option>\n";
 						$hasStatEligible = true;
 					}
 					?>
@@ -3322,6 +3330,7 @@ class Team_HTMLOUT extends Team
 							var formData = new FormData();
 							formData.append('player_id', pd.id);
 							formData.append('spp_cost',  pd.statCost);
+							formData.append('csrf_token', window.NAFLM_CSRF_TOKEN); // Security: this endpoint now requires a login/ownership + CSRF check (see lib/roll_auth_check.php).
 							fetch('lib/class_random_stat.php', {
 								method: 'POST',
 								body:   formData
@@ -3586,7 +3595,7 @@ class Team_HTMLOUT extends Team
 						if ($p->is_dead || $p->is_sold || $p->is_retired || !$p->can_retire)
 							continue;
 
-						echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+						echo "<option value='$p->player_id'>$p->nr ".htmlspecialchars($p->name)."</option>\n";
 						$DISABLE = false;
 					}
 					?>
@@ -3707,9 +3716,6 @@ class Team_HTMLOUT extends Team
 				<input type="submit" name="button" id="form_ok_button" value="OK" <?php echo ($DISABLE ? 'DISABLED' : '');?>
 					<?php if (in_array($_POST['menu_tmanage'], $tmange_confirm)) {echo "onClick=\"if(!confirm('".$lng->getTrn('common/confirm_box')."')){return false;}\"";}?>
 				>
-				<?php if(Mobile::isMobile()) {
-					echo '<a href="' . getFormAction('') . '">' . $lng->getTrn('common/back') . '</a>';
-				} ?>
 			</form>
 		</div>
 	</div>
@@ -3775,7 +3781,12 @@ class Team_HTMLOUT extends Team
 					if ($ALLOW_EDIT) {
 						?>
 						<form method='POST'>
-							<textarea name='teamtext' rows='15' style='width: 100%;'><?php echo $txt;?></textarea>
+							<textarea name='teamtext' rows='15' style='width: 100%;'><?php
+						// SECURITY: same textarea-breakout issue as the match report summary -
+						// $txt used to be echoed raw here; a bio containing "</textarea><script>"
+						// would close the box early and execute for the team's own owner.
+						echo htmlspecialchars($txt);
+					?></textarea>
 							<br><br>
 							<input type="hidden" name="type" value="teamtext">
 							<center>

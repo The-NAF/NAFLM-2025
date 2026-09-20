@@ -37,13 +37,16 @@ $core_tables = array(
         'coach_id'  => $CT_cols[T_OBJ_COACH].' NOT NULL PRIMARY KEY AUTO_INCREMENT',
         'name'      => $CT_cols['name'],
         'realname'  => $CT_cols['name'],
-        'passwd'    => 'VARCHAR(32)',
+        'passwd'    => 'VARCHAR(255)', # Security: widened from VARCHAR(32) - now holds a password_hash() bcrypt hash, not a raw MD5 hex digest. Legacy 32-char MD5 rows still fit and upgrade in place on next login (see Coach::checkPasswd()).
         'mail'      => 'VARCHAR(129)',
         'phone'     => 'VARCHAR(25) NOT NULL',
         'ring'      => 'TINYINT UNSIGNED NOT NULL DEFAULT 0', # Global access level
         'settings'  => 'VARCHAR(320) NOT NULL',
         'retired'   => 'BOOLEAN NOT NULL DEFAULT 0',
         'activation_code' => 'VARCHAR(32) DEFAULT NULL',
+        // Security (remember-me redesign): a single-device random login token whose SHA-256 hash alone is stored - see Coach::cookieLogin()/_setCookie().
+        'remember_token_hash'    => 'CHAR(64) DEFAULT NULL',
+        'remember_token_expires' => 'DATETIME DEFAULT NULL',
         // Dynamic properties (DPROPS)
         'elo'       => $CT_cols['elo'].' DEFAULT NULL', # All-time ELO (across all matches).
         'swon'      => $CT_cols['streak'].' DEFAULT 0',
@@ -1008,8 +1011,30 @@ function get_rows($tbl, array $getFields, $where = array()) {
     return $ret;
 }
 
+// Robustness: returns the live column names of $tblName (cached per-request), or null if the
+// table can't be described. Lets generic, $core_tables-driven queries (Stats::getRaw() in
+// particular) defend themselves against schema drift - specifically the gap between deploying new
+// code that describes a newer schema and an admin actually clicking "Update DB" to apply it, which
+// otherwise makes every query against that table hard-fail (not just ones touching the new
+# columns) until the button is clicked.
+function get_live_columns($tblName) {
+    static $cache = array();
+    if (!array_key_exists($tblName, $cache)) {
+        $cols = array();
+        $result = mysql_query("DESCRIBE `$tblName`");
+        if ($result) {
+            while ($row = mysql_fetch_assoc($result)) {
+                $cols[] = $row['Field'];
+            }
+        }
+        $cache[$tblName] = !empty($cols) ? $cols : null;
+    }
+    return $cache[$tblName];
+}
+
 function get_parent_id($type, $id, $parent_type) {
     global $relations_node, $relations_obj;
+    $id = (int) $id; # Security: spliced raw into the WHERE clause below - unauthenticated SQLi via every caller (admin_schedule.php, statsgraph, etc). Single-location fix.
     $relations = in_array($type, array_keys($relations_node)) ? $relations_node : $relations_obj;
     if ($type >= $parent_type)
         return null;
