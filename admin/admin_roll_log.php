@@ -54,7 +54,7 @@ if ($filter_type === 'skill') {
     $where[] = "pr.roll_type = 'stat'";
 }
 if ($filter_team > 0) {
-    $where[] = "p.owned_by_team_id = $filter_team";
+    $where[] = "pl.owned_by_team_id = $filter_team"; // was "p." - that alias doesn't exist in either query below (players is aliased "pl"), causing an "Unknown column" SQL error whenever a team filter was applied
 }
 $whereStr = implode(' AND ', $where);
 // --- Fetch records --
