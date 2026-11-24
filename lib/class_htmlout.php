@@ -118,7 +118,9 @@ class HTMLOUT
 			$m->tour_name = Tour::getTourUrl($m->f_tour_id);
 			$m->league_name = League::getLeagueUrl(get_parent_id(T_NODE_TOURNAMENT, $m->f_tour_id, T_NODE_LEAGUE));
 			if (in_array($m->round,array_keys($T_ROUNDS))) {
-				$m->round = $T_ROUNDS[$m->round];
+				$m->round_disp = $T_ROUNDS[$m->round];
+			} else {
+				$m->round_disp = $m->round;
 			}
 			$m->team1_name = "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->team1_id,false,false)."'>$m->team1_name</a>&nbsp;<i>(<a href='".urlcompile(T_URL_PROFILE,T_OBJ_COACH,$m->coach1_id,false,false)."'>$m->coach1_name</a>)</i>";
 			$m->team2_name = "<a href='".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$m->team2_id,false,false)."'>$m->team2_name</a>&nbsp;<i>(<a href='".urlcompile(T_URL_PROFILE,T_OBJ_COACH,$m->coach2_id,false,false)."'>$m->coach2_name</a>)</i>";
@@ -127,7 +129,7 @@ class HTMLOUT
 			'date_created_disp'  => array('desc' => $lng->getTrn('common/datecreated'), 'nosort' => true),
 			'league_name'        => array('desc' => $lng->getTrn('common/league'), 'nosort' => true),
 			'tour_name'          => array('desc' => $lng->getTrn('common/tournament'), 'nosort' => true),
-			'round'              => array('desc' => $lng->getTrn('common/round'), 'nosort' => true),
+			'round_disp'         => array('desc' => $lng->getTrn('common/round'), 'nosort' => true),
 			'team1_name'         => array('desc' => $lng->getTrn('common/home'), 'nosort' => true),
 			'team2_name'         => array('desc' => $lng->getTrn('common/away'), 'nosort' => true),
 	        // Old solution
